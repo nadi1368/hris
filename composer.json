@@ -38,7 +38,7 @@
         {
             "type": "composer",
             "url": "https://asset-packagist.org"
-        },
+        }
     ],
     "config": {
         "allow-plugins": {
