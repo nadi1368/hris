@@ -1,0 +1,39 @@
+<?php
+
+use kartik\file\FileInput;
+use yii\bootstrap4\ActiveForm;
+use yii\helpers\Html;
+use common\models\UploadExcel;
+use yii\web\View;
+use yii\widgets\MaskedInput;
+
+/* @var $this yii\web\View */
+/* @var $uploadForm UploadExcel */
+
+$this->title = 'آپلود فایل مزایای غیر نقدی';
+
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Salary Items Additions'), 'url' => ['salary-items-addition/index']];
+$this->params['breadcrumbs'][] = $this->title;
+?>
+<div class="card">
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-2">
+                <?= $form->field($uploadForm, 'month')->dropdownList(UploadExcel::itemAlias('Months')) ?>
+            </div>
+            <div class="col-md-12">
+                <?= $form->field($uploadForm, "excelFile")->fileInput() ?>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="card-footer">
+        <?= Html::submitButton(Yii::t("app", "Upload"), ['class' => 'btn btn-success btn btn-flat']); ?>
+    </div>
+
+    <?php ActiveForm::end() ?>
+</div>
+
+
