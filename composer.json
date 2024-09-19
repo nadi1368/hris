@@ -1,0 +1,51 @@
+{
+    "name": "hesabro/hris",
+    "version": "1.0.0",
+    "description": "Hesabro hris package",
+    "type": "yii2-extension",
+    "license": "BSD-3-Clause",
+    "autoload": {
+        "psr-4": {
+            "hesabro\\hris\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Nader Bahadori",
+            "email": "nader.bahadorii@gmail.com"
+        },
+        {
+            "name": "Moslem Tayari",
+            "email": "avapardazmota@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=8.0",
+        "hesabro/helpers": "*",
+        "hesabro/change-log": "*",
+        "hesabro/error-log": "*",
+        "yiisoft/yii2": "~2.0.14",
+        "yiisoft/yii2-bootstrap4": "^2.0",
+        "yii2tech/ar-softdelete": "*",
+        "guzzlehttp/guzzle": "*",
+        "yiisoft/yii2-queue": "^2.3"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^6.4"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        },
+    ],
+    "config": {
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true
+        }
+    },
+    "extra": {
+        "bootstrap": "hesabro\\hris\\Bootstrap"
+    }
+}
