@@ -135,7 +135,7 @@ class AdvanceMoneyManageController extends Controller
             return $response;
         }
         $this->performAjaxValidation($model);
-        $operation->date = Yii::$app->jdate->date("Y/m/d");
+        $operation->date = Yii::$app->jdf->jdate("Y/m/d");
         $operation->des = $model->comment . " - درخواست مساعده #" . $model->id;
         return $this->renderAjax('_confirm', [
             'model' => $model,

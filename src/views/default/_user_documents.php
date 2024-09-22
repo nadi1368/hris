@@ -56,7 +56,7 @@ use yii\web\View;
 					?></td>
 				<td><?= '<label class="badge badge-' . UserUpload::itemAlias('StatusClass', $item->status) . '">' . UserUpload::itemAlias('Status', $item->status) . '</label>' ?></td>
 				<td><?= $item->confirm_by ? $item->confirm->getLink() : '' ?></td>
-				<td><?= '<span title="بروز رسانی شده در ' . Yii::$app->jdate->date("Y/m/d  H:i", $item->changed) . '">' . Yii::$app->jdate->date("Y/m/d  H:i", $item->created) . '</span>' ?></td>
+				<td><?= '<span title="بروز رسانی شده در ' . Yii::$app->jdf->jdate("Y/m/d  H:i", $item->changed) . '">' . Yii::$app->jdf->jdate("Y/m/d  H:i", $item->created) . '</span>' ?></td>
 				<td><?= '<span title="بروز رسانی شده توسط ' . $item->update->fullName . '">' . $item->creator->fullName . '</span>'; ?></td>
 				<td class="grid-view">
 					<?= $item->status == UserUpload::STATUS_ACTIVE ? Html::a('<span class="fa fa-check"></span>', ['confirm-document', 'id' => $item->id], [

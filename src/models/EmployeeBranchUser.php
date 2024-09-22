@@ -379,12 +379,12 @@ class EmployeeBranchUser extends ActiveRecord implements SendAutoCommentInterfac
     public function validateEndWork($attribute, $params)
     {
         if (!$this->hasErrors()) {
-            if ($this->end_work < $this->start_work || $this->end_work > Yii::$app->jdate->date("Y/m/d")) {
+            if ($this->end_work < $this->start_work || $this->end_work > Yii::$app->jdf->jdate("Y/m/d")) {
                 $this->addError($attribute, Yii::t('yii', '{attribute} is invalid.', ['attribute' => $this->getAttributeLabel($attribute)]));
             } elseif (($year = Year::find()->byDate($this->end_work)->one()) === null || !$year->isSetSettingForYearPeriod()) {
                 $this->addError($attribute, 'برای سال مورد نظر تنظیمات اولیه حقوق و دستمزد ست نشده است');
-            } elseif (($lastPayment = SalaryPeriodItems::find()->byUser($this->user_id)->joinWith(['period'])->limit(1)->andWhere(['>', 'basic_salary', 0])->orderBy(['start_date' => SORT_DESC])->one()) !== null && $this->end_work != Yii::$app->jdate->date("Y/m/d", $lastPayment->period->end_date)) {
-                $this->addError($attribute, "تاریخ ترک کار باید برابر با " . Yii::$app->jdate->date("Y/m/d", $lastPayment->period->end_date) . " باشد.");
+            } elseif (($lastPayment = SalaryPeriodItems::find()->byUser($this->user_id)->joinWith(['period'])->limit(1)->andWhere(['>', 'basic_salary', 0])->orderBy(['start_date' => SORT_DESC])->one()) !== null && $this->end_work != Yii::$app->jdf->jdate("Y/m/d", $lastPayment->period->end_date)) {
+                $this->addError($attribute, "تاریخ ترک کار باید برابر با " . Yii::$app->jdf->jdate("Y/m/d", $lastPayment->period->end_date) . " باشد.");
             }
         }
     }

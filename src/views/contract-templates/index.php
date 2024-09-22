@@ -76,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				[
 					"attribute" => "created_at",
 					"value" => function ($model) {
-						return Yii::$app->jdate->date("Y/m/d H:i:s", $model->created_at);
+						return Yii::$app->jdf->jdate("Y/m/d H:i:s", $model->created_at);
 					},
 				],
 

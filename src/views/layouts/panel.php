@@ -160,7 +160,7 @@ PanelAssets::register($this);
 <?php $this->endBody() ?>
 
 <?php
-$today_date=Yii::$app->jdate->date('Y/m/d');
+$today_date=Yii::$app->jdf->jdate('Y/m/d');
 $script_doday_value = <<< JS
 today_date="$today_date";
 JS;

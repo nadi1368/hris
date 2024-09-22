@@ -226,7 +226,7 @@ class SalaryItemsAddition extends \yii\db\ActiveRecord
     {
         if ($this->to_date - $this->from_date <= 0) {
             $this->addError($attribute, Yii::t('app', "Minimum Range of Daily Leave is 1 Day and Days Start From daybreak"));
-        } elseif ((date('z', $this->to_date) - date('z', $this->from_date)) > 1 && Yii::$app->jdate->date("Y/m", $this->from_date) != Yii::$app->jdate->date("Y/m", $this->to_date)) {
+        } elseif ((date('z', $this->to_date) - date('z', $this->from_date)) > 1 && Yii::$app->jdf->jdate("Y/m", $this->from_date) != Yii::$app->jdf->jdate("Y/m", $this->to_date)) {
             $this->addError($attribute, 'مرخصی روزانه باید در یک ماه باشد.اگر در دوماه می باشد.لطفا ۲ مرخصی ثبت نمایید.');
         }
     }
@@ -365,7 +365,7 @@ class SalaryItemsAddition extends \yii\db\ActiveRecord
 
     private function sumTodayLeaveHours()
     {
-        $selected_day = Yii::$app->jdate->date("Y/m/d H:i:s", $this->from_date);
+        $selected_day = Yii::$app->jdf->jdate("Y/m/d H:i:s", $this->from_date);
 
         $day_start_ts = strtotime(Jdf::Convert_jalali_to_gregorian($selected_day) . " 00:00:00");
         $day_end_ts = strtotime(Jdf::Convert_jalali_to_gregorian($selected_day) . " 23:59:59");
@@ -412,11 +412,11 @@ class SalaryItemsAddition extends \yii\db\ActiveRecord
             case SalaryItemsAddition::KIND_OVER_TIME:
             case SalaryItemsAddition::KIND_COMMISSION:
             case SalaryItemsAddition::KIND_NON_CASH:
-                return Yii::$app->jdate->date("Y/m/d", $this->from_date);
+                return Yii::$app->jdf->jdate("Y/m/d", $this->from_date);
             case SalaryItemsAddition::KIND_LEAVE_HOURLY:
-                return Yii::$app->jdate->date("Y/m/d H:i:s", $this->from_date);
+                return Yii::$app->jdf->jdate("Y/m/d H:i:s", $this->from_date);
             case SalaryItemsAddition::KIND_LEAVE_DAILY:
-                return Yii::$app->jdate->date("Y/m/d", $this->from_date) . ' - ' . Yii::$app->jdate->date("Y/m/d", $this->to_date);
+                return Yii::$app->jdf->jdate("Y/m/d", $this->from_date) . ' - ' . Yii::$app->jdf->jdate("Y/m/d", $this->to_date);
         }
         return '';
     }
@@ -506,11 +506,11 @@ class SalaryItemsAddition extends \yii\db\ActiveRecord
         switch ($this->kind) {
             case SalaryItemsAddition::KIND_LOW_TIME:
                 $this->setScenario(self::SCENARIO_CREATE_LOW_TIME);
-                $this->date = Yii::$app->jdate->date("Y/m/d");
+                $this->date = Yii::$app->jdf->jdate("Y/m/d");
                 break;
             case SalaryItemsAddition::KIND_OVER_TIME:
                 $this->setScenario(self::SCENARIO_CREATE_OVER_TIME);
-                $this->date = Yii::$app->jdate->date("Y/m/d");
+                $this->date = Yii::$app->jdf->jdate("Y/m/d");
                 break;
             case SalaryItemsAddition::KIND_LEAVE_HOURLY:
                 $this->setScenario(self::SCENARIO_CREATE_LEAVE_HOURLY);
@@ -535,30 +535,30 @@ class SalaryItemsAddition extends \yii\db\ActiveRecord
         switch ($this->kind) {
             case SalaryItemsAddition::KIND_LOW_TIME:
                 $this->setScenario(self::SCENARIO_CREATE_LOW_TIME);
-                $this->date = Yii::$app->jdate->date("Y/m/d", $this->from_date);
+                $this->date = Yii::$app->jdf->jdate("Y/m/d", $this->from_date);
                 break;
             case SalaryItemsAddition::KIND_OVER_TIME:
                 $this->setScenario(self::SCENARIO_CREATE_OVER_TIME);
-                $this->date = Yii::$app->jdate->date("Y/m/d", $this->from_date);
+                $this->date = Yii::$app->jdf->jdate("Y/m/d", $this->from_date);
                 break;
             case SalaryItemsAddition::KIND_LEAVE_HOURLY:
                 $this->setScenario(self::SCENARIO_CREATE_LEAVE_HOURLY);
-                $this->range = Yii::$app->jdate->date("Y/m/d H:i:s", $this->from_date) . ' - ' . Yii::$app->jdate->date("Y/m/d H:i:s", $this->to_date);
+                $this->range = Yii::$app->jdf->jdate("Y/m/d H:i:s", $this->from_date) . ' - ' . Yii::$app->jdf->jdate("Y/m/d H:i:s", $this->to_date);
                 break;
             case SalaryItemsAddition::KIND_LEAVE_DAILY:
                 $this->setScenario(self::SCENARIO_CREATE_LEAVE_DAILY);
-                $this->range = Yii::$app->jdate->date("Y/m/d", $this->from_date) . ' - ' . Yii::$app->jdate->date("Y/m/d", $this->to_date);
+                $this->range = Yii::$app->jdf->jdate("Y/m/d", $this->from_date) . ' - ' . Yii::$app->jdf->jdate("Y/m/d", $this->to_date);
                 break;
             case SalaryItemsAddition::KIND_COMMISSION:
                 $this->setScenario(self::SCENARIO_CREATE_COMMISSION);
-                $this->date = Yii::$app->jdate->date("Y/m/d", $this->from_date);
+                $this->date = Yii::$app->jdf->jdate("Y/m/d", $this->from_date);
                 break;
             case SalaryItemsAddition::KIND_COMMISSION_CONST:
                 $this->setScenario(self::SCENARIO_CREATE_COMMISSION_CONST);
                 break;
             case SalaryItemsAddition::KIND_NON_CASH:
                 $this->setScenario(self::SCENARIO_CREATE_NON_CASH);
-                $this->date = Yii::$app->jdate->date("Y/m/d", $this->from_date);
+                $this->date = Yii::$app->jdf->jdate("Y/m/d", $this->from_date);
                 break;
         }
     }

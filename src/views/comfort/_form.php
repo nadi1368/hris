@@ -67,7 +67,7 @@ if ($model->excluded_jobs && ($tags = Tags::find()->andWhere(['IN', 'id', $model
                     'mask' => '9999/99/99',
                     'options' => [
                         'autocomplete' => 'off',
-                        'value' => $model->expire_time > 0 ? Yii::$app->jdate->date('Y/m/d', $model->expire_time) : ''
+                        'value' => $model->expire_time > 0 ? Yii::$app->jdf->jdate('Y/m/d', $model->expire_time) : ''
                     ]
                 ]) ?>
             </div>

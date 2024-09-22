@@ -71,7 +71,7 @@ Pjax::begin(['id' => 'pjax-employee-request']);
                 [
                     'attribute' => 'created_at',
                     'value' => function (EmployeeRequest $model) {
-                        return '<span title="بروز رسانی شده در ' . Yii::$app->jdate->date("Y/m/d  H:i", $model->updated_at) . '">' . Yii::$app->jdate->date("Y/m/d  H:i", $model->created_at) . '</span>';
+                        return '<span title="بروز رسانی شده در ' . Yii::$app->jdf->jdate("Y/m/d  H:i", $model->updated_at) . '">' . Yii::$app->jdf->jdate("Y/m/d  H:i", $model->created_at) . '</span>';
                     },
                     'format' => 'raw'
                 ],

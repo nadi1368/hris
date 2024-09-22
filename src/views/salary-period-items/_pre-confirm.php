@@ -107,7 +107,7 @@ $link['SalaryPeriodItemsSearch']['user_id'] = [];
                         <td><?= $itemComfortItems->user->linkEmployee ?></td>
                         <td><?= $itemComfortItems->comfort->title ?></td>
                         <td><?= number_format((float)$itemComfortItems->amount) ?></td>
-                        <td><?= Yii::$app->jdate->date("Y/m/d  H:i", $itemComfortItems->created) ?></td>
+                        <td><?= Yii::$app->jdf->jdate("Y/m/d  H:i", $itemComfortItems->created) ?></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>

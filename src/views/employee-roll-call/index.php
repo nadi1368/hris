@@ -69,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'date',
                     'value' => function (EmployeeRollCall $model) {
                         $time=strtotime(Jdf::Convert_jalali_to_gregorian($model->date));
-                        return Yii::$app->jdate->date("l d F Y",$time);
+                        return Yii::$app->jdf->jdate("l d F Y",$time);
                     },
                     'format' => 'raw',
                 ],

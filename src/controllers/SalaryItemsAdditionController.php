@@ -441,11 +441,11 @@ class SalaryItemsAdditionController extends Controller
      */
     public function actionUploadSalaryNonCash()
     {
-        $uploadForm = new UploadExcel(['scenario' => UploadExcel::SCENARIO_UPLOAD_SALARY_NON_CASH, 'type' => UploadExcel::TYPE_SALARY_NON_CASH, 'month' => Yii::$app->jdate->date("m", strtotime('-10 DAY'))]);
+        $uploadForm = new UploadExcel(['scenario' => UploadExcel::SCENARIO_UPLOAD_SALARY_NON_CASH, 'type' => UploadExcel::TYPE_SALARY_NON_CASH, 'month' => Yii::$app->jdf->jdate("m", strtotime('-10 DAY'))]);
         if ($uploadForm->load(Yii::$app->request->post())) {
             $transaction = \Yii::$app->db->beginTransaction();
             try {
-                $uploadForm->date = Yii::$app->jdate->date("Y/") . $uploadForm->month . '/01';
+                $uploadForm->date = Yii::$app->jdf->jdate("Y/") . $uploadForm->month . '/01';
                 if ($uploadForm->save()) {
                     $transaction->commit();
                     $this->flash('success', 'آپلود با موفقیت انجام شد.');

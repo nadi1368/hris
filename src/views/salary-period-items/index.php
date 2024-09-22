@@ -35,14 +35,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'attribute' => 'start_date',
                     'value' => function ($salaryPeriod) {
-                        return Yii::$app->jdate->date("Y/m/d", $salaryPeriod->start_date);
+                        return Yii::$app->jdf->jdate("Y/m/d", $salaryPeriod->start_date);
                     },
                     'format' => 'raw'
                 ],
                 [
                     'attribute' => 'end_date',
                     'value' => function ($salaryPeriod) {
-                        return Yii::$app->jdate->date("Y/m/d", $salaryPeriod->end_date);
+                        return Yii::$app->jdf->jdate("Y/m/d", $salaryPeriod->end_date);
                     },
                     'format' => 'raw'
                 ],

@@ -458,7 +458,7 @@ class DefaultController extends Controller
                     $model->history = [];
                 }
                 $model->history[] = $history;
-                $model->start_work = Yii::$app->jdate->date("Y/m/01");
+                $model->start_work = Yii::$app->jdf->jdate("Y/m/01");
                 $model->end_work = '';
                 $flag = $model->save(false);
                 if ($flag) {

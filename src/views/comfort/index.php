@@ -85,7 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'attribute' => 'expire_time',
                     'value' => function (Comfort $model) {
-                        return $model->expire_time ? Yii::$app->jdate->date("Y/m/d", $model->expire_time) : null;
+                        return $model->expire_time ? Yii::$app->jdf->jdate("Y/m/d", $model->expire_time) : null;
                     },
                     'format' => 'raw'
                 ],

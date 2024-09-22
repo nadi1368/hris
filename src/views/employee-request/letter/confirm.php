@@ -18,7 +18,7 @@ $inputs = $relatedModel->getVariablesInput($form);
             <?= $form->field($relatedModel, 'date')->widget(MaskedInput::class, [
                 'mask' => '9999/99/99',
                 'options' => [
-                    'value' => Yii::$app->jdate->date('Y/m/d'),
+                    'value' => Yii::$app->jdf->jdate('Y/m/d'),
                     'autocomplete' => 'off',
                 ]
             ]) ?>

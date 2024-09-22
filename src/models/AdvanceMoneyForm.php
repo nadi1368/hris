@@ -165,7 +165,7 @@ class AdvanceMoneyForm extends Model
 
     public function loadDefaultValues()
     {
-        $this->date = Yii::$app->jdate->date("Y/m/d");
+        $this->date = Yii::$app->jdf->jdate("Y/m/d");
         $this->definite_id_from = Settings::get('AdvanceMoneyForm_DefaultDefiniteCreditor');
         $this->account_id_from = Settings::get('AdvanceMoneyForm_DefaultAccountCreditor');
     }

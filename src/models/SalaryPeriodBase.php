@@ -223,7 +223,7 @@ class SalaryPeriodBase extends \yii\db\ActiveRecord
 
     public function getTitleWithYear()
     {
-        return $this->title . ' - ' . Yii::$app->jdate->date("Y", $this->start_date);
+        return $this->title . ' - ' . Yii::$app->jdf->jdate("Y", $this->start_date);
     }
 
     /**
@@ -231,7 +231,7 @@ class SalaryPeriodBase extends \yii\db\ActiveRecord
      */
     public function getYear()
     {
-        return Year::find()->byDate(Yii::$app->jdate->date("Y/m/d", $this->start_date))->one();
+        return Year::find()->byDate(Yii::$app->jdf->jdate("Y/m/d", $this->start_date))->one();
     }
 
     /**
@@ -292,7 +292,7 @@ class SalaryPeriodBase extends \yii\db\ActiveRecord
 
     public function canCopyPreviousPeriod()
     {
-        if ($this->status != self::STATUS_WAIT_CONFIRM || ((int)Yii::$app->jdate->date("m", $this->start_date)) == 1) {
+        if ($this->status != self::STATUS_WAIT_CONFIRM || ((int)Yii::$app->jdf->jdate("m", $this->start_date)) == 1) {
             return false;
         }
         if (self::find()->byPrevious($this->workshop_id, $this->start_date)->limit(1)->one() === null) {
@@ -445,8 +445,8 @@ class SalaryPeriodBase extends \yii\db\ActiveRecord
     {
         $this->setStartDate();
         $this->setEndDate();
-        $this->title = Yii::$app->jdate->date("F", $this->start_date);
-        $this->start_date = Yii::$app->jdate->date("Y/m", $this->start_date);
+        $this->title = Yii::$app->jdf->jdate("F", $this->start_date);
+        $this->start_date = Yii::$app->jdf->jdate("Y/m", $this->start_date);
     }
 
 
@@ -463,8 +463,8 @@ class SalaryPeriodBase extends \yii\db\ActiveRecord
     public function setEndDate()
     {
         $start_date = strtotime(Jdf::Convert_jalali_to_gregorian($this->start_date));
-        $year = Yii::$app->jdate->date("Y", $start_date);
-        $month = Yii::$app->jdate->date("m", $start_date);
+        $year = Yii::$app->jdf->jdate("Y", $start_date);
+        $month = Yii::$app->jdf->jdate("m", $start_date);
         $this->end_date = $year . '/' . $month . '/' . Jdf::lastDayInMonth($year, (int)$month);
     }
 
@@ -513,7 +513,7 @@ class SalaryPeriodBase extends \yii\db\ActiveRecord
 
     public function getCountDay()
     {
-        return Jdf::lastDayInMonth(Yii::$app->jdate->date("Y", $this->start_date), (int)Yii::$app->jdate->date("m", $this->start_date));
+        return Jdf::lastDayInMonth(Yii::$app->jdf->jdate("Y", $this->start_date), (int)Yii::$app->jdf->jdate("m", $this->start_date));
     }
 
     /**
@@ -526,8 +526,8 @@ class SalaryPeriodBase extends \yii\db\ActiveRecord
         if (($previousModel = self::find()->byPrevious($this->workshop_id, $this->start_date)->limit(1)->one()) !== null) {
             foreach ($previousModel->getSalaryPeriodItems()
                          ->joinWith(['employee'])
-                         ->andWhere(['>=', 'JSON_EXTRACT(' . EmployeeBranchUser::tableName() . '.`additional_data`, "$.end_work")', Yii::$app->jdate->date("Y/m/d", $previousModel->start_date)])
-                         ->andWhere(['=', 'JSON_EXTRACT(' . EmployeeBranchUser::tableName() . '.`additional_data`, "$.end_work")', Yii::$app->jdate->date("Y/m/d", $previousModel->end_date)])
+                         ->andWhere(['>=', 'JSON_EXTRACT(' . EmployeeBranchUser::tableName() . '.`additional_data`, "$.end_work")', Yii::$app->jdf->jdate("Y/m/d", $previousModel->start_date)])
+                         ->andWhere(['=', 'JSON_EXTRACT(' . EmployeeBranchUser::tableName() . '.`additional_data`, "$.end_work")', Yii::$app->jdf->jdate("Y/m/d", $previousModel->end_date)])
                          ->andWhere(['NOT IN', SalaryPeriodItems::tableName() . '.user_id', $this->getSalaryPeriodItems()->select(['user_id'])])->all() as $employeeLost) {
                 /** @var SalaryPeriodItems $employeeLost */
                 $model = new SalaryPeriodItems([
@@ -592,6 +592,6 @@ class SalaryPeriodBase extends \yii\db\ActiveRecord
 
     public function getRangeDate()
     {
-        return Yii::$app->jdate->date('Y/m/d', $this->start_date) . " - " . Yii::$app->jdate->date('Y/m/d', $this->end_date);
+        return Yii::$app->jdf->jdate('Y/m/d', $this->start_date) . " - " . Yii::$app->jdf->jdate('Y/m/d', $this->end_date);
     }
 }

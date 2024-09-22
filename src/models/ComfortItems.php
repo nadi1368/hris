@@ -200,7 +200,7 @@ class ComfortItems extends \yii\db\ActiveRecord implements SendAutoCommentInterf
                 $nextTimestamp = strtotime("+$requestAgainLimit days", $lastComfortItem?->created);
 
                 if ($lastComfortItem && time() < $nextTimestamp) {
-                    $nextDate = Yii::$app->jdate->date('Y/m/d', $nextTimestamp);
+                    $nextDate = Yii::$app->jdf->jdate('Y/m/d', $nextTimestamp);
                     $this->addError($attribute, "شما تا تاریخ $nextDate امکان ثبت این درخواست ندارید.");
                 }
             }

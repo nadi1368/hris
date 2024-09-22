@@ -185,7 +185,7 @@ class SalaryPeriodController extends Controller
             $salaryPeriod = new SalaryPeriod([
                 'scenario' => SalaryPeriod::SCENARIO_CREATE_REWARD,
                 'workshop_id' => $model->id,
-                'title' => 'عیدی و پاداش ' . Yii::$app->jdate->date("Y", $startAndEndOfCurrentYear['start']),
+                'title' => 'عیدی و پاداش ' . Yii::$app->jdf->jdate("Y", $startAndEndOfCurrentYear['start']),
                 'kind' => SalaryPeriod::KIND_REWARD,
                 'start_date' => $startAndEndOfCurrentYear['start'],
                 'end_date' => $startAndEndOfCurrentYear['end'],

@@ -94,14 +94,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'attribute' => 'start_date',
                     'value' => function ($model) {
-                        return Yii::$app->jdate->date("Y/m/d", $model->start_date);
+                        return Yii::$app->jdf->jdate("Y/m/d", $model->start_date);
                     },
                     'format' => 'raw'
                 ],
                 [
                     'attribute' => 'end_date',
                     'value' => function ($model) {
-                        return Yii::$app->jdate->date("Y/m/d", $model->end_date);
+                        return Yii::$app->jdf->jdate("Y/m/d", $model->end_date);
                     },
                     'format' => 'raw'
                 ],

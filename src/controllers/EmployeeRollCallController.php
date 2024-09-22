@@ -107,7 +107,7 @@ class EmployeeRollCallController extends Controller
      */
     public function actionUploadCsvDaily()
     {
-        $uploadForm = new UploadExcel(['scenario' => UploadExcel::SCENARIO_UPLOAD_RollCall_DAILY, 'type' => UploadExcel::TYPE_ROLL_CALL_DAILY, 'date' => Jdf::plusDay(Yii::$app->jdate->date("Y/m/d"), -1)]);
+        $uploadForm = new UploadExcel(['scenario' => UploadExcel::SCENARIO_UPLOAD_RollCall_DAILY, 'type' => UploadExcel::TYPE_ROLL_CALL_DAILY, 'date' => Jdf::plusDay(Yii::$app->jdf->jdate("Y/m/d"), -1)]);
         if ($uploadForm->load(Yii::$app->request->post())) {
             $transaction = \Yii::$app->db->beginTransaction();
             try {
@@ -289,8 +289,8 @@ class EmployeeRollCallController extends Controller
                     $row++;
                     if ($data[0] < $oldRollCallId) {
                         if ($employee !== null) {
-                            $flag = $flag && $employee->saveLowTime(Yii::$app->jdate->date("Y/m/d", $salaryPeriod->start_date), $lowTime, $salaryPeriod->id);
-                            $flag = $flag && $employee->saveOverTime(Yii::$app->jdate->date("Y/m/d", $salaryPeriod->start_date), $overTime, $salaryPeriod->id);
+                            $flag = $flag && $employee->saveLowTime(Yii::$app->jdf->jdate("Y/m/d", $salaryPeriod->start_date), $lowTime, $salaryPeriod->id);
+                            $flag = $flag && $employee->saveOverTime(Yii::$app->jdf->jdate("Y/m/d", $salaryPeriod->start_date), $overTime, $salaryPeriod->id);
                         }
                         $lowTime = 0;
                         $overTime = 0;
@@ -303,7 +303,7 @@ class EmployeeRollCallController extends Controller
                             'user_id' => $employee->user_id,
                             'employee' => $employee,
                             't_id' => $rollCallId,
-                            'date' => $data[0] > 9 ? Yii::$app->jdate->date("Y/m/$data[0]", $salaryPeriod->start_date) : Yii::$app->jdate->date("Y/m/0$data[0]", $salaryPeriod->start_date),
+                            'date' => $data[0] > 9 ? Yii::$app->jdf->jdate("Y/m/$data[0]", $salaryPeriod->start_date) : Yii::$app->jdf->jdate("Y/m/0$data[0]", $salaryPeriod->start_date),
                             'status' => $data[2],
                             'total' => \Yii::$app->phpNewVer->strReplace('#', '', $data[3]),
                             'shift' => \Yii::$app->phpNewVer->strReplace('#', '', $data[4]),
@@ -333,8 +333,8 @@ class EmployeeRollCallController extends Controller
                 fclose($handle);
             }
             if ($employee !== null) {
-                $flag = $flag && $employee->saveLowTime(Yii::$app->jdate->date("Y/m/d", $salaryPeriod->start_date), $lowTime, $salaryPeriod->id);
-                $flag = $flag && $employee->saveOverTime(Yii::$app->jdate->date("Y/m/d", $salaryPeriod->start_date), $overTime, $salaryPeriod->id);
+                $flag = $flag && $employee->saveLowTime(Yii::$app->jdf->jdate("Y/m/d", $salaryPeriod->start_date), $lowTime, $salaryPeriod->id);
+                $flag = $flag && $employee->saveOverTime(Yii::$app->jdf->jdate("Y/m/d", $salaryPeriod->start_date), $overTime, $salaryPeriod->id);
             }
             $salaryPeriod->setRollCall = Helper::YES;
             $flag = $flag && $salaryPeriod->save(false);

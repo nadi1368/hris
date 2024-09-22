@@ -493,7 +493,7 @@ class SalaryPeriodItemsController extends Controller
     {
         $model = $this->findModelPeriod($id);
         $model->setScenario(SalaryPeriod::SCENARIO_PAYMENT);
-        $model->payment_date = Yii::$app->jdate->date("Y/m/d");
+        $model->payment_date = Yii::$app->jdf->jdate("Y/m/d");
         if (!$model->canPayment()) {
             $this->flash('danger', Yii::t("app", "It is not possible to perform this operation"));
             return $this->redirect(['index', 'id' => $id]);
@@ -669,7 +669,7 @@ class SalaryPeriodItemsController extends Controller
                 ],
             ],
         ]);
-        return $exporter->send($model->title . ' - ' . Yii::$app->jdate->date("Y", $model->start_date) . '.xls');
+        return $exporter->send($model->title . ' - ' . Yii::$app->jdf->jdate("Y", $model->start_date) . '.xls');
     }
 
 
@@ -751,7 +751,7 @@ class SalaryPeriodItemsController extends Controller
                                 'user_id' => $employee->user_id,
                             ]);
                             $model->loadDefaultValuesBeforeCopy();
-                            if ($model->hours_of_work > 0 && (empty($employee->end_work) || $employee->end_work > Yii::$app->jdate->date("Y/m/d", $period->start_date))) {
+                            if ($model->hours_of_work > 0 && (empty($employee->end_work) || $employee->end_work > Yii::$app->jdf->jdate("Y/m/d", $period->start_date))) {
                                 if ($model->save()) {
                                     $countCopy++;
                                 } else {
@@ -807,7 +807,7 @@ class SalaryPeriodItemsController extends Controller
                             '',
                             $item->finalPayment,
                             $employeeUser->user->fullName,
-                            "پرداختی حقوق " . $model->title . ' - ' . Yii::$app->jdate->date("Y/m/d", $model->start_date),
+                            "پرداختی حقوق " . $model->title . ' - ' . Yii::$app->jdf->jdate("Y/m/d", $model->start_date),
                         ];
                         $totalBalance += $item->finalPayment;
                         $totalCount++;
@@ -819,11 +819,11 @@ class SalaryPeriodItemsController extends Controller
             }
         }
 
-        $fileId = Yii::$app->jdate->date("ymd") . '00' . $model->file_number;
+        $fileId = Yii::$app->jdf->jdate("ymd") . '00' . $model->file_number;
         $fileName = 'IR' . $model->shaba . $fileId . '.txt';
         $rows[0] = [
             'IR' . $model->shaba,
-            Yii::$app->jdate->date("Ymd"),
+            Yii::$app->jdf->jdate("Ymd"),
             $fileId,
             $totalCount,
             $totalBalance,
@@ -870,7 +870,7 @@ class SalaryPeriodItemsController extends Controller
                             '',
                             $item->finalPayment,
                             $employeeUser->user->fullName,
-                            "پرداختی حقوق " . $model->title . ' - ' . Yii::$app->jdate->date("Y/m/d", $model->start_date),
+                            "پرداختی حقوق " . $model->title . ' - ' . Yii::$app->jdf->jdate("Y/m/d", $model->start_date),
                         ];
                         $totalBalance += $item->finalPayment;
                         $totalCount++;
@@ -898,7 +898,7 @@ class SalaryPeriodItemsController extends Controller
                                     '',
                                     $item->finalPayment,
                                     $employeeUser->user->fullName,
-                                    "پرداختی حقوق " . $anotherPeriodModel->title . ' - ' . Yii::$app->jdate->date("Y/m/d", $anotherPeriodModel->start_date),
+                                    "پرداختی حقوق " . $anotherPeriodModel->title . ' - ' . Yii::$app->jdf->jdate("Y/m/d", $anotherPeriodModel->start_date),
                                 ];
                                 $totalBalance += $item->finalPayment;
                                 $totalCount++;
@@ -909,11 +909,11 @@ class SalaryPeriodItemsController extends Controller
                     }
                 }
             }
-            $fileId = Yii::$app->jdate->date("ymd") . '00' . $model->file_number;
+            $fileId = Yii::$app->jdf->jdate("ymd") . '00' . $model->file_number;
             $fileName = 'IR' . $model->shaba . $fileId . '.txt';
             $rows[0] = [
                 'IR' . $model->shaba,
-                Yii::$app->jdate->date("Ymd"),
+                Yii::$app->jdf->jdate("Ymd"),
                 $fileId,
                 $totalCount,
                 $totalBalance,
@@ -959,8 +959,8 @@ class SalaryPeriodItemsController extends Controller
                 'DSK_FARM' => $model->workshop->manager, // نام کارفرما
                 'DSK_ADRS' => $model->workshop->address, // آدرس
                 'DSK_KIND' => $model->DSK_KIND, // نوع لیست form
-                'DSK_YY' => Yii::$app->jdate->date("y", $model->start_date),  // سال
-                'DSK_MM' => Yii::$app->jdate->date("m", $model->start_date),  // ماه
+                'DSK_YY' => Yii::$app->jdf->jdate("y", $model->start_date),  // سال
+                'DSK_MM' => Yii::$app->jdf->jdate("m", $model->start_date),  // ماه
                 'DSK_LISTNO' => $model->DSK_LISTNO, // شماره لیست form
                 'DSK_DISC' => $model->DSK_DISC, // شرح لیست form
                 'DSK_NUM' => $model->DSK_NUM, // تعداد کارکنان
@@ -1000,8 +1000,8 @@ class SalaryPeriodItemsController extends Controller
                 }
                 $rows[] = [
                     'DSW_ID' => $model->workshop->code,  // کد کارگاه
-                    'DSW_YY' => Yii::$app->jdate->date("y", $model->start_date),  // سال
-                    'DSW_MM' => Yii::$app->jdate->date("m", $model->start_date),  // ماه
+                    'DSW_YY' => Yii::$app->jdf->jdate("y", $model->start_date),  // سال
+                    'DSW_MM' => Yii::$app->jdf->jdate("m", $model->start_date),  // ماه
                     'DSW_LISTNO' => $model->id,  // شماره لیست
                     'DSW_ID1' => $employee->insurance_code,  // شماره بیمه
                     'DSW_FNAME' => $employee->first_name,  // نام
@@ -1028,7 +1028,7 @@ class SalaryPeriodItemsController extends Controller
                     'PER_NATCOD' => $employee->nationalCode,  // کد ملی
                 ];
             }
-            $fileId = Yii::$app->jdate->date("ymd") . '00' . $model->file_number;
+            $fileId = Yii::$app->jdf->jdate("ymd") . '00' . $model->file_number;
             $fileName = 'IR' . $model->shaba . $fileId . '.txt';
             MGLogs::saveManual(SalaryPeriod::class, $model->id, $rows);
             return [
@@ -1071,8 +1071,8 @@ class SalaryPeriodItemsController extends Controller
                 'DSK_FARM' => $model->workshop->manager, // نام کارفرما
                 'DSK_ADRS' => $model->workshop->address, // آدرس
                 'DSK_KIND' => $model->DSK_KIND, // نوع لیست form
-                'DSK_YY' => Yii::$app->jdate->date("y", strtotime("+1 DAY", $model->end_date)),  // سال
-                'DSK_MM' => Yii::$app->jdate->date("m", strtotime("+1 DAY", $model->end_date)),  // ماه
+                'DSK_YY' => Yii::$app->jdf->jdate("y", strtotime("+1 DAY", $model->end_date)),  // سال
+                'DSK_MM' => Yii::$app->jdf->jdate("m", strtotime("+1 DAY", $model->end_date)),  // ماه
                 'DSK_LISTNO' => $model->DSK_LISTNO, // شماره لیست form
                 'DSK_DISC' => $model->DSK_DISC, // شرح لیست form
                 'DSK_NUM' => $model->DSK_NUM, // تعداد کارکنان
@@ -1115,8 +1115,8 @@ class SalaryPeriodItemsController extends Controller
                 }
                 $rows[] = [
                     'DSW_ID' => $model->workshop->code,  // کد کارگاه
-                    'DSW_YY' => Yii::$app->jdate->date("y", strtotime("+1 DAY", $model->end_date)),  // سال
-                    'DSW_MM' => Yii::$app->jdate->date("m", strtotime("+1 DAY", $model->end_date)),  // ماه
+                    'DSW_YY' => Yii::$app->jdf->jdate("y", strtotime("+1 DAY", $model->end_date)),  // سال
+                    'DSW_MM' => Yii::$app->jdf->jdate("m", strtotime("+1 DAY", $model->end_date)),  // ماه
                     'DSW_LISTNO' => $model->id,  // شماره لیست
                     'DSW_ID1' => $employee->insurance_code,  // شماره بیمه
                     'DSW_FNAME' => $employee->first_name,  // نام
@@ -1130,7 +1130,7 @@ class SalaryPeriodItemsController extends Controller
                     'DSW_NAT' => $employee->national,  // ملیت
                     'DSW_OCP' => $employee->salaryInsurance->group,  // شرح شفل
                     'DSW_SDATE' => \Yii::$app->phpNewVer->strReplace('/', '', $employee->start_work),  // شروع کار
-                    'DSW_EDATE' => \Yii::$app->phpNewVer->strReplace('/', '', Jdf::plusDay(Yii::$app->jdate->date("Y/m/d", $model->end_date), 1)),  // ترک کار
+                    'DSW_EDATE' => \Yii::$app->phpNewVer->strReplace('/', '', Jdf::plusDay(Yii::$app->jdf->jdate("Y/m/d", $model->end_date), 1)),  // ترک کار
                     'DSW_DD' => 0,  // نعداد روز کارکرد
                     'DSW_ROOZ' => 0,  // دستمزد روزانه
                     'DSW_MAH' => 0,  // دستمزد ماهانه
@@ -1143,7 +1143,7 @@ class SalaryPeriodItemsController extends Controller
                     'PER_NATCOD' => $employee->nationalCode,  // کد ملی
                 ];
             }
-            $fileId = Yii::$app->jdate->date("ymd") . '00' . $model->file_number;
+            $fileId = Yii::$app->jdf->jdate("ymd") . '00' . $model->file_number;
             $fileName = 'IR' . $model->shaba . $fileId . '.txt';
             return [
                 'success' => true,
@@ -1234,8 +1234,8 @@ class SalaryPeriodItemsController extends Controller
             }
         }
         $rows_header = [
-            Yii::$app->jdate->date("Y", $model->end_date), // سال
-            Yii::$app->jdate->date("m", $model->end_date), // ماه
+            Yii::$app->jdf->jdate("Y", $model->end_date), // سال
+            Yii::$app->jdf->jdate("m", $model->end_date), // ماه
             0, // دهی مالیاتی ماه جاری
             0, //  بدهی مالیاتی ماه گذشته
             str_replace('/', '', $model->end_date), // تاریخ ثبت در دفتر روزنامه
@@ -1249,8 +1249,8 @@ class SalaryPeriodItemsController extends Controller
             '', // تاریخ پرداخت
             '', // مبلغ پرداختی خزانه
         ];
-        $fileName = 'WH' . Yii::$app->jdate->date("Ym", $model->end_date) . '.txt';
-        $fileNameHeader = 'WK' . Yii::$app->jdate->date("Ym", $model->end_date) . '.txt';
+        $fileName = 'WH' . Yii::$app->jdf->jdate("Ym", $model->end_date) . '.txt';
+        $fileNameHeader = 'WK' . Yii::$app->jdf->jdate("Ym", $model->end_date) . '.txt';
         MGLogs::saveManual(SalaryPeriod::class, $model->id, $rows);
         return $this->renderAjax('_excel-tax-send-to-native', [
             'model' => $model,
@@ -1271,8 +1271,8 @@ class SalaryPeriodItemsController extends Controller
             $rows = [];
 
             $variable = [
-                'ListMonth' => Yii::$app->jdate->date("m", $model->start_date),  // ماه
-                'ListYear' => Yii::$app->jdate->date("y", $model->start_date),  // سال
+                'ListMonth' => Yii::$app->jdf->jdate("m", $model->start_date),  // ماه
+                'ListYear' => Yii::$app->jdf->jdate("y", $model->start_date),  // سال
                 'ListNumber' => $model->DSK_LISTNO, // شماره لیست form
                 'RadifPeyman' => $model->workshop->row, // ردیف پیمان
                 'WorkshopNumber' => $model->workshop->code,  // کد کارگاه
@@ -1304,8 +1304,8 @@ class SalaryPeriodItemsController extends Controller
                 $rows[] = [
                     'Radif' => $index + 1,
                     'DSW_ID' => $model->workshop->code,  // کد کارگاه
-                    'DSW_YY' => Yii::$app->jdate->date("y", $model->start_date),  // سال
-                    'DSW_MM' => Yii::$app->jdate->date("m", $model->start_date),  // ماه
+                    'DSW_YY' => Yii::$app->jdf->jdate("y", $model->start_date),  // سال
+                    'DSW_MM' => Yii::$app->jdf->jdate("m", $model->start_date),  // ماه
                     'DSW_LISTNO' => $model->id,  // شماره لیست
                     'DSW_ID1' => $employee->insurance_code,  // شماره بیمه
                     'DSW_FNAME' => $employee->first_name,  // نام
@@ -1430,7 +1430,7 @@ class SalaryPeriodItemsController extends Controller
                         'cartNumber' => $employeeUser->shaba_non_cash,
                         'accountNumber' => $employeeUser->account_non_cash,
                         'amount' => $item->non_cash_commission,
-                        'description' => "مزایای غیر نقدی " . $model->title . ' - ' . Yii::$app->jdate->date("Y/m/d", $model->start_date)
+                        'description' => "مزایای غیر نقدی " . $model->title . ' - ' . Yii::$app->jdf->jdate("Y/m/d", $model->start_date)
                     ];
                     $totalBalance += $item->non_cash_commission;
                     $totalCount++;
@@ -1467,7 +1467,7 @@ class SalaryPeriodItemsController extends Controller
                             'cartNumber' => $employeeUser->shaba_non_cash,
                             'accountNumber' => $employeeUser->account_non_cash,
                             'amount' => $item->non_cash_commission,
-                            'description' => "مزایای غیر نقدی " . $anotherPeriodModel->title . ' - ' . Yii::$app->jdate->date("Y/m/d", $anotherPeriodModel->start_date)
+                            'description' => "مزایای غیر نقدی " . $anotherPeriodModel->title . ' - ' . Yii::$app->jdf->jdate("Y/m/d", $anotherPeriodModel->start_date)
                         ];
                         $totalBalance += $item->non_cash_commission;
                         $totalCount++;
@@ -1543,7 +1543,7 @@ class SalaryPeriodItemsController extends Controller
                 ],
             ]);
 
-            return $spreadsheet->send('ExcelNoneCash_' . Yii::$app->client->identity->domain . '_' . Yii::$app->jdate->date("Y/m/d", $model->start_date) . '.xlsx');
+            return $spreadsheet->send('ExcelNoneCash_' . Yii::$app->client->identity->domain . '_' . Yii::$app->jdf->jdate("Y/m/d", $model->start_date) . '.xlsx');
         }
         $this->performAjaxValidation($model);
         return $this->renderAjax('_form-bank-none-cash', [

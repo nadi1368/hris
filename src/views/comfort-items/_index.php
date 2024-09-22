@@ -73,7 +73,7 @@ use yii\helpers\Url;
                 [
                     'attribute' => 'created',
                     'value' => function ($model) {
-                        return '<span title="بروز رسانی شده در ' . Yii::$app->jdate->date("Y/m/d  H:i", $model->changed) . '">' . Yii::$app->jdate->date("Y/m/d  H:i", $model->created) . '</span>';
+                        return '<span title="بروز رسانی شده در ' . Yii::$app->jdf->jdate("Y/m/d  H:i", $model->changed) . '">' . Yii::$app->jdf->jdate("Y/m/d  H:i", $model->created) . '</span>';
                     },
                     'format' => 'raw'
                 ],

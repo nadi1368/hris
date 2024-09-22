@@ -36,7 +36,7 @@ $this->title = '  فیش حقوقی دوره ' . $model->period->getTitleWithYea
                 <td colspan="1">شماره کارمندی</td>
                 <td colspan='1'><?= $model->employee->nationalCode ?></td>
                 <td colspan='1'>تاریخ صدور</td>
-                <td colspan='1'><?= Yii::$app->jdate->date('Y/m/d') ?></td>
+                <td colspan='1'><?= Yii::$app->jdf->jdate('Y/m/d') ?></td>
                 <td colspan='1'>شماره شبا</td>
                 <td colspan='3'><?= $model->employee->shaba ?></td>
             </tr>

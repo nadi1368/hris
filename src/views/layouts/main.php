@@ -131,15 +131,15 @@ MainAssets::register($this);
 	</body>
 	</html>
 <?php
-$today_date = Yii::$app->jdate->date('Y/m/d');
+$today_date = Yii::$app->jdf->jdate('Y/m/d');
 
 $startAndEndOfCurrentMonth = Jdf::getStartAndEndOfCurrentMonth();
-$first_month = Yii::$app->jdate->date('Y/m/d', $startAndEndOfCurrentMonth[0]);
-$last_month = Yii::$app->jdate->date('Y/m/d', $startAndEndOfCurrentMonth[1]);
+$first_month = Yii::$app->jdf->jdate('Y/m/d', $startAndEndOfCurrentMonth[0]);
+$last_month = Yii::$app->jdf->jdate('Y/m/d', $startAndEndOfCurrentMonth[1]);
 
 $startAndEndOfPreMonth = Jdf::getStartAndEndOfPreMonth();
-$pre_first_month = Yii::$app->jdate->date('Y/m/d', $startAndEndOfPreMonth[0]);
-$pre_last_month = Yii::$app->jdate->date('Y/m/d', $startAndEndOfPreMonth[1]);
+$pre_first_month = Yii::$app->jdf->jdate('Y/m/d', $startAndEndOfPreMonth[0]);
+$pre_last_month = Yii::$app->jdf->jdate('Y/m/d', $startAndEndOfPreMonth[1]);
 
 $main_domain = YII_DEBUG ? "http://localhost/crm/managerCrm/" : Settings::get("web_site_domain");
 $script_doday_value = <<< JS

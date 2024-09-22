@@ -2,17 +2,12 @@
 
 namespace hesabro\hris\models;
 
-use backend\models\BalanceDaily;
 use backend\models\User;
-use common\behaviors\JsonAdditional;
-use common\behaviors\LogBehavior;
-use common\behaviors\TraceBehavior;
-use common\components\jdf\Jdf;
-use common\models\BalanceDetailed;
-use common\models\Settings;
-use common\models\UserPoints;
+use hesabro\helpers\behaviors\JsonAdditional;
+use hesabro\changelog\behaviors\LogBehavior;
+use hesabro\errorlog\behaviors\TraceBehavior;
+use hesabro\helpers\components\Jdf;
 use common\models\Year;
-use console\job\SmsArrayJob;
 use Yii;
 
 /**
@@ -183,12 +178,13 @@ class SalaryPeriodItemsBase extends \yii\db\ActiveRecord
     public function validateUserPoint($attribute, $params)
     {
         if (!$this->hasErrors() && $this->count_point > 0) {
-            $countAllow = UserPoints::countRequestPayment($this->user_id);
+            $countAllow = $this->getUserPoint($this->user_id);
             if ($this->count_point > $countAllow) {
                 $this->addError($attribute, 'تعداد امتیاز مجاز برای برگشت وجه ' . $countAllow . ' می باشد');
             }
         }
     }
+
 
     /**
      * @param $attribute
@@ -316,7 +312,7 @@ class SalaryPeriodItemsBase extends \yii\db\ActiveRecord
     public function getYear()
     {
         if ($this->yearModel === null) {
-            return Year::find()->byDate(Yii::$app->jdate->date("Y/m/d", $this->period->start_date))->one();
+            return Year::find()->byDate(Yii::$app->jdf->jdate("Y/m/d", $this->period->start_date))->one();
         }
         return $this->yearModel;
     }
@@ -404,18 +400,8 @@ class SalaryPeriodItemsBase extends \yii\db\ActiveRecord
                 return $query->sum('insurance');
         }
     }
-
-    /**
-     * @return int
-     * @throws \yii\web\NotFoundHttpException
-     * مانده مساعده تا امروز
-     */
-    public function getAdvanceMoneyUntilThisMonth()
-    {
-        return (int)BalanceDaily::getBalanceDaily(Settings::get('m_debtor_advance_money'), $this->user->customer->oneAccount->id, Yii::$app->jdate->date("Y/m/d", $this->period->end_date));
-    }
-
-
+    
+    
     public function getHoursOfOvertimeCost()
     {
         $basic_salary_hours = (float)$this->basic_salary / 7.33;
@@ -538,7 +524,7 @@ class SalaryPeriodItemsBase extends \yii\db\ActiveRecord
         }
         $this->setSalaryItemsAddition();
         $this->cost_of_children = $this->count_of_children * $this->year->COST_OF_CHILDREN;
-        $this->count_point = UserPoints::countRequestPayment($this->user_id);
+        $this->count_point = $this->getUserPoint($this->user_id);
         $this->cost_point = $this->count_point * $this->year->COST_USER_POINTS;
         $this->setCostOfFood();
         $this->setCostOfHouse();
@@ -687,7 +673,7 @@ class SalaryPeriodItemsBase extends \yii\db\ActiveRecord
 //        }
 
         if ($this->employee->end_work) {
-            $this->advance_money = BalanceDetailed::getBalance(Settings::get('m_debtor_advance_money'), $this->employee->account_id);
+            $this->advance_money = $this->getAdvanceMoney($this->employee->account_id);
         } else {
             $this->advance_money = 0;
         }
@@ -805,34 +791,7 @@ class SalaryPeriodItemsBase extends \yii\db\ActiveRecord
         return (int)SalaryPeriodItems::find()->andWhere(['user_id' => $this->user_id])->sum('payment_salary');
     }
 
-    public function sendSmsPayment()
-    {
-        $total_salary = number_format((float)($this->payment_salary - $this->advance_money));
-
-        $message = "<آوا پرداز>";
-        $message .= "\n\r";
-        $message .= $this->user->fullName . ' عزیز';
-        $message .= "\n\r";
-        $message .= "مبلغ {$total_salary} ریال بابت حقوق {$this->period->title}  به حساب شما واریز گردید.";
-        if ($this->count_point > 0) {
-            $cost_point = number_format((float)$this->cost_point);
-            $message .= "\n\r";
-            $message .= "مبلغ {$cost_point} ریال ({$this->count_point}امتیاز) بابت امتیازات شما می باشد.";
-        }
-        if ($this->advance_money > 0) {
-            $advance_money = number_format((float)$this->advance_money);
-            $message .= "\n\r";
-            $message .= "مبلغ {$advance_money} ریال بابت مساعده کسر گردید.";
-        }
-        $message .= "\n\r";
-
-        Yii::$app->avaQueue->push(new SmsArrayJob([
-            'receptors' => $this->user->username,
-            'messages' => $message,
-            'model_class' => self::class,
-            'model_id' => $this->getPrimaryKey() ?? null
-        ]));
-    }
+    
 
     /**
      * @param string $action
@@ -880,7 +839,7 @@ class SalaryPeriodItemsBase extends \yii\db\ActiveRecord
             $this->detailAddition['holiday_of_overtime'][] = $item->title;
             $this->holiday_of_overtime += $item->convertValueToHour;
         }
-        if ($this->period->year->CALCULATE_EMPLOYEE_DAY && Yii::$app->jdate->date("m", $this->period->start_date) == '02') {
+        if ($this->period->year->CALCULATE_EMPLOYEE_DAY && Yii::$app->jdf->jdate("m", $this->period->start_date) == '02') {
             //ماه اردیبهشت . روز کارمند - محاسبه تعطیا کاری
             $this->detailAddition['holiday_of_overtime'][] = "مزد تعطیل کاری روز کارمند";
             $this->holiday_of_overtime += 7.33;
@@ -934,7 +893,7 @@ class SalaryPeriodItemsBase extends \yii\db\ActiveRecord
 //            $this->commission += $item->amount;
 //        }
 
-        if (Yii::$app->jdate->date("Y/m/d", $this->period->end_date) > '1403/03/31') {
+        if (Yii::$app->jdf->jdate("Y/m/d", $this->period->end_date) > '1403/03/31') {
             /** مزایای غیر نقدی */
             $this->detailAddition['non_cash_commission'] = [];
             $this->non_cash_commission = 0;

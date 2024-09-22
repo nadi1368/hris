@@ -122,15 +122,15 @@ class UserContractsSearch extends UserContracts
 
 		if ($this->contract_status) {
 			if ($this->contract_status == self::STATUS_EXPIRED_CONTRACT) {
-				$query->andWhere(['<=', 'end_date', Yii::$app->jdate->date('Y/m/d')]);
+				$query->andWhere(['<=', 'end_date', Yii::$app->jdf->jdate('Y/m/d')]);
 			}
 			if ($this->contract_status == self::STATUS_EXPIRING_1_MONTH) {
-				$query->andWhere(['>=', 'end_date', Yii::$app->jdate->date('Y/m/d')]);
-				$query->andWhere(['<=', 'end_date', Yii::$app->jdate->date('Y/m/d', strtotime('+1 month'))]);
+				$query->andWhere(['>=', 'end_date', Yii::$app->jdf->jdate('Y/m/d')]);
+				$query->andWhere(['<=', 'end_date', Yii::$app->jdf->jdate('Y/m/d', strtotime('+1 month'))]);
 			}
 			if ($this->contract_status == self::STATUS_EXPIRING_1_WEEK) {
-				$query->andWhere(['>=', 'end_date', Yii::$app->jdate->date('Y/m/d')]);
-				$query->andWhere(['<=', 'end_date', Yii::$app->jdate->date('Y/m/d', strtotime('+1 week'))]);
+				$query->andWhere(['>=', 'end_date', Yii::$app->jdf->jdate('Y/m/d')]);
+				$query->andWhere(['<=', 'end_date', Yii::$app->jdf->jdate('Y/m/d', strtotime('+1 week'))]);
 			}
 		}
 

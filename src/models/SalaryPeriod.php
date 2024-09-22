@@ -40,8 +40,8 @@ class SalaryPeriod extends SalaryPeriodBase
         $document->type = Document::TYPE_SALARY_PERIOD;
         $document->is_auto = 1;
         $document->model_id = $this->id;
-        $document->h_date = Yii::$app->jdate->date("Y/m/d", $this->end_date);
-        $document->des = "شناسایی حقوق " . $this->title . ' - ' . Yii::$app->jdate->date("Y/m/d", $this->start_date);
+        $document->h_date = Yii::$app->jdf->jdate("Y/m/d", $this->end_date);
+        $document->des = "شناسایی حقوق " . $this->title . ' - ' . Yii::$app->jdf->jdate("Y/m/d", $this->start_date);
         $flag = $document->save();
 
         /****************** بدهکار ******************/
@@ -70,8 +70,8 @@ class SalaryPeriod extends SalaryPeriodBase
         $document->type = Document::TYPE_SALARY_PERIOD;
         $document->is_auto = 1;
         $document->model_id = $this->id;
-        $document->h_date = Yii::$app->jdate->date("Y/m/d", $this->end_date);
-        $document->des = "شناسایی حقوق " . $this->title . ' - ' . Yii::$app->jdate->date("Y/m/d", $this->start_date);
+        $document->h_date = Yii::$app->jdf->jdate("Y/m/d", $this->end_date);
+        $document->des = "شناسایی حقوق " . $this->title . ' - ' . Yii::$app->jdf->jdate("Y/m/d", $this->start_date);
         $flag = $document->save();
 
         /****************** بدهکار ******************/
@@ -110,7 +110,7 @@ class SalaryPeriod extends SalaryPeriodBase
         $document->type = Document::TYPE_YEAR_PERIOD_CLEARING;
         $document->is_auto = 1;
         $document->model_id = $this->id;
-        $document->h_date = Yii::$app->jdate->date("Y/m/d", $this->end_date);
+        $document->h_date = Yii::$app->jdf->jdate("Y/m/d", $this->end_date);
         $document->des = $this->title;
         $flag = $document->save();
 
@@ -140,7 +140,7 @@ class SalaryPeriod extends SalaryPeriodBase
         $document->type = Document::TYPE_YEAR_PERIOD;
         $document->is_auto = 1;
         $document->model_id = $this->id;
-        $document->h_date = Yii::$app->jdate->date("Y/m/d", $this->end_date);
+        $document->h_date = Yii::$app->jdf->jdate("Y/m/d", $this->end_date);
         $document->des = $this->title;
         $flag = $document->save();
 
@@ -167,8 +167,8 @@ class SalaryPeriod extends SalaryPeriodBase
             $document->type = Document::TYPE_SALARY_PERIOD_ADVANCE_MONEY;
             $document->is_auto = 1;
             $document->model_id = $this->id;
-            $document->h_date = Yii::$app->jdate->date("Y/m/d", $this->end_date);
-            $document->des = "کسر مساعده حقوق " . $this->title . ' - ' . Yii::$app->jdate->date("Y/m/d", $this->start_date);
+            $document->h_date = Yii::$app->jdf->jdate("Y/m/d", $this->end_date);
+            $document->des = "کسر مساعده حقوق " . $this->title . ' - ' . Yii::$app->jdf->jdate("Y/m/d", $this->start_date);
             $flag = $document->save();
 
             foreach ($this->getSalaryPeriodItems()->andWhere('advance_money>0')->all() as $item) {
@@ -204,8 +204,8 @@ class SalaryPeriod extends SalaryPeriodBase
             $document->type = Document::TYPE_SALARY_PERIOD_NON_CASH_PAYMENT;
             $document->is_auto = 1;
             $document->model_id = $this->id;
-            $document->h_date = Yii::$app->jdate->date("Y/m/d", $this->end_date);
-            $document->des = "مزایای غیر نقدی حقوق " . $this->title . ' - ' . Yii::$app->jdate->date("Y/m/d", $this->start_date);
+            $document->h_date = Yii::$app->jdf->jdate("Y/m/d", $this->end_date);
+            $document->des = "مزایای غیر نقدی حقوق " . $this->title . ' - ' . Yii::$app->jdf->jdate("Y/m/d", $this->start_date);
             $flag = $document->save();
 
             foreach ($this->getSalaryPeriodItems()->andWhere('non_cash_commission>0')->all() as $item) {
@@ -234,8 +234,8 @@ class SalaryPeriod extends SalaryPeriodBase
             $document->type = Document::TYPE_SALARY_INSURANCE_ADDITION;
             $document->is_auto = 1;
             $document->model_id = $this->id;
-            $document->h_date = Yii::$app->jdate->date("Y/m/d", $this->end_date);
-            $document->des = "بیمه تکمیلی حقوق " . $this->title . ' - ' . Yii::$app->jdate->date("Y/m/d", $this->start_date);
+            $document->h_date = Yii::$app->jdf->jdate("Y/m/d", $this->end_date);
+            $document->des = "بیمه تکمیلی حقوق " . $this->title . ' - ' . Yii::$app->jdf->jdate("Y/m/d", $this->start_date);
             $flag = $document->save();
 
             foreach ($this->getSalaryPeriodItems()->andWhere('insurance_addition>0')->all() as $item) {
@@ -262,8 +262,8 @@ class SalaryPeriod extends SalaryPeriodBase
             $document->type = Document::TYPE_SALARY_PERIOD_ADVANCE_MONEY;
             $document->is_auto = 1;
             $document->model_id = $this->id;
-            $document->h_date = Yii::$app->jdate->date("Y/m/d", $this->end_date);
-            $document->des = "کسر مساعده حقوق " . $this->title . ' - ' . Yii::$app->jdate->date("Y/m/d", $this->start_date);
+            $document->h_date = Yii::$app->jdf->jdate("Y/m/d", $this->end_date);
+            $document->des = "کسر مساعده حقوق " . $this->title . ' - ' . Yii::$app->jdf->jdate("Y/m/d", $this->start_date);
             $flag = $document->save();
 
             foreach ($this->getSalaryPeriodItems()->andWhere('advance_money>0')->all() as $item) {
@@ -290,7 +290,7 @@ class SalaryPeriod extends SalaryPeriodBase
         $document->is_auto = 1;
         $document->model_id = $this->id;
         $document->h_date = $this->payment_date;
-        $document->des = "پرداختی حقوق " . $this->title . ' - ' . Yii::$app->jdate->date("Y/m/d", $this->start_date);
+        $document->des = "پرداختی حقوق " . $this->title . ' - ' . Yii::$app->jdf->jdate("Y/m/d", $this->start_date);
         $flag = $document->save();
         $totalAmount = 0;
         foreach ($this->getSalaryPeriodItems()->all() as $item) {
@@ -319,7 +319,7 @@ class SalaryPeriod extends SalaryPeriodBase
         $document->is_auto = 1;
         $document->model_id = $this->id;
         $document->h_date = $this->payment_date;
-        $document->des = "پرداختی حقوق " . $this->title . ' - ' . Yii::$app->jdate->date("Y/m/d", $this->start_date);
+        $document->des = "پرداختی حقوق " . $this->title . ' - ' . Yii::$app->jdf->jdate("Y/m/d", $this->start_date);
         $flag = $document->save();
         $totalAmount = 0;
         foreach ($this->getSalaryPeriodItems()->all() as $item) {
@@ -348,7 +348,7 @@ class SalaryPeriod extends SalaryPeriodBase
         $document->is_auto = 1;
         $document->model_id = $this->id;
         $document->h_date = $this->payment_date;
-        $document->des = "پرداختی حقوق " . $this->title . ' - ' . Yii::$app->jdate->date("Y/m/d", $this->start_date);
+        $document->des = "پرداختی حقوق " . $this->title . ' - ' . Yii::$app->jdf->jdate("Y/m/d", $this->start_date);
         $flag = $document->save();
         $totalAmount = 0;
         foreach ($this->getSalaryPeriodItems()->all() as $item) {
