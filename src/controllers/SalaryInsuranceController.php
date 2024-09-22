@@ -2,7 +2,6 @@
 
 namespace hesabro\hris\controllers;
 
-use common\models\Settings;
 use hesabro\helpers\traits\AjaxValidationTrait;
 use Exception;
 use Yii;
@@ -21,7 +20,6 @@ use yii\web\Response;
 class SalaryInsuranceController extends Controller
 {
     use AjaxValidationTrait;
-    public int $categorySetting = Settings::CAT_EMPLOYEE;
     /**
      * {@inheritdoc}
      */
@@ -102,8 +100,7 @@ class SalaryInsuranceController extends Controller
                 $transaction->rollBack();
                 Yii::error($e->getMessage() . $e->getTraceAsString(),  __METHOD__ . ':' . __LINE__);
             }
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return $result;
+            return $this->asJson($result);
         }
         $this->performAjaxValidation($model);
         return $this->renderAjax('_form', [
@@ -144,8 +141,7 @@ class SalaryInsuranceController extends Controller
                 $transaction->rollBack();
                 Yii::error($e->getMessage() . $e->getTraceAsString(),  __METHOD__ . ':' . __LINE__);
             }
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return $result;
+            return $this->asJson($result);
         }
         $this->performAjaxValidation($model);
         return $this->renderAjax('_form', [
@@ -175,8 +171,7 @@ class SalaryInsuranceController extends Controller
                 'message' => Yii::t("app", "Error In Save Info")
             ];
         }
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return $result;
+        return $this->asJson($result);
     }
 
     /**

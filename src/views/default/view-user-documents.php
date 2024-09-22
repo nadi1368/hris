@@ -1,17 +1,14 @@
 <?php
 
-
-/* @var $this View */
-/* @var $model EmployeeBranchUser */
-/* @var $userUploadModel UserUpload */
-
-/* @var $list UserUpload[] */
-
-
 use hesabro\hris\models\EmployeeBranchUser;
 use common\models\UserUpload;
 use yii\web\View;
 use yii\widgets\Pjax;
+
+/* @var $this View */
+/* @var $model EmployeeBranchUser */
+/* @var $userUploadModel UserUpload */
+/* @var $list UserUpload[] */
 
 $this->title = $model->user->fullName;
 $this->params['breadcrumbs'][] = $this->title;

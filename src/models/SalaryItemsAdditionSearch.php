@@ -4,9 +4,10 @@ namespace hesabro\hris\models;
 
 use backend\models\AuthAssignment;
 use backend\models\User;
-use Carbon\Carbon;
-use common\components\jdf\Jdf;
-use common\validators\DateValidator;
+use hesabro\hris\Module;
+use hesabro\hris\traits\ModuleTrait;
+use hesabro\helpers\components\Jdf;
+use hesabro\helpers\validators\DateValidator;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -15,9 +16,13 @@ use yii\db\Query;
 
 /**
  * SalaryItemsAdditionSearch represents the model behind the search form of `hesabro\hris\models\SalaryItemsAddition`.
+ *
+ *
+ * @property-read Module $module
  */
 class SalaryItemsAdditionSearch extends SalaryItemsAddition
 {
+    use ModuleTrait;
     /**
      * {@inheritdoc}
      */
@@ -232,7 +237,7 @@ class SalaryItemsAdditionSearch extends SalaryItemsAddition
         $employees = User::find()
             ->select(['id', 'username', 'first_name', 'last_name'])
             ->joinWith('authAssignment')
-            ->andWhere([AuthAssignment::tableName() . '.item_name' => 'employee'])
+            ->andWhere([AuthAssignment::tableName() . '.item_name' => $this->module->employeeRole])
             ->all();
 
         $kindHourly = SalaryItemsAddition::KIND_LEAVE_HOURLY;
@@ -269,7 +274,7 @@ class SalaryItemsAdditionSearch extends SalaryItemsAddition
 
         $filterTimestamp = $from;
         do {
-            [$y, $m] = explode('/', Yii::$app->Pdate->jdate('Y/m', $filterTimestamp, tr_num: 'en'));
+            [$y, $m] = explode('/', Yii::$app->jdf->jdate('Y/m', $filterTimestamp, tr_num: 'en'));
             $key = (int) ($y.$m);
             $chartData[$key] = ["$y/$m"];
 
@@ -281,7 +286,7 @@ class SalaryItemsAdditionSearch extends SalaryItemsAddition
                 $chartData[$key][$userId] = (float) ($userData ? $userData->total : 0);
             }
 
-            $filterTimestamp = Jdf::jalaliToTimestamp(Yii::$app->Pdate->add_month($filterTimestamp), 'Y/m/d');
+            $filterTimestamp = Jdf::jalaliToTimestamp(Yii::$app->jdf->add_month($filterTimestamp), 'Y/m/d');
         } while ($filterTimestamp < $to);
 
         return array_values(array_map(fn(array $data) => array_values($data), $chartData));

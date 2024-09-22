@@ -3,9 +3,9 @@
 namespace hesabro\hris\models;
 
 use backend\models\User;
-use common\behaviors\LogBehavior;
-use common\behaviors\TraceBehavior;
-use common\components\jdf\Jdf;
+use hesabro\changelog\behaviors\LogBehavior;
+use hesabro\errorlog\behaviors\TraceBehavior;
+use hesabro\helpers\components\Jdf;
 use Yii;
 
 /**

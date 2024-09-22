@@ -1,14 +1,11 @@
 <?php
-
-
-
-/* @var $this \yii\web\View */
-/* @var $model EmployeeBranchUser */
-
 use hesabro\hris\models\EmployeeBranchUser;
 use yii\bootstrap4\Nav;
 
-
+/* @var $this yii\web\View */
+/* @var $model EmployeeBranchUser */
+?>
+<?php
 Nav::begin([
 	'options' => [
 		'id' => 'employee-branch-user-view-user-nav',

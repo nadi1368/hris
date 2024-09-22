@@ -4,8 +4,6 @@ namespace hesabro\hris\controllers;
 
 use hesabro\hris\models\EmployeeBranch;
 use hesabro\hris\models\EmployeeBranchUser;
-use common\models\Settings;
-use common\models\UserUpload;
 use hesabro\helpers\traits\AjaxValidationTrait;
 use Yii;
 use yii\filters\AccessControl;
@@ -19,7 +17,6 @@ use yii\web\NotFoundHttpException;
 class SiteController extends Controller
 {
     use AjaxValidationTrait;
-    public int $categorySetting = Settings::CAT_EMPLOYEE;
     /**
      * {@inheritdoc}
      */
@@ -89,17 +86,6 @@ class SiteController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-	/**
-	 * @throws NotFoundHttpException
-	 */
-	protected function findModelUserUpload($id)
-	{
-		if (($model = UserUpload::findOne($id)) !== null) {
-			return $model;
-		}
-
-		throw new NotFoundHttpException(Yii::t("app", "The requested page does not exist."));
-	}
 
     public function flash($type, $message)
     {

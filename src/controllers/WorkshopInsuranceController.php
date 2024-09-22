@@ -2,7 +2,6 @@
 
 namespace hesabro\hris\controllers;
 
-use common\models\Settings;
 use hesabro\helpers\traits\AjaxValidationTrait;
 use Yii;
 use hesabro\hris\models\WorkshopInsurance;
@@ -20,7 +19,6 @@ use yii\web\Response;
 class WorkshopInsuranceController extends Controller
 {
     use AjaxValidationTrait;
-    public int $categorySetting = Settings::CAT_EMPLOYEE;
     /**
      * {@inheritdoc}
      */

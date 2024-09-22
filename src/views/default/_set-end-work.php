@@ -1,8 +1,5 @@
 <?php
 
-use hesabro\hris\models\EmployeeBranchUser;
-use hesabro\hris\models\SalaryInsurance;
-use common\models\CustomerForm;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 use yii\widgets\MaskedInput;

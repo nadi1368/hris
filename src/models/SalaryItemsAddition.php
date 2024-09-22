@@ -2,13 +2,12 @@
 
 namespace hesabro\hris\models;
 
-use common\behaviors\LogBehavior;
-use common\behaviors\TraceBehavior;
-use common\components\Helper;
-use common\components\jdf\Jdf;
-use common\models\Settings;
-use common\traits\CoreTrait;
-use common\validators\DateValidator;
+use hesabro\changelog\behaviors\LogBehavior;
+use hesabro\errorlog\behaviors\TraceBehavior;
+use hesabro\helpers\components\Helper;
+use hesabro\helpers\components\Jdf;
+use hesabro\helpers\traits\CoreTrait;
+use hesabro\helpers\validators\DateValidator;
 use Yii;
 use backend\models\User;
 

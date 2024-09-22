@@ -1,7 +1,7 @@
 <?php
 
 use hesabro\hris\models\EmployeeBranchUser;
-use common\components\Helper;
+use hesabro\helpers\components\Helper;
 use common\widgets\grid\GridView;
 use yii\bootstrap4\ButtonDropdown;
 use yii\helpers\Html;

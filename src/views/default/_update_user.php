@@ -67,7 +67,7 @@ use yii\widgets\MaskedInput;
                 <?= $form->field($model, 'roll_call_id') ?>
             </div>
             <div class='col-md-3'>
-                <?= $form->field($model, 'account_id')->dropdownList(ArrayHelper::map($model->user->customer->account,'id', 'fullName'), ['prompt' => Yii::t('app', 'Select...')]) ?>
+                <?= $form->field($model, 'account_id')->dropdownList(ArrayHelper::map($model->user->customer->account,'id', 'fullName'), ['prompt' => Yii::t('app', 'Select...')]) // TODO: What To Do ?>
             </div>
             <div class="col-md-12">
                 <?= $form->field($model, "delete_point")->checkbox() ?>

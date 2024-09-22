@@ -30,7 +30,6 @@ use yii\web\Response;
 class YearPeriodItemsController extends Controller
 {
     use AjaxValidationTrait;
-    public int $categorySetting = Settings::CAT_EMPLOYEE;
 
     /**
      * {@inheritdoc}

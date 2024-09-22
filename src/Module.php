@@ -11,6 +11,8 @@ class Module extends BaseModule
 
     public string | null $settings = null;
 
+    public string $employeeRole = 'employee';
+
     public array $modelMap = [];
 
     public function init(): void

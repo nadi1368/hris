@@ -2,16 +2,12 @@
 
 
 use hesabro\hris\models\EmployeeBranchUser;
-use common\models\UserUpload;
 use yii\helpers\Url;
 use yii\web\View;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 
 /* @var $this View */
-/* @var $model EmployeeBranchUser */
-
-/* @var $this yii\web\View */
 /* @var $model EmployeeBranchUser */
 ?>
 <?php Pjax::begin(['id' => 'view-user-info-pjax']) ?>

@@ -2,7 +2,7 @@
 
 use hesabro\hris\models\EmployeeBranch;
 use hesabro\hris\models\EmployeeBranchUser;
-use common\components\Helper;
+use hesabro\helpers\components\Helper;
 use common\models\User;
 use kartik\select2\Select2;
 use yii\bootstrap4\ActiveForm;

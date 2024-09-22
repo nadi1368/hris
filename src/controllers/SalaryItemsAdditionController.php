@@ -5,7 +5,7 @@ namespace hesabro\hris\controllers;
 use backend\models\RejectForm;
 use backend\models\UploadExcelSearch;
 use hesabro\hris\models\EmployeeBranchUser;
-use common\components\jdf\Jdf;
+use hesabro\helpers\components\Jdf;
 use common\models\UploadExcel;
 use hesabro\helpers\traits\AjaxValidationTrait;
 use Yii;
@@ -211,8 +211,7 @@ class SalaryItemsAdditionController extends Controller
                 $transaction->rollBack();
                 Yii::error($e->getMessage() . $e->getTraceAsString(), Yii::$app->controller->id . '/' . Yii::$app->controller->action->id);
             }
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return $result;
+            return $this->asJson($result);
         }
         $this->performAjaxValidation($model);
         switch ($model->kind) {
@@ -267,8 +266,7 @@ class SalaryItemsAdditionController extends Controller
                 'message' => Yii::t("app", "Error In Save Info")
             ];
         }
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return $result;
+        return $this->asJson($result);
     }
 
     /**
@@ -299,7 +297,7 @@ class SalaryItemsAdditionController extends Controller
         } else {
             $response['msg'] = Yii::t('app', 'It is not possible to perform this operation');
         }
-        return json_encode($response);
+        return $this->asJson($response);
     }
 
     /**
@@ -330,7 +328,7 @@ class SalaryItemsAdditionController extends Controller
         } else {
             $response['msg'] = Yii::t('app', 'It is not possible to perform this operation');
         }
-        return json_encode($response);
+        return $this->asJson($response);
     }
 
     /**
@@ -407,15 +405,14 @@ class SalaryItemsAdditionController extends Controller
                         'msg' => $e->getMessage()
                     ];
                 }
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                return $result;
+
+                return $this->asJson($result);
             }
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
 
         $this->performAjaxValidation($form);
-
         return $this->renderAjax('_form_reject', [
             'model' => $form,
         ]);

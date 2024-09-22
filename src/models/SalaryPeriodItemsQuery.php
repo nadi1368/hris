@@ -60,7 +60,10 @@ class SalaryPeriodItemsQuery extends \yii\db\ActiveQuery
             ->andWhere([BalanceDetailed::tableName() . '.definite_id' => Settings::get('m_debtor_advance_money')])
             ->andWhere(BalanceDetailed::tableName() . '.balance>0')
             ->andWhere(BalanceDetailed::tableName().'.`balance` <> '.SalaryPeriodItems::tableName().'.`advance_money`');
+
+        // TODO: What To Do
     }
+
     public function untilYear($endTime)
     {
         return $this->joinWith(['period'])
