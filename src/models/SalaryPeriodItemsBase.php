@@ -1049,18 +1049,18 @@ class SalaryPeriodItemsBase extends \yii\db\ActiveRecord
         return [
             [
                 'class' => TraceBehavior::class,
-                'ownerClassName' => self::class
+                'ownerClassName' => SalaryPeriodItems::class
             ],
             [
                 'class' => LogBehavior::class,
-                'ownerClassName' => self::class,
+                'ownerClassName' => SalaryPeriodItems::class,
                 'saveAfterInsert' => true,
                 'savePostDataAfterInsert' => true,
                 'savePostDataAfterUpdate' => true,
             ],
             [
                 'class' => JsonAdditional::class,
-                'ownerClassName' => self::class,
+                'ownerClassName' => SalaryPeriodItems::class,
                 'fieldAdditional' => 'additional_data',
                 'AdditionalDataProperty' => [
                     'count_point' => 'Integer',
