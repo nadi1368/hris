@@ -3,8 +3,8 @@
 namespace hesabro\hris\controllers;
 
 use hesabro\hris\models\WorkshopInsurance;
-use common\components\jdf\Jdf;
-use common\models\Settings;
+use hesabro\helpers\components\Jdf;
+use hesabro\hris\Module;
 use common\models\Year;
 use hesabro\helpers\traits\AjaxValidationTrait;
 use Yii;
@@ -24,8 +24,6 @@ use yii\web\Response;
 class SalaryPeriodController extends Controller
 {
     use AjaxValidationTrait;
-
-    public int $categorySetting = Settings::CAT_EMPLOYEE;
 
     /**
      * {@inheritdoc}
@@ -92,7 +90,6 @@ class SalaryPeriodController extends Controller
 
         $model->loadDefaultValuesBeforeCreate();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
             $transaction = Yii::$app->db->beginTransaction();
             try {
                 $model->setEndDate();
@@ -118,7 +115,7 @@ class SalaryPeriodController extends Controller
                     'msg' => $e->getMessage(),
                 ];
             }
-            return $result;
+            return $this->asJson($result);
         }
         $this->performAjaxValidation($model);
         return $this->renderAjax('_form', [
@@ -137,7 +134,6 @@ class SalaryPeriodController extends Controller
         $model = $this->findModel($id);
         $model->setScenario(SalaryPeriod::SCENARIO_UPDATE);
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
             $transaction = Yii::$app->db->beginTransaction();
             try {
                 $flag = $model->save(false);
@@ -162,7 +158,7 @@ class SalaryPeriodController extends Controller
                     'msg' => $e->getMessage(),
                 ];
             }
-            return $result;
+            return $this->asJson($result);
         }
         $this->performAjaxValidation($model);
         return $this->renderAjax('_form', [
@@ -285,8 +281,7 @@ class SalaryPeriodController extends Controller
             Yii::error($e->getMessage() . $e->getTraceAsString(), Yii::$app->controller->id . '/' . Yii::$app->controller->action->id);
         }
         if (Yii::$app->request->isAjax) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return $result;
+            return $this->asJson($result);
         } else {
             $this->flash($result['status'] ? 'success' : 'danger', $result['message']);
             return $this->redirect(['index']);

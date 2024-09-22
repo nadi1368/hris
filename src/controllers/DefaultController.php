@@ -4,6 +4,7 @@ namespace hesabro\hris\controllers;
 
 use backend\models\User;
 use backend\models\YearSearch;
+use hesabro\hris\Module;
 use hesabro\hris\models\EmployeeBranch;
 use hesabro\hris\models\EmployeeBranchSearch;
 use hesabro\hris\models\EmployeeBranchUser;
@@ -12,11 +13,7 @@ use hesabro\hris\models\EmployeeChild;
 use hesabro\hris\models\EmployeeExperience;
 use hesabro\hris\models\EmployeeHistory;
 use hesabro\hris\models\SalaryPeriodItems;
-use common\components\jdf\Jdf;
-use common\models\Account;
 use common\models\Model;
-use common\models\Settings;
-use common\models\UserUpload;
 use common\models\Year;
 use hesabro\helpers\traits\AjaxValidationTrait;
 use Yii;
@@ -35,8 +32,6 @@ use yii\web\UploadedFile;
 class DefaultController extends Controller
 {
     use AjaxValidationTrait;
-
-    public int $categorySetting = Settings::CAT_EMPLOYEE;
 
     /**
      * {@inheritdoc}
@@ -136,84 +131,6 @@ class DefaultController extends Controller
         }
     }
 
-
-//	/**
-//	 * @param $branch_id
-//	 * @param $user_id
-//	 *
-//	 * @return Response|string
-//	 * get bach and user and find branch user and render view
-//	 */
-//	public function actionViewUserDocuments($branch_id, $user_id)
-//	{
-//		$model = $this->findModelUser($branch_id, $user_id);
-//
-//		$userUploadModel = new UserUpload([
-//			'scenario' => UserUpload::SCENARIO_CREATE,
-//			'user_id' => $model->user_id
-//		]);
-//
-//		$uploadList = UserUpload::find()->byUser($model->user_id)->orderBy(['id' => SORT_DESC])->all();
-//
-//		if ($userUploadModel->load(Yii::$app->request->post()) && $userUploadModel->validate()) {
-//			$transaction = Yii::$app->db->beginTransaction();
-//			try {
-////                $model->setConfirm();
-//				if (($userUploadModel->save(false))) {
-//					$transaction->commit();
-//					$this->flash('success', 'آپلود با موفقیت انجام شد.');
-//					return $this->redirect(['view-user-documents', 'branch_id' => $model->branch_id, 'user_id' => $model->user_id]);
-//				} else {
-//					$transaction->rollBack();
-//					$this->flash('error', 'خطا در ثبت اطلاعات.');
-//					Yii::error('Flag is false', 'user-upload/index');
-//				}
-//			} catch (\Exception $e) {
-//				$transaction->rollBack();
-//				$this->flash('error', $e->getMessage());
-//				Yii::error($e->getMessage() . $e->getTraceAsString(), 'user-upload/index-Exception');
-//			}
-//		}
-//
-//		return $this->render('view-user-documents', [
-//			'model' => $model,
-//			'list' => $uploadList,
-//			'userUploadModel' => $userUploadModel,
-//		]);
-//	}
-//
-//	public function actionConfirmDocument($id)
-//	{
-//		$response = ['success' => false, 'data' => '', 'msg' => Yii::t('app', 'Error In Save Info')];
-//		$model = $this->findModelUserUpload($id);
-//		$model->setScenario(UserUpload::SCENARIO_CONFIRM);
-//
-//		if (!$model->canConfirm()) {
-//			throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
-//		}
-//
-//		$model->setConfirm();
-//		if ($model->save()) {
-//			$response['success'] = true;
-//			$response['msg'] = Yii::t("app", "Item Confirmed");
-//		}
-//
-//		return json_encode($response);
-//	}
-//
-//	public function actionDeleteDocument($id)
-//	{
-//		$response = ['success' => false, 'data' => '', 'msg' => Yii::t('app', 'Error In Delete Item')];
-//		$model = $this->findModelUserUpload($id);
-//
-//		if ($model->softDelete()) {
-//			$response['success'] = true;
-//			$response['msg'] = Yii::t("app", "Item Deleted");
-//		}
-//
-//		return json_encode($response);
-//	}
-
     /**
      * Displays a single EmployeeBranch model.
      * @param integer $id
@@ -250,7 +167,7 @@ class DefaultController extends Controller
                     $this->flash("warning", Yii::t("app", "Error In Save Info"));
                 }
             } catch (\Exception $e) {
-                Yii::error($e->getMessage() . $e->getTraceAsString(), __METHOD__ . ':' . __LINE__);
+                Yii::error($e->getMessage() . $e->getTraceAsString(), Yii::$app->controller->id.'/'.Yii::$app->controller->action->id);
                 $transaction->rollBack();
                 $this->flash('warning', $e->getMessage());
             }
@@ -293,7 +210,7 @@ class DefaultController extends Controller
                     $this->flash("warning", Yii::t("app", "Error In Save Info"));
                 }
             } catch (\Exception $e) {
-                Yii::error($e->getMessage() . $e->getTraceAsString(), __METHOD__ . ':' . __LINE__);
+                Yii::error($e->getMessage() . $e->getTraceAsString(), Yii::$app->controller->id.'/'.Yii::$app->controller->action->id);
                 $transaction->rollBack();
                 $this->flash('warning', $e->getMessage());
             }
@@ -315,11 +232,10 @@ class DefaultController extends Controller
         $model = $this->findModelUser($user_id);
         $model->setScenario(EmployeeBranchUser::SCENARIO_UPDATE);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return [
+            return $this->asJson([
                 'success' => true,
                 'msg' => Yii::t('app', 'Item Updated')
-            ];
+            ]);
         }
 
         $this->performAjaxValidation($model);
@@ -376,11 +292,10 @@ class DefaultController extends Controller
             }
 
             if ($updateProfile) {
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                return [
+                return $this->asJson([
                     'success' => true,
                     'msg' => Yii::t('app', 'Item Updated')
-                ];
+                ]);
             }
         }
 
@@ -416,11 +331,10 @@ class DefaultController extends Controller
             $rejected = $model->save(false);
         }
 
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return [
+        return $this->asJson([
             'success' => $rejected,
             'msg' => Yii::t('app', $rejected ? 'Item Rejected' : 'Can Not Update')
-        ];
+        ]);
     }
 
 
@@ -449,7 +363,7 @@ class DefaultController extends Controller
                 if (SalaryPeriodItems::find()
                         ->andWhere(['user_id' => $model->user_id])
                         ->bySalary()
-                        ->untilYear(strtotime(Jdf::Convert_jalali_to_gregorian($model->end_work)))->limit(1)->one() !== null) {
+                        ->untilYear(strtotime(Yii::$app->jdf::Convert_jalali_to_gregorian($model->end_work)))->limit(1)->one() !== null) {
                     $flag = $flag && $model->saveDocumentEndWork();
                 }
 
@@ -465,10 +379,9 @@ class DefaultController extends Controller
             } catch (\Exception $e) {
                 $transaction->rollBack();
                 $result['msg'] = $e->getMessage();
-                Yii::error($e->getMessage() . $e->getTraceAsString(), 'Employee/Default/SetEndWork');
+                Yii::error($e->getMessage() . $e->getTraceAsString(), Yii::$app->controller->id.'/'.Yii::$app->controller->action->id);
             }
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return $result;
+            return $this->asJson($result);
         }
 
         $this->performAjaxValidation($model);
@@ -519,8 +432,7 @@ class DefaultController extends Controller
                 'message' => Yii::t("app", "It is not possible to perform this operation")
             ];
         }
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return $result;
+        return $this->asJson($result);
     }
 
     /**
@@ -576,8 +488,7 @@ class DefaultController extends Controller
                 'message' => Yii::t("app", "It is not possible to perform this operation")
             ];
         }
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return $result;
+        return $this->asJson($result);
     }
 
     /**
@@ -644,8 +555,7 @@ class DefaultController extends Controller
                 $transaction->rollBack();
                 Yii::error($e->getMessage() . $e->getTraceAsString(), __METHOD__ . ':' . __LINE__);
             }
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return $result;
+            return $this->asJson($result);
         }
         $this->performAjaxValidation($model);
         return $this->renderAjax('_update-salary', [

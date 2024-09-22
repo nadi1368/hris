@@ -12,13 +12,9 @@ use hesabro\hris\models\SalaryPeriodItems;
 use hesabro\hris\models\SalaryPeriodItemsSearch;
 use hesabro\hris\models\TaxModel;
 use common\components\CsvExport;
-use common\components\Helper;
-use common\components\jdf\Jdf;
-use common\models\Document;
-use common\models\DocumentDetails;
-use common\models\mongo\MGLogs;
+use hesabro\helpers\components\Jdf;
+use hesabro\changelog\models\MGLogs;
 use common\models\Mutex;
-use common\models\Settings;
 use hesabro\helpers\traits\AjaxValidationTrait;
 use moonland\phpexcel\Excel;
 use Yii;
@@ -43,8 +39,6 @@ use yii\web\Response;
 class SalaryPeriodItemsController extends Controller
 {
     use AjaxValidationTrait;
-
-    public int $categorySetting = Settings::CAT_EMPLOYEE;
 
     /**
      * {@inheritdoc}
@@ -408,7 +402,7 @@ class SalaryPeriodItemsController extends Controller
             try {
                 $model->status = SalaryPeriod::STATUS_CONFIRM;
                 $flag = $model->save(false);
-                $flag = $flag && $model->saveMutex(Mutex::SalaryPeriodConfirm, $model->id);
+                $flag = $flag && $model->saveMutex(SalaryPeriod::MutexSalaryPeriodConfirm, $model->id);
                 if ($model->getSalaryPeriodItems()->exists()) {
                     $flag = $flag && $model->saveDocumentConfirm();
                     $flag = $flag && $model->saveDocumentAdvanceMoney();
@@ -451,11 +445,11 @@ class SalaryPeriodItemsController extends Controller
             try {
                 $model->status = SalaryPeriod::STATUS_WAIT_CONFIRM;
                 $flag = $model->save(false);
-                $flag = $flag && $model->deleteMutex(Mutex::SalaryPeriodConfirm, $model->id);
-                $flag = $flag && $model->deleteDocument(Document::TYPE_SALARY_PERIOD);
-                $flag = $flag && $model->deleteDocument(Document::TYPE_SALARY_PERIOD_ADVANCE_MONEY);
-                $flag = $flag && $model->deleteDocument(Document::TYPE_SALARY_PERIOD_NON_CASH_PAYMENT);
-                $flag = $flag && $model->deleteDocument(Document::TYPE_SALARY_INSURANCE_ADDITION);
+                $flag = $flag && $model->deleteMutex(SalaryPeriod::MutexSalaryPeriodConfirm, $model->id);
+                $flag = $flag && $model->deleteDocument(SalaryPeriod::DOCUMENT_TYPE_SALARY_PERIOD);
+                $flag = $flag && $model->deleteDocument(SalaryPeriod::DOCUMENT_TYPE_SALARY_PERIOD_ADVANCE_MONEY);
+                $flag = $flag && $model->deleteDocument(SalaryPeriod::DOCUMENT_TYPE_SALARY_PERIOD_NON_CASH_PAYMENT);
+                $flag = $flag && $model->deleteDocument(SalaryPeriod::DOCUMENT_TYPE_SALARY_INSURANCE_ADDITION);
                 $flag = $flag && $model->deleteDecreasePoint();
                 if ($flag) {
                     $transaction->commit();
@@ -509,7 +503,7 @@ class SalaryPeriodItemsController extends Controller
             try {
                 $model->status = SalaryPeriod::STATUS_PAYMENT;
                 $flag = $model->save(false);
-                $flag = $flag && $model->saveMutex(Mutex::SalaryPeriodPayment, $model->id);
+                $flag = $flag && $model->saveMutex(SalaryPeriod::MutexSalaryPeriodPayment, $model->id);
                 if ($model->getSalaryPeriodItems()->exists()) {
                     $flag = $flag && $model->saveDocumentPayment();
                 }
@@ -562,8 +556,8 @@ class SalaryPeriodItemsController extends Controller
             try {
                 $model->status = SalaryPeriod::STATUS_CONFIRM;
                 $flag = $model->save(false);
-                $flag = $flag && $model->deleteMutex(Mutex::SalaryPeriodPayment, $model->id);
-                $flag = $flag && $model->deleteDocument(Document::TYPE_SALARY_PERIOD_PAYMENT);
+                $flag = $flag && $model->deleteMutex(SalaryPeriod::MutexSalaryPeriodPayment, $model->id);
+                $flag = $flag && $model->deleteDocument(SalaryPeriod::DOCUMENT_TYPE_SALARY_PERIOD_PAYMENT);
                 if ($flag) {
                     $transaction->commit();
                     $result = [
@@ -579,7 +573,7 @@ class SalaryPeriodItemsController extends Controller
                 }
             } catch (\Exception $e) {
                 $transaction->rollBack();
-                Yii::error($e->getMessage() . $e->getTraceAsString(), __METHOD__ . ':' . __LINE__);
+                Yii::error($e->getMessage() . $e->getTraceAsString(), Yii::$app->controller->id . '/' . Yii::$app->controller->action->id);
                 $result = [
                     'status' => false,
                     'message' => $e->getMessage()
@@ -804,21 +798,18 @@ class SalaryPeriodItemsController extends Controller
         $rows[0] = [];
         $totalCount = 0;
         $totalBalance = 0;;
-        $document = Document::find()->findByModel($model->id)->findByType(Document::TYPE_SALARY_PERIOD_PAYMENT)->one();
-        foreach ($document->getDocumentDetails()->all() as $index => $item) {
-            /** @var DocumentDetails $item */
-            if ($item->debtor > 0) {
-                if (($employeeUser = EmployeeBranchUser::find()->andWhere(['user_id' => $item->account->aCustomer->user->id])->one()) !== null) {
-                    $salary_item = $model->getSalaryPeriodItems()->andWhere(['user_id' => $item->account->aCustomer->user->id, 'can_payment' => Helper::CHECKED])->limit(1)->one();
-                    if ($salary_item !== null) {
+        foreach ($model->salaryPeriodItems as $index => $item) {
+            if ($item->finalPayment > 0) {
+                if (($employeeUser = $item->employee) !== null) {
+                    if ($item->can_payment !== null) {
                         $rows[$index + 1] = [
                             'IR' . $employeeUser->shaba,
                             '',
-                            $item->debtor,
+                            $item->finalPayment,
                             $employeeUser->user->fullName,
                             "پرداختی حقوق " . $model->title . ' - ' . Yii::$app->jdate->date("Y/m/d", $model->start_date),
                         ];
-                        $totalBalance += $item->debtor;
+                        $totalBalance += $item->finalPayment;
                         $totalCount++;
                     }
                 } else {
@@ -863,33 +854,28 @@ class SalaryPeriodItemsController extends Controller
             $totalBalance = 0;
 
             $index = 1;
-            $document = Document::find()->findByModel($model->id)->findByType(Document::TYPE_SALARY_PERIOD_PAYMENT)->one();
-            foreach ($document->getDocumentDetails()->all() as $item) {
-                /** @var DocumentDetails $item */
-                if ($item->debtor > 0) {
-                    if (($employeeUser = EmployeeBranchUser::find()->andWhere(['user_id' => $item->account->aCustomer->user->id])->one()) !== null) {
-                        $salary_item = $model->getSalaryPeriodItems()->andWhere(['user_id' => $item->account->aCustomer->user->id, 'can_payment' => Helper::CHECKED])->limit(1)->one();
-                        if ($salary_item !== null) {
-                            if (!$employeeUser->canPaymentSalary()) {
-                                throw new HttpException(400, $employeeUser->error_msg);
-                            }
-                            if (in_array($employeeUser->shaba, $IBANList)) {
-                                throw new HttpException(400, $employeeUser->user->fullName . ' : شماره شبا این کارمند تکراری است');
-                            }
-                            $IBANList[] = $employeeUser->shaba;
-
-                            $rows[$index++] = [
-                                'IR' . $employeeUser->shaba,
-                                '',
-                                $item->debtor,
-                                $employeeUser->user->fullName,
-                                "پرداختی حقوق " . $model->title . ' - ' . Yii::$app->jdate->date("Y/m/d", $model->start_date),
-                            ];
-                            $totalBalance += $item->debtor;
-                            $totalCount++;
+            foreach ($model->salaryPeriodItems as $index => $item) {
+                if ($item->finalPayment > 0) {
+                    if (($employeeUser = $item->employee) !== null) {
+                        if (!$employeeUser->canPaymentSalary()) {
+                            throw new HttpException(400, $employeeUser->error_msg);
                         }
+                        if (in_array($employeeUser->shaba, $IBANList)) {
+                            throw new HttpException(400, $employeeUser->user->fullName . ' : شماره شبا این کارمند تکراری است');
+                        }
+                        $IBANList[] = $employeeUser->shaba;
+
+                        $rows[$index++] = [
+                            'IR' . $employeeUser->shaba,
+                            '',
+                            $item->finalPayment,
+                            $employeeUser->user->fullName,
+                            "پرداختی حقوق " . $model->title . ' - ' . Yii::$app->jdate->date("Y/m/d", $model->start_date),
+                        ];
+                        $totalBalance += $item->finalPayment;
+                        $totalCount++;
                     } else {
-                        throw new HttpException(400, $item->account->aCustomer->fullName . ' در مشخصات کارمندی ثبت نشده است.');
+                        throw new HttpException(400, $item->user->fullName . ' در مشخصات کارمندی ثبت نشده است.');
                     }
 
                 }
@@ -897,13 +883,9 @@ class SalaryPeriodItemsController extends Controller
 
             foreach (is_array($model->another_period) ? $model->another_period : [] as $anotherPeriodId) {
                 $anotherPeriodModel = $this->findModelPeriod($anotherPeriodId);
-                $document = Document::find()->findByModel($anotherPeriodModel->id)->findByType(Document::TYPE_SALARY_PERIOD_PAYMENT)->one();
-                foreach ($document->getDocumentDetails()->all() as $item) {
-                    /** @var DocumentDetails $item */
-                    if ($item->debtor > 0) {
-                        if (($employeeUser = EmployeeBranchUser::find()->andWhere(['user_id' => $item->account->aCustomer->user->id])->one()) !== null) {
-                            $salary_item = $anotherPeriodModel->getSalaryPeriodItems()->andWhere(['user_id' => $item->account->aCustomer->user->id, 'can_payment' => Helper::CHECKED])->limit(1)->one();
-                            if ($salary_item !== null) {
+                foreach ($anotherPeriodModel->salaryPeriodItems as $index => $item) {
+                    if ($item->finalPayment > 0) {
+                        if (($employeeUser = $item->employee) !== null) {
                                 if (!$employeeUser->canPaymentSalary()) {
                                     throw new HttpException(400, $employeeUser->error_msg);
                                 }
@@ -914,15 +896,14 @@ class SalaryPeriodItemsController extends Controller
                                 $rows[$index++] = [
                                     'IR' . $employeeUser->shaba,
                                     '',
-                                    $item->debtor,
+                                    $item->finalPayment,
                                     $employeeUser->user->fullName,
                                     "پرداختی حقوق " . $anotherPeriodModel->title . ' - ' . Yii::$app->jdate->date("Y/m/d", $anotherPeriodModel->start_date),
                                 ];
-                                $totalBalance += $item->debtor;
+                                $totalBalance += $item->finalPayment;
                                 $totalCount++;
-                            }
                         } else {
-                            throw new HttpException(400, $item->account->aCustomer->fullName . ' در مشخصات کارمندی ثبت نشده است.');
+                            throw new HttpException(400, $item->user->fullName . ' در مشخصات کارمندی ثبت نشده است.');
                         }
 
                     }
