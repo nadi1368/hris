@@ -2,7 +2,7 @@
 
 namespace hesabro\hris\models;
 
-use common\validators\DateValidator;
+use hesabro\helpers\validators\DateValidator;
 use sadi01\bidashboard\models\ReportWidget;
 use Yii;
 use yii\base\Model;

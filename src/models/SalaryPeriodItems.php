@@ -5,6 +5,8 @@ namespace hesabro\hris\models;
 use common\models\UserPoints;
 use backend\models\BalanceDaily;
 use console\job\SmsArrayJob;
+use common\models\Year;
+use Yii;
 
 /**
  * Class SalaryPeriodItems
@@ -13,6 +15,17 @@ use console\job\SmsArrayJob;
  */
 class SalaryPeriodItems extends SalaryPeriodItemsBase
 {
+    /**
+     * @return array|object|null
+     */
+    public function getYear()
+    {
+        if ($this->yearModel === null) {
+            return Year::find()->byDate(Yii::$app->jdf->jdate("Y/m/d", $this->period->start_date))->one();
+        }
+        return $this->yearModel;
+    }
+
 
     /**
      * @param $userId

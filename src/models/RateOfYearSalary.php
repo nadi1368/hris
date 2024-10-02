@@ -2,10 +2,10 @@
 
 namespace hesabro\hris\models;
 
+use hesabro\hris\Module;
 use Yii;
-use backend\models\User;
-use common\behaviors\LogBehavior;
-use common\behaviors\TraceBehavior;
+use hesabro\changelog\behaviors\LogBehavior;
+use hesabro\errorlog\behaviors\TraceBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\behaviors\BlameableBehavior;
 
@@ -22,8 +22,8 @@ use yii\behaviors\BlameableBehavior;
  * @property int|null $updated_by
  * @property int $deleted_at
  *
- * @property User $creator
- * @property User $update
+ * @property object $creator
+ * @property object $update
  */
 class RateOfYearSalary extends \yii\db\ActiveRecord
 {
@@ -76,7 +76,7 @@ class RateOfYearSalary extends \yii\db\ActiveRecord
      */
     public function getCreator()
     {
-        return $this->hasOne(User::className(), ['id' => 'created_by']);
+        return $this->hasOne(Module::getInstance()->user, ['id' => 'created_by']);
     }
 
     /**
@@ -84,7 +84,7 @@ class RateOfYearSalary extends \yii\db\ActiveRecord
      */
     public function getUpdate()
     {
-        return $this->hasOne(User::className(), ['id' => 'updated_by']);
+        return $this->hasOne(Module::getInstance()->user, ['id' => 'updated_by']);
     }
 
     /**

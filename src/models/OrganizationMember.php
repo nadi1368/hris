@@ -2,8 +2,8 @@
 
 namespace hesabro\hris\models;
 
-use backend\models\User;
-use common\behaviors\Jsonable;
+use hesabro\helpers\behaviors\JsonAdditional;
+use hesabro\hris\Module;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -46,13 +46,12 @@ class OrganizationMember extends \yii\db\ActiveRecord
 				'class' => BlameableBehavior::class,
 			],
 			'JSON' => [
-				'class' => Jsonable::class,
-				'jsonAttributes' => [
-					'additional_data' => [
-						'headline',
-						'show_job_tag',
-						'show_internal_number',
-					]
+				'class' => JsonAdditional::class,
+                'fieldAdditional' => 'additional_data',
+                'AdditionalDataProperty' => [
+                    'headline',
+                    'show_job_tag',
+                    'show_internal_number',
 				]
 			],
 		];
@@ -68,7 +67,7 @@ class OrganizationMember extends \yii\db\ActiveRecord
 			[['name', 'headline'], 'string'],
 			[['show_internal_number', 'show_job_tag'], 'boolean'],
 			[['parent_id', 'user_id'], 'integer'],
-			[['user_id'], 'exist', 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+			[['user_id'], 'exist', 'targetClass' => Module::getInstance()->user, 'targetAttribute' => ['user_id' => 'id']],
 			[['parent_id'], 'exist', 'targetClass' => self::class, 'targetAttribute' => ['parent_id' => 'id']],
 		];
 	}
@@ -94,7 +93,7 @@ class OrganizationMember extends \yii\db\ActiveRecord
 	 */
 	public function getUser()
 	{
-		return $this->hasOne(User::class, ['id' => 'user_id']);
+		return $this->hasOne(Module::getInstance()->user, ['id' => 'user_id']);
 	}
 
 	/**
@@ -110,7 +109,7 @@ class OrganizationMember extends \yii\db\ActiveRecord
 	 */
 	public function getCreator()
 	{
-		return $this->hasOne(User::class, ['id' => 'created_by']);
+		return $this->hasOne(Module::getInstance()->user, ['id' => 'created_by']);
 	}
 
 	/**
@@ -118,7 +117,7 @@ class OrganizationMember extends \yii\db\ActiveRecord
 	 */
 	public function getUpdate()
 	{
-		return $this->hasOne(User::class, ['id' => 'updated_by']);
+		return $this->hasOne(Module::getInstance()->user, ['id' => 'updated_by']);
 	}
 
 	/**

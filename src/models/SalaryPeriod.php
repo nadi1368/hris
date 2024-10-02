@@ -32,6 +32,14 @@ class SalaryPeriod extends SalaryPeriodBase
     const MutexSalaryPeriodPayment = Mutex::SalaryPeriodPayment;
 
     /**
+     * @return array|Year|null
+     */
+    public function getYear()
+    {
+        return Year::find()->byDate(Yii::$app->jdf->jdate("Y/m/d", $this->start_date))->one();
+    }
+
+    /**
      * @return bool
      */
     public function saveDocumentConfirm()

@@ -3,9 +3,7 @@
 namespace hesabro\hris\models;
 
 use hesabro\hris\Module;
-use hesabro\helpers\components\Helper;
 use hesabro\helpers\components\Jdf;
-use common\models\Year;
 use hesabro\helpers\validators\DateValidator;
 use hesabro\helpers\validators\IBANValidator;
 use Yii;
@@ -28,7 +26,6 @@ use yii\helpers\ArrayHelper;
  *
  * @property SalaryPeriodItems[] $salaryPeriodItems
  * @property WorkshopInsurance $workshop
- * @property Year $year
  * @property int $countDay
  * @property string $fullName
  * @property string $titleWitYear
@@ -224,14 +221,6 @@ class SalaryPeriodBase extends \yii\db\ActiveRecord
     public function getTitleWithYear()
     {
         return $this->title . ' - ' . Yii::$app->jdf->jdate("Y", $this->start_date);
-    }
-
-    /**
-     * @return array|Year|null
-     */
-    public function getYear()
-    {
-        return Year::find()->byDate(Yii::$app->jdf->jdate("Y/m/d", $this->start_date))->one();
     }
 
     /**

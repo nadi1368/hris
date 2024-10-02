@@ -2,6 +2,7 @@
 
 namespace hesabro\hris;
 
+use Yii;
 use yii\base\Module as BaseModule;
 
 class Module extends BaseModule
@@ -11,10 +12,8 @@ class Module extends BaseModule
 
     public string | null $settings = null;
 
-    public array $modelMap = [];
-
-    public function init(): void
+    public static function t($category, $message, $params = [], $language = null): string
     {
-        parent::init();
+        return Yii::t('hesabro/hris/' . $category, $message, $params, $language);
     }
 }

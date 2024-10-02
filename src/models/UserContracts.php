@@ -2,10 +2,10 @@
 
 namespace hesabro\hris\models;
 
-use common\behaviors\Jsonable;
-use common\behaviors\StatusActiveBehavior;
-use common\models\User;
-use common\validators\DateValidator;
+use hesabro\helpers\behaviors\JsonAdditional;
+use hesabro\helpers\behaviors\StatusActiveBehavior;
+use hesabro\helpers\validators\DateValidator;
+use hesabro\hris\Module;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -32,7 +32,7 @@ use yii\web\ForbiddenHttpException;
  * @property array $contract_clauses
  * @property UserContractsShelves $shelf
  * @property ContractTemplates $contract
- * @property User $user
+ * @property object $user
  * @property ContractClausesModel[] $clausesModels
  * @property string $contractTitle
  * @property string $contractDescription
@@ -84,18 +84,17 @@ class UserContracts extends \yii\db\ActiveRecord
 			[
 				'class' => StatusActiveBehavior::class,
 			],
-			'JSON' => [
-				'class' => Jsonable::className(),
-				'jsonAttributes' => [
-					'additional_data' => [
-						'contract_title',
-						'contract_description',
-						'contract_signatures',
-						'daily_salary',
-						'right_to_housing',
-						'right_to_food',
-						'right_to_child',
-					]
+			[
+				'class' => JsonAdditional::class,
+                'fieldAdditional' => 'additional_data',
+                'AdditionalDataProperty' => [
+                    'contract_title',
+                    'contract_description',
+                    'contract_signatures',
+                    'daily_salary',
+                    'right_to_housing',
+                    'right_to_food',
+                    'right_to_child',
 				]
 			],
 		];
@@ -118,7 +117,7 @@ class UserContracts extends \yii\db\ActiveRecord
 			[['start_date', 'end_date'], 'string', 'max' => 255],
 			[['start_date', 'end_date'], DateValidator::class],
 			[['contract_id'], 'exist', 'skipOnError' => true, 'targetClass' => ContractTemplates::className(), 'targetAttribute' => ['contract_id' => 'id']],
-			[['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+			[['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Module::getInstance()->user, 'targetAttribute' => ['user_id' => 'id']],
 			[['branch_id'], 'exist', 'skipOnError' => true, 'targetClass' => EmployeeBranch::className(), 'targetAttribute' => ['branch_id' => 'id']],
 			[['start_date'], 'validateDate'],
 			[['variables'], 'validateVariables'],
@@ -258,7 +257,7 @@ class UserContracts extends \yii\db\ActiveRecord
 	 */
 	public function getUser()
 	{
-		return $this->hasOne(User::className(), ['id' => 'user_id']);
+		return $this->hasOne(Module::getInstance()->user, ['id' => 'user_id']);
 	}
 
 	/**
@@ -266,7 +265,7 @@ class UserContracts extends \yii\db\ActiveRecord
 	 */
 	public function getCreator()
 	{
-		return $this->hasOne(User::class, ['id' => 'created_by']);
+		return $this->hasOne(Module::getInstance()->user, ['id' => 'created_by']);
 	}
 
 	/**
@@ -274,7 +273,7 @@ class UserContracts extends \yii\db\ActiveRecord
 	 */
 	public function getUpdate()
 	{
-		return $this->hasOne(User::class, ['id' => 'updated_by']);
+		return $this->hasOne(Module::getInstance()->user, ['id' => 'updated_by']);
 	}
 
 	public function getShelf()

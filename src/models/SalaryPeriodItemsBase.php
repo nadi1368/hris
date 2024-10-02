@@ -2,12 +2,11 @@
 
 namespace hesabro\hris\models;
 
-use backend\models\User;
 use hesabro\helpers\behaviors\JsonAdditional;
 use hesabro\changelog\behaviors\LogBehavior;
 use hesabro\errorlog\behaviors\TraceBehavior;
 use hesabro\helpers\components\Jdf;
-use common\models\Year;
+use hesabro\hris\Module;
 use Yii;
 
 /**
@@ -45,8 +44,8 @@ use Yii;
  * @property int $changed
  *
  * @property SalaryPeriod $period
- * @property User $user
- * @property Year $year
+ * @property object $user
+ * @property object $year
  * @property EmployeeBranchUser $employee
  * @property int $historyOfWork
  * @property int $historyOfWorkConvertToYear
@@ -69,7 +68,7 @@ class SalaryPeriodItemsBase extends \yii\db\ActiveRecord
 
     public $hours_of_overtime_cost, $holiday_of_overtime_cost, $night_of_overtime_cost, $final_payment;
 
-    /** @var Year */
+    /** @var object */
     public $yearModel = null;
 
     private $_historyOfWork = null;
@@ -124,7 +123,7 @@ class SalaryPeriodItemsBase extends \yii\db\ActiveRecord
             [['non_cash_commission'], 'validateNonCashCommission', 'on' => [self::SCENARIO_CREATE, self::SCENARIO_UPDATE]],
             [['advance_money'], 'compare', 'compareAttribute' => 'payment_salary', 'operator' => '<=', 'type' => 'number', 'on' => [self::SCENARIO_CREATE, self::SCENARIO_UPDATE]],
             [['period_id'], 'exist', 'skipOnError' => true, 'targetClass' => SalaryPeriod::class, 'targetAttribute' => ['period_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Module::getInstance()->user, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -279,7 +278,7 @@ class SalaryPeriodItemsBase extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::class, ['id' => 'user_id']);
+        return $this->hasOne(Module::getInstance()->user, ['id' => 'user_id']);
     }
 
     /**
@@ -287,7 +286,7 @@ class SalaryPeriodItemsBase extends \yii\db\ActiveRecord
      */
     public function getCreator()
     {
-        return $this->hasOne(User::class, ['id' => 'creator_id']);
+        return $this->hasOne(Module::getInstance()->user, ['id' => 'creator_id']);
     }
 
     /**
@@ -295,7 +294,7 @@ class SalaryPeriodItemsBase extends \yii\db\ActiveRecord
      */
     public function getUpdate()
     {
-        return $this->hasOne(User::class, ['id' => 'update_id']);
+        return $this->hasOne(Module::getInstance()->user, ['id' => 'update_id']);
     }
 
     /**
@@ -304,17 +303,6 @@ class SalaryPeriodItemsBase extends \yii\db\ActiveRecord
     public function getEmployee()
     {
         return $this->hasOne(EmployeeBranchUser::class, ['user_id' => 'user_id']);
-    }
-
-    /**
-     * @return array|Year|null
-     */
-    public function getYear()
-    {
-        if ($this->yearModel === null) {
-            return Year::find()->byDate(Yii::$app->jdf->jdate("Y/m/d", $this->period->start_date))->one();
-        }
-        return $this->yearModel;
     }
 
     public function setHistoryOfWork()
@@ -398,6 +386,8 @@ class SalaryPeriodItemsBase extends \yii\db\ActiveRecord
                 return $query->sum('tax');
             case "insurance":
                 return $query->sum('insurance');
+            default:
+                return 0;
         }
     }
     
@@ -616,7 +606,7 @@ class SalaryPeriodItemsBase extends \yii\db\ActiveRecord
 
     /**
      * @param $endDate
-     * @param Year $year
+     * @param object $year
      */
     public function loadDefaultValuesBeforeCreateReward($endDate, $year)
     {
@@ -683,7 +673,7 @@ class SalaryPeriodItemsBase extends \yii\db\ActiveRecord
 
     /**
      * @param $endDate
-     * @param Year $year
+     * @param object $year
      */
     public function loadDefaultValuesBeforeCreateYear($endDate, $year)
     {

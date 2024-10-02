@@ -2,10 +2,8 @@
 
 namespace hesabro\hris\models;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use hesabro\hris\models\Comfort;
 
 /**
  * ComfortSearch represents the model behind the search form of `hesabro\hris\models\Comfort`.

@@ -2,8 +2,8 @@
 
 namespace hesabro\hris\models;
 
-use common\components\Helper;
-use common\validators\DateValidator;
+use hesabro\helpers\validators\DateValidator;
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -85,28 +85,28 @@ class EmployeeBranchUserSearch extends EmployeeBranchUser
             // $query->where('0=1');
             return $dataProvider;
         }
-        if ((int)$this->show_on_salary_list == Helper::YES) {
+        if ((int)$this->show_on_salary_list == Yii::$app->helper::YES) {
             $query->andWhere('JSON_EXTRACT(' . EmployeeBranchUser::tableName() . '.`additional_data`, "$.end_work") IS NULL OR JSON_EXTRACT(' . EmployeeBranchUser::tableName() . '.`additional_data`, "$.end_work")=""')
                 ->andWhere('JSON_EXTRACT(' . EmployeeBranchUser::tableName() . '.`additional_data`, "$.disable_show_on_salary_list") IS NULL OR JSON_EXTRACT(' . EmployeeBranchUser::tableName() . '.`additional_data`, "$.disable_show_on_salary_list")=false');
         }
 
-        if ((int)$this->show_on_salary_list == Helper::NO) {
+        if ((int)$this->show_on_salary_list == Yii::$app->helper::NO) {
             $query->andWhere('JSON_EXTRACT(' . EmployeeBranchUser::tableName() . '.`additional_data`, "$.end_work")<>"" OR JSON_EXTRACT(' . EmployeeBranchUser::tableName() . '.`additional_data`, "$.disable_show_on_salary_list")=true');
         }
 
-        if ((int)$this->roll_call_id == Helper::YES) {
+        if ((int)$this->roll_call_id == Yii::$app->helper::YES) {
             $query->andWhere('JSON_EXTRACT(' . EmployeeBranchUser::tableName() . '.`additional_data`, "$.roll_call_id") > 0');
         }
 
-        if ((int)$this->roll_call_id == Helper::NO) {
+        if ((int)$this->roll_call_id == Yii::$app->helper::NO) {
             $query->andWhere('JSON_EXTRACT(' . EmployeeBranchUser::tableName() . '.`additional_data`, "$.roll_call_id") IS NULL OR JSON_EXTRACT(' . EmployeeBranchUser::tableName() . '.`additional_data`, "$.roll_call_id")=""');
         }
 
-        if ((int)$this->set_iban == Helper::YES) {
+        if ((int)$this->set_iban == Yii::$app->helper::YES) {
             $query->andWhere('shaba IS NOT NULL');
         }
 
-        if ((int)$this->set_iban == Helper::NO) {
+        if ((int)$this->set_iban == Yii::$app->helper::NO) {
             $query->andWhere('shaba IS NULL');
         }
 

@@ -2,16 +2,18 @@
 
 namespace hesabro\hris\models;
 
-use common\models\json\BaseModelJsonData;
+use yii\base\BaseObject;
 
 /**
  * Class EmployeeHistory
  * @package hesabro\hris\models
  * @author Nader <nader.bahadorii@gmail.com>
  */
-class EmployeeHistory extends BaseModelJsonData
+class EmployeeHistory extends BaseObject
 {
     public $start_work;
+
     public $end_work;
+
     public $document_id_end_work;
 }

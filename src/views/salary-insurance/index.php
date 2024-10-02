@@ -56,13 +56,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'code',
                 'group',
                 [
-                    'attribute' => 'tag_id',
-                    'value' => function (SalaryInsurance $model) {
-                        return $model->tag?->title ?: '';
-                    },
-                    'format' => 'raw'
-                ],
-                [
                     'attribute' => 'created',
                     'value' => function ($model) {
                         return '<span title="بروز رسانی شده در ' . Yii::$app->jdf->jdate("Y/m/d  H:i", $model->changed) . '">' . Yii::$app->jdf->jdate("Y/m/d  H:i", $model->created) . '</span>';

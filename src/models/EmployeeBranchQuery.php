@@ -2,12 +2,14 @@
 
 namespace hesabro\hris\models;
 
+use yii\db\ActiveQuery;
+
 /**
  * This is the ActiveQuery class for [[EmployeeBranch]].
  *
  * @see EmployeeBranch
  */
-class EmployeeBranchQuery extends \yii\db\ActiveQuery
+class EmployeeBranchQuery extends ActiveQuery
 {
     /*public function active()
     {

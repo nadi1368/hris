@@ -2,7 +2,6 @@
 
 namespace hesabro\hris\models;
 
-use hesabro\hris\models\ComfortItems;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;

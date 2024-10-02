@@ -2,7 +2,7 @@
 
 namespace hesabro\hris\models;
 
-use common\models\User;
+use hesabro\hris\Module;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -112,7 +112,7 @@ class UserContractsShelves extends \yii\db\ActiveRecord
     */
 	public function getCreator()
 	{
-		return $this->hasOne(User::class, ['id' => 'created_by']);
+		return $this->hasOne(Module::getInstance()->user, ['id' => 'created_by']);
 	}
 
 	/**
@@ -120,7 +120,7 @@ class UserContractsShelves extends \yii\db\ActiveRecord
 	*/
 	public function getUpdate()
 	{
-		return $this->hasOne(User::class, ['id' => 'updated_by']);
+		return $this->hasOne(Module::getInstance()->user, ['id' => 'updated_by']);
 	}
 
 	public function getActiveContracts()

@@ -2,10 +2,9 @@
 
 namespace hesabro\hris\models;
 
-use backend\models\User;
-use common\behaviors\LogBehavior;
-use common\behaviors\TraceBehavior;
-use common\components\jdf\Jdf;
+use hesabro\changelog\behaviors\LogBehavior;
+use hesabro\errorlog\behaviors\TraceBehavior;
+use hesabro\hris\Module;
 use Yii;
 
 /**
@@ -30,7 +29,7 @@ use Yii;
  * @property int $t_id
  * @property int $period_id
  *
- * @property User $user
+ * @property object $user
  */
 class EmployeeRollCall extends \yii\db\ActiveRecord
 {
@@ -102,7 +101,7 @@ class EmployeeRollCall extends \yii\db\ActiveRecord
      */
     public function getCreator()
     {
-        return $this->hasOne(User::class, ['id' => 'creator_id']);
+        return $this->hasOne(Module::getInstance()->user, ['id' => 'creator_id']);
     }
 
     /**
@@ -110,7 +109,7 @@ class EmployeeRollCall extends \yii\db\ActiveRecord
      */
     public function getUpdate()
     {
-        return $this->hasOne(User::class, ['id' => 'update_id']);
+        return $this->hasOne(Module::getInstance()->user, ['id' => 'update_id']);
     }
 
     /**
@@ -118,7 +117,7 @@ class EmployeeRollCall extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::class, ['id' => 'user_id']);
+        return $this->hasOne(Module::getInstance()->user, ['id' => 'user_id']);
     }
 
     /**
@@ -283,7 +282,7 @@ class EmployeeRollCall extends \yii\db\ActiveRecord
                 'kind' => SalaryItemsAddition::KIND_LEAVE_DAILY,
                 'type' => SalaryItemsAddition::TYPE_LEAVE_MERIT_DAILY,
                 'from_date' => $this->date,
-                'to_date' => Jdf::plusDay($this->date, 1),
+                'to_date' => Yii::$app->jdf::plusDay($this->date, 1),
                 'second' => $this->leave_time,
                 'description' => 'ثبت خودکار از دستگاه حضور و غیاب',
                 'status' => SalaryItemsAddition::STATUS_CONFIRM,
@@ -306,7 +305,7 @@ class EmployeeRollCall extends \yii\db\ActiveRecord
                 'kind' => SalaryItemsAddition::KIND_LOW_TIME,
                 'type' => SalaryItemsAddition::TYPE_LOW_ABSENCE,
                 'from_date' => $this->date,
-                'to_date' => Jdf::plusDay($this->date, 1),
+                'to_date' => Yii::$app->jdf::plusDay($this->date, 1),
                 'second' => $lowTime,
                 'description' => 'ثبت خودکار از دستگاه حضور و غیاب',
                 'status' => SalaryItemsAddition::STATUS_CONFIRM,

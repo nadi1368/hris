@@ -2,7 +2,7 @@
 
 namespace hesabro\hris\models;
 
-use backend\models\User;
+use yii\base\Model;
 use yii\db\ActiveQuery;
 use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
 
@@ -27,7 +27,7 @@ class EmployeeRequestQuery extends ActiveQuery
         return $this;
     }
 
-    public function byUser(User $user): self
+    public function byUser(Model $user): self
     {
         $this->andWhere(['user_id' => $user->id]);
 

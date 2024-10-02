@@ -2,8 +2,6 @@
 
 namespace hesabro\hris\models;
 
-use common\models\Customer;
-use Yii;
 use yii\db\Expression;
 
 /**
@@ -56,11 +54,10 @@ class ComfortQuery extends \yii\db\ActiveQuery
      */
     public function canShow(EmployeeBranchUser $employee): ComfortQuery
     {
-        $jobTags = array_map(fn ($item) => $item, Customer::find()->findByUser($employee->user_id)->one()->jobs ?: []);
         $this->notExpire(time())
             ->assignMe($employee->user_id)
-            ->byCustomJobTags($jobTags)
-            ->byExcludedCustomJobTags($jobTags);
+            ->byCustomJobTags([$employee->job_code])
+            ->byExcludedCustomJobTags([$employee->job_code]);
         /**
         if($employee->marital == EmployeeBranchUser::MARITAL_SINGLE)
         {
@@ -87,18 +84,18 @@ class ComfortQuery extends \yii\db\ActiveQuery
     }
 
 
-    public function byCustomJobTags($tags): self
+    public function byCustomJobTags(array $jobs): self
     {
         return $this->andWhere(['OR',
-            ['JSON_OVERLAPS(additional_data->"$.jobs", \'' . json_encode($tags) . '\')' => 1],
+            ['JSON_OVERLAPS(additional_data->"$.jobs", \'' . json_encode($jobs) . '\')' => 1],
             ['JSON_LENGTH(JSON_EXTRACT(additional_data, "$.jobs"))' => 0]
         ]);
     }
 
-    public function byExcludedCustomJobTags($tags): self
+    public function byExcludedCustomJobTags(array $jobs): self
     {
         return $this->andWhere(['OR',
-            ['JSON_OVERLAPS(additional_data->"$.excluded_jobs", \'' . json_encode($tags) . '\')' => 0],
+            ['JSON_OVERLAPS(additional_data->"$.excluded_jobs", \'' . json_encode($jobs) . '\')' => 0],
             ['JSON_LENGTH(JSON_EXTRACT(additional_data, "$.excluded_jobs"))' => 0]
         ]);
     }
