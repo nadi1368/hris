@@ -1,13 +1,10 @@
 <?php
-
-
-/* @var $this View */
-/* @var $model EmployeeBranchUser */
-
-
 use hesabro\hris\models\EmployeeBranchUser;
 use yii\web\View;
 use yii\widgets\Pjax;
+
+/* @var $this View */
+/* @var $model EmployeeBranchUser */
 
 $this->title = $model->user->fullName;
 $this->params['breadcrumbs'][] = $this->title;
