@@ -23,7 +23,7 @@ use yii\helpers\Html;
         <div class="row">
             <div class="col-md-9">
 
-                <?= $form->field($model, 'user_id')->widget(Select2::className(), [
+                <?= $form->field($model, 'user_id')->widget(Select2::class, [
                     'data' => User::getUserWithRoles(['employee']),
                     'pluginOptions' => [
                         'allowClear' => true,

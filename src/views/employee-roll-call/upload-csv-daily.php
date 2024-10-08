@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="card-body">
         <div class="row">
             <div class="col-md-2">
-                <?= $form->field($uploadForm, 'date')->widget(MaskedInput::className(), [
+                <?= $form->field($uploadForm, 'date')->widget(MaskedInput::class, [
                     'mask' => '9999/99/99',
                 ]) ?>
             </div>

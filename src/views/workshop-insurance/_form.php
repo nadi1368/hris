@@ -39,7 +39,7 @@ use yii\web\JsExpression;
             </div>
 
             <div class="col-md-12">
-                <?= $form->field($model, "account_id")->widget(Select2::classname(), [
+                <?= $form->field($model, "account_id")->widget(Select2::class, [
                     'initValueText' => $model->account_id ? $model->account?->fullName : 0, // set the initial display text
                     'options' => ['placeholder' => Yii::t("app", "Search"), 'dir' => 'rtl'],
                     'pluginOptions' => [

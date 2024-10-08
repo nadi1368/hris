@@ -16,7 +16,7 @@ use yii\widgets\MaskedInput;
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
-                    <?= $form->field($model, 'another_period')->widget(Select2::classname(), [
+                    <?= $form->field($model, 'another_period')->widget(Select2::class, [
                         'data' => $model->getAnotherPeriodList(),
                         'options' => [
                             'placeholder' => Yii::t("app", "Search"),

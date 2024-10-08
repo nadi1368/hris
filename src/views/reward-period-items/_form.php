@@ -13,7 +13,7 @@ use yii\widgets\MaskedInput;
 /* @var $salaryPeriod hesabro\hris\models\SalaryPeriod */
 /* @var $model hesabro\hris\models\SalaryPeriodItems */
 /* @var $form yii\bootstrap4\ActiveForm */
-$this->registerJsFile("@web/js/reward-calculate.js?v=1.1.8", ['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerJsFile("@web/js/reward-calculate.js?v=1.1.8", ['depends' => [\yii\web\JqueryAsset::class]]);
 $js = 'calculateSalary();';
 $this->registerJs($js);
 
@@ -40,7 +40,7 @@ $totalPaymentInYear=$model->getTotalInYear()  - ($model->year->COST_TAX_STEP_1_M
 
             <div class="col-md-3">
                 <?= $form->field($model, "basic_salary")
-                    ->widget(MaskedInput::className(),
+                    ->widget(MaskedInput::class,
                         [
                             'options' => [
                                 'autocomplete' => 'off',
@@ -70,7 +70,7 @@ $totalPaymentInYear=$model->getTotalInYear()  - ($model->year->COST_TAX_STEP_1_M
 
             <div class="col-md-3">
                 <?= $form->field($model, "tax")
-                    ->widget(MaskedInput::className(),
+                    ->widget(MaskedInput::class,
                         [
                             'options' => [
                                 'autocomplete' => 'off',
@@ -102,7 +102,7 @@ $totalPaymentInYear=$model->getTotalInYear()  - ($model->year->COST_TAX_STEP_1_M
             <div class="col-md-12"></div>
             <div class="col-md-3">
                 <?= $form->field($model, "total_salary")
-                    ->widget(MaskedInput::className(),
+                    ->widget(MaskedInput::class,
                         [
                             'options' => [
                                 'autocomplete' => 'off',
@@ -119,7 +119,7 @@ $totalPaymentInYear=$model->getTotalInYear()  - ($model->year->COST_TAX_STEP_1_M
 
             <div class="col-md-3">
                 <?= $form->field($model, "advance_money")
-                    ->widget(MaskedInput::className(),
+                    ->widget(MaskedInput::class,
                         [
                             'options' => [
                                 'autocomplete' => 'off',
@@ -137,7 +137,7 @@ $totalPaymentInYear=$model->getTotalInYear()  - ($model->year->COST_TAX_STEP_1_M
 
             <div class="col-md-3">
                 <?= $form->field($model, "payment_salary")
-                    ->widget(MaskedInput::className(),
+                    ->widget(MaskedInput::class,
                         [
                             'options' => [
                                 'autocomplete' => 'off',
@@ -153,7 +153,7 @@ $totalPaymentInYear=$model->getTotalInYear()  - ($model->year->COST_TAX_STEP_1_M
             </div>
             <div class="col-md-3">
                 <?= $form->field($model, "final_payment")
-                    ->widget(MaskedInput::className(),
+                    ->widget(MaskedInput::class,
                         [
                             'options' => [
                                 'autocomplete' => 'off',

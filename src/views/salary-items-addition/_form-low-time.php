@@ -16,7 +16,7 @@ use hesabro\hris\models\SalaryItemsAddition;
         <div class="row">
 
             <div class="col-md-12">
-                <?= $form->field($model, 'user_id')->widget(Select2::className(), [
+                <?= $form->field($model, 'user_id')->widget(Select2::class, [
                     'data' => User::getUserWithRoles(['employee']),
                     'pluginOptions' => [
                         'allowClear' => true,
@@ -37,7 +37,7 @@ use hesabro\hris\models\SalaryItemsAddition;
             </div>
 
             <div class="col-md-4">
-                <?= $form->field($model, 'date')->widget(dateRangePicker::classname(), [
+                <?= $form->field($model, 'date')->widget(dateRangePicker::class, [
                     'options'     => [
                         'locale'            => [
                             'format' => 'jYYYY/jMM/jDD',

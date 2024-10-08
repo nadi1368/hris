@@ -116,9 +116,9 @@ class UserContracts extends \yii\db\ActiveRecord
 			[['variables'], 'safe'],
 			[['start_date', 'end_date'], 'string', 'max' => 255],
 			[['start_date', 'end_date'], DateValidator::class],
-			[['contract_id'], 'exist', 'skipOnError' => true, 'targetClass' => ContractTemplates::className(), 'targetAttribute' => ['contract_id' => 'id']],
+			[['contract_id'], 'exist', 'skipOnError' => true, 'targetClass' => ContractTemplates::class, 'targetAttribute' => ['contract_id' => 'id']],
 			[['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Module::getInstance()->user, 'targetAttribute' => ['user_id' => 'id']],
-			[['branch_id'], 'exist', 'skipOnError' => true, 'targetClass' => EmployeeBranch::className(), 'targetAttribute' => ['branch_id' => 'id']],
+			[['branch_id'], 'exist', 'skipOnError' => true, 'targetClass' => EmployeeBranch::class, 'targetAttribute' => ['branch_id' => 'id']],
 			[['start_date'], 'validateDate'],
 			[['variables'], 'validateVariables'],
 			[['additional_data', 'contract_clauses'], 'safe'],
@@ -249,7 +249,7 @@ class UserContracts extends \yii\db\ActiveRecord
 	 */
 	public function getContract()
 	{
-		return $this->hasOne(ContractTemplates::className(), ['id' => 'contract_id']);
+		return $this->hasOne(ContractTemplates::class, ['id' => 'contract_id']);
 	}
 
 	/**

@@ -34,14 +34,14 @@ use yii\widgets\MaskedInput;
 
 			<div class="col-md-4">
 				<?= $form->field($model, 'start_date')->widget(
-					MaskedInput::className(), [
+					MaskedInput::class, [
 					'mask' => '9999/99/99',
 				]) ?>
 			</div>
 
 			<div class="col-md-4">
 				<?= $form->field($model, 'end_date')->widget(
-					MaskedInput::className(), [
+					MaskedInput::class, [
 					'mask' => '9999/99/99',
 				]) ?>
 			</div>
@@ -51,7 +51,7 @@ use yii\widgets\MaskedInput;
 			</div>
 
 			<div class="col-md-3">
-				<?= $form->field($model, 'daily_salary')->widget(MaskedInput::className(),
+				<?= $form->field($model, 'daily_salary')->widget(MaskedInput::class,
                     [
                         'options' => [
                             'autocomplete' => 'off',
@@ -68,7 +68,7 @@ use yii\widgets\MaskedInput;
 			</div>
 
 			<div class="col-md-3">
-				<?= $form->field($model, 'right_to_housing')->widget(MaskedInput::className(),
+				<?= $form->field($model, 'right_to_housing')->widget(MaskedInput::class,
                     [
                         'options' => [
                             'autocomplete' => 'off',
@@ -85,7 +85,7 @@ use yii\widgets\MaskedInput;
 			</div>
 
 			<div class="col-md-3">
-				<?= $form->field($model, 'right_to_food')->widget(MaskedInput::className(),
+				<?= $form->field($model, 'right_to_food')->widget(MaskedInput::class,
                     [
                         'options' => [
                             'autocomplete' => 'off',
@@ -102,7 +102,7 @@ use yii\widgets\MaskedInput;
 			</div>
 
 			<div class="col-md-3">
-				<?= $form->field($model, 'right_to_child')->widget(MaskedInput::className(),
+				<?= $form->field($model, 'right_to_child')->widget(MaskedInput::class,
 					[
 						'options' => [
 							'autocomplete' => 'off',

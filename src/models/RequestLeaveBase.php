@@ -195,7 +195,7 @@ class RequestLeaveBase extends \yii\db\ActiveRecord
      */
     public function getBranch()
     {
-        return $this->hasOne(EmployeeBranch::className(), ['id' => 'branch_id']);
+        return $this->hasOne(EmployeeBranch::class, ['id' => 'branch_id']);
     }
 
     /**

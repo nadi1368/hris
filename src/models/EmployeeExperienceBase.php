@@ -2,12 +2,15 @@
 
 namespace hesabro\hris\models;
 
+use hesabro\helpers\traits\ModelHelper;
 use Ramsey\Uuid\Uuid;
 use Yii;
 use yii\base\Model;
 
 class EmployeeExperienceBase extends Model
 {
+    use ModelHelper;
+
     public mixed $uuid = '';
 
     public $institute;

@@ -28,7 +28,7 @@ use yii\widgets\MaskedInput;
                 </div>
                 <div class="col-md-4">
                     <?= $form->field($model, "DSK_TROOZ")
-                        ->widget(MaskedInput::className(),
+                        ->widget(MaskedInput::class,
                             [
                                 'options' => [
                                     'autocomplete' => 'off',
@@ -44,7 +44,7 @@ use yii\widgets\MaskedInput;
                 </div>
                 <div class="col-md-4">
                     <?= $form->field($model, "DSK_TMAH")
-                        ->widget(MaskedInput::className(),
+                        ->widget(MaskedInput::class,
                             [
                                 'options' => [
                                     'autocomplete' => 'off',
@@ -60,7 +60,7 @@ use yii\widgets\MaskedInput;
                 </div>
                 <div class="col-md-4">
                     <?= $form->field($model, "DSK_TMAZ")
-                        ->widget(MaskedInput::className(),
+                        ->widget(MaskedInput::class,
                             [
                                 'options' => [
                                     'autocomplete' => 'off',
@@ -76,7 +76,7 @@ use yii\widgets\MaskedInput;
                 </div>
                 <div class="col-md-4">
                     <?= $form->field($model, "DSK_TMASH")
-                        ->widget(MaskedInput::className(),
+                        ->widget(MaskedInput::class,
                             [
                                 'options' => [
                                     'autocomplete' => 'off',
@@ -92,7 +92,7 @@ use yii\widgets\MaskedInput;
                 </div>
                 <div class="col-md-4">
                     <?= $form->field($model, "DSK_TTOTL")
-                        ->widget(MaskedInput::className(),
+                        ->widget(MaskedInput::class,
                             [
                                 'options' => [
                                     'autocomplete' => 'off',
@@ -108,7 +108,7 @@ use yii\widgets\MaskedInput;
                 </div>
                 <div class="col-md-4">
                     <?= $form->field($model, "DSK_TBIME")
-                        ->widget(MaskedInput::className(),
+                        ->widget(MaskedInput::class,
                             [
                                 'options' => [
                                     'autocomplete' => 'off',
@@ -124,7 +124,7 @@ use yii\widgets\MaskedInput;
                 </div>
                 <div class="col-md-4">
                     <?= $form->field($model, "DSK_TKOSO")
-                        ->widget(MaskedInput::className(),
+                        ->widget(MaskedInput::class,
                             [
                                 'options' => [
                                     'autocomplete' => 'off',
@@ -140,7 +140,7 @@ use yii\widgets\MaskedInput;
                 </div>
                 <div class="col-md-4">
                     <?= $form->field($model, "DSK_BIC")
-                        ->widget(MaskedInput::className(),
+                        ->widget(MaskedInput::class,
                             [
                                 'options' => [
                                     'autocomplete' => 'off',
@@ -156,7 +156,7 @@ use yii\widgets\MaskedInput;
                 </div>
                 <div class="col-md-4">
                     <?= $form->field($model, "DSK_RATE")
-                        ->widget(MaskedInput::className(),
+                        ->widget(MaskedInput::class,
                             [
                                 'options' => [
                                     'autocomplete' => 'off',
@@ -172,7 +172,7 @@ use yii\widgets\MaskedInput;
                 </div>
                 <div class="col-md-4">
                     <?= $form->field($model, "DSK_PRATE")
-                        ->widget(MaskedInput::className(),
+                        ->widget(MaskedInput::class,
                             [
                                 'options' => [
                                     'autocomplete' => 'off',
@@ -188,7 +188,7 @@ use yii\widgets\MaskedInput;
                 </div>
                 <div class="col-md-4">
                     <?= $form->field($model, "DSK_BIMH")
-                        ->widget(MaskedInput::className(),
+                        ->widget(MaskedInput::class,
                             [
                                 'options' => [
                                     'autocomplete' => 'off',

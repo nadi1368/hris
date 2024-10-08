@@ -183,7 +183,7 @@ if ($model->excluded_jobs && ($tags = Tags::find()->andWhere(['IN', 'id', $model
             </div>
 
             <div class="col-md-6">
-                <?= $form->field($model, 'jobs')->widget(Select2::className(), [
+                <?= $form->field($model, 'jobs')->widget(Select2::class, [
                     'initValueText' => $initValueTextTagsInclude,
                     'options' => [
                         'placeholder' => Yii::t("app", "Search"),
@@ -213,7 +213,7 @@ if ($model->excluded_jobs && ($tags = Tags::find()->andWhere(['IN', 'id', $model
                     ],
                 ]); ?>
             </div><div class="col-md-6">
-                <?= $form->field($model, 'excluded_jobs')->widget(Select2::className(), [
+                <?= $form->field($model, 'excluded_jobs')->widget(Select2::class, [
                     'initValueText' => $initValueTextTagsExclude,
                     'options' => [
                         'placeholder' => Yii::t("app", "Search"),

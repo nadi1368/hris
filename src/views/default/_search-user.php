@@ -49,7 +49,7 @@ use yii\widgets\MaskedInput;
                 <?= $form->field($model, 'status')->dropDownList(EmployeeBranchUser::itemAlias('Status'), ['prompt' => Yii::t('app', 'Select...')]) ?>
             </div>
             <div class="col-md-2 date-input">
-                <?= $form->field($model, 'end_work')->widget(MaskedInput::className(), [
+                <?= $form->field($model, 'end_work')->widget(MaskedInput::class, [
                     'mask' => '9999/99/99',
                 ]) ?>
             </div>

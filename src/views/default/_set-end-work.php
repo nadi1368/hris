@@ -18,7 +18,7 @@ use yii\widgets\MaskedInput;
     <div class="card-body">
         <div class="row">
             <div class="col-md-6">
-                <?= $form->field($model, 'end_work')->widget(MaskedInput::className(), ['mask' => '9999/99/99']) ?>
+                <?= $form->field($model, 'end_work')->widget(MaskedInput::class, ['mask' => '9999/99/99']) ?>
             </div>
         </div>
     </div>

@@ -40,10 +40,10 @@ use yii\widgets\MaskedInput;
                 <?= $form->field($model, 'sh_number')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-md-2">
-                <?= $form->field($model, 'birthday')->widget(MaskedInput::className(), ['mask' => '9999/99/99']) ?>
+                <?= $form->field($model, 'birthday')->widget(MaskedInput::class, ['mask' => '9999/99/99']) ?>
             </div>
 			<div class="col-md-2">
-				<?= $form->field($model, 'issue_date')->widget(MaskedInput::className(), ['mask' => '9999/99/99']) ?>
+				<?= $form->field($model, 'issue_date')->widget(MaskedInput::class, ['mask' => '9999/99/99']) ?>
 			</div>
 			<div class="col-md-2">
 				<?= $form->field($model, 'issue_place')->textInput(['maxlength' => true]) ?>
@@ -69,10 +69,10 @@ use yii\widgets\MaskedInput;
                 <?= $form->field($model, 'insurance_code')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-md-3">
-                <?= $form->field($model, 'start_work')->widget(MaskedInput::className(), ['mask' => '9999/99/99']) ?>
+                <?= $form->field($model, 'start_work')->widget(MaskedInput::class, ['mask' => '9999/99/99']) ?>
             </div>
             <div class="col-md-3">
-                <?= $form->field($model, 'end_work')->widget(MaskedInput::className(), ['mask' => '9999/99/99']) ?>
+                <?= $form->field($model, 'end_work')->widget(MaskedInput::class, ['mask' => '9999/99/99']) ?>
             </div>
             <div class="col-md-2">
                 <?= $form->field($model, 'checkout')->checkbox() ?>

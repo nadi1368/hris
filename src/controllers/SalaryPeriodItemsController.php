@@ -2,7 +2,10 @@
 
 namespace hesabro\hris\controllers;
 
-use backend\models\User;
+use hesabro\helpers\components\CsvExport;
+use hesabro\changelog\models\MGLogs;
+use hesabro\helpers\components\Jdf;
+use hesabro\helpers\traits\AjaxValidationTrait;
 use hesabro\hris\models\ComfortItems;
 use hesabro\hris\models\EmployeeBranchUser;
 use hesabro\hris\models\EmployeeBranchUserSearch;
@@ -11,27 +14,22 @@ use hesabro\hris\models\SalaryPeriod;
 use hesabro\hris\models\SalaryPeriodItems;
 use hesabro\hris\models\SalaryPeriodItemsSearch;
 use hesabro\hris\models\TaxModel;
-use common\components\CsvExport;
-use hesabro\helpers\components\Jdf;
-use hesabro\changelog\models\MGLogs;
-use common\models\Mutex;
-use hesabro\helpers\traits\AjaxValidationTrait;
-use moonland\phpexcel\Excel;
+use hesabro\hris\Module;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Url;
-use yii2tech\spreadsheet\Spreadsheet;
 use yii\db\ActiveQuery;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
+use yii2tech\spreadsheet\Spreadsheet;
 
 /**
  * SalaryPeriodItemsController implements the CRUD actions for SalaryPeriodItems model.
@@ -591,90 +589,6 @@ class SalaryPeriodItemsController extends Controller
 
     /**
      * @param $id
-     * @throws NotFoundHttpException
-     */
-    public function actionExport($id)
-    {
-        $model = $this->findModelPeriod($id);
-        $dataProvider = new ActiveDataProvider([
-            'query' => $model->getSalaryPeriodItems(),
-        ]);
-
-        $exporter = new Spreadsheet([
-            'dataProvider' => $dataProvider,
-            'columns' => [
-                [
-                    'label' => 'کد ملی',
-                    'value' => function (SalaryPeriodItems $item) {
-                        return $item->user->nationalCode;
-                    }
-                ],
-                [
-                    'label' => 'نام و نام خانوادگی',
-                    'value' => function (SalaryPeriodItems $item) {
-                        return $item->user->fullName;
-                    }
-                ],
-                'hours_of_work',
-                'treatment_day',
-                'basic_salary',
-                [
-                    'label' => 'حقوق پایه',
-                    'value' => function (SalaryPeriodItems $item) {
-                        return $item->hours_of_work * $item->basic_salary;
-                    }
-                ],
-                'cost_of_house',
-                'cost_of_food',
-                'cost_of_spouse',
-                'cost_of_children',
-                'rate_of_year',
-                [
-                    'label' => 'اضافه کاری',
-                    'value' => function (SalaryPeriodItems $item) {
-                        return $item->getHoursOfOvertimeCost();
-                    }
-                ],
-                [
-                    'label' => 'تعطیل کاری',
-                    'value' => function (SalaryPeriodItems $item) {
-                        return $item->getHolidayOfOvertimeCost();
-                    }
-                ],
-                [
-                    'label' => 'شب کاری',
-                    'value' => function (SalaryPeriodItems $item) {
-                        return $item->getNightOfOvertimeCost();
-                    }
-                ],
-                [
-                    'label' => 'کسر کاری',
-                    'value' => function (SalaryPeriodItems $item) {
-                        return $item->getHoursOfLowTimeCost();
-                    }
-                ],
-                'cost_of_trust',
-                'commission',
-                'total_salary',
-                'insurance_owner',
-                'insurance',
-                'tax',
-                'advance_money',
-                'payment_salary',
-                [
-                    'label' => 'پرداختی',
-                    'value' => function (SalaryPeriodItems $item) {
-                        return $item->finalPayment;
-                    }
-                ],
-            ],
-        ]);
-        return $exporter->send($model->title . ' - ' . Yii::$app->jdf->jdate("Y", $model->start_date) . '.xls');
-    }
-
-
-    /**
-     * @param $id
      * @return array
      * @throws NotFoundHttpException
      * @throws \Throwable
@@ -789,50 +703,6 @@ class SalaryPeriodItemsController extends Controller
         return $this->redirect(['index', 'id' => $id]);
     }
 
-    public function actionExportExcel($id)
-    {
-        $model = $this->findModelPeriod($id);
-        $model->setScenario(SalaryPeriod::SCENARIO_EXPORT);
-        $model->load(Yii::$app->request->post());
-        $rows = [];
-        $rows[0] = [];
-        $totalCount = 0;
-        $totalBalance = 0;;
-        foreach ($model->salaryPeriodItems as $index => $item) {
-            if ($item->finalPayment > 0) {
-                if (($employeeUser = $item->employee) !== null) {
-                    if ($item->can_payment !== null) {
-                        $rows[$index + 1] = [
-                            'IR' . $employeeUser->shaba,
-                            '',
-                            $item->finalPayment,
-                            $employeeUser->user->fullName,
-                            "پرداختی حقوق " . $model->title . ' - ' . Yii::$app->jdf->jdate("Y/m/d", $model->start_date),
-                        ];
-                        $totalBalance += $item->finalPayment;
-                        $totalCount++;
-                    }
-                } else {
-                    throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.=>' . $item->id));
-                }
-
-            }
-        }
-
-        $fileId = Yii::$app->jdf->jdate("ymd") . '00' . $model->file_number;
-        $fileName = 'IR' . $model->shaba . $fileId . '.txt';
-        $rows[0] = [
-            'IR' . $model->shaba,
-            Yii::$app->jdf->jdate("Ymd"),
-            $fileId,
-            $totalCount,
-            $totalBalance,
-            $model->bank_name
-        ];
-        $csvExport = new CsvExport();
-        $csvExport->array_to_csv_download($rows, $fileName);
-    }
-
     /**
      * @param $id
      * @return array|string
@@ -886,22 +756,22 @@ class SalaryPeriodItemsController extends Controller
                 foreach ($anotherPeriodModel->salaryPeriodItems as $index => $item) {
                     if ($item->finalPayment > 0) {
                         if (($employeeUser = $item->employee) !== null) {
-                                if (!$employeeUser->canPaymentSalary()) {
-                                    throw new HttpException(400, $employeeUser->error_msg);
-                                }
-                                if (in_array($employeeUser->shaba, $IBANList)) {
-                                    throw new HttpException(400, $employeeUser->user->fullName . ' : شماره شبا این کارمند تکراری است');
-                                }
-                                $IBANList[] = $employeeUser->shaba;
-                                $rows[$index++] = [
-                                    'IR' . $employeeUser->shaba,
-                                    '',
-                                    $item->finalPayment,
-                                    $employeeUser->user->fullName,
-                                    "پرداختی حقوق " . $anotherPeriodModel->title . ' - ' . Yii::$app->jdf->jdate("Y/m/d", $anotherPeriodModel->start_date),
-                                ];
-                                $totalBalance += $item->finalPayment;
-                                $totalCount++;
+                            if (!$employeeUser->canPaymentSalary()) {
+                                throw new HttpException(400, $employeeUser->error_msg);
+                            }
+                            if (in_array($employeeUser->shaba, $IBANList)) {
+                                throw new HttpException(400, $employeeUser->user->fullName . ' : شماره شبا این کارمند تکراری است');
+                            }
+                            $IBANList[] = $employeeUser->shaba;
+                            $rows[$index++] = [
+                                'IR' . $employeeUser->shaba,
+                                '',
+                                $item->finalPayment,
+                                $employeeUser->user->fullName,
+                                "پرداختی حقوق " . $anotherPeriodModel->title . ' - ' . Yii::$app->jdf->jdate("Y/m/d", $anotherPeriodModel->start_date),
+                            ];
+                            $totalBalance += $item->finalPayment;
+                            $totalCount++;
                         } else {
                             throw new HttpException(400, $item->user->fullName . ' در مشخصات کارمندی ثبت نشده است.');
                         }
@@ -1387,7 +1257,230 @@ class SalaryPeriodItemsController extends Controller
 
     /**
      * @param $id
-     * @return array|string
+     * @return Response
+     * @throws NotFoundHttpException
+     */
+    public function actionCheckDocument($id)
+    {
+        $salaryPeriod = $this->findModelPeriod($id);
+        $find = false;
+        $link = [];
+        $link['SalaryPeriodItemsSearch']['user_id'] = [];
+        foreach ($salaryPeriod->salaryPeriodItems as $item) {
+            $totalDebtor = $item->total_salary + $item->insurance_owner;
+            $totalCreditor = $item->insurance + $item->insurance_owner + $item->tax + $item->payment_salary;
+            if ($totalDebtor - $totalCreditor !== 0) {
+                $link['SalaryPeriodItemsSearch']['user_id'][] = $item->user_id;
+                $find = true;
+            }
+        }
+        if ($find) {
+            $this->flash('danger', 'لطفا اطلاعات کارمندان زیر را بررسی نمایید.');
+        } else {
+            $this->flash('success', 'سند مورد نظر صحیح است');
+        }
+        return $this->redirect(ArrayHelper::merge(['index', 'id' => $id], $link));
+    }
+
+    /**
+     * Finds the SalaryPeriodItems model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return SalaryPeriodItems the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = SalaryPeriodItems::findOne($id)) !== null && (int)$model->period->kind == SalaryPeriod::KIND_SALARY) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    /**
+     * Finds the SalaryPeriod model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return SalaryPeriod the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModelPeriod($id)
+    {
+        if (($model = SalaryPeriod::findOne($id)) !== null && (int)$model->kind == SalaryPeriod::KIND_SALARY) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    /**
+     * Finds the EmployeeBranchUser model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return EmployeeBranchUser the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModelEmployee($id)
+    {
+        if (($model = EmployeeBranchUser::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    /**
+     * Finds the User model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return object the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModelUser($id)
+    {
+        if (($model = Module::getInstance()->user::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    public function flash($type, $message)
+    {
+        Yii::$app->getSession()->setFlash($type == 'error' ? 'danger' : $type, $message);
+    }
+
+    /**
+     * @param $id
+     * @throws NotFoundHttpException
+     */
+    public function actionExport($id)
+    {
+        $model = $this->findModelPeriod($id);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $model->getSalaryPeriodItems(),
+        ]);
+
+        $exporter = new Spreadsheet([
+            'dataProvider' => $dataProvider,
+            'columns' => [
+                [
+                    'label' => 'کد ملی',
+                    'value' => function (SalaryPeriodItems $item) {
+                        return $item->user->nationalCode;
+                    }
+                ],
+                [
+                    'label' => 'نام و نام خانوادگی',
+                    'value' => function (SalaryPeriodItems $item) {
+                        return $item->user->fullName;
+                    }
+                ],
+                'hours_of_work',
+                'treatment_day',
+                'basic_salary',
+                [
+                    'label' => 'حقوق پایه',
+                    'value' => function (SalaryPeriodItems $item) {
+                        return $item->hours_of_work * $item->basic_salary;
+                    }
+                ],
+                'cost_of_house',
+                'cost_of_food',
+                'cost_of_spouse',
+                'cost_of_children',
+                'rate_of_year',
+                [
+                    'label' => 'اضافه کاری',
+                    'value' => function (SalaryPeriodItems $item) {
+                        return $item->getHoursOfOvertimeCost();
+                    }
+                ],
+                [
+                    'label' => 'تعطیل کاری',
+                    'value' => function (SalaryPeriodItems $item) {
+                        return $item->getHolidayOfOvertimeCost();
+                    }
+                ],
+                [
+                    'label' => 'شب کاری',
+                    'value' => function (SalaryPeriodItems $item) {
+                        return $item->getNightOfOvertimeCost();
+                    }
+                ],
+                [
+                    'label' => 'کسر کاری',
+                    'value' => function (SalaryPeriodItems $item) {
+                        return $item->getHoursOfLowTimeCost();
+                    }
+                ],
+                'cost_of_trust',
+                'commission',
+                'total_salary',
+                'insurance_owner',
+                'insurance',
+                'tax',
+                'advance_money',
+                'payment_salary',
+                [
+                    'label' => 'پرداختی',
+                    'value' => function (SalaryPeriodItems $item) {
+                        return $item->finalPayment;
+                    }
+                ],
+            ],
+        ]);
+        return $exporter->send($model->title . ' - ' . Yii::$app->jdf->jdate("Y", $model->start_date) . '.xls');
+    }
+
+    public function actionExportExcel($id)
+    {
+        $model = $this->findModelPeriod($id);
+        $model->setScenario(SalaryPeriod::SCENARIO_EXPORT);
+        $model->load(Yii::$app->request->post());
+        $rows = [];
+        $rows[0] = [];
+        $totalCount = 0;
+        $totalBalance = 0;;
+        foreach ($model->salaryPeriodItems as $index => $item) {
+            if ($item->finalPayment > 0) {
+                if (($employeeUser = $item->employee) !== null) {
+                    if ($item->can_payment !== null) {
+                        $rows[$index + 1] = [
+                            'IR' . $employeeUser->shaba,
+                            '',
+                            $item->finalPayment,
+                            $employeeUser->user->fullName,
+                            "پرداختی حقوق " . $model->title . ' - ' . Yii::$app->jdf->jdate("Y/m/d", $model->start_date),
+                        ];
+                        $totalBalance += $item->finalPayment;
+                        $totalCount++;
+                    }
+                } else {
+                    throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.=>' . $item->id));
+                }
+
+            }
+        }
+
+        $fileId = Yii::$app->jdf->jdate("ymd") . '00' . $model->file_number;
+        $fileName = 'IR' . $model->shaba . $fileId . '.txt';
+        $rows[0] = [
+            'IR' . $model->shaba,
+            Yii::$app->jdf->jdate("Ymd"),
+            $fileId,
+            $totalCount,
+            $totalBalance,
+            $model->bank_name
+        ];
+        $csvExport = new CsvExport();
+        $csvExport->array_to_csv_download($rows, $fileName);
+    }
+
+    /**
+     * @param $id
+     * @return array|string|Response
      * @throws HttpException
      * @throws NotFoundHttpException
      * @throws Yii\base\ExitException
@@ -1549,101 +1642,5 @@ class SalaryPeriodItemsController extends Controller
         return $this->renderAjax('_form-bank-none-cash', [
             'model' => $model,
         ]);
-    }
-
-    /**
-     * @param $id
-     * @return Response
-     * @throws NotFoundHttpException
-     */
-    public function actionCheckDocument($id)
-    {
-        $salaryPeriod = $this->findModelPeriod($id);
-        $find = false;
-        $link = [];
-        $link['SalaryPeriodItemsSearch']['user_id'] = [];
-        foreach ($salaryPeriod->salaryPeriodItems as $item) {
-            $totalDebtor = $item->total_salary + $item->insurance_owner;
-            $totalCreditor = $item->insurance + $item->insurance_owner + $item->tax + $item->payment_salary;
-            if ($totalDebtor - $totalCreditor !== 0) {
-                $link['SalaryPeriodItemsSearch']['user_id'][] = $item->user_id;
-                $find = true;
-            }
-        }
-        if ($find) {
-            $this->flash('danger', 'لطفا اطلاعات کارمندان زیر را بررسی نمایید.');
-        } else {
-            $this->flash('success', 'سند مورد نظر صحیح است');
-        }
-        return $this->redirect(ArrayHelper::merge(['index', 'id' => $id], $link));
-    }
-
-    /**
-     * Finds the SalaryPeriodItems model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return SalaryPeriodItems the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = SalaryPeriodItems::findOne($id)) !== null && (int)$model->period->kind == SalaryPeriod::KIND_SALARY) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
-    }
-
-    /**
-     * Finds the SalaryPeriod model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return SalaryPeriod the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModelPeriod($id)
-    {
-        if (($model = SalaryPeriod::findOne($id)) !== null && (int)$model->kind == SalaryPeriod::KIND_SALARY) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
-    }
-
-    /**
-     * Finds the EmployeeBranchUser model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return EmployeeBranchUser the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModelEmployee($id)
-    {
-        if (($model = EmployeeBranchUser::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
-    }
-
-    /**
-     * Finds the User model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return User the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModelUser($id)
-    {
-        if (($model = User::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
-    }
-
-    public function flash($type, $message)
-    {
-        Yii::$app->getSession()->setFlash($type == 'error' ? 'danger' : $type, $message);
     }
 }

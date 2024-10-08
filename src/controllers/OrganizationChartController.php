@@ -8,7 +8,6 @@ use hesabro\helpers\traits\AjaxValidationTrait;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\helpers\Html;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UnprocessableEntityHttpException;

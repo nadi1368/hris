@@ -16,7 +16,7 @@ use yii\widgets\MaskedInput;
     <div class="card-body">
         <div class="row">
             <div class="col-md-6 date-input">
-                <?= $form->field($model, 'payment_date')->widget(MaskedInput::className(), [
+                <?= $form->field($model, 'payment_date')->widget(MaskedInput::class, [
                     'mask' => '9999/99/99',
                 ]) ?>
             </div>

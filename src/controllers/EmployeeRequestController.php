@@ -2,16 +2,12 @@
 
 namespace hesabro\hris\controllers;
 
-use backend\models\User;
-use hesabro\hris\models\EmployeeBranch;
-use hesabro\hris\models\EmployeeBranchUser;
 use hesabro\hris\models\EmployeeRequest;
 use hesabro\hris\models\EmployeeRequestSearch;
 use hesabro\hris\models\Letter;
 use hesabro\helpers\traits\AjaxValidationTrait;
 use Yii;
 use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -103,7 +99,7 @@ class EmployeeRequestController extends Controller
 
     public function actionMy(mixed $type)
     {
-        /** @var User $user */
+        /** @var object $user */
         $user = Yii::$app->user->getIdentity();
         $employeeBranchUser = $user->employeeBranchUser;
         $this->layout = 'panel';
@@ -122,7 +118,7 @@ class EmployeeRequestController extends Controller
 
     public function actionCreate(mixed $type)
     {
-        /** @var User $user */
+        /** @var object $user */
         $user = Yii::$app->user->getIdentity();
         $request = Yii::$app->request;
         $model = new EmployeeRequest([

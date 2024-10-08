@@ -31,7 +31,7 @@ use yii\widgets\MaskedInput;
                     <?= $form->field($model, 'file_number') ?>
                 </div>
                 <div class="col-md-6">
-                    <?= $form->field($model, 'another_period')->widget(Select2::classname(), [
+                    <?= $form->field($model, 'another_period')->widget(Select2::class, [
                         'data' => $model->getAnotherPeriodList(),
                         'options' => [
                             'placeholder' => Yii::t("app", "Search"),

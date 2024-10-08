@@ -12,7 +12,7 @@ use yii\helpers\Html;
 /* @var $model ContractTemplates */
 /* @var $form yii\bootstrap4\ActiveForm */
 
-$this->registerJsFile("@web/js/contractTemplate.js", ['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerJsFile("@web/js/contractTemplate.js", ['depends' => [\yii\web\JqueryAsset::class]]);
 
 
 $variables = '';

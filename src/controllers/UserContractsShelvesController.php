@@ -6,7 +6,6 @@ use hesabro\hris\models\UserContracts;
 use hesabro\hris\models\UserContractsSearch;
 use hesabro\hris\models\UserContractsShelves;
 use hesabro\hris\models\UserContractsShelvesSearch;
-use common\models\Settings;
 use hesabro\helpers\traits\AjaxValidationTrait;
 use Yii;
 use yii\filters\AccessControl;
@@ -21,7 +20,7 @@ use yii\web\Response;
 class UserContractsShelvesController extends Controller
 {
     use AjaxValidationTrait;
-    public int $categorySetting = Settings::CAT_EMPLOYEE;
+
     /**
      * {@inheritdoc}
      */
@@ -29,13 +28,13 @@ class UserContractsShelvesController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
             ],
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' =>
                 [
                     [

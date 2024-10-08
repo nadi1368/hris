@@ -17,7 +17,7 @@ use yii\helpers\Html;
 <div class="card-body">
 	<div class="row">
 		<div class="col-md-12">
-			<?= $form->field($model, 'shelf_id')->widget(Select2::classname(), [
+			<?= $form->field($model, 'shelf_id')->widget(Select2::class, [
 				'data' => UserContractsShelves::itemAlias('List'),
 				'options' =>
 					[

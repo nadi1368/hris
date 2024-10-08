@@ -255,12 +255,12 @@ class EmployeeBranchBase extends ActiveRecord
     {
         return [
             [
-                'class' => TraceBehavior::className(),
-                'ownerClassName' => self::className()
+                'class' => TraceBehavior::class,
+                'ownerClassName' => self::class
             ],
             [
-                'class' => LogBehavior::className(),
-                'ownerClassName' => self::className(),
+                'class' => LogBehavior::class,
+                'ownerClassName' => self::class,
                 'saveAfterInsert' => true,
                 'excludeAttribute' => ['changed', 'update_id'],
             ],

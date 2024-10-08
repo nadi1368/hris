@@ -2,11 +2,14 @@
 
 namespace hesabro\hris\models;
 
+use hesabro\helpers\traits\ModelHelper;
 use Yii;
 use yii\base\Model;
 
 class ContractClausesModel extends Model
 {
+    use ModelHelper;
+
 	public ?string $title = null;
 	public ?string $description = null;
 

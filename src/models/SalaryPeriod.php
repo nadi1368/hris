@@ -28,6 +28,10 @@ class SalaryPeriod extends SalaryPeriodBase
     const DOCUMENT_TYPE_SALARY_INSURANCE_ADDITION = Document::TYPE_SALARY_INSURANCE_ADDITION;
     const DOCUMENT_TYPE_SALARY_PERIOD_PAYMENT = Document::TYPE_SALARY_PERIOD_PAYMENT;
 
+    const DOCUMENT_TYPE_YEAR_PERIOD_CLEARING = Document::TYPE_YEAR_PERIOD_CLEARING;
+
+    const DOCUMENT_TYPE_YEAR_PERIOD = Document::TYPE_YEAR_PERIOD;
+
     const MutexSalaryPeriodConfirm = Mutex::SalaryPeriodConfirm;
     const MutexSalaryPeriodPayment = Mutex::SalaryPeriodPayment;
 

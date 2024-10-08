@@ -4,8 +4,7 @@ namespace hesabro\hris\controllers;
 
 use hesabro\hris\models\InternalNumber;
 use hesabro\hris\models\InternalNumberSearch;
-use common\components\mobit\SortableGridview\SortableGridAction;
-use common\models\Settings;
+use himiklab\sortablegrid\SortableGridAction;
 use hesabro\helpers\traits\AjaxValidationTrait;
 use Yii;
 use yii\filters\AccessControl;
@@ -23,8 +22,6 @@ use yii\web\UploadedFile;
 class InternalNumberController extends Controller
 {
     use AjaxValidationTrait;
-
-    public int $categorySetting = Settings::CAT_EMPLOYEE;
 
     /**
      * {@inheritdoc}

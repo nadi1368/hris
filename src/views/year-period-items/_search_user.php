@@ -22,7 +22,7 @@ use yii\widgets\MaskedInput;
     <div class="card-body">
         <div class="row">
             <div class="col-md-12">
-                <?= $form->field($model, 'user_id')->widget(Select2::className(), [
+                <?= $form->field($model, 'user_id')->widget(Select2::class, [
                     'data' => User::getUserWithRoles(['employee']),
                     'pluginOptions' => [
                         'allowClear' => true,
@@ -35,7 +35,7 @@ use yii\widgets\MaskedInput;
             </div>
 
             <div class="col-md-12 date-input">
-                <?= $form->field($model, 'end_work')->widget(MaskedInput::className(), [
+                <?= $form->field($model, 'end_work')->widget(MaskedInput::class, [
                     'mask' => '9999/99/99',
                 ]) ?>
             </div>

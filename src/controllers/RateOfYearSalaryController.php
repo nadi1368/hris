@@ -6,7 +6,6 @@ use hesabro\helpers\traits\AjaxValidationTrait;
 use Yii;
 use hesabro\hris\models\RateOfYearSalary;
 use hesabro\hris\models\RateOfYearSalarySearch;
-use yii\helpers\Html;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -26,13 +25,13 @@ class RateOfYearSalaryController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
             ],
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' =>
                     [
                         [

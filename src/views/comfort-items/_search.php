@@ -21,7 +21,7 @@ use hesabro\hris\models\ComfortItems;
     <div class="card-body">
         <div class="row">
             <div class="col-md-4">
-                <?= $form->field($model, 'user_id')->widget(Select2::className(), [
+                <?= $form->field($model, 'user_id')->widget(Select2::class, [
                     'data' => User::getUserWithRoles(['employee']),
                     'pluginOptions' => [
                         'allowClear' => true,

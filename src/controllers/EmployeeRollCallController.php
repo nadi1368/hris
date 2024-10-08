@@ -3,69 +3,18 @@
 namespace hesabro\hris\controllers;
 
 use backend\models\UploadExcelSearch;
+use backend\modules\excel\models\UploadFormExcel;
+use common\models\UploadExcel;
+use hesabro\helpers\validators\PersianValidator;
 use hesabro\hris\models\EmployeeBranchUser;
 use hesabro\hris\models\EmployeeRollCall;
-use hesabro\hris\models\EmployeeRollCallSearch;
-use hesabro\hris\models\SalaryPeriod;
-use backend\modules\excel\models\UploadFormExcel;
-use common\components\Helper;
-use common\components\jdf\Jdf;
-use common\models\UploadExcel;
-use common\validators\PersianValidator;
 use Yii;
-use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
 use yii\helpers\Html;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
-/**
- * EmployeeRollCallController implements the CRUD actions for EmployeeRollCall model.
- */
-class EmployeeRollCallController extends Controller
+class EmployeeRollCallController extends EmployeeRollCallBase
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' =>
-                    [
-                        [
-                            'allow' => true,
-                            'roles' => ['EmployeeBranch/RollCall'],
-                        ],
-                    ]
-            ]
-        ];
-    }
-
-    /**
-     * Lists all EmployeeRollCall models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $searchModel = new EmployeeRollCallSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-
     /**
      * @return string
      */
@@ -107,7 +56,7 @@ class EmployeeRollCallController extends Controller
      */
     public function actionUploadCsvDaily()
     {
-        $uploadForm = new UploadExcel(['scenario' => UploadExcel::SCENARIO_UPLOAD_RollCall_DAILY, 'type' => UploadExcel::TYPE_ROLL_CALL_DAILY, 'date' => Jdf::plusDay(Yii::$app->jdf->jdate("Y/m/d"), -1)]);
+        $uploadForm = new UploadExcel(['scenario' => UploadExcel::SCENARIO_UPLOAD_RollCall_DAILY, 'type' => UploadExcel::TYPE_ROLL_CALL_DAILY, 'date' => Yii::$app->jdf::plusDay(Yii::$app->jdf->jdate("Y/m/d"), -1)]);
         if ($uploadForm->load(Yii::$app->request->post())) {
             $transaction = \Yii::$app->db->beginTransaction();
             try {
@@ -222,45 +171,6 @@ class EmployeeRollCallController extends Controller
     }
 
     /**
-     * @param $id
-     * @return array
-     * @throws NotFoundHttpException
-     */
-    public function actionDeleteCsvDaily($id): array
-    {
-        $model = $this->findModelUploadFile($id);
-        $result = [
-            'status' => false,
-            'message' => Yii::t("app", "Error In Save Info")
-        ];
-        if ($model->canDelete()) {
-            $transaction = \Yii::$app->db->beginTransaction();
-            try {
-                $flag = $model->softDelete();
-                $flag = $flag && $model->afterSoftDelete();
-                if ($flag) {
-                    $transaction->commit();
-                    $result = [
-                        'status' => true,
-                        'message' => Yii::t("app", "Item Deleted")
-                    ];
-                } else {
-                    $transaction->rollBack();
-                }
-            } catch (\Exception $e) {
-                $transaction->rollBack();
-                $result = [
-                    'status' => false,
-                    'message' => $e->getMessage()
-                ];
-                Yii::error($e->getMessage() . $e->getTraceAsString(), Yii::$app->controller->id . '/' . Yii::$app->controller->action->id);
-            }
-        }
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return $result;
-    }
-
-    /**
      * /**
      * @param $period_id
      * @param $file_name
@@ -336,7 +246,7 @@ class EmployeeRollCallController extends Controller
                 $flag = $flag && $employee->saveLowTime(Yii::$app->jdf->jdate("Y/m/d", $salaryPeriod->start_date), $lowTime, $salaryPeriod->id);
                 $flag = $flag && $employee->saveOverTime(Yii::$app->jdf->jdate("Y/m/d", $salaryPeriod->start_date), $overTime, $salaryPeriod->id);
             }
-            $salaryPeriod->setRollCall = Helper::YES;
+            $salaryPeriod->setRollCall = Yii::$app->helper::YES;
             $flag = $flag && $salaryPeriod->save(false);
             if ($flag) {
                 $transaction->commit();
@@ -354,39 +264,6 @@ class EmployeeRollCallController extends Controller
         return $this->redirect(['index']);
     }
 
-
-    /**
-     * Finds the EmployeeRollCall model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id شناسه
-     * @return EmployeeRollCall the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = EmployeeRollCall::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
-    }
-
-    /**
-     * Finds the SalaryPeriod model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id شناسه
-     * @return SalaryPeriod the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModelPeriod(int $id)
-    {
-        if (($model = SalaryPeriod::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
-    }
-
     /**
      * Finds the UploadExcel model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -402,10 +279,4 @@ class EmployeeRollCallController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
-
-    public function flash($type, $message)
-    {
-        Yii::$app->getSession()->setFlash($type == 'error' ? 'danger' : $type, $message);
-    }
-
 }

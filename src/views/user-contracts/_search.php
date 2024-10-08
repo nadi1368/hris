@@ -30,7 +30,7 @@ use yii\widgets\MaskedInput;
 			</div>
 
 			<div class="col-md-4">
-				<?= $form->field($model, 'user_id')->widget(Select2::className(), [
+				<?= $form->field($model, 'user_id')->widget(Select2::class, [
 					'data' => User::getUserWithRoles(['employee']),
 					'pluginOptions' => [
 						'allowClear' => true,
@@ -43,25 +43,25 @@ use yii\widgets\MaskedInput;
 			</div>
 
 			<div class="col-md-2 date-input">
-				<?= $form->field($model, 'fromStartDate')->widget(MaskedInput::className(), [
+				<?= $form->field($model, 'fromStartDate')->widget(MaskedInput::class, [
                 'mask' => '9999/99/99',
             ]) ?>
 			</div>
 
 			<div class="col-md-2 date-input">
-				<?= $form->field($model, 'toStartDate')->widget(MaskedInput::className(), [
+				<?= $form->field($model, 'toStartDate')->widget(MaskedInput::class, [
                 'mask' => '9999/99/99',
             ]) ?>
 			</div>
 
 			<div class="col-md-2 date-input">
-				<?= $form->field($model, 'fromEndDate')->widget(MaskedInput::className(), [
+				<?= $form->field($model, 'fromEndDate')->widget(MaskedInput::class, [
 					'mask' => '9999/99/99',
 				]) ?>
 			</div>
 
 			<div class="col-md-2 date-input">
-				<?= $form->field($model, 'toEndDate')->widget(MaskedInput::className(), [
+				<?= $form->field($model, 'toEndDate')->widget(MaskedInput::class, [
 					'mask' => '9999/99/99',
 				]) ?>
 			</div>

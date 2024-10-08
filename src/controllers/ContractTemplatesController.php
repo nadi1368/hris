@@ -5,8 +5,6 @@ namespace hesabro\hris\controllers;
 use hesabro\hris\models\ContractClausesModel;
 use hesabro\hris\models\ContractTemplates;
 use hesabro\hris\models\ContractTemplatesSearch;
-use common\models\BaseModel;
-use common\models\Settings;
 use hesabro\helpers\traits\AjaxValidationTrait;
 use Yii;
 use yii\filters\AccessControl;
@@ -24,7 +22,6 @@ class ContractTemplatesController extends Controller
 {
     use AjaxValidationTrait;
 
-    public int $categorySetting = Settings::CAT_EMPLOYEE;
     /**
      * {@inheritdoc}
      */
@@ -32,41 +29,41 @@ class ContractTemplatesController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
             ],
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' =>
-                [
                     [
-                        'allow' => true,
-                        'roles' => ['ContractTemplates/index'],
-                        'actions' => ['index', 'json-export', 'json-import']
-                    ],
-                    [
-                        'allow' => true,
-                        'roles' => ['ContractTemplates/create'],
-                        'actions' => ['create']
-                    ],
-                    [
-                        'allow' => true,
-                        'roles' => ['ContractTemplates/update'],
-                        'actions' => ['update']
-                    ],
-                    [
-                        'allow' => true,
-                        'roles' => ['ContractTemplates/delete'],
-                        'actions' => ['delete']
-                    ],
-                    [
-                        'allow' => true,
-                        'roles' => ['ContractTemplates/view'],
-                        'actions' => ['view']
-                    ],
-                ]
+                        [
+                            'allow' => true,
+                            'roles' => ['ContractTemplates/index'],
+                            'actions' => ['index', 'json-export', 'json-import']
+                        ],
+                        [
+                            'allow' => true,
+                            'roles' => ['ContractTemplates/create'],
+                            'actions' => ['create']
+                        ],
+                        [
+                            'allow' => true,
+                            'roles' => ['ContractTemplates/update'],
+                            'actions' => ['update']
+                        ],
+                        [
+                            'allow' => true,
+                            'roles' => ['ContractTemplates/delete'],
+                            'actions' => ['delete']
+                        ],
+                        [
+                            'allow' => true,
+                            'roles' => ['ContractTemplates/view'],
+                            'actions' => ['view']
+                        ],
+                    ]
             ]
         ];
     }
@@ -122,14 +119,14 @@ class ContractTemplatesController extends Controller
         if ($model->load(Yii::$app->request->post())) {
 
             if ($model->type != ContractTemplates::TYPE_LETTER) {
-                $model->clausesModels = BaseModel::createMultiple(ContractClausesModel::class);
-                BaseModel::loadMultiple($model->clausesModels, Yii::$app->request->post());
-                BaseModel::validateMultiple($model->clausesModels);
+                $model->clausesModels = ContractClausesModel::createMultipleWithScenario(ContractClausesModel::class);
+                ContractClausesModel::loadMultiple($model->clausesModels, Yii::$app->request->post());
+                ContractClausesModel::validateMultiple($model->clausesModels);
             }
 
-			if($model->save()) {
-				return $this->redirect(['index', 'type' => $model->type]);
-			}
+            if($model->save()) {
+                return $this->redirect(['index', 'type' => $model->type]);
+            }
         } else if ($oldContract) {
             $model->attributes = $oldContract->attributes;
             $model->clausesModels = $oldContract->clausesModels;
@@ -158,13 +155,13 @@ class ContractTemplatesController extends Controller
         }
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 
-			$model->clausesModels = BaseModel::createMultiple(ContractClausesModel::class);
-			BaseModel::loadMultiple($model->clausesModels, Yii::$app->request->post());
-            BaseModel::validateMultiple($model->clausesModels);
+            $model->clausesModels = ContractClausesModel::createMultipleWithScenario(ContractClausesModel::class);
+            ContractClausesModel::loadMultiple($model->clausesModels, Yii::$app->request->post());
+            ContractClausesModel::validateMultiple($model->clausesModels);
 
-			if ($model->save()) {
-				return $this->redirect(['index', 'type' => $model->type]);
-			}
+            if ($model->save()) {
+                return $this->redirect(['index', 'type' => $model->type]);
+            }
         }
 
         return $this->render('update', [

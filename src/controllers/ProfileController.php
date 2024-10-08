@@ -2,12 +2,11 @@
 
 namespace hesabro\hris\controllers;
 
-use backend\models\User;
 use hesabro\hris\models\EmployeeBranchUser;
 use hesabro\hris\models\EmployeeChild;
 use hesabro\hris\models\EmployeeExperience;
-use common\models\Model;
 use hesabro\helpers\traits\AjaxValidationTrait;
+use hesabro\hris\Module;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -52,20 +51,20 @@ class ProfileController extends Controller
 
         if ($request->isPost) {
             $updateAvatar = true;
-            $user = User::findOne(Yii::$app->user->getId());
+            $user = Module::getInstance()->user::findOne(Yii::$app->user->getId());
             if ($avatar = UploadedFile::getInstance($model, 'avatar')) {
-                $user->scenario = User::SCENARIO_UPDATE_AVATAR;
+                $user->scenario = Module::getInstance()->user::SCENARIO_UPDATE_AVATAR;
                 $user->avatar = $avatar;
                 $updateAvatar = $user->save(false);
             }
 
-            $model->children = Model::createMultiple(EmployeeChild::class);
-            Model::loadMultiple($model->children, $request->post());
-            $valid = Model::validateMultiple($model->children);
+            $model->children = EmployeeChild::createMultiple(EmployeeChild::class);
+            EmployeeChild::loadMultiple($model->children, $request->post());
+            $valid = EmployeeChild::validateMultiple($model->children);
 
-            $model->experiences = Model::createMultiple(EmployeeExperience::class);
-            Model::loadMultiple($model->experiences, $request->post());
-            $valid = $valid && Model::validateMultiple($model->experiences);
+            $model->experiences = EmployeeExperience::createMultiple(EmployeeExperience::class);
+            EmployeeExperience::loadMultiple($model->experiences, $request->post());
+            $valid = $valid && EmployeeExperience::validateMultiple($model->experiences);
 
             $updateProfile = $valid && $updateAvatar;
 

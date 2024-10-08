@@ -17,7 +17,7 @@ use yii\widgets\MaskedInput;
         <div class="row">
 
             <div class="col-md-12">
-                <?= $form->field($model, 'user_id')->widget(Select2::className(), [
+                <?= $form->field($model, 'user_id')->widget(Select2::class, [
                     'data' => User::getUserWithRoles(['employee']),
                     'pluginOptions' => [
                         'allowClear' => true,
@@ -35,7 +35,7 @@ use yii\widgets\MaskedInput;
 
             <div class="col-md-4">
                 <?= $form->field($model, "second")
-                    ->widget(MaskedInput::className(),
+                    ->widget(MaskedInput::class,
                         [
                             'options' => [
                                 'autocomplete' => 'off',
@@ -51,7 +51,7 @@ use yii\widgets\MaskedInput;
             </div>
 
             <div class="col-md-4">
-                <?= $form->field($model, 'date')->widget(dateRangePicker::classname(), [
+                <?= $form->field($model, 'date')->widget(dateRangePicker::class, [
                     'options'     => [
                         'locale'            => [
                             'format' => 'jYYYY/jMM/jDD',
