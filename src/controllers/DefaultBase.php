@@ -157,11 +157,11 @@ class DefaultBase extends Controller
                 $flag = $flag && $model->createUser();
                 if ($flag) {
                     $transaction->commit();
-                    $this->flash("success", Yii::t('app', 'Item Created'));
+                    $this->flash("success", Module::t('module', 'Item Created'));
                     return $this->redirect(['index', 'id' => $model->id]);
                 } else {
                     $transaction->rollBack();
-                    $this->flash("warning", Yii::t("app", "Error In Save Info"));
+                    $this->flash("warning", Module::t('module', "Error In Save Info"));
                 }
             } catch (\Exception $e) {
                 Yii::error($e->getMessage() . $e->getTraceAsString(), Yii::$app->controller->id.'/'.Yii::$app->controller->action->id);
@@ -186,7 +186,7 @@ class DefaultBase extends Controller
     {
         $model = $this->findModel($id);
         if (!$model->canUpdate()) {
-            $this->flash('danger', Yii::t("app", "Can Not Update"));
+            $this->flash('danger', Module::t('module', "Can Not Update"));
             return $this->redirect(['index']);
         }
 
@@ -200,11 +200,11 @@ class DefaultBase extends Controller
                 $flag = $flag && $model->updateUser($old_user_ids);
                 if ($flag) {
                     $transaction->commit();
-                    $this->flash("success", Yii::t('app', 'Item Updated'));
+                    $this->flash("success", Module::t('module', 'Item Updated'));
                     return $this->redirect(['index', 'id' => $model->id]);
                 } else {
                     $transaction->rollBack();
-                    $this->flash("warning", Yii::t("app", "Error In Save Info"));
+                    $this->flash("warning", Module::t('module', "Error In Save Info"));
                 }
             } catch (\Exception $e) {
                 Yii::error($e->getMessage() . $e->getTraceAsString(), Yii::$app->controller->id.'/'.Yii::$app->controller->action->id);
@@ -231,7 +231,7 @@ class DefaultBase extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->asJson([
                 'success' => true,
-                'msg' => Yii::t('app', 'Item Updated')
+                'msg' => Module::t('module', 'Item Updated')
             ]);
         }
 
@@ -285,13 +285,13 @@ class DefaultBase extends Controller
             }
 
             if (!$updateAvatar) {
-                $model->addError('avatar', $user->getFirstError('avatar') ?: Yii::t('app', 'Error In Save Information, Please Try Again'));
+                $model->addError('avatar', $user->getFirstError('avatar') ?: Module::t('module', 'Error In Save Information, Please Try Again'));
             }
 
             if ($updateProfile) {
                 return $this->asJson([
                     'success' => true,
-                    'msg' => Yii::t('app', 'Item Updated')
+                    'msg' => Module::t('module', 'Item Updated')
                 ]);
             }
         }
@@ -330,7 +330,7 @@ class DefaultBase extends Controller
 
         return $this->asJson([
             'success' => $rejected,
-            'msg' => Yii::t('app', $rejected ? 'Item Rejected' : 'Can Not Update')
+            'msg' => Module::t('module', $rejected ? 'Item Rejected' : 'Can Not Update')
         ]);
     }
 
@@ -347,11 +347,11 @@ class DefaultBase extends Controller
         $model = $this->findModelUser( $id);
         $model->setScenario(EmployeeBranchUser::SCENARIO_SET_END_WORK);
         if (!$model->canSetEndWork()) {
-            throw new HttpException(400, Yii::t("app", "It is not possible to perform this operation."));
+            throw new HttpException(400, Module::t('module', "It is not possible to perform this operation."));
         }
         $result = [
             'success' => false,
-            'msg' => Yii::t("app", "Error In Save Info")
+            'msg' => Module::t('module', "Error In Save Info")
         ];
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $transaction = Yii::$app->db->beginTransaction();
@@ -367,7 +367,7 @@ class DefaultBase extends Controller
                 if ($flag) {
                     $result = [
                         'success' => true,
-                        'msg' => Yii::t("app", "Item Updated")
+                        'msg' => Module::t('module', "Item Updated")
                     ];
                     $transaction->commit();
                 } else {
@@ -406,13 +406,13 @@ class DefaultBase extends Controller
                     $transaction->commit();
                     $result = [
                         'status' => true,
-                        'message' => Yii::t("app", "Item Updated")
+                        'message' => Module::t('module', "Item Updated")
                     ];
                 } else {
                     $transaction->rollBack();
                     $result = [
                         'status' => false,
-                        'message' => Yii::t("app", "Error In Save Info")
+                        'message' => Module::t('module', "Error In Save Info")
                     ];
                 }
             } catch (\Exception $e) {
@@ -426,7 +426,7 @@ class DefaultBase extends Controller
         } else {
             $result = [
                 'status' => false,
-                'message' => Yii::t("app", "It is not possible to perform this operation")
+                'message' => Module::t('module', "It is not possible to perform this operation")
             ];
         }
         return $this->asJson($result);
@@ -462,13 +462,13 @@ class DefaultBase extends Controller
                     $transaction->commit();
                     $result = [
                         'status' => true,
-                        'message' => Yii::t("app", "Item Updated")
+                        'message' => Module::t('module', "Item Updated")
                     ];
                 } else {
                     $transaction->rollBack();
                     $result = [
                         'status' => false,
-                        'message' => Yii::t("app", "Error In Save Info")
+                        'message' => Module::t('module', "Error In Save Info")
                     ];
                 }
             } catch (\Exception $e) {
@@ -482,7 +482,7 @@ class DefaultBase extends Controller
         } else {
             $result = [
                 'status' => false,
-                'message' => Yii::t("app", "It is not possible to perform this operation")
+                'message' => Module::t('module', "It is not possible to perform this operation")
             ];
         }
         return $this->asJson($result);
@@ -500,7 +500,7 @@ class DefaultBase extends Controller
         $model = $this->findModel($id);
 
         if ($model->softDelete()) {
-            $this->flash('success', Yii::t("app", "Item Deleted"));
+            $this->flash('success', Module::t('module', "Item Deleted"));
         }
         return $this->redirect(['index']);
     }

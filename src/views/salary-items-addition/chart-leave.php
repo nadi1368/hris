@@ -1,4 +1,6 @@
 <?php
+
+use hesabro\hris\Module;
 use yii\web\View;
 
 /* @var $this View */
@@ -14,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="card">
     <div class="card-header">
-        <h4 class="mb-0"><?= Yii::t('app', 'Employee Leave Chart') ?></h4>
+        <h4 class="mb-0"><?= Module::t('module', 'Employee Leave Chart') ?></h4>
     </div>
     <div class="card-body">
         <div id="report-leave-chart" style="width: 100%; height: 750px"></div>
@@ -23,8 +25,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php
 $chartData = json_encode($chartData);
-$day = Yii::t('app', 'Day');
-$hour = Yii::t('app', 'Hour');
+$day = Module::t('module', 'Day');
+$hour = Module::t('module', 'Hour');
 $js = <<<JS
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawChart);

@@ -7,9 +7,9 @@ use hesabro\hris\models\ComfortItems;
 use hesabro\hris\models\SalaryItemsAddition;
 use common\models\BalanceDetailed;
 use common\models\Settings;
+use hesabro\hris\Module;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\helpers\Url;
 use hesabro\hris\models\SalaryPeriodItems;
 
 /* @var $model hesabro\hris\models\SalaryPeriod */
@@ -146,13 +146,13 @@ $link['SalaryPeriodItemsSearch']['user_id'] = [];
                 'class' => "btn btn-success",
             ]) : ''; ?>
         <?= $model->canConfirm() ?
-            Html::a(Yii::t('app', 'Confirm'),
+            Html::a(Module::t('module', 'Confirm'),
                 ['confirm', 'id' => $model->id],
                 [
-                    'title' => Yii::t('app', 'Confirm'),
+                    'title' => Module::t('module', 'Confirm'),
                     'class' => "btn btn-primary",
                     'data-method' => 'post',
-                    'data-confirm' => Yii::t('app', 'Are you sure?'),
+                    'data-confirm' => Module::t('module', 'Are you sure?'),
                 ]) : '' ?>
     </div>
 </div>

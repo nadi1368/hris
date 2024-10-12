@@ -3,6 +3,7 @@
 namespace hesabro\hris\controllers;
 
 use hesabro\helpers\traits\AjaxValidationTrait;
+use hesabro\hris\Module;
 use Yii;
 use hesabro\hris\models\RateOfYearSalary;
 use hesabro\hris\models\RateOfYearSalarySearch;
@@ -67,7 +68,7 @@ class RateOfYearSalaryController extends Controller
         $model = new RateOfYearSalary();
         $result = [
             'success' => false,
-            'msg' => Yii::t("app", "Error In Save Info")
+            'msg' => Module::t('module', "Error In Save Info")
         ];
 
         if ($this->request->isPost) {
@@ -78,7 +79,7 @@ class RateOfYearSalaryController extends Controller
                     if ($flag) {
                         $result = [
                             'success' => true,
-                            'msg' => Yii::t("app", "Item Created")
+                            'msg' => Module::t('module', "Item Created")
                         ];
                         $transaction->commit();
                     } else {
@@ -114,7 +115,7 @@ class RateOfYearSalaryController extends Controller
 
         $result = [
             'success' => false,
-            'msg' => Yii::t("app", "Error In Save Info")
+            'msg' => Module::t('module', "Error In Save Info")
         ];
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $transaction = Yii::$app->db->beginTransaction();
@@ -123,7 +124,7 @@ class RateOfYearSalaryController extends Controller
                 if ($flag) {
                     $result = [
                         'success' => true,
-                        'msg' => Yii::t("app", "Item Updated")
+                        'msg' => Module::t('module', "Item Updated")
                     ];
                     $transaction->commit();
                 } else {
@@ -160,13 +161,13 @@ class RateOfYearSalaryController extends Controller
                     $transaction->commit();
                     $result = [
                         'status' => true,
-                        'message' => Yii::t("app", "Item Deleted")
+                        'message' => Module::t('module', "Item Deleted")
                     ];
                 } else {
                     $transaction->rollBack();
                     $result = [
                         'status' => false,
-                        'message' => Yii::t("app", "Error In Save Info")
+                        'message' => Module::t('module', "Error In Save Info")
                     ];
                 }
             } catch (\Exception $e) {
@@ -180,7 +181,7 @@ class RateOfYearSalaryController extends Controller
         } else {
             $result = [
                 'status' => false,
-                'message' => Yii::t("app", "It is not possible to perform this operation")
+                'message' => Module::t('module', "It is not possible to perform this operation")
             ];
         }
         return $this->asJson($result);
@@ -199,7 +200,7 @@ class RateOfYearSalaryController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
     public function flash($type, $message)

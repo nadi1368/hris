@@ -3,6 +3,7 @@
 namespace hesabro\hris\models;
 
 use hesabro\errorlog\behaviors\TraceBehavior;
+use hesabro\hris\Module;
 use Yii;
 use yii\base\Model;
 
@@ -31,12 +32,12 @@ class AdvanceMoneyFormBase extends Model
     public function attributeLabels()
     {
         return [
-            'definite_id_from' => Yii::t('app', 'M Id Creditor'),
-            'account_id_from' => Yii::t('app', 'T Id Creditor'),
+            'definite_id_from' => Module::t('module', 'M Id Creditor'),
+            'account_id_from' => Module::t('module', 'T Id Creditor'),
             'account_id_to' => 'تفضیل کارمند (بدهکار)',
-            'amount' => Yii::t('app', 'Amount'),
-            'date' => Yii::t('app', 'Date'),
-            'description' => Yii::t('app', 'Description'),
+            'amount' => Module::t('module', 'Amount'),
+            'date' => Module::t('module', 'Date'),
+            'description' => Module::t('module', 'Description'),
         ];
     }
 

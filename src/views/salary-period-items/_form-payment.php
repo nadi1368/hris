@@ -3,6 +3,7 @@
 
 use common\models\BalanceDetailed;
 use common\models\Settings;
+use hesabro\hris\Module;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -81,7 +82,7 @@ $link['SalaryPeriodItemsSearch']['user_id'] = [];
                 'class' => "btn btn-success",
             ]) : ''; ?>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">لغو</button>
-        <?= Html::submitButton(Yii::t('app', 'Payment'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton(Module::t('module', 'Payment'), ['class' => 'btn btn-primary']) ?>
     </div>
 </div>
 <?php ActiveForm::end(); ?>

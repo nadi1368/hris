@@ -147,21 +147,21 @@ class EmployeeRequestBase extends ActiveRecord
     public function attributeLabels(): array
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'user_id' => Yii::t('app', 'User'),
-            'type' => Yii::t('app', 'Category'),
-            'branch_id' => Yii::t('app', 'Branch'),
-            'status' => Yii::t('app', 'Status'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'created_by' => Yii::t('app', 'Created By'),
-            'updated_by' => Yii::t('app', 'Updated By'),
-            'deleted_at' => Yii::t('app', 'Deleted At'),
-            'slave_id' => Yii::t('app', 'Slave'),
-            'contract_template_id' => Yii::t('app', 'Letter'),
-            'description' => Yii::t('app', 'Description'),
-            'reject_description' => Yii::t('app', 'Reject Description'),
-            'indicator_id' => Yii::t('app', 'Indicator'),
+            'id' => Module::t('module', 'ID'),
+            'user_id' => Module::t('module', 'User'),
+            'type' => Module::t('module', 'Category'),
+            'branch_id' => Module::t('module', 'Branch'),
+            'status' => Module::t('module', 'Status'),
+            'created_at' => Module::t('module', 'Created At'),
+            'updated_at' => Module::t('module', 'Updated At'),
+            'created_by' => Module::t('module', 'Created By'),
+            'updated_by' => Module::t('module', 'Updated By'),
+            'deleted_at' => Module::t('module', 'Deleted At'),
+            'slave_id' => Module::t('module', 'Slave'),
+            'contract_template_id' => Module::t('module', 'Letter'),
+            'description' => Module::t('module', 'Description'),
+            'reject_description' => Module::t('module', 'Reject Description'),
+            'indicator_id' => Module::t('module', 'Indicator'),
         ];
     }
 
@@ -243,12 +243,12 @@ class EmployeeRequestBase extends ActiveRecord
     {
         $items = [
             'Type' => [
-                self::TYPE_LETTER => Yii::t('app', 'Letter')
+                self::TYPE_LETTER => Module::t('module', 'Letter')
             ],
             'Status' => [
-                self::STATUS_PENDING => Yii::t('app', 'Wait Confirm'),
-                self::STATUS_REJECT => Yii::t('app', 'Rejected'),
-                self::STATUS_ACCEPT => Yii::t('app', 'Confirmed'),
+                self::STATUS_PENDING => Module::t('module', 'Wait Confirm'),
+                self::STATUS_REJECT => Module::t('module', 'Rejected'),
+                self::STATUS_ACCEPT => Module::t('module', 'Confirmed'),
             ],
             'StatusClass' => [
                 self::STATUS_PENDING => 'warning',

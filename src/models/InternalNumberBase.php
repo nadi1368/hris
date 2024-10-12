@@ -89,12 +89,12 @@ class InternalNumberBase extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'sort' => Yii::t('app', 'Sort'),
-            'name' => Yii::t('app', 'Name'),
-            'number' => Yii::t('app', 'Number'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'job_position' => Yii::t('app', 'Post'),
+            'id' => Module::t('module', 'ID'),
+            'sort' => Module::t('module', 'Sort'),
+            'name' => Module::t('module', 'Name'),
+            'number' => Module::t('module', 'Number'),
+            'user_id' => Module::t('module', 'User ID'),
+            'job_position' => Module::t('module', 'Post'),
         ];
     }
 

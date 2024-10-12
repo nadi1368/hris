@@ -4,6 +4,7 @@ namespace hesabro\hris\controllers;
 
 use hesabro\hris\models\EmployeeBranchUser;
 use hesabro\helpers\traits\AjaxValidationTrait;
+use hesabro\hris\Module;
 use Yii;
 use hesabro\hris\models\SalaryItemsAddition;
 use hesabro\hris\models\SalaryItemsAdditionSearch;
@@ -117,7 +118,7 @@ class SalaryItemsAdditionBase extends Controller
         $model->setDefaultValueBeforeCreate();
         $result = [
             'success' => false,
-            'msg' => Yii::t("app", "Error In Save Info")
+            'msg' => Module::t('module', "Error In Save Info")
         ];
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $transaction = Yii::$app->db->beginTransaction();
@@ -126,7 +127,7 @@ class SalaryItemsAdditionBase extends Controller
                 if ($flag) {
                     $result = [
                         'success' => true,
-                        'msg' => Yii::t("app", "Item Created")
+                        'msg' => Module::t('module', "Item Created")
                     ];
                     $transaction->commit();
                 } else {
@@ -188,7 +189,7 @@ class SalaryItemsAdditionBase extends Controller
         $model->setDefaultValueBeforeUpdate();
         $result = [
             'success' => false,
-            'msg' => Yii::t("app", "Error In Save Info")
+            'msg' => Module::t('module', "Error In Save Info")
         ];
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $transaction = Yii::$app->db->beginTransaction();
@@ -197,7 +198,7 @@ class SalaryItemsAdditionBase extends Controller
                 if ($flag) {
                     $result = [
                         'success' => true,
-                        'msg' => Yii::t("app", "Item Updated")
+                        'msg' => Module::t('module', "Item Updated")
                     ];
                     $transaction->commit();
                 } else {
@@ -256,12 +257,12 @@ class SalaryItemsAdditionBase extends Controller
         if ($model->canDelete() && $model->softDelete()) {
             $result = [
                 'status' => true,
-                'message' => Yii::t("app", "Item Deleted")
+                'message' => Module::t('module', "Item Deleted")
             ];
         } else {
             $result = [
                 'status' => false,
-                'message' => Yii::t("app", "Error In Save Info")
+                'message' => Module::t('module', "Error In Save Info")
             ];
         }
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -275,7 +276,7 @@ class SalaryItemsAdditionBase extends Controller
      */
     public function actionConfirm($id)
     {
-        $response = ['success' => false, 'data' => '', 'msg' => Yii::t('app', 'Error In Save Info')];
+        $response = ['success' => false, 'data' => '', 'msg' => Module::t('module', 'Error In Save Info')];
         $model = $this->findModel($id);
         if ($model->canConfirm()) {
             $transaction = \Yii::$app->db->beginTransaction();
@@ -284,7 +285,7 @@ class SalaryItemsAdditionBase extends Controller
                 if ($flag) {
                     $transaction->commit();
                     $response['success'] = true;
-                    $response['msg'] = Yii::t("app", "Item Confirmed");
+                    $response['msg'] = Module::t('module', "Item Confirmed");
 
                 } else {
                     $transaction->rollBack();
@@ -294,7 +295,7 @@ class SalaryItemsAdditionBase extends Controller
                 Yii::error($e->getMessage() . $e->getTraceAsString(), Yii::$app->controller->id . '/' . Yii::$app->controller->action->id);
             }
         } else {
-            $response['msg'] = Yii::t('app', 'It is not possible to perform this operation');
+            $response['msg'] = Module::t('module', 'It is not possible to perform this operation');
         }
         return json_encode($response);
     }
@@ -306,7 +307,7 @@ class SalaryItemsAdditionBase extends Controller
      */
     public function actionReturnStatus($id)
     {
-        $response = ['success' => false, 'data' => '', 'msg' => Yii::t('app', 'Error In Save Info')];
+        $response = ['success' => false, 'data' => '', 'msg' => Module::t('module', 'Error In Save Info')];
         $model = $this->findModel($id);
         if ($model->canReturnStatus()) {
             $transaction = \Yii::$app->db->beginTransaction();
@@ -315,7 +316,7 @@ class SalaryItemsAdditionBase extends Controller
                 if ($flag) {
                     $transaction->commit();
                     $response['success'] = true;
-                    $response['msg'] = Yii::t("app", "Item Updated");
+                    $response['msg'] = Module::t('module', "Item Updated");
 
                 } else {
                     $transaction->rollBack();
@@ -325,7 +326,7 @@ class SalaryItemsAdditionBase extends Controller
                 Yii::error($e->getMessage() . $e->getTraceAsString(), Yii::$app->controller->id . '/' . Yii::$app->controller->action->id);
             }
         } else {
-            $response['msg'] = Yii::t('app', 'It is not possible to perform this operation');
+            $response['msg'] = Module::t('module', 'It is not possible to perform this operation');
         }
         return json_encode($response);
     }
@@ -430,7 +431,7 @@ class SalaryItemsAdditionBase extends Controller
 
             } else {
                 $transaction->rollBack();
-                $this->flash("warning", !empty($error) ? $error : Yii::t("app", "Error In Save Info"));
+                $this->flash("warning", !empty($error) ? $error : Module::t('module', "Error In Save Info"));
             }
         } catch (\Exception $e) {
             $transaction->rollBack();
@@ -454,7 +455,7 @@ class SalaryItemsAdditionBase extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
     public function flash($type, $message)

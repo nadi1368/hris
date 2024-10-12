@@ -1,5 +1,6 @@
 <?php
 
+use hesabro\hris\Module;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 use yii\widgets\MaskedInput;
@@ -24,7 +25,7 @@ use yii\widgets\MaskedInput;
     </div>
     <div class="card-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">لغو</button>
-        <?= Html::submitButton(Yii::t('app', 'Payment'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton(Module::t('module', 'Payment'), ['class' => 'btn btn-primary']) ?>
     </div>
 </div>
 <?php ActiveForm::end(); ?>

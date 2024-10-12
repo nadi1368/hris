@@ -2,6 +2,7 @@
 
 use hesabro\hris\models\ContractTemplates;
 use hesabro\hris\models\EmployeeRequest;
+use hesabro\hris\Module;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 
@@ -28,7 +29,7 @@ $form = ActiveForm::begin([
         </div>
     </div>
     <div class="card-footer">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? Module::t('module', 'Create') : Module::t('module', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 </div>
 

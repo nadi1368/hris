@@ -9,6 +9,7 @@ use hesabro\hris\models\SalaryPeriodItems;
 use hesabro\hris\models\SalaryPeriodItemsSearch;
 use hesabro\changelog\models\MGLogs;
 use hesabro\helpers\traits\AjaxValidationTrait;
+use hesabro\hris\Module;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -116,7 +117,7 @@ class RewardPeriodItemsBase extends Controller
 
         $employee = $this->findModelEmployee($user_id);
         if (!$salaryPeriod->canCreateItems() || !$employee->canCreateRewardPayment()) {
-            throw new HttpException(400, Yii::t("app", "It is not possible to perform this operation"));
+            throw new HttpException(400, Module::t('module', "It is not possible to perform this operation"));
         }
         $model = new SalaryPeriodItems([
             'scenario' => SalaryPeriodItems::SCENARIO_CREATE_REWARD,
@@ -136,14 +137,14 @@ class RewardPeriodItemsBase extends Controller
                 if ($flag) {
                     $result = [
                         'success' => true,
-                        'msg' => Yii::t("app", "Item Created")
+                        'msg' => Module::t('module', "Item Created")
                     ];
                     $transaction->commit();
                 } else {
                     $transaction->rollBack();
                     $result = [
                         'success' => false,
-                        'msg' => Yii::t("app", "Error In Save Info")
+                        'msg' => Module::t('module', "Error In Save Info")
                     ];
                 }
             } catch (\Exception $e) {
@@ -176,12 +177,12 @@ class RewardPeriodItemsBase extends Controller
         if ($model->canDelete() && $model->delete()) {
             $result = [
                 'status' => true,
-                'message' => Yii::t("app", "Item Deleted")
+                'message' => Module::t('module', "Item Deleted")
             ];
         } else {
             $result = [
                 'status' => false,
-                'message' => Yii::t("app", "Error In Save Info")
+                'message' => Module::t('module', "Error In Save Info")
             ];
         }
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -200,7 +201,7 @@ class RewardPeriodItemsBase extends Controller
     {
         $model = $this->findModel($id);
         if (!$model->canUpdate()) {
-            throw new HttpException(400, Yii::t("app", "It is not possible to perform this operation"));
+            throw new HttpException(400, Module::t('module', "It is not possible to perform this operation"));
         }
         $salaryPeriod = $model->period;
         $model->setScenario(SalaryPeriodItems::SCENARIO_UPDATE_REWARD);
@@ -214,14 +215,14 @@ class RewardPeriodItemsBase extends Controller
                 if ($flag) {
                     $result = [
                         'success' => true,
-                        'msg' => Yii::t("app", "Item Updated")
+                        'msg' => Module::t('module', "Item Updated")
                     ];
                     $transaction->commit();
                 } else {
                     $transaction->rollBack();
                     $result = [
                         'success' => false,
-                        'msg' => Yii::t("app", "Error In Save Info")
+                        'msg' => Module::t('module', "Error In Save Info")
                     ];
                 }
             } catch (\Exception $e) {
@@ -252,7 +253,7 @@ class RewardPeriodItemsBase extends Controller
     {
         $model = $this->findModel($id);
         if (!$model->canUpdateAfterConfirm()) {
-            throw new HttpException(400, Yii::t("app", "It is not possible to perform this operation"));
+            throw new HttpException(400, Module::t('module', "It is not possible to perform this operation"));
         }
         $salaryPeriod = $model->period;
         $model->setScenario(SalaryPeriodItems::SCENARIO_UPDATE_AFTER_CONFIRM);
@@ -265,14 +266,14 @@ class RewardPeriodItemsBase extends Controller
                 if ($flag) {
                     $result = [
                         'success' => true,
-                        'msg' => Yii::t("app", "Item Updated")
+                        'msg' => Module::t('module', "Item Updated")
                     ];
                     $transaction->commit();
                 } else {
                     $transaction->rollBack();
                     $result = [
                         'success' => false,
-                        'msg' => Yii::t("app", "Error In Save Info")
+                        'msg' => Module::t('module', "Error In Save Info")
                     ];
                 }
             } catch (\Exception $e) {
@@ -313,13 +314,13 @@ class RewardPeriodItemsBase extends Controller
                     $transaction->commit();
                     $result = [
                         'status' => true,
-                        'message' => Yii::t("app", "Item Confirmed")
+                        'message' => Module::t('module', "Item Confirmed")
                     ];
                 } else {
                     $transaction->rollBack();
                     $result = [
                         'status' => false,
-                        'message' => Yii::t("app", "Error In Save Info")
+                        'message' => Module::t('module', "Error In Save Info")
                     ];
                 }
             } catch (\Exception $e) {
@@ -333,7 +334,7 @@ class RewardPeriodItemsBase extends Controller
         } else {
             $result = [
                 'status' => false,
-                'message' => Yii::t("app", "It is not possible to perform this operation")
+                'message' => Module::t('module', "It is not possible to perform this operation")
             ];
         }
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -352,7 +353,7 @@ class RewardPeriodItemsBase extends Controller
         $model->setScenario(SalaryPeriod::SCENARIO_PAYMENT);
         $model->payment_date = Yii::$app->jdf->jdate("Y/m/d");
         if (!$model->canPayment()) {
-            $this->flash('danger', Yii::t("app", "It is not possible to perform this operation"));
+            $this->flash('danger', Module::t('module', "It is not possible to perform this operation"));
             return $this->redirect(['index', 'id' => $id]);
         }
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -365,13 +366,13 @@ class RewardPeriodItemsBase extends Controller
                     $transaction->commit();
                     $result = [
                         'success' => true,
-                        'msg' => Yii::t("app", "Item Created")
+                        'msg' => Module::t('module', "Item Created")
                     ];
                 } else {
                     $transaction->rollBack();
                     $result = [
                         'success' => false,
-                        'msg' => Yii::t("app", "Error In Save Info")
+                        'msg' => Module::t('module', "Error In Save Info")
                     ];
                 }
             } catch (\Exception $e) {
@@ -412,13 +413,13 @@ class RewardPeriodItemsBase extends Controller
                     $transaction->commit();
                     $result = [
                         'status' => true,
-                        'message' => Yii::t("app", "Item Deleted")
+                        'message' => Module::t('module', "Item Deleted")
                     ];
                 } else {
                     $transaction->rollBack();
                     $result = [
                         'status' => false,
-                        'message' => Yii::t("app", "Error In Save Info")
+                        'message' => Module::t('module', "Error In Save Info")
                     ];
                 }
             } catch (\Exception $e) {
@@ -432,7 +433,7 @@ class RewardPeriodItemsBase extends Controller
         } else {
             $result = [
                 'status' => false,
-                'message' => Yii::t("app", "Error In Save Info")
+                'message' => Module::t('module', "Error In Save Info")
             ];
         }
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -516,7 +517,7 @@ class RewardPeriodItemsBase extends Controller
             MGLogs::saveManual(SalaryPeriod::class, $model->id, $rows);
             return [
                 'success' => true,
-                'msg' => Yii::t("app", "Item Created"),
+                'msg' => Module::t('module', "Item Created"),
                 'html' => $this->renderAjax('_excel-insurance-send-to-native', [
                     'model' => $model,
                     'rows' => json_encode($rows),
@@ -590,7 +591,7 @@ class RewardPeriodItemsBase extends Controller
             }
             return [
                 'success' => true,
-                'msg' => Yii::t("app", "Item Created"),
+                'msg' => Module::t('module', "Item Created"),
                 'html' => $this->renderAjax('_print-insurance-send-to-native', [
                     'model' => $model,
                     'variable' => json_encode($variable),
@@ -616,7 +617,7 @@ class RewardPeriodItemsBase extends Controller
         $model = $this->findModel($id);
         $result = [
             'status' => false,
-            'message' => Yii::t("app", "Error In Save Info")
+            'message' => Module::t('module', "Error In Save Info")
         ];
 
         $transaction = Yii::$app->db->beginTransaction();
@@ -626,7 +627,7 @@ class RewardPeriodItemsBase extends Controller
             if ($flag) {
                 $result = [
                     'status' => true,
-                    'message' => Yii::t("app", "Item Updated")
+                    'message' => Module::t('module', "Item Updated")
                 ];
                 $transaction->commit();
             } else {
@@ -659,11 +660,11 @@ class RewardPeriodItemsBase extends Controller
             $flag = $model->save();
             if ($flag) {
                 $transaction->commit();
-                $this->flash("success", Yii::t('app', 'Item Confirmed'));
+                $this->flash("success", Module::t('module', 'Item Confirmed'));
 
             } else {
                 $transaction->rollBack();
-                $this->flash("warning", Yii::t("app", "Error In Save Info"));
+                $this->flash("warning", Module::t('module', "Error In Save Info"));
             }
         } catch (\Exception $e) {
             $transaction->rollBack();
@@ -694,13 +695,13 @@ class RewardPeriodItemsBase extends Controller
                     $transaction->commit();
                     $result = [
                         'status' => true,
-                        'message' => Yii::t("app", "Item Confirmed")
+                        'message' => Module::t('module', "Item Confirmed")
                     ];
                 } else {
                     $transaction->rollBack();
                     $result = [
                         'status' => false,
-                        'message' => Yii::t("app", "Error In Save Info")
+                        'message' => Module::t('module', "Error In Save Info")
                     ];
                 }
             } catch (\Exception $e) {
@@ -714,7 +715,7 @@ class RewardPeriodItemsBase extends Controller
         } else {
             $result = [
                 'status' => false,
-                'message' => Yii::t("app", "It is not possible to perform this operation")
+                'message' => Module::t('module', "It is not possible to perform this operation")
             ];
         }
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -741,13 +742,13 @@ class RewardPeriodItemsBase extends Controller
                     $transaction->commit();
                     $result = [
                         'status' => true,
-                        'message' => Yii::t("app", "Item Confirmed")
+                        'message' => Module::t('module', "Item Confirmed")
                     ];
                 } else {
                     $transaction->rollBack();
                     $result = [
                         'status' => false,
-                        'message' => Yii::t("app", "Error In Save Info")
+                        'message' => Module::t('module', "Error In Save Info")
                     ];
                 }
             } catch (\Exception $e) {
@@ -761,7 +762,7 @@ class RewardPeriodItemsBase extends Controller
         } else {
             $result = [
                 'status' => false,
-                'message' => Yii::t("app", "It is not possible to perform this operation")
+                'message' => Module::t('module', "It is not possible to perform this operation")
             ];
         }
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -780,13 +781,13 @@ class RewardPeriodItemsBase extends Controller
             'query' => $model->getSalaryPeriodItems(),
             'columns' => [
                 [
-                    'label' => Yii::t("app", 'National Code'),
+                    'label' => Module::t('module', 'National Code'),
                     "value" => function (SalaryPeriodItems $model) {
                         return $model->user->nationalCode;
                     }
                 ],
                 [
-                    'label' => Yii::t("app", 'First Name And Last Name'),
+                    'label' => Module::t('module', 'First Name And Last Name'),
                     "value" => function (SalaryPeriodItems $model) {
                         return $model->user->fullName;
                     }
@@ -912,7 +913,7 @@ class RewardPeriodItemsBase extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
     /**
@@ -928,7 +929,7 @@ class RewardPeriodItemsBase extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
     /**
@@ -944,7 +945,7 @@ class RewardPeriodItemsBase extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
     public function flash($type, $message)

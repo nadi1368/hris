@@ -49,7 +49,7 @@ class EmployeeProfileController extends EmployeeProfileBase
         ]), $requestLeave);
 
         $advanceMoney = array_map(fn (AdvanceMoney $advanceMoney) => ([
-            'title' => Yii::t('app', 'Advance Money'),
+            'title' => Module::t('module', 'Advance Money'),
             'status' => AdvanceMoney::itemAlias('Status', $advanceMoney->status),
             'icon' => AdvanceMoney::itemAlias('StatusIcon', $advanceMoney->status),
             'color' => AdvanceMoney::itemAlias('StatusClass', $advanceMoney->status),
@@ -112,8 +112,8 @@ class EmployeeProfileController extends EmployeeProfileBase
                 'user_id' => $userId,
                 'kind' => SalaryItemsAddition::KIND_OVER_TIME,
                 'type' => SalaryItemsAddition::TYPE_OVER_TIME_DAY,
-                'from_date' => Yii::$app->jdate->date('Y/m/d', $currentMonth[0]),
-                'to_date' => Yii::$app->jdate->date('Y/m/d', $currentMonth[1])
+                'from_date' => Yii::$app->jdf->jdate('Y/m/d', $currentMonth[0]),
+                'to_date' => Yii::$app->jdf->jdate('Y/m/d', $currentMonth[1])
             ]
         ])->query->one() : null;
 
@@ -122,8 +122,8 @@ class EmployeeProfileController extends EmployeeProfileBase
                 'user_id' => $userId,
                 'kind' => SalaryItemsAddition::KIND_OVER_TIME,
                 'type' => SalaryItemsAddition::TYPE_OVER_TIME_NIGHT,
-                'from_date' => Yii::$app->jdate->date('Y/m/d', $currentMonth[0]),
-                'to_date' => Yii::$app->jdate->date('Y/m/d', $currentMonth[1])
+                'from_date' => Yii::$app->jdf->jdate('Y/m/d', $currentMonth[0]),
+                'to_date' => Yii::$app->jdf->jdate('Y/m/d', $currentMonth[1])
             ]
         ])->query->one() : null;
 
@@ -132,8 +132,8 @@ class EmployeeProfileController extends EmployeeProfileBase
                 'user_id' => $userId,
                 'kind' => SalaryItemsAddition::KIND_OVER_TIME,
                 'type' => SalaryItemsAddition::TYPE_OVER_TIME_HOLIDAY,
-                'from_date' => Yii::$app->jdate->date('Y/m/d', $currentMonth[0]),
-                'to_date' => Yii::$app->jdate->date('Y/m/d', $currentMonth[1])
+                'from_date' => Yii::$app->jdf->jdate('Y/m/d', $currentMonth[0]),
+                'to_date' => Yii::$app->jdf->jdate('Y/m/d', $currentMonth[1])
             ]
         ])->query->one() : null;
 
@@ -141,24 +141,24 @@ class EmployeeProfileController extends EmployeeProfileBase
             $salaryItemsAdditionSearchFormName => [
                 'user_id' => $userId,
                 'kind' => SalaryItemsAddition::KIND_LOW_TIME,
-                'from_date' => Yii::$app->jdate->date('Y/m/d', $currentMonth[0]),
-                'to_date' => Yii::$app->jdate->date('Y/m/d', $currentMonth[1])
+                'from_date' => Yii::$app->jdf->jdate('Y/m/d', $currentMonth[0]),
+                'to_date' => Yii::$app->jdf->jdate('Y/m/d', $currentMonth[1])
             ]
         ])->query->one() : null;
 
         $monthLeaveReport = $employee ? (new SalaryItemsAdditionSearch())->searchReportLeave([
             $salaryItemsAdditionSearchFormName => [
                 'user_id' => $userId,
-                'from_date' => Yii::$app->jdate->date('Y/m/d', $currentMonth[0]),
-                'to_date' => Yii::$app->jdate->date('Y/m/d', $currentMonth[1])
+                'from_date' => Yii::$app->jdf->jdate('Y/m/d', $currentMonth[0]),
+                'to_date' => Yii::$app->jdf->jdate('Y/m/d', $currentMonth[1])
             ]
         ])->query->one() : null;
 
         $yearLeaveReport = $employee ? (new SalaryItemsAdditionSearch())->searchReportLeave([
             $salaryItemsAdditionSearchFormName => [
                 'user_id' => $userId,
-                'from_date' => Yii::$app->jdate->date('Y/m/d', $currentYear['start']),
-                'to_date' => Yii::$app->jdate->date('Y/m/d', $currentYear['end'])
+                'from_date' => Yii::$app->jdf->jdate('Y/m/d', $currentYear['start']),
+                'to_date' => Yii::$app->jdf->jdate('Y/m/d', $currentYear['end'])
             ]
         ])->query->one() : null;
 

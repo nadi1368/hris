@@ -1,7 +1,8 @@
 <?php
 
+use hesabro\hris\Module;
 use yii\helpers\Html;
-use common\widgets\grid\GridView;
+use hesabro\helpers\widgets\grid\GridView;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
@@ -73,11 +74,11 @@ use yii\helpers\Url;
                         'insurance_data' => function ($url, $model, $key) {
                             return $model->canUpdate() ? Html::a('<span class="far fa-edit"></span>',
                                 'javascript:void(0)', [
-                                    'title' => Yii::t('app', 'Insurance Data'),
+                                    'title' => Module::t('module', 'Insurance Data'),
                                     'id' => 'insurance-data' . $model->user_id,
                                     'class' => 'text-primary',
                                     'data-size' => 'modal-xl',
-                                    'data-title' => Yii::t('app', 'Insurance Data'). ' - '.$model->user->fullName,
+                                    'data-title' => Module::t('module', 'Insurance Data'). ' - '.$model->user->fullName,
                                     'data-toggle' => 'modal',
                                     'data-target' => '#modal-pjax',
                                     'data-url' => Url::to(['/employee/default/insurance-data', 'branch_id' => $model->branch_id, 'user_id' => $model->user_id]),

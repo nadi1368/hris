@@ -5,6 +5,7 @@ use common\components\Menu;
 use common\models\Faq;
 use common\models\Comments;
 use common\models\Rbac;
+use hesabro\hris\Module;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -17,7 +18,7 @@ if (Yii::$app->user->identity->canAccess(['comments/inbox', 'comments/create']))
 
 $menuItems = [
     [
-        'label' => Yii::t('app' , 'Home') . ' ' . Yii::t('app', 'HR'),
+        'label' => Yii::t('app' , 'Home') . ' ' . Module::t('module', 'HR'),
         'url' => ['/profile/index'],
         'group' => 'dashboard',
         'level' => 'first-level',
@@ -79,7 +80,7 @@ $menuItems = [
                 'icon' => 'far fa-gift'
             ],
             [
-                'label' => Yii::t('app', 'Request') . ' ' . Yii::t('app', 'Letter'),
+                'label' => Module::t('module', 'Request') . ' ' . Module::t('module', 'Letter'),
                 'url' => ['/employee/employee-request/my', 'type' => EmployeeRequest::TYPE_LETTER],
                 'group' => 'requests',
                 'level' => 'second-level',
@@ -88,7 +89,7 @@ $menuItems = [
         ]
     ],
     // [
-    //     'label' => Yii::t('app', 'Faq'),
+    //     'label' => Module::t('module', 'Faq'),
     //     'group' => 'faq',
     //     'level' => 'first-level',
     //     'icon' => 'fa fa-question',
@@ -140,7 +141,7 @@ $menuItems = [
     [
 
         'label' => $count_tickets_waiting ?
-            Html::tag('div', Html::tag('span', Yii::t("app", "Tickets"), ['class' => '']) .
+            Html::tag('div', Html::tag('span', Module::t('module', "Tickets"), ['class' => '']) .
                 Html::tag('span', '*', ['class' => 'badge badge-danger mr-2 font-14', 'style' => 'right: 100px; position: relative;']),
                 [
                     'class' => 'd-flex justify-content-between align-items-baseline'
@@ -151,14 +152,14 @@ $menuItems = [
         'icon' => 'far fa-headset'
     ],
     [
-        'label' => Yii::t("app", "Internal Numbers"),
+        'label' => Module::t('module', "Internal Numbers"),
         'icon' => 'far fa-phone',
         'url' => ['/employee/internal-number/public'],
         'group' => 'InternalNumber',
         'level' => "first-level",
     ],
     [
-        'label' => Yii::t('app', 'Organization Chart'),
+        'label' => Module::t('module', 'Organization Chart'),
         'url' => '/employee/organization-chart/public',
         'group' => 'organization-chart',
         'level' => 'first-level',

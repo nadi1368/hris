@@ -1,5 +1,6 @@
 <?php
 use hesabro\hris\models\Letter;
+use hesabro\hris\Module;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 use yii\widgets\MaskedInput;
@@ -14,7 +15,7 @@ $form = ActiveForm::begin(['id' => 'reject-letter-form']);
     <div class="card-body">
         <div class="row">
             <div class="col-12">
-                <p><?= Yii::t('app', 'Are you sure you want to reject this item?') ?></p>
+                <p><?= Module::t('module', 'Are you sure you want to reject this item?') ?></p>
             </div>
             <div class="col-12">
                 <?= $form->field($relatedModel, 'rejectDescription')->textarea() ?>
@@ -22,7 +23,7 @@ $form = ActiveForm::begin(['id' => 'reject-letter-form']);
         </div>
     </div>
     <div class="card-footer d-flex align-items-center justify-content-end">
-        <?= Html::submitButton(Yii::t('app', 'Reject') . ' ' . Yii::t('app', 'Request'), ['class' => 'btn btn-danger']) ?>
+        <?= Html::submitButton(Module::t('module', 'Reject') . ' ' . Module::t('module', 'Request'), ['class' => 'btn btn-danger']) ?>
     </div>
 </div>
 

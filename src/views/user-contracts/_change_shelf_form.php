@@ -1,6 +1,7 @@
 <?php
 
 use hesabro\hris\models\UserContractsShelves;
+use hesabro\hris\Module;
 use kartik\select2\Select2;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
@@ -21,7 +22,7 @@ use yii\helpers\Html;
 				'data' => UserContractsShelves::itemAlias('List'),
 				'options' =>
 					[
-						'placeholder' => Yii::t("app", "Search"),
+						'placeholder' => Module::t('module', "Search"),
 						'dir' => 'rtl',
 					],
 				'pluginOptions' => [
@@ -34,7 +35,7 @@ use yii\helpers\Html;
 </div>
 <div class="card-footer">
 	<div class="form-group">
-		<?= Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-primary btn btn-flat']) ?>
+		<?= Html::submitButton(Module::t('module', 'Update'), ['class' => 'btn btn-primary btn btn-flat']) ?>
 	</div>
 </div>
 <?php ActiveForm::end(); ?>

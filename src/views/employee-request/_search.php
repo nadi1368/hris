@@ -1,8 +1,8 @@
 <?php
 
-use backend\models\User;
 use hesabro\hris\models\EmployeeRequest;
 use hesabro\hris\models\EmployeeRequestSearch;
+use hesabro\hris\Module;
 use kartik\select2\Select2;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
@@ -22,28 +22,28 @@ use yii\helpers\Html;
 
             <div class="col-md-3">
                 <?= $form->field($model, 'user_id')->widget(Select2::class, [
-                    'data' => User::getUserWithRoles(['employee']),
+                    'data' => Module::getInstance()->user::getUserWithRoles(['employee']),
                     'pluginOptions' => [
                         'allowClear' => true,
                     ],
                     'options' => [
-                        'placeholder' => Yii::t('app', 'Search'),
+                        'placeholder' => Module::t('module', 'Search'),
                         'dir' => 'rtl',
                     ],
                 ]); ?>
             </div>
 
             <div class="col-md-3">
-                <?= $form->field($model, 'type')->dropdownList(EmployeeRequest::itemAlias('Type'), ['prompt' => Yii::t('app', 'Select...')]) ?>
+                <?= $form->field($model, 'type')->dropdownList(EmployeeRequest::itemAlias('Type'), ['prompt' => Module::t('module', 'Select...')]) ?>
             </div>
 
             <div class="col-md-3">
-                <?= $form->field($model, 'status')->dropdownList(EmployeeRequest::itemAlias('Status'), ['prompt' => Yii::t('app', 'Select...')]) ?>
+                <?= $form->field($model, 'status')->dropdownList(EmployeeRequest::itemAlias('Status'), ['prompt' => Module::t('module', 'Select...')]) ?>
             </div>
 
             <div class="col align-self-center text-right">
-                <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
-                <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-secondary']) ?>
+                <?= Html::submitButton(Module::t('module', 'Search'), ['class' => 'btn btn-primary']) ?>
+                <?= Html::resetButton(Module::t('module', 'Reset'), ['class' => 'btn btn-secondary']) ?>
             </div>
         </div>
     </div>

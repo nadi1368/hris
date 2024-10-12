@@ -2,6 +2,7 @@
 
 namespace hesabro\hris\models;
 
+use hesabro\hris\Module;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -24,7 +25,7 @@ class InsuranceExportForm extends InternalNumberBase
                 (!YII_DEBUG && !ArrayHelper::isIn(Yii::$app->request->userIP, $companyIpg->trustedIps))
             ) {
                 Yii::error('Ip is invalid', 'Exception/CompanyLogin');
-                $this->addError($attribute, Yii::t('app', 'Your data is invalid'));
+                $this->addError($attribute, Module::t('module', 'Your data is invalid'));
             } else {
                 $this->companyIpg = $companyIpg;
             }

@@ -1,6 +1,6 @@
 <?php
 
-use common\widgets\TableView;
+use hesabro\helpers\widgets\TableView;
 use hesabro\hris\models\ComfortItems;
 use yii\helpers\Html;
 

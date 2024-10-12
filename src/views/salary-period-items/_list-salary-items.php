@@ -1,10 +1,10 @@
 <?php
 
 use hesabro\hris\models\SalaryPeriodItems;
-use common\components\Helper;
 use common\models\BalanceDetailed;
 use common\models\Settings;
-use common\widgets\grid\GridView;
+use hesabro\helpers\widgets\grid\GridView;
+use hesabro\hris\Module;
 use yii\bootstrap4\ButtonDropdown;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -64,13 +64,14 @@ $this->registerCss($style);
                     'value' => function ($model) {
                         return Html::a(Html::tag('span', '', ['class' => $model->can_payment ? "fa fa-check" : "fa fa-times"]), 'javascript:void(0)',
                             [
-                                'title' => !$model->can_payment ? Yii::t('app', 'Add To Payment List') : Yii::t('app', 'Delete Payment List'),
-                                'aria-label' => !$model->can_payment ? Yii::t('app', 'Add To Payment List') : Yii::t('app', 'Delete Payment List'),
+                                'title' => !$model->can_payment ? Module::t('module', 'Add To Payment List') : Module::t('module', 'Delete Payment List'),
+                                'aria-label' => !$model->can_payment ? Module::t('module', 'Add To Payment List') : Module::t('module', 'Delete Payment List'),
                                 'data-reload-pjax-container' => 'p-jax-salary-period-items',
                                 'data-pjax' => '0',
-                                'data-url' => Url::to(['add-to-payment-list', 'id' => $model->id, 'type' => $model->can_payment ? Helper::UN_CHECKED : Helper::CHECKED]),
+                                'data-url' => Url::to(['add-to-payment-list', 'id' => $model->id, 'type' => $model->can_payment ? Yii::$app->helper::UN_CHECKED : Yii::$app->helper::CHECKED]),
+
                                 'class' => $model->can_payment ? "text-success p-jax-btn" : "text-danger p-jax-btn",
-                                'data-title' => !$model->can_payment ? Yii::t('app', 'Add To Payment List') : Yii::t('app', 'Delete Payment List'),
+                                'data-title' => !$model->can_payment ? Module::t('module', 'Add To Payment List') : Module::t('module', 'Delete Payment List'),
                                 'data-method' => 'post',
 
                             ]);
@@ -86,12 +87,12 @@ $this->registerCss($style);
                         'group' => function ($url, SalaryPeriodItems $model, $key) {
                             $items = [];
                             $items[] = [
-                                'label' => Html::tag('span', ' ', ['class' => 'fa fa-eye']) . ' ' . Yii::t("app", "Details"),
+                                'label' => Html::tag('span', ' ', ['class' => 'fa fa-eye']) . ' ' . Module::t('module', "Details"),
                                 'url' => 'javascript:void(0)',
                                 'encode' => false,
                                 'linkOptions' => [
                                     'data-size' => 'modal-xl',
-                                    'data-title' => Yii::t('app', 'Details'),
+                                    'data-title' => Module::t('module', 'Details'),
                                     'data-toggle' => 'modal',
                                     'data-target' => '#modal-pjax',
                                     'data-url' => Url::to(['view', 'id' => $model->id]),
@@ -100,13 +101,13 @@ $this->registerCss($style);
                             ];
                             if ($model->canUpdate()) {
                                 $items[] = [
-                                    'label' => Html::tag('span', ' ', ['class' => 'fa fa-pen']) . ' ' . Yii::t('app', 'Update'),
+                                    'label' => Html::tag('span', ' ', ['class' => 'fa fa-pen']) . ' ' . Module::t('module', 'Update'),
                                     'url' => 'javascript:void(0)',
                                     'encode' => false,
                                     'linkOptions' => [
-                                        'title' => Yii::t('app', 'Update'),
+                                        'title' => Module::t('module', 'Update'),
                                         'data-size' => 'modal-xl',
-                                        'data-title' => Yii::t('app', 'Update') . ' - ' . $model->user->fullName,
+                                        'data-title' => Module::t('module', 'Update') . ' - ' . $model->user->fullName,
                                         'data-toggle' => 'modal',
                                         'data-target' => '#modal-pjax',
                                         'data-url' => Url::to(['update', 'id' => $model->id]),
@@ -116,13 +117,13 @@ $this->registerCss($style);
                             }
                             if ($model->canUpdateAfterConfirm()) {
                                 $items[] = [
-                                    'label' => Html::tag('span', ' ', ['class' => 'fa fa-pen']) . ' ' . Yii::t('app', 'Update'),
+                                    'label' => Html::tag('span', ' ', ['class' => 'fa fa-pen']) . ' ' . Module::t('module', 'Update'),
                                     'url' => 'javascript:void(0)',
                                     'encode' => false,
                                     'linkOptions' => [
-                                        'title' => Yii::t('app', 'Update'),
+                                        'title' => Module::t('module', 'Update'),
                                         'data-size' => 'modal-xl',
-                                        'data-title' => Yii::t('app', 'Update') . ' - ' . $model->user->fullName,
+                                        'data-title' => Module::t('module', 'Update') . ' - ' . $model->user->fullName,
                                         'data-toggle' => 'modal',
                                         'data-target' => '#modal-pjax',
                                         'data-url' => Url::to(['update-after-confirm', 'id' => $model->id]),
@@ -133,25 +134,25 @@ $this->registerCss($style);
                             }
                             if ($model->canDelete()) {
                                 $items[] = [
-                                    'label' => Html::tag('span', '', ['class' => 'fa fa-trash-alt']) . ' ' . Yii::t('app', 'Delete'),
+                                    'label' => Html::tag('span', '', ['class' => 'fa fa-trash-alt']) . ' ' . Module::t('module', 'Delete'),
                                     'url' => 'javascript:void(0)',
                                     'encode' => false,
                                     'linkOptions' => [
-                                        'data-confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                                        'title' => Yii::t('app', 'Delete'),
-                                        'aria-label' => Yii::t('app', 'Delete'),
+                                        'data-confirm' => Module::t('module', 'Are you sure you want to delete this item?'),
+                                        'title' => Module::t('module', 'Delete'),
+                                        'aria-label' => Module::t('module', 'Delete'),
                                         'data-reload-pjax-container' => 'p-jax-salary-period-items',
                                         'data-pjax' => '0',
                                         'data-url' => Url::to(['delete', 'id' => $model->id]),
                                         'class' => "text-danger p-jax-btn",
-                                        'data-title' => Yii::t('app', 'Delete'),
+                                        'data-title' => Module::t('module', 'Delete'),
                                         'data-method' => 'post'
                                     ],
                                 ];
                             }
                             if ($model->canPrint()) {
                                 $items[] = [
-                                    'label' => Html::tag('span', ' ', ['class' => 'fa fa-print']) . ' ' . Yii::t("app", "Print"),
+                                    'label' => Html::tag('span', ' ', ['class' => 'fa fa-print']) . ' ' . Module::t('module', "Print"),
                                     'url' => ['print-single-item', 'id' => $key],
                                     'encode' => false,
                                     'linkOptions' => [
@@ -170,17 +171,17 @@ $this->registerCss($style);
                                 ],
                             ];
                             $items[] = [
-                                'label' => Html::tag('span', ' ', ['class' => 'fa fa-history']) . ' ' . Yii::t('app', 'Log'),
+                                'label' => Html::tag('span', ' ', ['class' => 'fa fa-history']) . ' ' . Module::t('module', 'Log'),
                                 'url' => ['/mongo/log/view-ajax', 'modelId' => $model->id, 'modelClass' => SalaryPeriodItems::class],
                                 'encode' => false,
                                 'linkOptions' => [
-                                    'title' => Yii::t('app', 'Log'),
+                                    'title' => Module::t('module', 'Log'),
                                     'class' => 'showModalButton',
                                     'data-size' => 'modal-xxl',
                                 ],
                             ];
                             return ButtonDropdown::widget([
-                                'buttonOptions' => ['class' => 'btn btn-info btn-md dropdown-toggle', 'style' => 'padding: 3px 7px !important;', 'title' => Yii::t('app', 'Actions')],
+                                'buttonOptions' => ['class' => 'btn btn-info btn-md dropdown-toggle', 'style' => 'padding: 3px 7px !important;', 'title' => Module::t('module', 'Actions')],
                                 'encodeLabel' => false,
                                 'label' => '<i class="far fa-list mr-1"></i>',
                                 'options' => ['class' => 'float-right'],
@@ -199,7 +200,7 @@ $this->registerCss($style);
                     'format' => 'raw',
                 ],
                 [
-                    'label' => Yii::t('app', 'Shaba Number'),
+                    'label' => Module::t('module', 'Shaba Number'),
                     'value' => function (SalaryPeriodItems $model) {
                         return $model->employee->shaba;
                     },

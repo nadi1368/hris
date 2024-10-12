@@ -4,7 +4,7 @@ use kartik\file\FileInput;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 use common\models\UploadExcel;
-use yii\web\View;
+use hesabro\hris\Module;
 use yii\widgets\MaskedInput;
 
 /* @var $this yii\web\View */
@@ -12,7 +12,7 @@ use yii\widgets\MaskedInput;
 
 $this->title = 'آپلود فایل حضور و غیاب روزانه';
 
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Salary Periods'), 'url' => ['salary-period/index']];
+$this->params['breadcrumbs'][] = ['label' => Module::t('module', 'Salary Periods'), 'url' => ['salary-period/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="card">
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     </div>
     <div class="card-footer">
-        <?= Html::submitButton(Yii::t("app", "Upload"), ['class' => 'btn btn-success btn btn-flat']); ?>
+        <?= Html::submitButton(Module::t('module', "Upload"), ['class' => 'btn btn-success btn btn-flat']); ?>
     </div>
 
     <?php ActiveForm::end() ?>

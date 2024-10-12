@@ -6,6 +6,7 @@ use hesabro\hris\models\EmployeeRequest;
 use hesabro\hris\models\EmployeeRequestSearch;
 use hesabro\hris\models\Letter;
 use hesabro\helpers\traits\AjaxValidationTrait;
+use hesabro\hris\Module;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -135,7 +136,7 @@ class EmployeeRequestController extends Controller
 
             return $this->asJson([
                 'success' => $save,
-                'msg' => Yii::t('app', $save ? 'Item Created' : 'Error In Save Info')
+                'msg' => Module::t('module', $save ? 'Item Created' : 'Error In Save Info')
             ]);
         }
 
@@ -158,7 +159,7 @@ class EmployeeRequestController extends Controller
 
             return $this->asJson([
                 'success' => $save,
-                'msg' => Yii::t('app', $save ? 'Item updated' : 'Error In Save Info')
+                'msg' => Module::t('module', $save ? 'Item updated' : 'Error In Save Info')
             ]);
         }
 
@@ -175,7 +176,7 @@ class EmployeeRequestController extends Controller
 
         return $this->asJson([
             'success' => $delete,
-            'msg' => Yii::t('app', $delete ? 'Item deleted' : 'Error In Save Info')
+            'msg' => Module::t('module', $delete ? 'Item deleted' : 'Error In Save Info')
         ]);
     }
 
@@ -193,7 +194,7 @@ class EmployeeRequestController extends Controller
             $confirm = $relatedModel->confirm();
             return $this->asJson([
                 'success' => $confirm,
-                'msg' => Yii::t('app', $confirm ? 'Item Confirmed' : 'Error In Save Info')
+                'msg' => Module::t('module', $confirm ? 'Item Confirmed' : 'Error In Save Info')
             ]);
         }
 
@@ -217,7 +218,7 @@ class EmployeeRequestController extends Controller
             $reject = $relatedModel->reject();
             return $this->asJson([
                 'success' => $reject,
-                'msg' => Yii::t('app', $reject ? 'Item Rejected' : 'Error In Save Info')
+                'msg' => Module::t('module', $reject ? 'Item Rejected' : 'Error In Save Info')
             ]);
         }
 
@@ -241,7 +242,7 @@ class EmployeeRequestController extends Controller
 
         return $this->asJson([
             'success' => $undo,
-            'msg' => Yii::t('app', $undo ? 'Item Undid' : 'Error In Save Info')
+            'msg' => Module::t('module', $undo ? 'Item Undid' : 'Error In Save Info')
         ]);
     }
 
@@ -251,7 +252,7 @@ class EmployeeRequestController extends Controller
             return $model;
         }
 
-        throw throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
     private function viewByType(string $view, string $type)
@@ -271,7 +272,7 @@ class EmployeeRequestController extends Controller
             return $viewFile;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
 }

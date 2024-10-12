@@ -2,7 +2,8 @@
 
 use hesabro\hris\models\EmployeeBranchUser;
 use hesabro\helpers\components\Helper;
-use common\widgets\grid\GridView;
+use hesabro\helpers\widgets\grid\GridView;
+use hesabro\hris\Module;
 use yii\bootstrap4\ButtonDropdown;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -12,7 +13,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel hesabro\hris\models\EmployeeBranchUserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Employee Branch User');
+$this->title = Module::t('module', 'Employee Branch User');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="employee-branch-index card">
@@ -98,7 +99,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'insurance_code',
                 [
                     'attribute' => 'roll_call_id',
-                    'label' => Yii::t('app', 'Traffic ID'),
+                    'label' => Module::t('module', 'Traffic ID'),
                     'contentOptions' => ['title' => 'شناسه دستگاه حضور و غیاب'],
                     'headerOptions' => ['title' => 'شناسه دستگاه حضور و غیاب']
                 ],
@@ -118,7 +119,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'group' => function ($url, EmployeeBranchUser $model, $key) {
                             $items = [];
                             $items[] = [
-                                'label' => Html::tag('span', ' ', ['class' => 'fa fa-eye']) . ' ' . Yii::t("app", "Details"),
+                                'label' => Html::tag('span', ' ', ['class' => 'fa fa-eye']) . ' ' . Module::t('module', "Details"),
                                 'url' => ['view-user', 'branch_id' => $model->branch_id, 'user_id' => $model->user_id],
                                 'encode' => false,
                                 'linkOptions' => [
@@ -127,13 +128,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             ];
                             if ($model->canUpdate()) {
                                 $items[] = [
-                                    'label' => Html::tag('span', ' ', ['class' => 'fa fa-pen']) . ' ' . Yii::t('app', 'Update'),
+                                    'label' => Html::tag('span', ' ', ['class' => 'fa fa-pen']) . ' ' . Module::t('module', 'Update'),
                                     'url' => 'javascript:void(0)',
                                     'encode' => false,
                                     'linkOptions' => [
-                                        'title' => Yii::t('app', 'Update'),
+                                        'title' => Module::t('module', 'Update'),
                                         'data-size' => 'modal-xl',
-                                        'data-title' => Yii::t('app', 'Update') . ' - ' . $model->user->fullName,
+                                        'data-title' => Module::t('module', 'Update') . ' - ' . $model->user->fullName,
                                         'data-toggle' => 'modal',
                                         'data-target' => '#modal-pjax',
                                         'data-url' => Url::to(['update-user', 'branch_id' => $model->branch_id, 'user_id' => $model->user_id]),
@@ -143,13 +144,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             }
                             if ($model->canUpdate()) {
                                 $items[] = [
-                                    'label' => Html::tag('span', ' ', ['class' => 'fa fa-pen']) . ' ' . Yii::t('app', 'Insurance Data'),
+                                    'label' => Html::tag('span', ' ', ['class' => 'fa fa-pen']) . ' ' . Module::t('module', 'Insurance Data'),
                                     'url' => 'javascript:void(0)',
                                     'encode' => false,
                                     'linkOptions' => [
-                                        'title' => Yii::t('app', 'Insurance Data'),
+                                        'title' => Module::t('module', 'Insurance Data'),
                                         'data-size' => 'modal-xxl',
-                                        'data-title' => Yii::t('app', 'Insurance Data') . ' - ' . $model->user->fullName,
+                                        'data-title' => Module::t('module', 'Insurance Data') . ' - ' . $model->user->fullName,
                                         'data-toggle' => 'modal',
                                         'data-target' => '#modal-pjax',
                                         'data-url' => Url::to(['insurance-data', 'branch_id' => $model->branch_id, 'user_id' => $model->user_id]),
@@ -159,13 +160,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ];
                             }
                             $items[] = [
-                                'label' => Html::tag('span', ' ', ['class' => 'fa fa-money-bill']) . ' ' . Yii::t('app', 'Advance Money'),
+                                'label' => Html::tag('span', ' ', ['class' => 'fa fa-money-bill']) . ' ' . Module::t('module', 'Advance Money'),
                                 'url' => 'javascript:void(0)',
                                 'encode' => false,
                                 'linkOptions' => [
-                                    'title' => Yii::t('app', 'Advance Money'),
+                                    'title' => Module::t('module', 'Advance Money'),
                                     'data-size' => 'modal-xl',
-                                    'data-title' => Yii::t('app', 'Advance Money') . ' - ' . $model->user->fullName,
+                                    'data-title' => Module::t('module', 'Advance Money') . ' - ' . $model->user->fullName,
                                     'data-toggle' => 'modal',
                                     'data-target' => '#modal-pjax',
                                     'data-url' => Url::to(['advance-money-manage/create-with-confirm', 'user_id' => $model->user_id]),
@@ -182,17 +183,17 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                             ];
                             $items[] = [
-                                'label' => Html::tag('span', ' ', ['class' => 'fa fa-history']) . ' ' . Yii::t('app', 'Log'),
+                                'label' => Html::tag('span', ' ', ['class' => 'fa fa-history']) . ' ' . Module::t('module', 'Log'),
                                 'url' => ['/mongo/log/view-ajax', 'modelId' => $model->user_id, 'modelClass' => EmployeeBranchUser::class],
                                 'encode' => false,
                                 'linkOptions' => [
-                                    'title' => Yii::t('app', 'Log'),
+                                    'title' => Module::t('module', 'Log'),
                                     'class' => 'showModalButton',
                                     'data-size' => 'modal-xxl',
                                 ],
                             ];
                             return ButtonDropdown::widget([
-                                'buttonOptions' => ['class' => 'btn btn-info btn-md dropdown-toggle', 'style' => 'padding: 3px 7px !important;', 'title' => Yii::t('app', 'Actions')],
+                                'buttonOptions' => ['class' => 'btn btn-info btn-md dropdown-toggle', 'style' => 'padding: 3px 7px !important;', 'title' => Module::t('module', 'Actions')],
                                 'encodeLabel' => false,
                                 'label' => '<i class="far fa-list mr-1"></i>',
                                 'options' => ['class' => 'float-right'],

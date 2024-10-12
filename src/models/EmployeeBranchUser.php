@@ -14,6 +14,7 @@ use common\models\Document;
 use common\models\Settings;
 use common\models\Year;
 use hesabro\hris\Module;
+use Yii;
 use yii\helpers\ArrayHelper;
 
 /**

@@ -1,7 +1,8 @@
 <?php
 
 use hesabro\hris\models\UserContractsShelves;
-use common\widgets\grid\GridView;
+use hesabro\helpers\widgets\grid\GridView;
+use hesabro\hris\Module;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
@@ -10,7 +11,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel hesabro\hris\models\UserContractsShelvesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'User Contracts Shelves');
+$this->title = Module::t('module', 'User Contracts Shelves');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
     <?php Pjax::begin(['id' => 'user-contracts-shelves-p-jax']); ?>
@@ -30,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'id' => 'user-contracts-shelves-create',
                     'class' => 'grid-btn grid-btn-update',
                     'data-size' => 'modal-lg',
-                    'data-title' => Yii::t('app', 'Create'),
+                    'data-title' => Module::t('module', 'Create'),
                     'data-toggle' => 'modal',
                     'data-target' => '#modal-pjax',
                     'data-url' => Url::to(['create']),
@@ -75,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'id' => 'user-contracts-shelves-update',
                         'class' => 'grid-btn grid-btn-update',
                         'data-size' => 'modal-lg',
-                        'data-title' => Yii::t('app', 'Update'),
+                        'data-title' => Module::t('module', 'Update'),
                         'data-toggle' => 'modal',
                         'data-target' => '#modal-pjax',
                         'data-url' => Url::to(['update', 'id' => $model->id]),
@@ -85,7 +86,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                              },
                     'view' => function ($url, $model, $key) {
                         return Html::a('<i class="text-info far fa-eye"></i>', ['view', 'id' => $model->id], [
-                        'title' => Yii::t('app', 'View'),
+                        'title' => Module::t('module', 'View'),
                         'class' => 'grid-btn grid-btn-view'
                         ]);
                     },

@@ -2,10 +2,16 @@
 
 namespace hesabro\hris\controllers;
 
+use common\models\Account;
 use common\models\Document;
 use common\models\Operation;
+use common\models\AccountDefinite;
 use hesabro\hris\models\AdvanceMoney;
+use hesabro\hris\models\AdvanceMoneyForm;
+use hesabro\hris\Module;
 use Yii;
+use yii\helpers\Url;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -23,14 +29,14 @@ class AdvanceMoneyManageController extends AdvanceMoneyManageBase
         $model = $this->findModel($id);
         $model->setScenario(AdvanceMoney::SCENARIO_CONFIRM);
         if (!$model->canConfirm()) {
-            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+            throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
         }
         $operation = new Operation();
         $operation->setScenario(Operation::SCENARIO_PAYMENT_TO_CUSTOMER);
         $operation->price = (int)$model->amount;
         if ($operation->load(Yii::$app->request->post()) && $operation->validate()) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            $response = ['success' => false, 'msg' => Yii::t('app', 'Error In Save Info')];
+            $response = ['success' => false, 'msg' => Module::t('module', 'Error In Save Info')];
 
             $transaction = \Yii::$app->db->beginTransaction();
             try {
@@ -43,7 +49,7 @@ class AdvanceMoneyManageController extends AdvanceMoneyManageBase
                     $transaction->commit();
                     $response = [
                         'success' => true,
-                        'msg' => Yii::t('app', 'Item Confirmed')
+                        'msg' => Module::t('module', 'Item Confirmed')
                     ];
                 } else {
                     $transaction->rollBack();
@@ -66,6 +72,62 @@ class AdvanceMoneyManageController extends AdvanceMoneyManageBase
         return $this->renderAjax('_confirm', [
             'model' => $model,
             'operation' => $operation,
+            'wageTypes' => Operation::itemAlias('WageType'),
+            'getAccountUrl' => Url::to(['/account-definite/find', 'level' => AccountDefinite::LEVEL_DEFINITE, 'is_account' => 1]),
+            'toList' => Account::itemAlias('Customer', null, $model->user->customer->id),
+            'fromList' => Account::itemAlias('BankOrCashOrPublic')
+        ]);
+    }
+
+    public function actionCreateWithConfirm($user_id)
+    {
+        $employee = $this->findModelEmployeeUser($user_id);
+        $model = new AdvanceMoneyForm([
+            'user_id' => $employee->user_id,
+            'employee' => $employee,
+            'account_id_to' => $employee->account_id,
+        ]);
+
+        if (!$model->canCreate()) {
+            throw new ForbiddenHttpException($model->error_msg ?: Module::t('module', "It is not possible to perform this operation"));
+        }
+        $result = [
+            'success' => false,
+            'msg' => Module::t('module', "Error In Save Info")
+        ];
+        if ($this->request->isPost) {
+            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+                $transaction = Yii::$app->db->beginTransaction();
+                try {
+                    $flag = $model->saveDocument();
+                    $flag = $flag && $model->saveAdvanceMoney();
+                    if ($flag) {
+                        $result = [
+                            'success' => true,
+                            'msg' => Module::t('module', "Item Created")
+                        ];
+                        if(Yii::$app->request->post('TypeBtn', null) == 'document'){
+                            $result['CallFunction'] = 'showModalAfterAjax';
+                            $result['ModalUrl'] = Url::to(['/document/view', 'id' => $model->id]);
+                        }
+                        $transaction->commit();
+                    } else {
+                        $transaction->rollBack();
+                    }
+                } catch (\Exception $e) {
+                    $transaction->rollBack();
+                    Yii::error($e->getMessage() . $e->getTraceAsString(), Yii::$app->controller->id . '/' . Yii::$app->controller->action->id);
+                }
+                return $this->asJson($result);
+            }
+        } else {
+            $model->loadDefaultValues();
+        }
+        $this->performAjaxValidation($model);
+        return $this->renderAjax('_create-with-confirm', [
+            'model' => $model,
+            'accountDefiniteFind' => Url::to(['/account-definite/find', 'level' => AccountDefinite::LEVEL_DEFINITE]),
+            'accountList' => Url::to(['/account/get-account'])
         ]);
     }
 }

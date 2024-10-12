@@ -1,5 +1,6 @@
 <?php
 
+use hesabro\hris\Module;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -7,7 +8,7 @@ use yii\widgets\DetailView;
 /* @var $model hesabro\hris\models\EmployeeBranch */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app','Employee Branches'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Module::t('module','Employee Branches'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="employee-branch-view card">

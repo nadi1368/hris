@@ -3,7 +3,10 @@
 namespace hesabro\hris\controllers;
 
 use common\models\Comments;
+use Exception;
 use hesabro\hris\models\ComfortItems;
+use hesabro\hris\Module;
+use Yii;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -25,7 +28,7 @@ class ComfortItemsController extends ComfortItemsBase
         }
         $result = [
             'success' => false,
-            'msg' => Yii::t("app", "Error In Save Info")
+            'msg' => Module::t('module', "Error In Save Info")
         ];
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $transaction = Yii::$app->db->beginTransaction();
@@ -46,7 +49,7 @@ class ComfortItemsController extends ComfortItemsBase
                 if ($flag) {
                     $result = [
                         'success' => true,
-                        'msg' => Yii::t("app", "Item Confirmed")
+                        'msg' => Module::t('module', "Item Confirmed")
                     ];
                     $transaction->commit();
                 } else {
@@ -78,7 +81,7 @@ class ComfortItemsController extends ComfortItemsBase
 
         $result = [
             'success' => false,
-            'msg' => Yii::t("app", "Error In Save Info")
+            'msg' => Module::t('module', "Error In Save Info")
         ];
 
         if ($comment->load(Yii::$app->request->post()) && $comment->validate()) {
@@ -88,7 +91,7 @@ class ComfortItemsController extends ComfortItemsBase
                 if ($model->createComment($comment)) {
                     $result = [
                         'success' => true,
-                        'msg' => Yii::t('app', 'Item Referred')
+                        'msg' => Module::t('module', 'Item Referred')
                     ];
                     $transaction->commit();
                 } else {

@@ -7,6 +7,7 @@ use common\interfaces\SendAutoCommentInterface;
 use common\models\CommentsType;
 use common\models\SettingsAccount;
 use hesabro\helpers\traits\CoreTrait;
+use Yii;
 use yii\helpers\Html;
 
 class RequestLeave extends RequestLeaveBase implements SendAutoCommentInterface
@@ -75,8 +76,8 @@ class RequestLeave extends RequestLeaveBase implements SendAutoCommentInterface
             $content .= Html::tag('p', 'این درخواست توسط "' . $this->user->fullName . '" در سیستم ثبت شد.');
             $content .= Html::tag('p', 'توضیحات درخواست : "' . $this->description . '"');
             $content .= Html::tag('p', 'نوع درخواست : "' . self::itemAlias('Types', (int)$this->type) . '"');
-            $content .= Html::tag('p', 'از تاریخ : "' . (in_array($this->type, array_keys(RequestLeave::itemAlias('TypesDaily'))) ? Yii::$app->jdate->date("l d F Y", $this->from_date) : Yii::$app->jdate->date("l d F Y  H:i", $this->from_date)) . '"');
-            $content .= Html::tag('p', 'تا تاریخ : "' . (in_array($this->type, array_keys(RequestLeave::itemAlias('TypesDaily'))) ? Yii::$app->jdate->date("l d F Y", $this->to_date) : Yii::$app->jdate->date("l d F Y  H:i", $this->to_date)) . '"');
+            $content .= Html::tag('p', 'از تاریخ : "' . (in_array($this->type, array_keys(RequestLeave::itemAlias('TypesDaily'))) ? Yii::$app->jdf->jdate("l d F Y", $this->from_date) : Yii::$app->jdf->jdate("l d F Y  H:i", $this->from_date)) . '"');
+            $content .= Html::tag('p', 'تا تاریخ : "' . (in_array($this->type, array_keys(RequestLeave::itemAlias('TypesDaily'))) ? Yii::$app->jdf->jdate("l d F Y", $this->to_date) : Yii::$app->jdf->jdate("l d F Y  H:i", $this->to_date)) . '"');
             $content .= Html::tag('p', 'بازه زمانی درخواست : "' . Yii::$app->formatter->asDuration($this->to_date - $this->from_date, '  و ') . '"');
         }
         if ($this->getScenario() == self::SCENARIO_REJECT) {
@@ -84,15 +85,15 @@ class RequestLeave extends RequestLeaveBase implements SendAutoCommentInterface
             $content .= Html::tag('p', 'این درخواست توسط "' . $this->update->fullName . '" رد شد.');
             $content .= Html::tag('p', 'توضیحات رد درخواست : "' . $this->rejectDescription . '"');
             $content .= Html::tag('p', 'نوع درخواست : "' . self::itemAlias('Types', (int)$this->type) . '"');
-            $content .= Html::tag('p', 'از تاریخ : "' . (in_array($this->type, array_keys(RequestLeave::itemAlias('TypesDaily'))) ? Yii::$app->jdate->date("l d F Y", $this->from_date) : Yii::$app->jdate->date("l d F Y  H:i", $this->from_date)) . '"');
-            $content .= Html::tag('p', 'تا تاریخ : "' . (in_array($this->type, array_keys(RequestLeave::itemAlias('TypesDaily'))) ? Yii::$app->jdate->date("l d F Y", $this->to_date) : Yii::$app->jdate->date("l d F Y  H:i", $this->to_date)) . '"');
+            $content .= Html::tag('p', 'از تاریخ : "' . (in_array($this->type, array_keys(RequestLeave::itemAlias('TypesDaily'))) ? Yii::$app->jdf->jdate("l d F Y", $this->from_date) : Yii::$app->jdf->jdate("l d F Y  H:i", $this->from_date)) . '"');
+            $content .= Html::tag('p', 'تا تاریخ : "' . (in_array($this->type, array_keys(RequestLeave::itemAlias('TypesDaily'))) ? Yii::$app->jdf->jdate("l d F Y", $this->to_date) : Yii::$app->jdf->jdate("l d F Y  H:i", $this->to_date)) . '"');
         }
         if ($this->getScenario() == self::SCENARIO_CONFIRM) {
             $content = Html::tag('p', "درخواست {$type} شما مورد تایید قرار گرفت.");
             $content .= Html::tag('p', 'این درخواست توسط "' . $this->update->fullName . '" تایید شد.');
             $content .= Html::tag('p', 'نوع درخواست : "' . self::itemAlias('Types', (int)$this->type) . '"');
-            $content .= Html::tag('p', 'از تاریخ : "' . (in_array($this->type, array_keys(RequestLeave::itemAlias('TypesDaily'))) ? Yii::$app->jdate->date("l d F Y", $this->from_date) : Yii::$app->jdate->date("l d F Y  H:i", $this->from_date)) . '"');
-            $content .= Html::tag('p', 'تا تاریخ : "' . (in_array($this->type, array_keys(RequestLeave::itemAlias('TypesDaily'))) ? Yii::$app->jdate->date("l d F Y", $this->to_date) : Yii::$app->jdate->date("l d F Y  H:i", $this->to_date)) . '"');
+            $content .= Html::tag('p', 'از تاریخ : "' . (in_array($this->type, array_keys(RequestLeave::itemAlias('TypesDaily'))) ? Yii::$app->jdf->jdate("l d F Y", $this->from_date) : Yii::$app->jdf->jdate("l d F Y  H:i", $this->from_date)) . '"');
+            $content .= Html::tag('p', 'تا تاریخ : "' . (in_array($this->type, array_keys(RequestLeave::itemAlias('TypesDaily'))) ? Yii::$app->jdf->jdate("l d F Y", $this->to_date) : Yii::$app->jdf->jdate("l d F Y  H:i", $this->to_date)) . '"');
         }
 
         return $content;

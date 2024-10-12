@@ -2,6 +2,7 @@
 
 use hesabro\hris\models\EmployeeBranchUser;
 use hesabro\hris\models\SalaryInsurance;
+use hesabro\hris\Module;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 use yii\widgets\MaskedInput;
@@ -31,7 +32,7 @@ use yii\widgets\MaskedInput;
                 <?= $form->field($model, 'nationalCode')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-md-2">
-                <?= $form->field($model, 'national')->dropDownList(\common\models\Customer::itemAlias('National'), ['prompt' => Yii::t("app", "Select")]) ?>
+                <?= $form->field($model, 'national')->dropDownList(\common\models\Customer::itemAlias('National'), ['prompt' => Module::t('module', "Select")]) ?>
             </div>
             <div class="col-md-2">
                 <?= $form->field($model, 'sex')->dropDownList(\common\models\Customer::itemAlias('Sex')) ?>
@@ -49,7 +50,7 @@ use yii\widgets\MaskedInput;
 				<?= $form->field($model, 'issue_place')->textInput(['maxlength' => true]) ?>
 			</div>
 			<div class="col-md-3">
-				<?= $form->field($model, 'marital')->dropDownList(EmployeeBranchUser::itemAlias('marital'), ['prompt' => Yii::t('app','Select...')]) ?>
+				<?= $form->field($model, 'marital')->dropDownList(EmployeeBranchUser::itemAlias('marital'), ['prompt' => Module::t('module','Select...')]) ?>
 			</div>
 			<div class="col-md-3">
 				<?= $form->field($model, 'child_count')->textInput(['type' => 'number']) ?>
@@ -58,11 +59,11 @@ use yii\widgets\MaskedInput;
                 <?= $form->field($model, 'count_insurance_addition')->textInput(['type' => 'number'])->hint('تعداد نفرات برای کسر بیمه تکمیلی') ?>
             </div>
 			<div class="col-md-3">
-				<?= $form->field($model, 'education')->dropDownList(EmployeeBranchUser::itemAlias('education'), ['prompt' => Yii::t('app', 'Select...')]) ?>
+				<?= $form->field($model, 'education')->dropDownList(EmployeeBranchUser::itemAlias('education'), ['prompt' => Module::t('module', 'Select...')]) ?>
 			</div>
 
             <div class="col-md-3">
-                <?= $form->field($model, 'job_code')->dropDownList(SalaryInsurance::itemAlias('List'), ['prompt' => Yii::t('app', 'Select...')]) ?>
+                <?= $form->field($model, 'job_code')->dropDownList(SalaryInsurance::itemAlias('List'), ['prompt' => Module::t('module', 'Select...')]) ?>
             </div>
 
             <div class="col-md-3">
@@ -96,7 +97,7 @@ use yii\widgets\MaskedInput;
         </div>
     </div>
     <div class="card-footer">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? Module::t('module', 'Create') : Module::t('module', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

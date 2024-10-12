@@ -1,14 +1,14 @@
 <?php
 
-use backend\models\AdvanceMoney;
-use common\components\Helper;
-use common\widgets\grid\GridView;
+use hesabro\helpers\widgets\grid\GridView;
+use hesabro\hris\models\AdvanceMoney;
+use hesabro\hris\Module;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\AdvanceMoneySearch */
+/* @var \hesabro\hris\models\AdvanceMoneySearch $searchModel */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 Pjax::begin(['id' => 'pjax-advance-money'])
 ?>
@@ -59,13 +59,13 @@ Pjax::begin(['id' => 'pjax-advance-money'])
                     'format' => 'raw'
                 ],
                 [
-                    'label' => Yii::t('app', 'Shaba Number'),
+                    'label' => Module::t('module', 'Shaba Number'),
                     'value' => function (AdvanceMoney $model) {
                         if($model->iban) {
-                            return Helper::formatterIBAN($model->iban) . '<br />' . Html::a('<i class="fa fa-copy"></i>', ['#'], ['onclick' => "return copyToClipboard('" . $model->iban . "')", 'title' => 'کپی', 'class' => 'text-info']);
+                            return Yii::$app->helper::formatterIBAN($model->iban) . '<br />' . Html::a('<i class="fa fa-copy"></i>', ['#'], ['onclick' => "return copyToClipboard('" . $model->iban . "')", 'title' => 'کپی', 'class' => 'text-info']);
                         }
                         $employeeUser = $model->employee;
-                        return $employeeUser !== null && $employeeUser->shaba ? Helper::formatterIBAN($employeeUser->shaba) . '<br />' . Html::a('<i class="fa fa-copy"></i>', ['#'], ['onclick' => "return copyToClipboard('" . $employeeUser->shaba . "')", 'title' => 'کپی', 'class' => 'text-info']) : null;;
+                        return $employeeUser !== null && $employeeUser->shaba ? Yii::$app->helper::formatterIBAN($employeeUser->shaba) . '<br />' . Html::a('<i class="fa fa-copy"></i>', ['#'], ['onclick' => "return copyToClipboard('" . $employeeUser->shaba . "')", 'title' => 'کپی', 'class' => 'text-info']) : null;;
                     },
                     'format' => 'raw'
                 ],
@@ -93,11 +93,11 @@ Pjax::begin(['id' => 'pjax-advance-money'])
                         'confirm' => function ($url, $model, $key) {
                             return $model->canConfirm() ? Html::a('<span class="far fa-check"></span>',
                                 'javascript:void(0)', [
-                                    'title' => Yii::t('app', 'Confirm'),
+                                    'title' => Module::t('module', 'Confirm'),
                                     'id' => 'confirm-advance-money',
                                     'class' => 'text-success',
                                     'data-size' => 'modal-xxl',
-                                    'data-title' => Yii::t('app', 'Confirm'),
+                                    'data-title' => Module::t('module', 'Confirm'),
                                     'data-toggle' => 'modal',
                                     'data-target' => '#modal-pjax',
                                     'data-url' => Url::to(['confirm', 'id' => $model->id]),
@@ -110,11 +110,11 @@ Pjax::begin(['id' => 'pjax-advance-money'])
                         'reject' => function ($url, $model, $key) {
                             return $model->canReject() ? Html::a('<span class="fa fa-times"></span>',
                                 'javascript:void(0)', [
-                                    'title' => Yii::t('app', 'Reject'),
+                                    'title' => Module::t('module', 'Reject'),
                                     'id' => 'reject-advance-money',
                                     'class' => 'text-danger',
                                     'data-size' => 'modal-xl',
-                                    'data-title' => Yii::t('app', 'Reject'),
+                                    'data-title' => Module::t('module', 'Reject'),
                                     'data-toggle' => 'modal',
                                     'data-target' => '#modal-pjax',
                                     'data-url' => Url::to(['reject', 'id' => $model->id]),
@@ -127,7 +127,7 @@ Pjax::begin(['id' => 'pjax-advance-money'])
 
                         'document' => function ($url, $model, $key) {
                             return $model->status == AdvanceMoney::STATUS_CONFIRM ? Html::a('<span class="ti-write grid-btn grid-btn-update"></span>', ['/document/view', 'id' => $model->doc_id], [
-                                'title' => Yii::t('app', 'Document'),
+                                'title' => Module::t('module', 'Document'),
                                 'class' => "showModalButton"
                             ]) : '';
                         },

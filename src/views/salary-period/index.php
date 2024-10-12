@@ -2,7 +2,8 @@
 
 use hesabro\hris\models\SalaryPeriod;
 use common\models\Year;
-use common\widgets\grid\GridView;
+use hesabro\helpers\widgets\grid\GridView;
+use hesabro\hris\Module;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
@@ -11,7 +12,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel hesabro\hris\models\SalaryPeriodSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Salary Periods');
+$this->title = Module::t('module', 'Salary Periods');
 if ($searchModel->workshop_id) {
     $this->params['breadcrumbs'][] = ['label' => $searchModel->workshop->fullName, 'url' => ['workshop-insurance/index', 'WorkshopInsuranceSearch[id]' => $searchModel->workshop_id]];
 }
@@ -29,13 +30,13 @@ $this->params['breadcrumbs'][] = $this->title;
             <div>
                 <?= $searchModel->workshop_id && $searchModel->workshop->canCreateYear() ? Html::a('ایجاد سنوات '.Year::getDefault('title'),
                     ['create-year', 'workshop_id' => $searchModel->workshop_id], [
-                        'data-confirm' => Yii::t('app', 'Are you sure?'),
+                        'data-confirm' => Module::t('module', 'Are you sure?'),
                         'data-method' => 'post',
                         'class' => 'btn btn-success',
                     ]) : ''; ?>
                 <?= $searchModel->workshop_id && $searchModel->workshop->canCreateReward() ? Html::a('ایجاد عیدی و پاداش',
                     ['create-reward', 'workshop_id' => $searchModel->workshop_id], [
-                        'data-confirm' => Yii::t('app', 'Are you sure?'),
+                        'data-confirm' => Module::t('module', 'Are you sure?'),
                         'data-method' => 'post',
                         'class' => 'btn btn-success',
                     ]) : ''; ?>
@@ -127,16 +128,16 @@ $this->params['breadcrumbs'][] = $this->title;
                             return
                                 Html::a('<span class="fa fa-eye text-info"></span>',
                                     [SalaryPeriod::itemAlias('KindLink', (int)$model->kind), 'id' => $key], [
-                                        'title' => Yii::t('app', 'Details'),
+                                        'title' => Module::t('module', 'Details'),
                                     ]);
                         },
                         'update' => function ($url, $model, $key) {
                             return $model->canUpdate() ? Html::a('<span class="fa fa-edit text-primary"></span>',
                                 'javascript:void(0)', [
-                                    'title' => Yii::t('app', 'Update'),
+                                    'title' => Module::t('module', 'Update'),
                                     'id' => 'edit-ipg-btn',
                                     'data-size' => 'modal-lg',
-                                    'data-title' => Yii::t('app', 'Update'),
+                                    'data-title' => Module::t('module', 'Update'),
                                     'data-toggle' => 'modal',
                                     'data-target' => '#modal-pjax',
                                     'data-url' => Url::to(['update', 'id' => $model->id]),

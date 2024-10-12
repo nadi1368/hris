@@ -5,6 +5,7 @@ namespace hesabro\hris\controllers;
 use hesabro\hris\models\RejectForm;
 use hesabro\helpers\traits\AjaxValidationTrait;
 use Exception;
+use hesabro\hris\Module;
 use Yii;
 use hesabro\hris\models\ComfortItems;
 use hesabro\hris\models\ComfortItemsSearch;
@@ -127,7 +128,7 @@ class ComfortItemsBase extends Controller
                         $transaction->commit();
                         $result = [
                             'success' => true,
-                            'msg' => Yii::t("app", 'Item Rejected')
+                            'msg' => Module::t('module', 'Item Rejected')
                         ];
                     } else {
                         $transaction->rollBack();
@@ -148,7 +149,7 @@ class ComfortItemsBase extends Controller
                 return $this->asJson($result);
             }
         } else {
-            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+            throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
         }
 
         $this->performAjaxValidation($form);
@@ -172,7 +173,7 @@ class ComfortItemsBase extends Controller
                     $transaction->commit();
                     return $this->asJson([
                         'success' => true,
-                        'msg' => Yii::t('app', 'Item Reverted')
+                        'msg' => Module::t('module', 'Item Reverted')
                     ]);
                 }
                 $transaction->rollBack();
@@ -185,7 +186,7 @@ class ComfortItemsBase extends Controller
         $this->performAjaxValidation($model);
         return $this->asJson([
             'success' => false,
-            'msg' => Yii::t('app', 'Error In Save Information, Please Try Again')
+            'msg' => Module::t('module', 'Error In Save Information, Please Try Again')
         ]);
     }
 
@@ -202,7 +203,7 @@ class ComfortItemsBase extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
     public function flash($type, $message)

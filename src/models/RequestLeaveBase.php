@@ -113,20 +113,20 @@ class RequestLeaveBase extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'branch_id' => Yii::t('app', 'Branch ID'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'manager_id' => Yii::t('app', 'Manager ID'),
-            'type' => Yii::t('app', 'Type'),
-            'description' => Yii::t('app', 'Description'),
-            'from_date' => Yii::t('app', 'From Date'),
-            'to_date' => Yii::t('app', 'To Date'),
-            'status' => Yii::t('app', 'State'),
-            'creator_id' => Yii::t('app', 'Creator ID'),
-            'update_id' => Yii::t('app', 'Update ID'),
-            'created' => Yii::t('app', 'Created'),
-            'changed' => Yii::t('app', 'Changed'),
-            'range' => Yii::t('app', 'Range'),
+            'id' => Module::t('module', 'ID'),
+            'branch_id' => Module::t('module', 'Branch ID'),
+            'user_id' => Module::t('module', 'User ID'),
+            'manager_id' => Module::t('module', 'Manager ID'),
+            'type' => Module::t('module', 'Type'),
+            'description' => Module::t('module', 'Description'),
+            'from_date' => Module::t('module', 'From Date'),
+            'to_date' => Module::t('module', 'To Date'),
+            'status' => Module::t('module', 'State'),
+            'creator_id' => Module::t('module', 'Creator ID'),
+            'update_id' => Module::t('module', 'Update ID'),
+            'created' => Module::t('module', 'Created'),
+            'changed' => Module::t('module', 'Changed'),
+            'range' => Module::t('module', 'Range'),
         ];
     }
 
@@ -143,7 +143,7 @@ class RequestLeaveBase extends \yii\db\ActiveRecord
                 $this->to_date = $date_range['end'];
             }
             if (empty($this->from_date) || empty($this->to_date)) {
-                $this->addError('range', Yii::t('app', 'Invalid {value} .', ['value' => $this->getAttributeLabel('range')]));
+                $this->addError('range', Module::t('module', 'Invalid {value} .', ['value' => $this->getAttributeLabel('range')]));
             }
         }
         return parent::beforeValidate();
@@ -152,7 +152,7 @@ class RequestLeaveBase extends \yii\db\ActiveRecord
     public function validateMeritHourly($attribute)
     {
         if (date('z', $this->from_date) !== date('z', $this->to_date)) {
-            $this->addError($attribute, Yii::t('app', 'Hourly leave can only be recorded in one day'));
+            $this->addError($attribute, Module::t('module', 'Hourly leave can only be recorded in one day'));
         }
 
         $max_hours_leave = (int)self::MERIT_HOURLY_REQUESTS_PER_DAY;
@@ -161,17 +161,17 @@ class RequestLeaveBase extends \yii\db\ActiveRecord
         $meritHourly_Requests = $sum <= 0 ? 1 : ceil(($sum / ($max_hours_leave * 60 * 60)) + 1);
 
         if (($this->to_date - $this->from_date) > ($max_hours_leave * 60 * 60)) {
-            $this->addError($attribute, Yii::t('app', "Maximum Hourly Leave per request is:{max_hours_leave}", ['max_hours_leave' => $max_hours_leave]));
+            $this->addError($attribute, Module::t('module', "Maximum Hourly Leave per request is:{max_hours_leave}", ['max_hours_leave' => $max_hours_leave]));
         }
         if ($meritHourly_Requests <= self::MERIT_HOURLY_REQUESTS_PER_DAY) {
 
             $merit_hours_leftover = (($max_hours_leave * 60 * 60) * self::MERIT_HOURLY_REQUESTS_PER_DAY) - (($this->sumTodayLeaveHours() ?? 0));
 
             if (($this->to_date - $this->from_date) > $merit_hours_leftover) {
-                $this->addError($attribute, Yii::t('app', 'Your merit leave left for current request is  {merit_hour_leftover}', ['merit_hour_leftover' => Yii::$app->formatter->asDuration($merit_hours_leftover)]));
+                $this->addError($attribute, Module::t('module', 'Your merit leave left for current request is  {merit_hour_leftover}', ['merit_hour_leftover' => Yii::$app->formatter->asDuration($merit_hours_leftover)]));
             }
         } else {
-            $this->addError($attribute, Yii::t('app', 'Sum of Your Hourly Merit Leaves Hours are Reached to This day Limit'));
+            $this->addError($attribute, Module::t('module', 'Sum of Your Hourly Merit Leaves Hours are Reached to This day Limit'));
         }
 
     }
@@ -179,14 +179,14 @@ class RequestLeaveBase extends \yii\db\ActiveRecord
     public function validateMissionHourly($attribute)
     {
         if (date('z', $this->from_date) !== date('z', $this->to_date)) {
-            $this->addError($attribute, Yii::t('app', 'Hourly leave can only be recorded in one day'));
+            $this->addError($attribute, Module::t('module', 'Hourly leave can only be recorded in one day'));
         }
     }
 
     public function validateMeritDaily($attribute)
     {
         if ($this->to_date - $this->from_date <= 0) {
-            $this->addError($attribute, Yii::t('app', "Minimum Range of Daily Leave is 1 Day and Days Start From daybreak"));
+            $this->addError($attribute, Module::t('module', "Minimum Range of Daily Leave is 1 Day and Days Start From daybreak"));
         }
     }
 
@@ -344,7 +344,7 @@ class RequestLeaveBase extends \yii\db\ActiveRecord
 
     private function sumTodayLeaveHours()
     {
-        $selected_day = Yii::$app->jdate->date("Y/m/d H:i:s", $this->from_date);
+        $selected_day = Yii::$app->jdf->jdate("Y/m/d H:i:s", $this->from_date);
 
         $day_start_ts = strtotime(Yii::$app->jdf::Convert_jalali_to_gregorian($selected_day) . " 00:00:00");
         $day_end_ts = strtotime(Yii::$app->jdf::Convert_jalali_to_gregorian($selected_day) . " 23:59:59");
@@ -391,31 +391,31 @@ class RequestLeaveBase extends \yii\db\ActiveRecord
     {
         $_items = [
             'Types' => [
-                self::TYPE_MERIT_HOURLY => Yii::t('app', 'Merit Hourly'),
-                self::TYPE_MERIT_DAILY => Yii::t('app', 'Merit Daily'),
-                self::TYPE_TREATMENT_DAILY => Yii::t('app', 'Treatment Daily'),
-                self::TYPE_NO_SALARY_HOURLY => Yii::t('app', 'No Salary Hourly'),
-                self::TYPE_NO_SALARY_DAILY => Yii::t('app', 'No Salary Daily'),
-                self::TYPE_MISSION_HOURLY => Yii::t('app', 'Mission Hourly'),
-                self::TYPE_MISSION_DAILY => Yii::t('app', 'Mission Daily'),
+                self::TYPE_MERIT_HOURLY => Module::t('module', 'Merit Hourly'),
+                self::TYPE_MERIT_DAILY => Module::t('module', 'Merit Daily'),
+                self::TYPE_TREATMENT_DAILY => Module::t('module', 'Treatment Daily'),
+                self::TYPE_NO_SALARY_HOURLY => Module::t('module', 'No Salary Hourly'),
+                self::TYPE_NO_SALARY_DAILY => Module::t('module', 'No Salary Daily'),
+                self::TYPE_MISSION_HOURLY => Module::t('module', 'Mission Hourly'),
+                self::TYPE_MISSION_DAILY => Module::t('module', 'Mission Daily'),
             ],
             'TypesDaily' => [
-                self::TYPE_MERIT_DAILY => Yii::t('app', 'Merit Daily'),
-                self::TYPE_TREATMENT_DAILY => Yii::t('app', 'Treatment Daily'),
-                self::TYPE_NO_SALARY_DAILY => Yii::t('app', 'No Salary Daily'),
-                self::TYPE_MISSION_DAILY => Yii::t('app', 'Mission Daily'),
+                self::TYPE_MERIT_DAILY => Module::t('module', 'Merit Daily'),
+                self::TYPE_TREATMENT_DAILY => Module::t('module', 'Treatment Daily'),
+                self::TYPE_NO_SALARY_DAILY => Module::t('module', 'No Salary Daily'),
+                self::TYPE_MISSION_DAILY => Module::t('module', 'Mission Daily'),
             ],
             'TypesHourly' => [
-                self::TYPE_MERIT_HOURLY => Yii::t('app', 'Merit Hourly'),
-                self::TYPE_NO_SALARY_HOURLY => Yii::t('app', 'No Salary Hourly'),
-                self::TYPE_MISSION_HOURLY => Yii::t('app', 'Mission Hourly'),
+                self::TYPE_MERIT_HOURLY => Module::t('module', 'Merit Hourly'),
+                self::TYPE_NO_SALARY_HOURLY => Module::t('module', 'No Salary Hourly'),
+                self::TYPE_MISSION_HOURLY => Module::t('module', 'Mission Hourly'),
             ],
             'Status' => [
-                self::STATUS_WAIT_CONFIRM => Yii::t('app', 'Wait Confirm'),
-                self::STATUS_CONFIRM_MANAGER_BRANCH => Yii::t('app', 'Status Confirm Manager'),
-                self::STATUS_REJECT_MANAGER_BRANCH => Yii::t('app', 'Status Reject Manager'),
-                self::STATUS_CONFIRM_ADMIN => Yii::t('app', 'Status Confirm Admin'),
-                self::STATUS_REJECT_ADMIN => Yii::t('app', 'Status Reject Admin'),
+                self::STATUS_WAIT_CONFIRM => Module::t('module', 'Wait Confirm'),
+                self::STATUS_CONFIRM_MANAGER_BRANCH => Module::t('module', 'Status Confirm Manager'),
+                self::STATUS_REJECT_MANAGER_BRANCH => Module::t('module', 'Status Reject Manager'),
+                self::STATUS_CONFIRM_ADMIN => Module::t('module', 'Status Confirm Admin'),
+                self::STATUS_REJECT_ADMIN => Module::t('module', 'Status Reject Admin'),
             ],
             'StatusClass' => [
                 self::STATUS_WAIT_CONFIRM => 'warning',

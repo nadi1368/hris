@@ -1,7 +1,6 @@
 <?php
 
-use common\components\Helper;
-use common\models\User;
+use hesabro\hris\Module;
 use kartik\select2\Select2;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
@@ -24,19 +23,19 @@ use yii\helpers\Html;
             <div class="col-md-12">
 
                 <?= $form->field($model, "user_id")->widget(Select2::class, [
-                    'data' => User::getUserWithRoles(['employee']),
+                    'data' => Module::getInstance()->user::getUserWithRoles(['employee']),
                     'pluginOptions' => [
                         'allowClear' => true,
                     ],
                     'options' => [
                         'dir' => 'rtl',
-                        'placeholder' => Yii::t('app', 'Select...'),
+                        'placeholder' => Module::t('module', 'Select...'),
                         'multiple' => true
                     ],
                 ]); ?>
             </div>
             <div class="col-md-3">
-                <?= $form->field($model, 'can_payment')->dropdownList(Helper::itemAlias('CheckboxTitle'), ['prompt' => Yii::t('app', 'Select...')]) ?>
+                <?= $form->field($model, 'can_payment')->dropdownList(Yii::$app->helper::itemAlias('CheckboxTitle'), ['prompt' => Module::t('module', 'Select...')]) ?>
             </div>
             <div class="col-md-3">
                 <?= $form->field($model, 'check_advance_money')->checkbox() ?>
@@ -46,8 +45,8 @@ use yii\helpers\Html;
             </div>
 
             <div class="col align-self-center text-right">
-                <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
-                <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-secondary']) ?>
+                <?= Html::submitButton(Module::t('module', 'Search'), ['class' => 'btn btn-primary']) ?>
+                <?= Html::resetButton(Module::t('module', 'Reset'), ['class' => 'btn btn-secondary']) ?>
             </div>
         </div>
     </div>

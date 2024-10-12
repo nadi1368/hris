@@ -168,7 +168,7 @@ class SalaryPeriodItemsController extends Controller
 
         $employee = $this->findModelEmployee($user_id);
         if (!$salaryPeriod->canCreateItems() || !$employee->canCreateSalaryPayment()) {
-            throw new HttpException(400, Yii::t("app", "It is not possible to perform this operation"));
+            throw new HttpException(400, Module::t('module', "It is not possible to perform this operation"));
         }
         $model = new SalaryPeriodItems([
             'scenario' => SalaryPeriodItems::SCENARIO_CREATE,
@@ -185,14 +185,14 @@ class SalaryPeriodItemsController extends Controller
                 if ($flag) {
                     $result = [
                         'success' => true,
-                        'msg' => Yii::t("app", "Item Created")
+                        'msg' => Module::t('module', "Item Created")
                     ];
                     $transaction->commit();
                 } else {
                     $transaction->rollBack();
                     $result = [
                         'success' => false,
-                        'msg' => Yii::t("app", "Error In Save Info")
+                        'msg' => Module::t('module', "Error In Save Info")
                     ];
                 }
             } catch (\Exception $e) {
@@ -223,7 +223,7 @@ class SalaryPeriodItemsController extends Controller
     {
         $model = $this->findModel($id);
         if (!$model->canUpdate()) {
-            throw new HttpException(400, Yii::t("app", "It is not possible to perform this operation"));
+            throw new HttpException(400, Module::t('module', "It is not possible to perform this operation"));
         }
         $salaryPeriod = $model->period;
         $model->setScenario(SalaryPeriodItems::SCENARIO_UPDATE);
@@ -237,19 +237,19 @@ class SalaryPeriodItemsController extends Controller
                 if ($flag) {
                     $result = [
                         'success' => true,
-                        'msg' => Yii::t("app", "Item Updated")
+                        'msg' => Module::t('module', "Item Updated")
                     ];
                     if (Yii::$app->request->post('TypeSubmit') == 'next' && ($nextModel = $salaryPeriod->getSalaryPeriodItems()->andWhere(['<', SalaryPeriodItems::tableName() . '.id', $model->id])->orderBy([SalaryPeriodItems::tableName() . '.id' => SORT_DESC])->limit(1)->one()) !== null) {
                         $result['CallFunction'] = 'updateNextSalaryPeriodItems';
                         $result['ModalUrl'] = Url::to(['update', 'id' => $nextModel->id]);
-                        $result['ModalTitle'] = Yii::t('app', 'Update') . ' - ' . $nextModel->user->fullName;
+                        $result['ModalTitle'] = Module::t('module', 'Update') . ' - ' . $nextModel->user->fullName;
                     }
                     $transaction->commit();
                 } else {
                     $transaction->rollBack();
                     $result = [
                         'success' => false,
-                        'msg' => Yii::t("app", "Error In Save Info")
+                        'msg' => Module::t('module', "Error In Save Info")
                     ];
                 }
             } catch (\Exception $e) {
@@ -280,7 +280,7 @@ class SalaryPeriodItemsController extends Controller
     {
         $model = $this->findModel($id);
         if (!$model->canUpdateAfterConfirm()) {
-            throw new HttpException(400, Yii::t("app", "It is not possible to perform this operation"));
+            throw new HttpException(400, Module::t('module', "It is not possible to perform this operation"));
         }
         $salaryPeriod = $model->period;
         $model->setScenario(SalaryPeriodItems::SCENARIO_UPDATE_AFTER_CONFIRM);
@@ -293,14 +293,14 @@ class SalaryPeriodItemsController extends Controller
                 if ($flag) {
                     $result = [
                         'success' => true,
-                        'msg' => Yii::t("app", "Item Updated")
+                        'msg' => Module::t('module', "Item Updated")
                     ];
                     $transaction->commit();
                 } else {
                     $transaction->rollBack();
                     $result = [
                         'success' => false,
-                        'msg' => Yii::t("app", "Error In Save Info")
+                        'msg' => Module::t('module', "Error In Save Info")
                     ];
                 }
             } catch (\Exception $e) {
@@ -334,12 +334,12 @@ class SalaryPeriodItemsController extends Controller
         if ($model->canDelete() && $model->delete()) {
             $result = [
                 'status' => true,
-                'message' => Yii::t("app", "Item Deleted")
+                'message' => Module::t('module', "Item Deleted")
             ];
         } else {
             $result = [
                 'status' => false,
-                'message' => Yii::t("app", "Error In Save Info")
+                'message' => Module::t('module', "Error In Save Info")
             ];
         }
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -410,10 +410,10 @@ class SalaryPeriodItemsController extends Controller
                 }
                 if ($flag) {
                     $transaction->commit();
-                    $this->flash('success', Yii::t("app", "Item Confirmed"));
+                    $this->flash('success', Module::t('module', "Item Confirmed"));
                 } else {
                     $transaction->rollBack();
-                    $this->flash('warning', $err_msg ?: Yii::t("app", "Error In Save Info"));
+                    $this->flash('warning', $err_msg ?: Module::t('module', "Error In Save Info"));
                 }
             } catch (\Exception $e) {
                 $transaction->rollBack();
@@ -421,7 +421,7 @@ class SalaryPeriodItemsController extends Controller
                 $this->flash('warning', $e->getMessage());
             }
         } else {
-            $this->flash('warning', Yii::t("app", "It is not possible to perform this operation"));
+            $this->flash('warning', Module::t('module', "It is not possible to perform this operation"));
         }
 
         return $this->redirect(['index', 'id' => $model->id]);
@@ -453,13 +453,13 @@ class SalaryPeriodItemsController extends Controller
                     $transaction->commit();
                     $result = [
                         'status' => true,
-                        'message' => Yii::t("app", "Item Confirmed")
+                        'message' => Module::t('module', "Item Confirmed")
                     ];
                 } else {
                     $transaction->rollBack();
                     $result = [
                         'status' => false,
-                        'message' => Yii::t("app", "Error In Save Info")
+                        'message' => Module::t('module', "Error In Save Info")
                     ];
                 }
             } catch (\Exception $e) {
@@ -473,7 +473,7 @@ class SalaryPeriodItemsController extends Controller
         } else {
             $result = [
                 'status' => false,
-                'message' => Yii::t("app", "It is not possible to perform this operation")
+                'message' => Module::t('module', "It is not possible to perform this operation")
             ];
         }
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -493,7 +493,7 @@ class SalaryPeriodItemsController extends Controller
         $model->setScenario(SalaryPeriod::SCENARIO_PAYMENT);
         $model->payment_date = Yii::$app->jdf->jdate("Y/m/d");
         if (!$model->canPayment()) {
-            $this->flash('danger', Yii::t("app", "It is not possible to perform this operation"));
+            $this->flash('danger', Module::t('module', "It is not possible to perform this operation"));
             return $this->redirect(['index', 'id' => $id]);
         }
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -510,13 +510,13 @@ class SalaryPeriodItemsController extends Controller
                     $transaction->commit();
                     $result = [
                         'success' => true,
-                        'msg' => Yii::t("app", "Item Created")
+                        'msg' => Module::t('module', "Item Created")
                     ];
                 } else {
                     $transaction->rollBack();
                     $result = [
                         'success' => false,
-                        'msg' => Yii::t("app", "Error In Save Info")
+                        'msg' => Module::t('module', "Error In Save Info")
                     ];
                 }
             } catch (\Exception $e) {
@@ -560,13 +560,13 @@ class SalaryPeriodItemsController extends Controller
                     $transaction->commit();
                     $result = [
                         'status' => true,
-                        'message' => Yii::t("app", "Item Confirmed")
+                        'message' => Module::t('module', "Item Confirmed")
                     ];
                 } else {
                     $transaction->rollBack();
                     $result = [
                         'status' => false,
-                        'message' => Yii::t("app", "Error In Save Info")
+                        'message' => Module::t('module', "Error In Save Info")
                     ];
                 }
             } catch (\Exception $e) {
@@ -580,7 +580,7 @@ class SalaryPeriodItemsController extends Controller
         } else {
             $result = [
                 'status' => false,
-                'message' => Yii::t("app", "It is not possible to perform this operation")
+                'message' => Module::t('module', "It is not possible to perform this operation")
             ];
         }
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -606,13 +606,13 @@ class SalaryPeriodItemsController extends Controller
                     $transaction->commit();
                     $result = [
                         'status' => true,
-                        'message' => Yii::t("app", "Item Deleted")
+                        'message' => Module::t('module', "Item Deleted")
                     ];
                 } else {
                     $transaction->rollBack();
                     $result = [
                         'status' => false,
-                        'message' => Yii::t("app", "Error In Save Info")
+                        'message' => Module::t('module', "Error In Save Info")
                     ];
                 }
             } catch (\Exception $e) {
@@ -626,7 +626,7 @@ class SalaryPeriodItemsController extends Controller
         } else {
             $result = [
                 'status' => false,
-                'message' => Yii::t("app", "Error In Save Info")
+                'message' => Module::t('module', "Error In Save Info")
             ];
         }
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -698,7 +698,7 @@ class SalaryPeriodItemsController extends Controller
                 $this->flash('danger', $e->getMessage());
             }
         } else {
-            $this->flash('danger', Yii::t('app', 'It is not possible to perform this operation.'));
+            $this->flash('danger', Module::t('module', 'It is not possible to perform this operation.'));
         }
         return $this->redirect(['index', 'id' => $id]);
     }
@@ -792,7 +792,7 @@ class SalaryPeriodItemsController extends Controller
             MGLogs::saveManual(SalaryPeriod::class, $model->id, $rows);
             return [
                 'success' => true,
-                'msg' => Yii::t("app", "Item Created"),
+                'msg' => Module::t('module', "Item Created"),
                 'html' => $this->renderAjax('_excel-bank-send-to-native', [
                     'model' => $model,
                     'rows' => json_encode($rows),
@@ -903,7 +903,7 @@ class SalaryPeriodItemsController extends Controller
             MGLogs::saveManual(SalaryPeriod::class, $model->id, $rows);
             return [
                 'success' => true,
-                'msg' => Yii::t("app", "Item Created"),
+                'msg' => Module::t('module', "Item Created"),
                 'html' => $this->renderAjax('_excel-insurance-send-to-native', [
                     'model' => $model,
                     'rows' => json_encode($rows),
@@ -1017,7 +1017,7 @@ class SalaryPeriodItemsController extends Controller
             $fileName = 'IR' . $model->shaba . $fileId . '.txt';
             return [
                 'success' => true,
-                'msg' => Yii::t("app", "Item Created"),
+                'msg' => Module::t('module', "Item Created"),
                 'html' => $this->renderAjax('_excel-insurance-send-to-native', [
                     'model' => $model,
                     'rows' => json_encode($rows),
@@ -1204,7 +1204,7 @@ class SalaryPeriodItemsController extends Controller
             }
             return [
                 'success' => true,
-                'msg' => Yii::t("app", "Item Created"),
+                'msg' => Module::t('module', "Item Created"),
                 'html' => $this->renderAjax('_print-insurance-send-to-native', [
                     'model' => $model,
                     'variable' => json_encode($variable),
@@ -1231,7 +1231,7 @@ class SalaryPeriodItemsController extends Controller
         $model = $this->findModel($id);
         $result = [
             'status' => false,
-            'message' => Yii::t("app", "Error In Save Info")
+            'message' => Module::t('module', "Error In Save Info")
         ];
 
         $transaction = Yii::$app->db->beginTransaction();
@@ -1241,7 +1241,7 @@ class SalaryPeriodItemsController extends Controller
             if ($flag) {
                 $result = [
                     'status' => true,
-                    'message' => Yii::t("app", "Item Updated")
+                    'message' => Module::t('module', "Item Updated")
                 ];
                 $transaction->commit();
             } else {
@@ -1295,7 +1295,7 @@ class SalaryPeriodItemsController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
     /**
@@ -1311,7 +1311,7 @@ class SalaryPeriodItemsController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
     /**
@@ -1327,7 +1327,7 @@ class SalaryPeriodItemsController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
     /**
@@ -1343,7 +1343,7 @@ class SalaryPeriodItemsController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
     public function flash($type, $message)
@@ -1458,7 +1458,7 @@ class SalaryPeriodItemsController extends Controller
                         $totalCount++;
                     }
                 } else {
-                    throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.=>' . $item->id));
+                    throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.=>' . $item->id));
                 }
 
             }

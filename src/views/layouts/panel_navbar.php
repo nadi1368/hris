@@ -88,20 +88,20 @@ $identity = Yii::$app->user->identity;
                 <?php endif; ?>
                 <a href="<?= Url::to(['/profile/index']) ?>" class="dropdown-item">
                     <i class="fal fa-user icon-size"></i>
-                    <?= Yii::t('app', 'Profile').' Pulse' ?>
+                    <?= Module::t('module', 'Profile').' Pulse' ?>
                 </a>
                 <a href="<?= Url::to(['/employee/profile/update']) ?>" class="dropdown-item">
                     <i class="fal fa-user icon-size"></i>
-                    <?= Yii::t('app', 'Edit') ?> <?= Yii::t('app', 'Profile').' Pulse' ?>
+                    <?= Module::t('module', 'Edit') ?> <?= Module::t('module', 'Profile').' Pulse' ?>
                 </a>
                 <a href="<?= Url::to(['/ticket/inbox']) ?>" class="dropdown-item">
                     <i class="fas fa-envelope icon-size"></i>
                     صندوق پیام
                 </a>
                 <a class="dropdown-item" href="<?= Url::to(['/authenticator']) ?>" data-method="post"
-                   title="<?= Yii::t('app', '2-Step Verification') ?>">
+                   title="<?= Module::t('module', '2-Step Verification') ?>">
                     <i class="fal fa-lock"></i>
-                    <?= Yii::t('app', '2-Step Verification') ?>
+                    <?= Module::t('module', '2-Step Verification') ?>
                 </a>
 
                 <?php Pjax::begin(['id' => 'send-report-p-jax']); ?>
@@ -122,9 +122,9 @@ $identity = Yii::$app->user->identity;
                     </a>
                 <?php endif; ?>
                 <a class="dropdown-item" href="<?= Url::to(['/site/logout']) ?>" data-method="post"
-                   title="<?= Yii::t('app', 'Logout') ?>">
+                   title="<?= Module::t('module', 'Logout') ?>">
                     <i class="fas fa-power-off"></i>
-                    <?= Yii::t('app', 'Logout') ?>
+                    <?= Module::t('module', 'Logout') ?>
                 </a>
                 <div>
                     <div class="p-3 border-bottom">

@@ -5,6 +5,7 @@ use hesabro\hris\models\SalaryBase;
 use hesabro\hris\models\SalaryPeriodItems;
 use common\models\Settings;
 use common\models\Year;
+use hesabro\hris\Module;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 use yii\widgets\MaskedInput;
@@ -30,7 +31,7 @@ $paymentReward = BalanceDaily::find()->byDefinite(Settings::get('reward_period_p
                 <div class="col-md-12">
                     <div class="alert alert-info">
                         <p>این کاربر در این سال مالی گردش عیدی پاداش دارد.</p>
-                        <p><?= Html::a(Yii::t('app', 'Details'), ['/account/cycle', 'DocumentDetailsSearch[definite_id]' => Settings::get('reward_period_payment_m_id'), 'DocumentDetailsSearch[a_id]' => $model->employee->account_id, 'DocumentDetailsSearch[fromDate]' => Year::getDefault('start'), 'DocumentDetailsSearch[toDate]' => Year::getDefault('end')], ['class' => 'text-info']) ?></p>
+                        <p><?= Html::a(Module::t('module', 'Details'), ['/account/cycle', 'DocumentDetailsSearch[definite_id]' => Settings::get('reward_period_payment_m_id'), 'DocumentDetailsSearch[a_id]' => $model->employee->account_id, 'DocumentDetailsSearch[fromDate]' => Year::getDefault('start'), 'DocumentDetailsSearch[toDate]' => Year::getDefault('end')], ['class' => 'text-info']) ?></p>
                     </div>
                 </div>
             <?php endif; ?>
@@ -150,7 +151,7 @@ $paymentReward = BalanceDaily::find()->byDefinite(Settings::get('reward_period_p
         </div>
     </div>
     <div class="card-footer">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? Module::t('module', 'Create') : Module::t('module', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

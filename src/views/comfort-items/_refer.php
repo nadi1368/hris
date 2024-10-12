@@ -1,8 +1,8 @@
 <?php
 
-use backend\models\User;
 use hesabro\hris\models\ComfortItems;
 use common\models\Comments;
+use hesabro\hris\Module;
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\web\View;
@@ -23,9 +23,9 @@ $form = $standalone ? ActiveForm::begin(['id'=>'comfort-items-refer-form']) : $f
 <div class="row">
     <div class="col-12">
         <?= $form->field($comment, 'owner')->widget(Select2::class, [
-            'data' => User::userOptions(),
+            'data' => Module::getInstance()->user::userOptions(),
             'options' => [
-                'placeholder' => Yii::t('app', 'Users'),
+                'placeholder' => Module::t('module', 'Users'),
                 'dir' => 'rtl',
                 'multiple' => true
             ]
@@ -58,7 +58,7 @@ $form = $standalone ? ActiveForm::begin(['id'=>'comfort-items-refer-form']) : $f
 
     <?php if($standalone): ?>
         <div class="col-12">
-            <?= Html::submitButton(Yii::t('app', 'Refer'), ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton(Module::t('module', 'Refer'), ['class' => 'btn btn-primary']) ?>
         </div>
     <?php endif; ?>
 </div>

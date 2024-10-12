@@ -59,15 +59,15 @@ class RateOfYearSalary extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'year' => Yii::t('app', 'Year'),
+            'id' => Module::t('module', 'ID'),
+            'year' => Module::t('module', 'Year'),
             'rate_of_day' => 'نرخ هر روز',
-            'status' => Yii::t('app', 'Status'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'created_by' => Yii::t('app', 'Created By'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'updated_by' => Yii::t('app', 'Updated By'),
-            'deleted_at' => Yii::t('app', 'Deleted At'),
+            'status' => Module::t('module', 'Status'),
+            'created_at' => Module::t('module', 'Created At'),
+            'created_by' => Module::t('module', 'Created By'),
+            'updated_at' => Module::t('module', 'Updated At'),
+            'updated_by' => Module::t('module', 'Updated By'),
+            'deleted_at' => Module::t('module', 'Deleted At'),
         ];
     }
 

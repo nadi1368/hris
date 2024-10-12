@@ -1,5 +1,6 @@
 <?php
 
+use hesabro\hris\Module;
 use kartik\select2\Select2;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
@@ -34,7 +35,7 @@ use yii\widgets\MaskedInput;
                     <?= $form->field($model, 'another_period')->widget(Select2::class, [
                         'data' => $model->getAnotherPeriodList(),
                         'options' => [
-                            'placeholder' => Yii::t("app", "Search"),
+                            'placeholder' => Module::t('module', "Search"),
                             'multiple' => true,
                             'dir' => 'rtl',
                         ],
@@ -48,7 +49,7 @@ use yii\widgets\MaskedInput;
         </div>
         <div class="card-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">لغو</button>
-            <?= Html::submitButton(Yii::t('app', 'Get'), ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton(Module::t('module', 'Get'), ['class' => 'btn btn-primary']) ?>
         </div>
     </div>
     <?php ActiveForm::end(); ?>

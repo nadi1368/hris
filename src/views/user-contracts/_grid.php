@@ -1,11 +1,15 @@
 <?php
 
 
+use hesabro\helpers\widgets\grid\GridView;
 use hesabro\hris\models\UserContracts;
-use common\widgets\grid\GridView;
+use hesabro\hris\Module;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+/**
+ * @var \yii\data\ActiveDataProvider $dataProvider
+ */
 ?>
 
 
@@ -35,8 +39,8 @@ use yii\helpers\Url;
 					'confirm' => function ($url, UserContracts $model, $key) {
 						return $model->canConfirm() ? Html::a('تایید نهایی', 'javascript:void(0)',
 							[
-								'title' => Yii::t('app', 'Confirm'),
-								'aria-label' => Yii::t('app', 'Confirm'),
+								'title' => Module::t('module', 'Confirm'),
+								'aria-label' => Module::t('module', 'Confirm'),
 								'data-reload-pjax-container' => 'user-contracts-p-jax',
 								'data-pjax' => '0',
 								'data-url' => Url::to(['confirm', 'id' => $model->id]),
@@ -55,7 +59,7 @@ use yii\helpers\Url;
 					},
 					'view' => function ($url, $model, $key) {
 						return Html::a('<i class="text-info far fa-eye"></i>', ['view', 'id' => $model->id], [
-							'title' => Yii::t('app', 'View'),
+							'title' => Module::t('module', 'View'),
 							'class' => 'grid-btn grid-btn-view showModalButton',
 							'data-size' => 'modal-xl'
 						]);

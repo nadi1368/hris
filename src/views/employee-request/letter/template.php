@@ -2,6 +2,7 @@
 
 use hesabro\hris\models\Letter;
 use common\models\Settings;
+use hesabro\hris\Module;
 use yii\bootstrap4\Html;
 
 /**
@@ -28,11 +29,11 @@ $y2 = $position[2] ?? 20;
             </th>
             <th class="text-right" style="width: 33%">
                 <p style="position: absolute; top: <?= $x ?>; left: <?= $y ?>; margin-block-start: 0 !important; margin-block-end: 0 !important; font-weight: normal;">
-                    <?= Yii::t('app', 'Letter Number') ?>:
+                    <?= Module::t('module', 'Letter Number') ?>:
                     <?= $letter->employeeRequest?->indicator?->document_number ?: '' ?>
                 </p>
                 <p style="position: absolute; top: <?= $x + $y2 ?>; left: <?= $y ?>; margin-block-start: 0 !important; margin-block-end: 0 !important; font-weight: normal;">
-                    <?= Yii::t('app', 'Date') ?>:
+                    <?= Module::t('module', 'Date') ?>:
                     <?= $letter->employeeRequest?->indicator?->date ? Yii::$app->jdf->jdate("Y/m/d",$letter->employeeRequest?->indicator?->date): '' ?>
                 </p>
             </th>

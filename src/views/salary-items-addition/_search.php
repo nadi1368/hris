@@ -1,9 +1,8 @@
 <?php
 
-
-use common\models\User;
+use hesabro\hris\Module;
 use kartik\select2\Select2;
-use common\widgets\dateRangePicker\dateRangePicker;
+use hesabro\helpers\widgets\DateRangePicker\DateRangePicker;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 use hesabro\hris\models\SalaryItemsAddition;
@@ -26,27 +25,27 @@ use hesabro\hris\models\SalaryItemsAddition;
         <div class="row">
             <div class="col-md-12">
                 <?= $form->field($model, 'user_id')->widget(Select2::class, [
-                    'data' => User::getUserWithRoles(['employee']),
+                    'data' => Module::getInstance()->user::getUserWithRoles(['employee']),
                     'pluginOptions' => [
                         'allowClear' => true,
                     ],
                     'options' => [
-                        'placeholder' => Yii::t('app', 'Search'),
+                        'placeholder' => Module::t('module', 'Search'),
                         'dir' => 'rtl',
                     ],
                 ]); ?>
             </div>
 
             <div class="col-md-2">
-                <?= $form->field($model, 'kind')->dropDownList(SalaryItemsAddition::itemAlias('Kind'), ['prompt' => Yii::t('app', 'Select...')]) ?>
+                <?= $form->field($model, 'kind')->dropDownList(SalaryItemsAddition::itemAlias('Kind'), ['prompt' => Module::t('module', 'Select...')]) ?>
             </div>
 
             <div class="col-md-2">
-                <?= $form->field($model, 'type')->dropDownList(SalaryItemsAddition::itemAlias('Type'), ['prompt' => Yii::t('app', 'Select...')]) ?>
+                <?= $form->field($model, 'type')->dropDownList(SalaryItemsAddition::itemAlias('Type'), ['prompt' => Module::t('module', 'Select...')]) ?>
             </div>
 
             <div class="col-md-2">
-                <?= $form->field($model, 'status')->dropDownList(SalaryItemsAddition::itemAlias('Status'), ['prompt' => Yii::t('app', 'Select...')]) ?>
+                <?= $form->field($model, 'status')->dropDownList(SalaryItemsAddition::itemAlias('Status'), ['prompt' => Module::t('module', 'Select...')]) ?>
             </div>
 
             <div class="col-md-2 date-input">
@@ -98,8 +97,8 @@ use hesabro\hris\models\SalaryItemsAddition;
                 ]); ?>
             </div>
             <div class="col align-self-center text-right">
-                <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
-                <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-secondary']) ?>
+                <?= Html::submitButton(Module::t('module', 'Search'), ['class' => 'btn btn-primary']) ?>
+                <?= Html::resetButton(Module::t('module', 'Reset'), ['class' => 'btn btn-secondary']) ?>
             </div>
         </div>
     </div>

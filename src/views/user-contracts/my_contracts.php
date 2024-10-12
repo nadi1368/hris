@@ -1,7 +1,8 @@
 <?php
 
 use hesabro\hris\models\UserContracts;
-use common\widgets\grid\GridView;
+use hesabro\helpers\widgets\grid\GridView;
+use hesabro\hris\Module;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
@@ -10,7 +11,7 @@ use yii\widgets\Pjax;
 /** @var hesabro\hris\models\UserContractsSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = Yii::t('app', 'My Contracts');
+$this->title = Module::t('module', 'My Contracts');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php Pjax::begin(['id' => 'user-contracts-p-jax']); ?>
@@ -35,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'buttons' => [
 						'view' => function ($url, $model, $key) {
 							return Html::a('<i class="text-info far fa-eye"></i>', ['user-contracts/view-my-contract', 'id' => $model->id], [
-								'title' => Yii::t('app', 'View'),
+								'title' => Module::t('module', 'View'),
 								'class' => 'grid-btn grid-btn-view showModalButton',
 								'data-size' => 'modal-xl'
 							]);

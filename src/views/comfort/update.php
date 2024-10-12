@@ -1,14 +1,14 @@
 <?php
 
-use yii\helpers\Html;
+use hesabro\hris\Module;
 
 /* @var $this yii\web\View */
 /* @var $model hesabro\hris\models\Comfort */
 
-$this->title = Yii::t('app', 'Update');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Comforts'), 'url' => ['index']];
+$this->title = Module::t('module', 'Update');
+$this->params['breadcrumbs'][] = ['label' => Module::t('module', 'Comforts'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->params['breadcrumbs'][] = Module::t('module', 'Update');
 ?>
 <div class="comfort-update card">
 	<?= $this->render('_form', [

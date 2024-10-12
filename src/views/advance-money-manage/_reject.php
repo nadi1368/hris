@@ -1,5 +1,6 @@
 <?php
 
+use hesabro\hris\Module;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 use yii\widgets\Pjax;
@@ -21,7 +22,7 @@ use yii\widgets\Pjax;
         </div>
     </div>
     <div class="card-footer">
-        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton(Module::t('module', 'Save'), ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

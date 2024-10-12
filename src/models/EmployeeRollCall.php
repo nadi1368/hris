@@ -76,10 +76,10 @@ class EmployeeRollCall extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'date' => Yii::t('app', 'Date'),
-            'status' => Yii::t('app', 'Status'),
+            'id' => Module::t('module', 'ID'),
+            'user_id' => Module::t('module', 'User ID'),
+            'date' => Module::t('module', 'Date'),
+            'status' => Module::t('module', 'Status'),
             'total' => 'کارکرد',
             'shift' => 'شیفت',
             'over_time' => 'اضافه کار',

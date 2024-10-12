@@ -1,6 +1,8 @@
 <?php
+
+use hesabro\helpers\widgets\TableView;
 use hesabro\hris\models\EmployeeRequest;
-use common\widgets\TableView;
+use hesabro\hris\Module;
 
 /**
  * @var EmployeeRequest $model
@@ -22,7 +24,7 @@ use common\widgets\TableView;
                 ],
                 [
                     'attribute' => 'indicator_id',
-                    'label' => Yii::t('app', 'Document Number') . ' ' .Yii::t('app', 'Indicator'),
+                    'label' => Module::t('module', 'Document Number') . ' ' .Module::t('module', 'Indicator'),
                     'value' => function (EmployeeRequest $model) {
                         return $model->indicator?->document_number;
                     },

@@ -78,13 +78,13 @@ class OrganizationMember extends \yii\db\ActiveRecord
 	public function attributeLabels()
 	{
 		return [
-			'id' => Yii::t('app', 'ID'),
-			'name' => Yii::t('app', 'Title'),
-			'user_id' => Yii::t('app', 'Related User'),
-			'parent_id' => Yii::t('app', 'Upper Agent'),
-			'headline' => Yii::t('app', 'Headline'),
-			'show_internal_number' => Yii::t('app', 'Show Internal Number'),
-			'show_job_tag' => Yii::t('app', 'Show Job Label'),
+			'id' => Module::t('module', 'ID'),
+			'name' => Module::t('module', 'Title'),
+			'user_id' => Module::t('module', 'Related User'),
+			'parent_id' => Module::t('module', 'Upper Agent'),
+			'headline' => Module::t('module', 'Headline'),
+			'show_internal_number' => Module::t('module', 'Show Internal Number'),
+			'show_job_tag' => Module::t('module', 'Show Job Label'),
 		];
 	}
 

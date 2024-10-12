@@ -1,7 +1,8 @@
 <?php
 
 use hesabro\hris\models\ContractTemplates;
-use common\widgets\grid\GridView;
+use hesabro\helpers\widgets\grid\GridView;
+use hesabro\hris\Module;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
@@ -11,7 +12,7 @@ use yii\widgets\Pjax;
  * @var $dataProvider yii\data\ActiveDataProvider
  */
 
-$this->title = Yii::t('app', "$searchModel->typeText Templates");
+$this->title = Module::t('module', "$searchModel->typeText Templates");
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php Pjax::begin(['id' => 'contract-templates-p-jax']); ?>
@@ -25,12 +26,12 @@ $this->params['breadcrumbs'][] = $this->title;
 				</a>
 			</h4>
 			<div>
-				<?= Html::a(Yii::t('app','Create'), Url::to(['create', 'type' => $searchModel->type ]),['class'=>'btn btn-success text-white']); ?>
+				<?= Html::a(Module::t('module','Create'), Url::to(['create', 'type' => $searchModel->type ]),['class'=>'btn btn-success text-white']); ?>
 
-                <?= Html::a(Yii::t('app','Import Json'), 'javascript:void(0)', [
+                <?= Html::a(Module::t('module','Import Json'), 'javascript:void(0)', [
                     'class' => 'btn btn-info',
                     'data-size' => 'modal-md',
-                    'data-title' => Yii::t('app','Import Json'),
+                    'data-title' => Module::t('module','Import Json'),
                     'data-toggle' => 'modal',
                     'data-target' => '#modal-pjax',
                     'data-url' => Url::to(['json-import']),
@@ -110,7 +111,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						},
 						'view' => function ($url, $model, $key) {
 							return Html::a('<i class="text-info far fa-eye"></i>', ['view', 'id' => $model->id], [
-								'title' => Yii::t('app', 'View'),
+								'title' => Module::t('module', 'View'),
 								'class' => 'grid-btn grid-btn-view showModalButton',
 								'data-size' => 'modal-xl',
 							]);
@@ -119,7 +120,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							return $model->canDelete() ? Html::a('<span class="fal fa-trash"></span>', ['delete', 'id' => $model->id], [
 								'title' => Yii::t('yii', 'Delete'),
 								'class' => 'text-danger',
-								'data-confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+								'data-confirm' => Module::t('module', 'Are you sure you want to delete this item?'),
 								'data-method' => 'post',
 							]) : '';
 						},

@@ -1,9 +1,8 @@
 <?php
 
-use common\components\Jdate;
 use common\models\Tags;
-use common\models\User;
 use common\widgets\TagsWidget;
+use hesabro\hris\Module;
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
@@ -55,11 +54,11 @@ if ($model->excluded_jobs && ($tags = Tags::find()->andWhere(['IN', 'id', $model
             </div>
 
             <div class="col-12 col-md-3">
-                <?= $form->field($model, 'type')->dropDownList(Comfort::itemAlias('TypeCat'), ['prompt' => Yii::t('app', 'Select')]) ?>
+                <?= $form->field($model, 'type')->dropDownList(Comfort::itemAlias('TypeCat'), ['prompt' => Module::t('module', 'Select')]) ?>
             </div>
 
             <div class="col-12 col-md-3">
-                <?= $form->field($model, 'type_limit')->dropDownList(Comfort::itemAlias('TypeLimit'), ['prompt' => Yii::t('app', 'Select')]) ?>
+                <?= $form->field($model, 'type_limit')->dropDownList(Comfort::itemAlias('TypeLimit'), ['prompt' => Module::t('module', 'Select')]) ?>
             </div>
 
             <div class="col-12 col-md-3 date-input">
@@ -67,7 +66,7 @@ if ($model->excluded_jobs && ($tags = Tags::find()->andWhere(['IN', 'id', $model
                     'mask' => '9999/99/99',
                     'options' => [
                         'autocomplete' => 'off',
-                        'value' => $model->expire_time > 0 ? Yii::$app->jdf->jdate('Y/m/d', $model->expire_time) : ''
+                        'value' => $model->expire_time > 0 ? Yii::$app->jdf::jdate('Y/m/d', $model->expire_time) : ''
                     ]
                 ]) ?>
             </div>
@@ -106,13 +105,13 @@ if ($model->excluded_jobs && ($tags = Tags::find()->andWhere(['IN', 'id', $model
             <div class="col-12 col-md-3">
                 <?php $months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]; ?>
                 <?= $form->field($model, 'month_limit')->widget(Select2::class, [
-                    'data' => array_combine($months, array_map(fn ($m) => Jdate::getMonthNames($m), $months)),
+                    'data' => array_combine($months, array_map(fn ($m) => Yii::$app->jdf::getMonthNames($m), $months)),
                     'pluginOptions' => [
                         'allowClear' => true,
                     ],
                     'options' => [
                         'dir' => 'rtl',
-                        'placeholder' => Yii::t('app', 'Select...'),
+                        'placeholder' => Module::t('module', 'Select...'),
                         'multiple' => true
                     ],
                 ]); ?>
@@ -128,7 +127,7 @@ if ($model->excluded_jobs && ($tags = Tags::find()->andWhere(['IN', 'id', $model
 
             <div class="col-12">
                 <?= $form->field($model, 'salary_items_addition')
-                    ->dropDownList(Comfort::itemAlias('SalaryItemsAddition'), ['prompt' => Yii::t('app', 'Select')]) ?>
+                    ->dropDownList(Comfort::itemAlias('SalaryItemsAddition'), ['prompt' => Module::t('module', 'Select')]) ?>
             </div>
 
             <div class="col-12 col-md-6">
@@ -147,11 +146,11 @@ if ($model->excluded_jobs && ($tags = Tags::find()->andWhere(['IN', 'id', $model
             <div class="col-12 col-md-6 position-relative">
                 <?= $form->field($model, 'related_faq_clause')->widget(DepDrop::class, [
                     'type' => DepDrop::TYPE_SELECT2,
-                    'options' => ['placeholder' => Yii::t('app', 'Related Faq Clause')],
+                    'options' => ['placeholder' => Module::t('module', 'Related Faq Clause')],
                     'pluginOptions' => [
-                        'loadingText' => Yii::t('app', 'Loading...'),
+                        'loadingText' => Module::t('module', 'Loading...'),
                         'depends' => ['related_faq'],
-                        'placeholder' => Yii::t("app", "Select"),
+                        'placeholder' => Module::t('module', "Select"),
                         'url' => Url::to(['/faq/clauses', 'selected' => $model->related_faq_clause]),
                         'initialize' => true,
                         'initDepends' => ['related_faq'],
@@ -162,7 +161,7 @@ if ($model->excluded_jobs && ($tags = Tags::find()->andWhere(['IN', 'id', $model
 
             <div class="col-md-6">
                 <?= $form->field($model, 'users')->widget(Select2::class, [
-                    'data' => User::getUserWithRoles(['employee']),
+                    'data' => Module::getInstance()->user::getUserWithRoles(['employee']),
                     'options' => [
                         'placeholder' => 'کاربرانی که مجاز به استفاده هستند',
                         'dir' => 'rtl',
@@ -173,7 +172,7 @@ if ($model->excluded_jobs && ($tags = Tags::find()->andWhere(['IN', 'id', $model
 
             <div class="col-md-6">
                 <?= $form->field($model, 'excluded_users')->widget(Select2::class, [
-                    'data' => User::getUserWithRoles(['employee']),
+                    'data' => Module::getInstance()->user::getUserWithRoles(['employee']),
                     'options' => [
                         'placeholder' => 'کاربرانی که مجوز استفاده ندارند',
                         'dir' => 'rtl',
@@ -186,7 +185,7 @@ if ($model->excluded_jobs && ($tags = Tags::find()->andWhere(['IN', 'id', $model
                 <?= $form->field($model, 'jobs')->widget(Select2::class, [
                     'initValueText' => $initValueTextTagsInclude,
                     'options' => [
-                        'placeholder' => Yii::t("app", "Search"),
+                        'placeholder' => Module::t('module', "Search"),
                         'dir' => 'rtl',
                         'multiple' => true
                     ],
@@ -195,12 +194,12 @@ if ($model->excluded_jobs && ($tags = Tags::find()->andWhere(['IN', 'id', $model
                         'multiple' => true,
                         'minimumInputLength' => 3,
                         'language' => [
-                            'errorLoading' => new JsExpression("function () { return '" . Yii::t('app', 'Select2')['Error Loading'] . "'; }"),
-                            'inputTooShort' => new JsExpression("function () { return '" . Yii::t('app', 'Select2')['Input Too Short'] . "'; }"),
-                            'loadingMore' => new JsExpression("function () { return '" . Yii::t('app', 'Select2')['Loading More'] . "'; }"),
-                            'noResults' => new JsExpression("function () { return '" . Yii::t('app', 'Select2')['No Results'] . "'; }"),
-                            'searching' => new JsExpression("function () { return '" . Yii::t('app', 'Select2')['Searching'] . "'; }"),
-                            'maximumSelected' => new JsExpression("function () { return '" . Yii::t('app', 'Select2')['Maximum Selected'] . "'; }"),
+                            'errorLoading' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Error Loading'] . "'; }"),
+                            'inputTooShort' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Input Too Short'] . "'; }"),
+                            'loadingMore' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Loading More'] . "'; }"),
+                            'noResults' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['No Results'] . "'; }"),
+                            'searching' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Searching'] . "'; }"),
+                            'maximumSelected' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Maximum Selected'] . "'; }"),
                         ],
                         'ajax' => [
                             'url' => Url::to(['/tags/find', 'category' => Tags::MODEL_JOBS]),
@@ -216,7 +215,7 @@ if ($model->excluded_jobs && ($tags = Tags::find()->andWhere(['IN', 'id', $model
                 <?= $form->field($model, 'excluded_jobs')->widget(Select2::class, [
                     'initValueText' => $initValueTextTagsExclude,
                     'options' => [
-                        'placeholder' => Yii::t("app", "Search"),
+                        'placeholder' => Module::t('module', "Search"),
                         'dir' => 'rtl',
                         'multiple' => true
                     ],
@@ -225,12 +224,12 @@ if ($model->excluded_jobs && ($tags = Tags::find()->andWhere(['IN', 'id', $model
                         'multiple' => true,
                         'minimumInputLength' => 3,
                         'language' => [
-                            'errorLoading' => new JsExpression("function () { return '" . Yii::t('app', 'Select2')['Error Loading'] . "'; }"),
-                            'inputTooShort' => new JsExpression("function () { return '" . Yii::t('app', 'Select2')['Input Too Short'] . "'; }"),
-                            'loadingMore' => new JsExpression("function () { return '" . Yii::t('app', 'Select2')['Loading More'] . "'; }"),
-                            'noResults' => new JsExpression("function () { return '" . Yii::t('app', 'Select2')['No Results'] . "'; }"),
-                            'searching' => new JsExpression("function () { return '" . Yii::t('app', 'Select2')['Searching'] . "'; }"),
-                            'maximumSelected' => new JsExpression("function () { return '" . Yii::t('app', 'Select2')['Maximum Selected'] . "'; }"),
+                            'errorLoading' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Error Loading'] . "'; }"),
+                            'inputTooShort' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Input Too Short'] . "'; }"),
+                            'loadingMore' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Loading More'] . "'; }"),
+                            'noResults' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['No Results'] . "'; }"),
+                            'searching' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Searching'] . "'; }"),
+                            'maximumSelected' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Maximum Selected'] . "'; }"),
                         ],
                         'ajax' => [
                             'url' => Url::to(['/tags/find', 'category' => Tags::MODEL_JOBS]),
@@ -263,7 +262,7 @@ if ($model->excluded_jobs && ($tags = Tags::find()->andWhere(['IN', 'id', $model
         </div>
     </div>
     <div class="card-footer">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? Module::t('module', 'Create') : Module::t('module', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

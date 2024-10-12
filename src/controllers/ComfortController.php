@@ -3,6 +3,7 @@
 namespace hesabro\hris\controllers;
 
 use hesabro\helpers\traits\AjaxValidationTrait;
+use hesabro\hris\Module;
 use Yii;
 use hesabro\hris\models\Comfort;
 use hesabro\hris\models\ComfortSearch;
@@ -81,7 +82,7 @@ class ComfortController extends Controller
         $model = new Comfort(['scenario' => Comfort::SCENARIO_CREATE]);
         $result = [
             'success' => false,
-            'msg' => Yii::t("app", "Error In Save Info")
+            'msg' => Module::t('module', "Error In Save Info")
         ];
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $transaction = Yii::$app->db->beginTransaction();
@@ -90,7 +91,7 @@ class ComfortController extends Controller
                 if ($flag) {
                     $result = [
                         'success' => true,
-                        'msg' => Yii::t("app", "Item Created")
+                        'msg' => Module::t('module', "Item Created")
                     ];
                     $transaction->commit();
                 } else {
@@ -123,7 +124,7 @@ class ComfortController extends Controller
         }
         $result = [
             'success' => false,
-            'msg' => Yii::t("app", "Error In Save Info")
+            'msg' => Module::t('module', "Error In Save Info")
         ];
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $transaction = Yii::$app->db->beginTransaction();
@@ -132,7 +133,7 @@ class ComfortController extends Controller
                 if ($flag) {
                     $result = [
                         'success' => true,
-                        'msg' => Yii::t("app", "Item Updated")
+                        'msg' => Module::t('module', "Item Updated")
                     ];
                     $transaction->commit();
                 } else {
@@ -163,12 +164,12 @@ class ComfortController extends Controller
         if ($model->canDelete() && $model->softDelete()) {
             $result = [
                 'status' => true,
-                'message' => Yii::t("app", "Item Deleted")
+                'message' => Module::t('module', "Item Deleted")
             ];
         } else {
             $result = [
                 'status' => false,
-                'message' => Yii::t("app", "Error In Save Info")
+                'message' => Module::t('module', "Error In Save Info")
             ];
         }
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -188,7 +189,7 @@ class ComfortController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
     public function flash($type, $message)

@@ -28,7 +28,7 @@ PanelAssets::register($this);
     <meta name="country" content="Iran">
     <link rel="shortcut icon" href="<?= Yii::getAlias('@web') . "/img/hesabro.png"; ?>" type="image/png"/>
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode(($this->title ?: '') . ' ' . Yii::t('app', 'HR')) . ' (HRIS)' ?></title>
+    <title><?= Html::encode(($this->title ?: '') . ' ' . Module::t('module', 'HR')) . ' (HRIS)' ?></title>
     <?php $this->head() ?>
 </head>
 <body>
@@ -197,9 +197,9 @@ $this->registerJs($script_doday_value);
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary"
-                        onclick="modalConfirm()"><?= Yii::t('app', 'Yes') ?></button>
+                        onclick="modalConfirm()"><?= Module::t('module', 'Yes') ?></button>
                 <button type="button" class="btn btn-default" onclick="modalClose()">
-                    <?= Yii::t('app', 'No') ?>
+                    <?= Module::t('module', 'No') ?>
                 </button>
             </div>
         </div>

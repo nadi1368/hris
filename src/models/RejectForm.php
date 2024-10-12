@@ -1,6 +1,7 @@
 <?php
 namespace hesabro\hris\models;
 
+use hesabro\hris\Module;
 use Yii;
 use yii\base\Model;
 
@@ -24,7 +25,7 @@ class RejectForm extends Model
     public function attributeLabels()
     {
         return [
-            'description' => Yii::t('app','Description'),
+            'description' => Module::t('module','Description'),
         ];
     }
 

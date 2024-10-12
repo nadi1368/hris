@@ -1,9 +1,9 @@
 <?php
 
 use hesabro\hris\models\SalaryItemsAddition;
-use common\components\Helper;
+use hesabro\hris\Module;
 use yii\helpers\Html;
-use common\widgets\grid\GridView;
+use hesabro\helpers\widgets\grid\GridView;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 
@@ -11,7 +11,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel hesabro\hris\models\SalaryItemsAdditionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Salary Items Additions');
+$this->title = Module::t('module', 'Salary Items Additions');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="salary-items-addition-index card">
@@ -26,13 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
             <div>
                 <?= Html::a('آپلود فایل مزایای غیر نقدی', ['salary-items-addition/upload-salary-non-cash'], ['class' => 'btn btn-primary']); ?>
                 <?php foreach (SalaryItemsAddition::itemAlias('Kind') as $kind => $title): ?>
-                    <?= Html::a(Yii::t('app', 'Create') . ' ' . $title,
+                    <?= Html::a(Module::t('module', 'Create') . ' ' . $title,
                         'javascript:void(0)', [
-                            'title' => Yii::t('app', 'Create'),
+                            'title' => Module::t('module', 'Create'),
                             'id' => 'create-addition-' . $kind,
                             'class' => 'btn btn-primary',
                             'data-size' => 'modal-lg',
-                            'data-title' => Yii::t('app', 'Create') . ' ' . $title,
+                            'data-title' => Module::t('module', 'Create') . ' ' . $title,
                             'data-toggle' => 'modal',
                             'data-target' => '#modal-pjax',
                             'data-url' => Url::to(['create', 'kind' => $kind]),
@@ -124,7 +124,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'attribute' => 'is_auto',
                     'value' => function (SalaryItemsAddition $model) {
-                        return Helper::itemAlias('CheckboxIcon', $model->is_auto);
+                        return Yii::$app->helper::itemAlias('CheckboxIcon', $model->is_auto);
                     },
                     'format' => 'raw'
                 ],
@@ -135,9 +135,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         'update' => function ($url, SalaryItemsAddition $model, $key) {
                             return $model->canUpdate() ? Html::a('<span class="fa fa-edit text-primary"></span>',
                                 'javascript:void(0)', [
-                                    'title' => Yii::t('app', 'Update'),
+                                    'title' => Module::t('module', 'Update'),
                                     'data-size' => 'modal-lg',
-                                    'data-title' => Yii::t('app', 'Update'),
+                                    'data-title' => Module::t('module', 'Update'),
                                     'data-toggle' => 'modal',
                                     'data-target' => '#modal-pjax',
                                     'data-url' => Url::to(['update', 'id' => $model->id]),
@@ -166,7 +166,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ['/mongo/log/view-ajax', 'modelId' => $model->id, 'modelClass' => get_class($model)],
                                 [
                                     'class' => 'text-secondary showModalButton',
-                                    'title' => Yii::t('app', 'Logs'),
+                                    'title' => Module::t('module', 'Logs'),
                                     'data-size' => 'modal-xl'
                                 ]
                             );
@@ -177,8 +177,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 [
                                     'id' => 'reject-leave-btn',
                                     'data-size' => 'modal-lg',
-                                    'title' => Yii::t('app', 'Reject'),
-                                    'data-title' => Yii::t('app', 'Reject'),
+                                    'title' => Module::t('module', 'Reject'),
+                                    'data-title' => Module::t('module', 'Reject'),
                                     'data-toggle' => 'modal',
                                     'data-target' => '#modal-pjax',
                                     'data-url' => Url::to(['reject', 'id' => $model->id]),
@@ -188,8 +188,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                         'confirm' => function ($url, SalaryItemsAddition $model, $key) {
                             return $model->canConfirm() ? Html::a('<span class="fa fa-check text-success"></span>', ['confirm', 'id' => $model->id], [
-                                'title' => Yii::t('app', 'Confirm'),
-                                'data-confirm' => Yii::t('app', 'Are you sure?'),
+                                'title' => Module::t('module', 'Confirm'),
+                                'data-confirm' => Module::t('module', 'Are you sure?'),
                                 'data-method' => 'post',
                                 'class' => 'ajax-btn',
                                 'data-view' => 'index',
@@ -198,8 +198,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                         'returnStatus' => function ($url, SalaryItemsAddition $model, $key) {
                             return $model->canReturnStatus() ? Html::a('<span class="fa fa-undo text-warning"></span>', ['return-status', 'id' => $model->id], [
-                                'title' => Yii::t('app', 'Return State'),
-                                'data-confirm' => Yii::t('app', 'Are you sure?'),
+                                'title' => Module::t('module', 'Return State'),
+                                'data-confirm' => Module::t('module', 'Are you sure?'),
                                 'data-method' => 'post',
                                 'class' => 'ajax-btn',
                                 'data-view' => 'index',

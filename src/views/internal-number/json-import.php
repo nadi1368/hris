@@ -5,6 +5,7 @@
 
 /* @var $model */
 
+use hesabro\hris\Module;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 
@@ -24,7 +25,7 @@ use yii\helpers\Html;
     </div>
 
     <div class="card-footer">
-        <?= Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton(Module::t('module', 'Update'), ['class' => 'btn btn-primary']) ?>
     </div>
 
 <?php ActiveForm::end(); ?>

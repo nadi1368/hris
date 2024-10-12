@@ -1,5 +1,6 @@
 <?php
 
+use hesabro\hris\Module;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 use hesabro\hris\models\SalaryPeriod;
@@ -19,12 +20,12 @@ use hesabro\hris\models\SalaryPeriod;
     <div class="card-body">
         <div class="row">
             <div class="col-md-3">
-                <?= $form->field($model, 'kind')->dropdownList(SalaryPeriod::itemAlias('Kind'), ['prompt' => Yii::t('app', 'Select...')]) ?>
+                <?= $form->field($model, 'kind')->dropdownList(SalaryPeriod::itemAlias('Kind'), ['prompt' => Module::t('module', 'Select...')]) ?>
             </div>
 
             <div class="col align-self-center text-right">
-                <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
-                <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-secondary']) ?>
+                <?= Html::submitButton(Module::t('module', 'Search'), ['class' => 'btn btn-primary']) ?>
+                <?= Html::resetButton(Module::t('module', 'Reset'), ['class' => 'btn btn-secondary']) ?>
             </div>
         </div>
     </div>

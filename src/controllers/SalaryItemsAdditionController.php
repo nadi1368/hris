@@ -5,6 +5,7 @@ namespace hesabro\hris\controllers;
 use backend\models\RejectForm;
 use backend\models\UploadExcelSearch;
 use common\models\UploadExcel;
+use hesabro\hris\Module;
 use Yii;
 use yii\helpers\Html;
 use yii\web\NotFoundHttpException;
@@ -31,7 +32,7 @@ class SalaryItemsAdditionController extends SalaryItemsAdditionBase
                         $transaction->commit();
                         $result = [
                             'success' => true,
-                            'msg' => Yii::t("app", 'Item Rejected')
+                            'msg' => Module::t('module', 'Item Rejected')
                         ];
                     } else {
                         $transaction->rollBack();
@@ -51,7 +52,7 @@ class SalaryItemsAdditionController extends SalaryItemsAdditionBase
                 return $result;
             }
         } else {
-            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+            throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
         }
 
         $this->performAjaxValidation($form);
@@ -93,7 +94,7 @@ class SalaryItemsAdditionController extends SalaryItemsAdditionBase
 
                 } else {
                     $transaction->rollBack();
-                    $this->flash("warning", Yii::t("app", "Error In Save Info"));
+                    $this->flash("warning", Module::t('module', "Error In Save Info"));
                 }
             } catch (\Exception $e) {
                 $transaction->rollBack();
@@ -119,6 +120,6 @@ class SalaryItemsAdditionController extends SalaryItemsAdditionBase
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 }

@@ -56,14 +56,14 @@ class SalaryInsuranceBase extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'code' => Yii::t('app', 'Job Code'),
-            'group' => Yii::t('app', 'Title'),
-            'creator_id' => Yii::t('app', 'Creator ID'),
-            'update_id' => Yii::t('app', 'Update ID'),
-            'created' => Yii::t('app', 'Created'),
-            'changed' => Yii::t('app', 'Changed'),
-            'tag_id' => Yii::t('app', 'Job')
+            'id' => Module::t('module', 'ID'),
+            'code' => Module::t('module', 'Job Code'),
+            'group' => Module::t('module', 'Title'),
+            'creator_id' => Module::t('module', 'Creator ID'),
+            'update_id' => Module::t('module', 'Update ID'),
+            'created' => Module::t('module', 'Created'),
+            'changed' => Module::t('module', 'Changed'),
+            'tag_id' => Module::t('module', 'Job')
         ];
     }
 

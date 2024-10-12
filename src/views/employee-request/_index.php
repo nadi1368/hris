@@ -1,8 +1,9 @@
 <?php
 
+use hesabro\helpers\widgets\grid\GridView;
 use hesabro\hris\models\EmployeeRequest;
 use hesabro\hris\models\EmployeeRequestSearch;
-use common\widgets\grid\GridView;
+use hesabro\hris\Module;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -22,7 +23,7 @@ Pjax::begin(['id' => 'pjax-employee-request']);
             <h4 class="panel-title mb-0">
                 <a class="accordion-toggle collapsed d-flex align-items-center gap-2" data-toggle="collapse" data-parent="#accordion" href="#searchBox" aria-expanded="false">
                     <i class="far fa-search"></i>
-                    <span><?= Yii::t('app', 'Search') ?></span>
+                    <span><?= Module::t('module', 'Search') ?></span>
                 </a>
             </h4>
         </div>
@@ -82,12 +83,12 @@ Pjax::begin(['id' => 'pjax-employee-request']);
                         'confirm' => function ($url, EmployeeRequest $model, $key) {
                             return $model->canConfirm() ? Html::a(Html::tag('span', '', ['class' => 'far fa-check']),
                                 'javascript:void(0)', [
-                                    'title' => Yii::t('app', 'Confirm'),
+                                    'title' => Module::t('module', 'Confirm'),
                                     'class' => 'text-success',
                                     'data-size' => 'modal-xl',
                                     'data-title' => implode(' ', [
-                                        Yii::t('app', 'Confirm'),
-                                        Yii::t('app', 'Letter'),
+                                        Module::t('module', 'Confirm'),
+                                        Module::t('module', 'Letter'),
                                         $model->contractTemplate?->title
                                     ]),
                                     'data-toggle' => 'modal',
@@ -101,13 +102,13 @@ Pjax::begin(['id' => 'pjax-employee-request']);
                         'reject' => function ($url, EmployeeRequest $model, $key) {
                             return $model->canConfirm() ? Html::a(Html::tag('span', '', ['class' => 'fa fa-times']),
                                 'javascript:void(0)', [
-                                    'title' => Yii::t('app', 'Reject'),
+                                    'title' => Module::t('module', 'Reject'),
                                     'class' => 'text-danger',
                                     'data-size' => 'modal-md',
                                     'data-title' => implode(' ', [
-                                        Yii::t('app', 'Reject'),
-                                        Yii::t('app', 'Request'),
-                                        Yii::t('app', 'Letter'),
+                                        Module::t('module', 'Reject'),
+                                        Module::t('module', 'Request'),
+                                        Module::t('module', 'Letter'),
                                         $model->contractTemplate?->title
                                     ]),
                                     'data-toggle' => 'modal',
@@ -122,8 +123,8 @@ Pjax::begin(['id' => 'pjax-employee-request']);
                             return in_array($model->status, [EmployeeRequest::STATUS_ACCEPT, EmployeeRequest::STATUS_REJECT]) ?
                                 Html::a(Html::tag('span', '', ['class' => 'far fa-undo']), Url::to(['undo', 'id' => $model->id]),
                                     [
-                                        'title' => Yii::t('app', 'Undo'),
-                                        'data-confirm' => Yii::t('app', 'Are you sure you want to undo this item?'),
+                                        'title' => Module::t('module', 'Undo'),
+                                        'data-confirm' => Module::t('module', 'Are you sure you want to undo this item?'),
                                         'data-method' => 'post',
                                         'class' => 'ajax-btn text-danger',
                                         'data-view' => 'index',
@@ -133,14 +134,14 @@ Pjax::begin(['id' => 'pjax-employee-request']);
                         'view' => function ($url, EmployeeRequest $model, $key) {
                             return $model->status == EmployeeRequest::STATUS_ACCEPT ? Html::a(Html::tag('span', '', ['class' => 'far fa-eye']),
                                 'javascript:void(0)', [
-                                    'title' => Yii::t('app', 'View'),
+                                    'title' => Module::t('module', 'View'),
                                     'class' => 'text-primary',
                                     'data-size' => 'modal-lg',
                                     'data-title' => implode(' ', [
-                                        Yii::t('app', 'View'),
-                                        Yii::t('app', 'Letter'),
+                                        Module::t('module', 'View'),
+                                        Module::t('module', 'Letter'),
                                         "({$model->contractTemplate?->title})",
-                                        Yii::t('app', 'For'),
+                                        Module::t('module', 'For'),
                                         $model->user->fullName
                                     ]),
                                     'data-toggle' => 'modal',
@@ -154,7 +155,7 @@ Pjax::begin(['id' => 'pjax-employee-request']);
                         'print' => function ($url, EmployeeRequest $model, $key) {
                             return $model->status === EmployeeRequest::STATUS_ACCEPT ? Html::a(Html::tag('span', '', ['class' => 'fas fa-print']), Url::to(['view', 'id' => $model->id, 'print' => 1]),
                                 [
-                                    'title' => Yii::t('app', 'Print'),
+                                    'title' => Module::t('module', 'Print'),
                                     'class' => 'text-info popup-link',
                                     'data' => [
                                         'popup-width' => '620',

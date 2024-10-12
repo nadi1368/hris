@@ -1,7 +1,7 @@
 <?php
 
 use hesabro\hris\models\SalaryPeriodItems;
-use common\components\Helper;
+use hesabro\hris\Module;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 use yii\widgets\MaskedInput;
@@ -36,13 +36,13 @@ $this->registerJs($js);
             <div class="col-md-3">
                 <?= $form->field($model, 'treatment_day')
                     ->hint(SalaryPeriodItems::itemAlias('HintLabel', 'treatment_day'))
-                    ->label(isset($model->detailAddition['treatment_day']) ? Helper::renderLabelHelp($model->getAttributeLabel('treatment_day'), implode("<br />", $model->detailAddition['treatment_day'])) : $model->getAttributeLabel('treatment_day'));
+                    ->label(isset($model->detailAddition['treatment_day']) ? Yii::$app->helper::renderLabelHelp($model->getAttributeLabel('treatment_day'), implode("<br />", $model->detailAddition['treatment_day'])) : $model->getAttributeLabel('treatment_day'));
                 ?>
             </div>
             <div class="col-md-3">
                 <?= $form->field($model, 'countOfDayLeaveNoSalary')->textInput(['disabled' => true])
                     ->hint(SalaryPeriodItems::itemAlias('HintLabel', 'countOfDayLeaveNoSalary'))
-                    ->label(isset($model->detailAddition['countOfDayLeaveNoSalary']) ? Helper::renderLabelHelp($model->getAttributeLabel('countOfDayLeaveNoSalary'), implode("<br />", $model->detailAddition['countOfDayLeaveNoSalary'])) : $model->getAttributeLabel('countOfDayLeaveNoSalary')) ?>
+                    ->label(isset($model->detailAddition['countOfDayLeaveNoSalary']) ? Yii::$app->helper::renderLabelHelp($model->getAttributeLabel('countOfDayLeaveNoSalary'), implode("<br />", $model->detailAddition['countOfDayLeaveNoSalary'])) : $model->getAttributeLabel('countOfDayLeaveNoSalary')) ?>
             </div>
 
             <div class="col-md-3">
@@ -96,7 +96,7 @@ $this->registerJs($js);
             <div class="col-md-3">
                 <?= $form->field($model, 'count_of_children')
                     ->dropdownList(SalaryPeriodItems::itemAlias('Children'), [
-                        'prompt' => Yii::t('app', 'Select...'),
+                        'prompt' => Module::t('module', 'Select...'),
                         'onchange' => "return calculateCostOfChildrenAndSalary();",
                         'options' => $model->getChildrenCost()
                     ]); ?>
@@ -134,7 +134,7 @@ $this->registerJs($js);
                                 'autoUnmask' => true,
                             ],
                         ])
-                    ->label(isset($model->detailAddition['commission']) ? Helper::renderLabelHelp($model->getAttributeLabel('commission'), implode("<br />", $model->detailAddition['commission'])) : $model->getAttributeLabel('commission')) ?>
+                    ->label(isset($model->detailAddition['commission']) ? Yii::$app->helper::renderLabelHelp($model->getAttributeLabel('commission'), implode("<br />", $model->detailAddition['commission'])) : $model->getAttributeLabel('commission')) ?>
             </div>
 
             <div class="col-md-3">
@@ -161,7 +161,7 @@ $this->registerJs($js);
                     ->textInput(['data-value' => $model->year->COST_HOURS_OVERTIME, 'onchange' => "return calculateSalary()"])
                     ->hint(SalaryPeriodItems::itemAlias('HintLabel', 'hours_of_overtime'))
                     ->label(isset($model->detailAddition['hours_of_overtime']) ?
-                        Helper::renderLabelHelp($model->getAttributeLabel('hours_of_overtime'), implode("<br />", $model->detailAddition['hours_of_overtime'])) :
+                        Yii::$app->helper::renderLabelHelp($model->getAttributeLabel('hours_of_overtime'), implode("<br />", $model->detailAddition['hours_of_overtime'])) :
                         $model->getAttributeLabel('hours_of_overtime')
                     ) ?>
                 <?= $form->field($model, "hours_of_overtime_cost")
@@ -185,7 +185,7 @@ $this->registerJs($js);
                     ->textInput(['data-value' => $model->year->COST_HOLIDAY_OVERTIME, 'onchange' => "return calculateSalary()"])
                     ->hint(SalaryPeriodItems::itemAlias('HintLabel', 'holiday_of_overtime'))
                     ->label(isset($model->detailAddition['holiday_of_overtime']) ?
-                        Helper::renderLabelHelp($model->getAttributeLabel('holiday_of_overtime'), implode("<br />", $model->detailAddition['holiday_of_overtime'])) :
+                        Yii::$app->helper::renderLabelHelp($model->getAttributeLabel('holiday_of_overtime'), implode("<br />", $model->detailAddition['holiday_of_overtime'])) :
                         $model->getAttributeLabel('holiday_of_overtime')
                     );
                 ?>
@@ -210,7 +210,7 @@ $this->registerJs($js);
                     ->textInput(['data-value' => $model->year->COST_NIGHT_OVERTIME, 'onchange' => "return calculateSalary()"])
                     ->hint(SalaryPeriodItems::itemAlias('HintLabel', 'night_of_overtime'))
                     ->label(isset($model->detailAddition['night_of_overtime']) ?
-                        Helper::renderLabelHelp($model->getAttributeLabel('night_of_overtime'), implode("<br />", $model->detailAddition['night_of_overtime'])) :
+                        Yii::$app->helper::renderLabelHelp($model->getAttributeLabel('night_of_overtime'), implode("<br />", $model->detailAddition['night_of_overtime'])) :
                         $model->getAttributeLabel('night_of_overtime')
                     ); ?>
                 <?= $form->field($model, "night_of_overtime_cost")
@@ -234,7 +234,7 @@ $this->registerJs($js);
                     ->textInput(['data-value' => $model->year->COST_HOURS_LOW_TIME, 'onchange' => "return calculateSalary()"])
                     ->hint(SalaryPeriodItems::itemAlias('HintLabel', 'hoursOfLowTime'))
                     ->label(isset($model->detailAddition['hoursOfLowTime']) ?
-                        Helper::renderLabelHelp($model->getAttributeLabel('hoursOfLowTime'), implode("<br />", $model->detailAddition['hoursOfLowTime'])) :
+                        Yii::$app->helper::renderLabelHelp($model->getAttributeLabel('hoursOfLowTime'), implode("<br />", $model->detailAddition['hoursOfLowTime'])) :
                         $model->getAttributeLabel('hoursOfLowTime')
                     ); ?>
                 <?= $form->field($model, "hoursOfLowTimeCost")
@@ -273,7 +273,7 @@ $this->registerJs($js);
                                 'autoUnmask' => true,
                             ],
                         ])->label(isset($model->detailAddition['non_cash_commission']) ?
-                        Helper::renderLabelHelp($model->getAttributeLabel('non_cash_commission'), implode("<br />", $model->detailAddition['non_cash_commission'])) :
+                        Yii::$app->helper::renderLabelHelp($model->getAttributeLabel('non_cash_commission'), implode("<br />", $model->detailAddition['non_cash_commission'])) :
                         $model->getAttributeLabel('non_cash_commission')
                     ); ?>
             </div>
@@ -443,7 +443,7 @@ $this->registerJs($js);
         </div>
     </div>
     <div class="card-footer">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Save'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary',  'name' => 'TypeSubmit', 'value' => 'default']) ?>
+        <?= Html::submitButton($model->isNewRecord ? Module::t('module', 'Create') : Module::t('module', 'Save'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary',  'name' => 'TypeSubmit', 'value' => 'default']) ?>
         <?= !$model->isNewRecord ?  Html::submitButton( 'ذخیره و نمایش فرم کارمند بعدی', ['class' =>  'btn btn-info',  'name' => 'TypeSubmit', 'value' => 'next']) : '' ?>
 
         <button type="button" class="btn btn-primary pull-left" data-toggle="modal" data-target="#formulaModal">

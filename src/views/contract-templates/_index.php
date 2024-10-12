@@ -1,13 +1,14 @@
 <?php
 
 use hesabro\hris\models\ContractTemplates;
+use hesabro\hris\Module;
 
 /** @var $model ContractTemplates */
 
 ?>
 
 <div class="col-md-12 my-3 text-center" style="border-bottom: 1px solid rgba(0,0,0,0.2);">
-	<h2><?= Yii::t('app', 'Contract Clauses') ?></h2>
+	<h2><?= Module::t('module', 'Contract Clauses') ?></h2>
 </div>
 
 <table class="table table-hover">

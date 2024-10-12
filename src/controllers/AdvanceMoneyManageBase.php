@@ -5,15 +5,13 @@ namespace hesabro\hris\controllers;
 use hesabro\hris\models\AdvanceMoney;
 use hesabro\hris\models\AdvanceMoneySearch;
 use hesabro\hris\models\RejectForm;
-use hesabro\hris\models\AdvanceMoneyForm;
 use hesabro\hris\models\EmployeeBranchUser;
 use hesabro\helpers\traits\AjaxValidationTrait;
+use hesabro\hris\Module;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\web\Controller;
-use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -74,7 +72,7 @@ class AdvanceMoneyManageBase extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
                 'success' => true,
-                'msg' => Yii::t('app', 'Item Created')
+                'msg' => Module::t('module', 'Item Created')
             ];
         }
 
@@ -102,7 +100,7 @@ class AdvanceMoneyManageBase extends Controller
                     $transaction->commit();
                     $result = [
                         'success' => true,
-                        'msg' => Yii::t("app", 'Item Rejected')
+                        'msg' => Module::t('module', 'Item Rejected')
                     ];
                 } else {
                     $transaction->rollBack();
@@ -129,56 +127,6 @@ class AdvanceMoneyManageBase extends Controller
         ]);
     }
 
-    public function actionCreateWithConfirm($user_id)
-    {
-        $employee = $this->findModelEmployeeUser($user_id);
-        $model = new AdvanceMoneyForm([
-            'user_id' => $employee->user_id,
-            'employee' => $employee,
-            'account_id_to' => $employee->account_id,
-        ]);
-
-        if (!$model->canCreate()) {
-            throw new ForbiddenHttpException($model->error_msg ?: Yii::t("app", "It is not possible to perform this operation"));
-        }
-        $result = [
-            'success' => false,
-            'msg' => Yii::t("app", "Error In Save Info")
-        ];
-        if ($this->request->isPost) {
-            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-                $transaction = Yii::$app->db->beginTransaction();
-                try {
-                    $flag = $model->saveDocument();
-                    $flag = $flag && $model->saveAdvanceMoney();
-                    if ($flag) {
-                        $result = [
-                            'success' => true,
-                            'msg' => Yii::t("app", "Item Created")
-                        ];
-                        if(Yii::$app->request->post('TypeBtn', null) == 'document'){
-                            $result['CallFunction'] = 'showModalAfterAjax';
-                            $result['ModalUrl'] = Url::to(['/document/view', 'id' => $model->id]);
-                        }
-                        $transaction->commit();
-                    } else {
-                        $transaction->rollBack();
-                    }
-                } catch (\Exception $e) {
-                    $transaction->rollBack();
-                    Yii::error($e->getMessage() . $e->getTraceAsString(), Yii::$app->controller->id . '/' . Yii::$app->controller->action->id);
-                }
-                return $this->asJson($result);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
-        $this->performAjaxValidation($model);
-        return $this->renderAjax('_create-with-confirm', [
-            'model' => $model,
-        ]);
-    }
-
     /**
      * Finds the AdvanceMoney model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -192,7 +140,7 @@ class AdvanceMoneyManageBase extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
     public function flash($type, $message)

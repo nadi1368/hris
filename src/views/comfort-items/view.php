@@ -1,7 +1,7 @@
 <?php
 
 use hesabro\hris\models\ComfortItems;
-use common\components\Jdate;
+use hesabro\hris\Module;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -9,7 +9,7 @@ use yii\widgets\DetailView;
 /* @var $model hesabro\hris\models\ComfortItems */
 
 $this->title = $model->comfort?->title . ' ' . $model->user?->fullName;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Comfort Items'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Module::t('module', 'Comfort Items'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="comfort-items-view card">
@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'created' => [
                 'attribute' => $model->getAttributeLabel('created'),
-                'value' => fn(ComfortItems $model) => $model->created ? Jdate::date('Y/m/d', $model->created) : null,
+                'value' => fn(ComfortItems $model) => $model->created ? Yii::$app->jdf::jdate('Y/m/d', $model->created) : null,
             ],
             'creator_id' => [
                 'attribute' => $model->getAttributeLabel('creator_id'),
@@ -50,17 +50,17 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'changed' => [
                 'attribute' => $model->getAttributeLabel('changed'),
-                'value' => fn(ComfortItems $model) => Jdate::date('Y/m/d', $model->changed)
+                'value' => fn(ComfortItems $model) => Yii::$app->jdf::jdate('Y/m/d', $model->changed)
             ],
 		],
 	]) ?>
 	</div>
 	<div class="card-footer">
-		<?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-		<?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
+		<?= Html::a(Module::t('module', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+		<?= Html::a(Module::t('module', 'Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                'confirm' => Module::t('module', 'Are you sure you want to delete this item?'),
                 'method' => 'post',
             ]
 		]) ?>

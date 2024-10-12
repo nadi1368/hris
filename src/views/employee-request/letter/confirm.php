@@ -1,5 +1,6 @@
 <?php
 use hesabro\hris\models\Letter;
+use hesabro\hris\Module;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -41,8 +42,8 @@ $inputs = $relatedModel->getVariablesInput($form);
     </div>
 
     <div class="card-footer d-flex align-items-center justify-content-end gap-2">
-        <?= Html::button(Yii::t('app', 'Preview'), ['id' => 'letter-preview', 'class' => 'btn btn-info']) ?>
-        <?= Html::submitButton(Yii::t('app', 'Confirm') . ' ' . Yii::t('app', 'Request'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::button(Module::t('module', 'Preview'), ['id' => 'letter-preview', 'class' => 'btn btn-info']) ?>
+        <?= Html::submitButton(Module::t('module', 'Confirm') . ' ' . Module::t('module', 'Request'), ['class' => 'btn btn-primary']) ?>
     </div>
 </div>
 

@@ -1,5 +1,6 @@
 <?php
 
+use hesabro\hris\Module;
 use kartik\file\FileInput;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
@@ -10,9 +11,9 @@ use yii\web\View;
 /* @var $model UploadFormExcel */
 /* @var $salaryPeriod hesabro\hris\models\SalaryPeriod */
 
-$this->title = Yii::t("app", "Excel File Upload");
+$this->title = Module::t('module', "Excel File Upload");
 
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Salary Periods'), 'url' => ['salary-period/index']];
+$this->params['breadcrumbs'][] = ['label' => Module::t('module', 'Salary Periods'), 'url' => ['salary-period/index']];
 $this->params['breadcrumbs'][] = ['label' => $salaryPeriod->title, 'url' => ['salary-period-items/index', 'id' => $salaryPeriod->id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -26,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div class="card-footer">
-        <?= Html::submitButton(Yii::t("app", "Upload"), ['class' => 'btn btn-success btn btn-flat']); ?>
+        <?= Html::submitButton(Module::t('module', "Upload"), ['class' => 'btn btn-success btn btn-flat']); ?>
     </div>
 
     <?php ActiveForm::end() ?>

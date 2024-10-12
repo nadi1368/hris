@@ -1,8 +1,9 @@
 <?php
 
 use hesabro\hris\models\ComfortItems;
+use hesabro\hris\Module;
 use yii\helpers\Html;
-use common\widgets\grid\GridView;
+use hesabro\helpers\widgets\grid\GridView;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
@@ -91,10 +92,10 @@ use yii\helpers\Url;
                         'cycle' => function ($url, ComfortItems $model, $key) {
                             return $model->comments_count ? Html::a('<i class="fas fa-recycle text-warning"></i>',
                                 'javascript:void(0)', [
-                                    'title' => Yii::t('app', 'Work Cycle'),
+                                    'title' => Module::t('module', 'Work Cycle'),
                                     'id' => 'work-cycle',
                                     'data-size' => 'modal-xl',
-                                    'data-title' => Yii::t('app', 'Work Cycle'),
+                                    'data-title' => Module::t('module', 'Work Cycle'),
                                     'data-toggle' => 'modal',
                                     'data-target' => '#modal-pjax',
                                     'data-url' => Url::to(['comfort-items/comments', 'id' => $model->id]),
@@ -107,9 +108,9 @@ use yii\helpers\Url;
                         'confirm' => function ($url, $model, $key) {
                             return $model->status == ComfortItems::STATUS_WAIT_CONFIRM ? ($model->canConfirm() ? Html::a('<span class="fa fa-check text-success"></span>',
                                 'javascript:void(0)', [
-                                    'title' => Yii::t('app', 'Confirm'),
+                                    'title' => Module::t('module', 'Confirm'),
                                     'data-size' => 'modal-lg',
-                                    'data-title' => Yii::t('app', 'Confirm'),
+                                    'data-title' => Module::t('module', 'Confirm'),
                                     'data-toggle' => 'modal',
                                     'data-target' => '#modal-pjax',
                                     'data-url' => Url::to(['confirm', 'id' => $model->id]),
@@ -128,10 +129,10 @@ use yii\helpers\Url;
                         'refer' => function ($url, ComfortItems $model, $key) {
                             return !$model->comments_count ? Html::a('<i class="far fa-paper-plane text-black"></i>',
                                 'javascript:void(0)', [
-                                    'title' => Yii::t('app', 'Refer'),
+                                    'title' => Module::t('module', 'Refer'),
                                     'id' => 'refer',
                                     'data-size' => 'modal-lg',
-                                    'data-title' => Yii::t('app', 'Refer'),
+                                    'data-title' => Module::t('module', 'Refer'),
                                     'data-toggle' => 'modal',
                                     'data-target' => '#modal-pjax',
                                     'data-url' => Url::to(['comfort-items/refer', 'id' => $model->id]),
@@ -147,8 +148,8 @@ use yii\helpers\Url;
                                 [
                                     'id' => 'reject-leave-btn',
                                     'data-size' => 'modal-lg',
-                                    'title' => Yii::t('app', 'Reject'),
-                                    'data-title' => Yii::t('app', 'Reject'),
+                                    'title' => Module::t('module', 'Reject'),
+                                    'data-title' => Module::t('module', 'Reject'),
                                     'data-toggle' => 'modal',
                                     'data-target' => '#modal-pjax',
                                     'data-url' => Url::to(['reject', 'id' => $model->id]),
@@ -160,8 +161,8 @@ use yii\helpers\Url;
                             return $model->canRevert() ?
                                 Html::a(Html::tag('span', '', ['class' => 'far fa-undo']), Url::to(['revert', 'id' => $model->id]),
                                     [
-                                        'title' => Yii::t('app', 'Undo'),
-                                        'data-confirm' => Yii::t('app', 'Are you sure you want to undo this item?'),
+                                        'title' => Module::t('module', 'Undo'),
+                                        'data-confirm' => Module::t('module', 'Are you sure you want to undo this item?'),
                                         'data-method' => 'post',
                                         'class' => 'ajax-btn text-danger',
                                         'data-view' => 'index',
@@ -173,7 +174,7 @@ use yii\helpers\Url;
                                 ['/mongo/log/view-ajax', 'modelId' => $model->id, 'modelClass' => get_class($model)],
                                 [
                                     'class' => 'text-secondary showModalButton',
-                                    'title' => Yii::t('app', 'Logs'),
+                                    'title' => Module::t('module', 'Logs'),
                                     'data-size' => 'modal-xl'
                                 ]
                             );

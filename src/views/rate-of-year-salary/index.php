@@ -1,8 +1,9 @@
 <?php
 
+use hesabro\hris\Module;
 use yii\bootstrap4\ButtonDropdown;
 use yii\helpers\Html;
-use common\widgets\grid\GridView;
+use hesabro\helpers\widgets\grid\GridView;
 use yii\helpers\Url;
 use hesabro\hris\models\RateOfYearSalary;
 
@@ -10,7 +11,7 @@ use hesabro\hris\models\RateOfYearSalary;
 /* @var $searchModel hesabro\hris\models\RateOfYearSalarySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Rate Of Year Salaries');
+$this->title = Module::t('module', 'Rate Of Year Salaries');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="rate-of-year-salary-index card">
@@ -23,10 +24,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 </a>
             </h4>
             <div>
-                <?= Html::a(Yii::t('app', 'Create'),
+                <?= Html::a(Module::t('module', 'Create'),
                     'javascript:void(0)', [
-                        'title' => Yii::t('app', 'Create'),
-                        'data-title' => Yii::t('app', 'Create'),
+                        'title' => Module::t('module', 'Create'),
+                        'data-title' => Module::t('module', 'Create'),
                         'class' => 'btn btn-success',
                         'data-size' => 'modal-lg',
                         'data-toggle' => 'modal',
@@ -77,13 +78,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             $items = [];
 
                             $items[] = [
-                                'label' => Html::tag('span', ' ', ['class' => 'fa fa-pen']) . ' ' . Yii::t('app', 'Update'),
+                                'label' => Html::tag('span', ' ', ['class' => 'fa fa-pen']) . ' ' . Module::t('module', 'Update'),
                                 'url' => 'javascript:void(0)',
                                 'encode' => false,
                                 'linkOptions' => [
                                     'data-pjax' => '0',
-                                    'title' => Yii::t('app', 'Update'),
-                                    'data-title' => Yii::t('app', 'Update'),
+                                    'title' => Module::t('module', 'Update'),
+                                    'data-title' => Module::t('module', 'Update'),
                                     'data-size' => 'modal-lg',
                                     'data-toggle' => 'modal',
                                     'data-target' => '#modal-pjax',
@@ -93,34 +94,34 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                             ];
                             $items[] = [
-                                'label' => Html::tag('span', '', ['class' => 'fa fa-trash-alt']) . ' ' . Yii::t('app', 'Delete'),
+                                'label' => Html::tag('span', '', ['class' => 'fa fa-trash-alt']) . ' ' . Module::t('module', 'Delete'),
                                 'url' => 'javascript:void(0)',
                                 'encode' => false,
                                 'linkOptions' => [
-                                    'data-confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                                    'title' => Yii::t('app', 'Delete'),
-                                    'aria-label' => Yii::t('app', 'Delete'),
+                                    'data-confirm' => Module::t('module', 'Are you sure you want to delete this item?'),
+                                    'title' => Module::t('module', 'Delete'),
+                                    'aria-label' => Module::t('module', 'Delete'),
                                     'data-reload-pjax-container' => 'p-jax-rate-of-year',
                                     'data-pjax' => '0',
                                     'data-url' => Url::to(['delete', 'id' => $model->id]),
                                     'class' => "text-danger p-jax-btn",
-                                    'data-title' => Yii::t('app', 'Delete'),
+                                    'data-title' => Module::t('module', 'Delete'),
                                     'data-method' => 'post'
                                 ],
                             ];
                             $items[] = [
-                                'label' => Html::tag('span', ' ', ['class' => 'fa fa-history']) . ' ' . Yii::t('app', 'Log'),
+                                'label' => Html::tag('span', ' ', ['class' => 'fa fa-history']) . ' ' . Module::t('module', 'Log'),
                                 'url' => ['/mongo/log/view-ajax', 'modelId' => $model->id, 'modelClass' => get_class($model)],
                                 'encode' => false,
                                 'linkOptions' => [
-                                    'title' => Yii::t('app', 'Log'),
+                                    'title' => Module::t('module', 'Log'),
                                     'class' => 'showModalButton',
                                     'data-size' => 'modal-xxl',
                                 ],
                             ];
 
                             return ButtonDropdown::widget([
-                                'buttonOptions' => ['class' => 'btn btn-info btn-md dropdown-toggle', 'style' => 'padding: 3px 7px !important;', 'title' => Yii::t('app', 'Actions')],
+                                'buttonOptions' => ['class' => 'btn btn-info btn-md dropdown-toggle', 'style' => 'padding: 3px 7px !important;', 'title' => Module::t('module', 'Actions')],
                                 'encodeLabel' => false,
                                 'label' => '<i class="far fa-list mr-1"></i>',
                                 'options' => ['class' => 'float-right'],

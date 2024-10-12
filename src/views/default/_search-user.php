@@ -3,7 +3,7 @@
 use hesabro\hris\models\EmployeeBranch;
 use hesabro\hris\models\EmployeeBranchUser;
 use hesabro\helpers\components\Helper;
-use common\models\User;
+use hesabro\hris\Module;
 use kartik\select2\Select2;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
@@ -24,29 +24,29 @@ use yii\widgets\MaskedInput;
         <div class="row">
 
             <div class="col-md-3">
-                <?= $form->field($model, 'branch_id')->dropDownList(EmployeeBranch::itemAlias('List'), ['prompt' => Yii::t('app', 'Select...')]) ?>
+                <?= $form->field($model, 'branch_id')->dropDownList(EmployeeBranch::itemAlias('List'), ['prompt' => Module::t('module', 'Select...')]) ?>
             </div>
             <div class="col-md-4">
                 <?= $form->field($model, "user_id")->widget(Select2::class, [
-                    'data' => User::getUserWithRoles(['employee']),
+                    'data' => Module::getInstance()->user::getUserWithRoles(['employee']),
                     'pluginOptions' => [
                         'allowClear' => true,
                     ],
                     'options' => [
                         'dir' => 'rtl',
-                        'placeholder' => Yii::t('app', 'Select...'),
+                        'placeholder' => Module::t('module', 'Select...'),
                     ],
                 ]); ?>
             </div>
             <div class="col-md-2">
-                <?= $form->field($model, 'show_on_salary_list')->dropDownList(Helper::itemAlias('YesOrNo'), ['prompt' => Yii::t('app', 'Select...')]) ?>
+                <?= $form->field($model, 'show_on_salary_list')->dropDownList(Helper::itemAlias('YesOrNo'), ['prompt' => Module::t('module', 'Select...')]) ?>
             </div>
             <div class="col-md-2">
-                <?= $form->field($model, 'set_iban')->dropDownList(Helper::itemAlias('YesOrNo'), ['prompt' => Yii::t('app', 'Select...')]) ?>
+                <?= $form->field($model, 'set_iban')->dropDownList(Helper::itemAlias('YesOrNo'), ['prompt' => Module::t('module', 'Select...')]) ?>
             </div>
 
             <div class="col-md-2">
-                <?= $form->field($model, 'status')->dropDownList(EmployeeBranchUser::itemAlias('Status'), ['prompt' => Yii::t('app', 'Select...')]) ?>
+                <?= $form->field($model, 'status')->dropDownList(EmployeeBranchUser::itemAlias('Status'), ['prompt' => Module::t('module', 'Select...')]) ?>
             </div>
             <div class="col-md-2 date-input">
                 <?= $form->field($model, 'end_work')->widget(MaskedInput::class, [
@@ -54,12 +54,12 @@ use yii\widgets\MaskedInput;
                 ]) ?>
             </div>
             <div class="col-md-2">
-                <?= $form->field($model, 'roll_call_id')->dropDownList(Helper::itemAlias('YesOrNo'), ['prompt' => Yii::t('app', 'Select...')]) ?>
+                <?= $form->field($model, 'roll_call_id')->dropDownList(Helper::itemAlias('YesOrNo'), ['prompt' => Module::t('module', 'Select...')]) ?>
             </div>
 
             <div class="col align-self-center text-right">
-                <?= Html::submitButton(Yii::t('app','Search'), ['class' => 'btn btn-primary']) ?>
-                <?= Html::resetButton(Yii::t('app','Reset'), ['class' => 'btn btn-secondary']) ?>
+                <?= Html::submitButton(Module::t('module','Search'), ['class' => 'btn btn-primary']) ?>
+                <?= Html::resetButton(Module::t('module','Reset'), ['class' => 'btn btn-secondary']) ?>
             </div>
         </div>
     </div>

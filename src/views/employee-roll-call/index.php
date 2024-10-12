@@ -1,17 +1,17 @@
 <?php
 
-use common\components\jdf\Jdf;
 use common\models\Rbac;
+use hesabro\hris\Module;
 use sadi01\bidashboard\widgets\ReportModalWidget;
 use yii\helpers\Html;
-use common\widgets\grid\GridView;
+use hesabro\helpers\widgets\grid\GridView;
 use \hesabro\hris\models\EmployeeRollCall;
 
 /* @var $this yii\web\View */
 /* @var $searchModel hesabro\hris\models\EmployeeRollCallSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Employee Roll Calls');
+$this->title = Module::t('module', 'Employee Roll Calls');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="employee-roll-call-index card">
@@ -34,10 +34,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'searchRoute' => Yii::$app->request->pathInfo,
                         'searchModelFormName' => $searchModel->formName(),
                         'outputColumn' => [
-                            'total_over_time' => Yii::t('app', 'Total') . ' ' . $searchModel->getAttributeLabel('over_time'),
-                            'total_low_time' => Yii::t('app', 'Total') . ' ' . $searchModel->getAttributeLabel('low_time'),
-                            'total_mission_time' => Yii::t('app', 'Total') . ' ' . $searchModel->getAttributeLabel('mission_time'),
-                            'total_leave_time' => Yii::t('app', 'Total') . ' ' . $searchModel->getAttributeLabel('leave_time'),
+                            'total_over_time' => Module::t('module', 'Total') . ' ' . $searchModel->getAttributeLabel('over_time'),
+                            'total_low_time' => Module::t('module', 'Total') . ' ' . $searchModel->getAttributeLabel('low_time'),
+                            'total_mission_time' => Module::t('module', 'Total') . ' ' . $searchModel->getAttributeLabel('mission_time'),
+                            'total_leave_time' => Module::t('module', 'Total') . ' ' . $searchModel->getAttributeLabel('leave_time'),
                         ],
                     ]) : null ?>
             </div>
@@ -68,8 +68,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'attribute' => 'date',
                     'value' => function (EmployeeRollCall $model) {
-                        $time=strtotime(Jdf::Convert_jalali_to_gregorian($model->date));
-                        return Yii::$app->jdf->jdate("l d F Y",$time);
+                        $time=strtotime(Yii::$app->jdf::Convert_jalali_to_gregorian($model->date));
+                        return Yii::$app->jdf::jdate("l d F Y",$time);
                     },
                     'format' => 'raw',
                 ],

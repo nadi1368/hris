@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Comments;
+use hesabro\hris\Module;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\MaskedInput;
@@ -48,7 +49,7 @@ use yii\widgets\MaskedInput;
 
                 <div class="position-relative pt-3 col-12" style="border: 3px dotted #bbbbbb; border-radius: 8px;">
                     <label class="position-absolute"
-                           style="top: -14px; right: 16px; font-size: 18px; background: white; padding: 0 4px;"><?= Yii::t('app', 'Refer') ?></label>
+                           style="top: -14px; right: 16px; font-size: 18px; background: white; padding: 0 4px;"><?= Module::t('module', 'Refer') ?></label>
                     <?= $this->renderFile('@backend/modules/employee/views/comfort-items/_refer.php', [
                         'model' => $model,
                         'comment' => $comment,
@@ -60,7 +61,7 @@ use yii\widgets\MaskedInput;
         </div>
     </div>
     <div class="card-footer">
-        <?= Html::submitButton(Yii::t('app', 'Confirm'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton(Module::t('module', 'Confirm'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -27,7 +27,7 @@ MainAssets::register($this);
 		<meta http-equiv="content-language" content="fa"/>
 		<?= Html::csrfMetaTags() ?>
 		<link rel="shortcut icon" href="<?= Yii::getAlias('@web') . "/img/hesabro.png"; ?>" type="image/png"/>
-        <title><?= Html::encode(($this->title ?: '') . ' ' . Yii::t('app', 'Admin') . ' ' . Yii::t('app', 'HR')) . ' (HRIS)' ?></title>
+        <title><?= Html::encode(($this->title ?: '') . ' ' . Module::t('module', 'Admin') . ' ' . Module::t('module', 'HR')) . ' (HRIS)' ?></title>
 		<?php $this->head() ?>
 	</head>
 	<body>

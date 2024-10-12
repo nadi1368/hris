@@ -109,8 +109,8 @@ class EmployeeProfileBase extends Controller
     {
         $searchModel = new EmployeeRollCallSearch();
         $startAndEndOfCurrentMonth = Yii::$app->jdf::getStartAndEndOfCurrentMonth();
-        $start_month = Yii::$app->jdate->date('Y/m/d', $startAndEndOfCurrentMonth[0]);
-        $end_month = Yii::$app->jdate->date('Y/m/d', $startAndEndOfCurrentMonth[1]);
+        $start_month = Yii::$app->jdf->jdate('Y/m/d', $startAndEndOfCurrentMonth[0]);
+        $end_month = Yii::$app->jdf->jdate('Y/m/d', $startAndEndOfCurrentMonth[1]);
         $searchModel->fromDate = $start_month;
         $searchModel->toDate = $end_month;
         $dataProvider = $searchModel->searchUser(Yii::$app->request->queryParams, Yii::$app->user->id);
@@ -146,7 +146,7 @@ class EmployeeProfileBase extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
 
@@ -161,7 +161,7 @@ class EmployeeProfileBase extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
 

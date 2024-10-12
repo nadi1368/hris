@@ -1,13 +1,14 @@
 <?php
 
-use common\models\User;
+use hesabro\hris\models\AdvanceMoney;
+use hesabro\hris\Module;
 use kartik\select2\Select2;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 use yii\widgets\MaskedInput;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\AdvanceMoney */
+/* @var $model AdvanceMoney */
 /* @var $form yii\bootstrap4\ActiveForm */
 ?>
 
@@ -19,7 +20,7 @@ use yii\widgets\MaskedInput;
 
 			<div class="col-md-6">
 				<?= $form->field($model, 'user_id')->widget(Select2::class, [
-					'data' => User::userOptions(),
+					'data' => Module::getInstance()->user::userOptions(),
 					'options' => [
 						'placeholder' => 'کاربر',
 						'dir' => 'rtl',
@@ -51,7 +52,7 @@ use yii\widgets\MaskedInput;
         </div>
     </div>
     <div class="card-footer">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? Module::t('module', 'Create') : Module::t('module', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -3,6 +3,7 @@
 namespace hesabro\hris\models;
 
 use hesabro\helpers\traits\ModelHelper;
+use hesabro\hris\Module;
 use Yii;
 use yii\base\Model;
 
@@ -28,8 +29,8 @@ class ContractClausesModel extends Model
     public function attributeLabels()
 	{
 		return [
-			'title' => Yii::t('app','Title'),
-			'description' => Yii::t('app','Description'),
+			'title' => Module::t('module','Title'),
+			'description' => Module::t('module','Description'),
 		];
 	}
 
@@ -38,7 +39,7 @@ class ContractClausesModel extends Model
 //        if (!empty($this->variables)) {
 //            foreach ($this->variables as $key => $variable) {
 //                if (!$variable) {
-//                    $this->addError("variables[$key]", Yii::t('app', 'Variable name is required'));
+//                    $this->addError("variables[$key]", Module::t('module', 'Variable name is required'));
 //                }
 //            }
 //        }

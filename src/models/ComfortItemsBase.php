@@ -249,20 +249,20 @@ class ComfortItemsBase extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'comfort_id' => Yii::t('app', 'Type'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'amount' => Yii::t('app', 'Amount'),
-            'attach' => Yii::t('app', 'Attach'),
-            'file_name' => Yii::t('app', 'Request Documents'),
-            'description' => Yii::t('app', 'Description'),
-            'additional_data' => Yii::t('app', 'Additional Data'),
-            'status' => Yii::t('app', 'State'),
-            'created' => Yii::t('app', 'Created'),
-            'creator_id' => Yii::t('app', 'Creator ID'),
-            'update_id' => Yii::t('app', 'Update ID'),
-            'changed' => Yii::t('app', 'Changed'),
-            'reject_description' => Yii::t('app', 'Reject Description'),
+            'id' => Module::t('module', 'ID'),
+            'comfort_id' => Module::t('module', 'Type'),
+            'user_id' => Module::t('module', 'User ID'),
+            'amount' => Module::t('module', 'Amount'),
+            'attach' => Module::t('module', 'Attach'),
+            'file_name' => Module::t('module', 'Request Documents'),
+            'description' => Module::t('module', 'Description'),
+            'additional_data' => Module::t('module', 'Additional Data'),
+            'status' => Module::t('module', 'State'),
+            'created' => Module::t('module', 'Created'),
+            'creator_id' => Module::t('module', 'Creator ID'),
+            'update_id' => Module::t('module', 'Update ID'),
+            'changed' => Module::t('module', 'Changed'),
+            'reject_description' => Module::t('module', 'Reject Description'),
             'saveAdvanceMoney' => 'ثبت مساعده',
             'loan_installment' => 'تعداد اقساط'
         ];
@@ -338,7 +338,7 @@ class ComfortItemsBase extends \yii\db\ActiveRecord
     public function canConfirm(): bool
     {
         if ($this->status != self::STATUS_WAIT_CONFIRM) {
-            $this->error_msg = Yii::t('app', 'It is not possible to perform this operation');
+            $this->error_msg = Module::t('module', 'It is not possible to perform this operation');
             return false;
         }
         $this->setEmployee();
@@ -481,9 +481,9 @@ class ComfortItemsBase extends \yii\db\ActiveRecord
 
         $_items = [
             'Status' => [
-                self::STATUS_WAIT_CONFIRM => Yii::t('app', 'Wait Confirm'),
-                self::STATUS_CONFIRM => Yii::t('app', 'Confirm'),
-                self::STATUS_REJECT => Yii::t('app', 'Reject'),
+                self::STATUS_WAIT_CONFIRM => Module::t('module', 'Wait Confirm'),
+                self::STATUS_CONFIRM => Module::t('module', 'Confirm'),
+                self::STATUS_REJECT => Module::t('module', 'Reject'),
             ],
             'StatusClass' => [
                 self::STATUS_WAIT_CONFIRM => 'warning',

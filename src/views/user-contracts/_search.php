@@ -2,7 +2,7 @@
 
 use hesabro\hris\models\ContractTemplates;
 use hesabro\hris\models\UserContractsSearch;
-use common\models\User;
+use hesabro\hris\Module;
 use kartik\select2\Select2;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
@@ -26,17 +26,17 @@ use yii\widgets\MaskedInput;
 		<div class="row">
 
 			<div class="col-md-4">
-				<?= $form->field($model, 'contract_id')->dropdownList(ContractTemplates::itemAlias('ListContract') ?? [], ['prompt' => Yii::t('app', 'Select...')]) ?>
+				<?= $form->field($model, 'contract_id')->dropdownList(ContractTemplates::itemAlias('ListContract') ?? [], ['prompt' => Module::t('module', 'Select...')]) ?>
 			</div>
 
 			<div class="col-md-4">
 				<?= $form->field($model, 'user_id')->widget(Select2::class, [
-					'data' => User::getUserWithRoles(['employee']),
+					'data' => Module::getInstance()->user::getUserWithRoles(['employee']),
 					'pluginOptions' => [
 						'allowClear' => true,
 					],
 					'options' => [
-						'placeholder' => Yii::t('app', 'Search'),
+						'placeholder' => Module::t('module', 'Search'),
 						'dir' => 'rtl',
 					],
 				]); ?>
@@ -67,12 +67,12 @@ use yii\widgets\MaskedInput;
 			</div>
 
 			<div class="col-md-3">
-				<?= $form->field($model, 'contract_status')->dropdownList(UserContractsSearch::itemAlias('contract_status'), ['prompt' => Yii::t('app', 'Select...')]) ?>
+				<?= $form->field($model, 'contract_status')->dropdownList(UserContractsSearch::itemAlias('contract_status'), ['prompt' => Module::t('module', 'Select...')]) ?>
 			</div>
 
 			<div class="col align-self-center text-right">
-				<?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
-				<?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-secondary']) ?>
+				<?= Html::submitButton(Module::t('module', 'Search'), ['class' => 'btn btn-primary']) ?>
+				<?= Html::resetButton(Module::t('module', 'Reset'), ['class' => 'btn btn-secondary']) ?>
 			</div>
 		</div>
 	</div>

@@ -84,15 +84,15 @@ class ContractTemplatesBase extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'title' => Yii::t('app', 'Title'),
-            'type' => Yii::t('app', 'Type'),
-            'description' => Yii::t('app', 'Description'),
-            'status' => Yii::t('app', 'Status'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'created_by' => Yii::t('app', 'Created By'),
-            'updated_by' => Yii::t('app', 'Updated By'),
+            'id' => Module::t('module', 'ID'),
+            'title' => Module::t('module', 'Title'),
+            'type' => Module::t('module', 'Type'),
+            'description' => Module::t('module', 'Description'),
+            'status' => Module::t('module', 'Status'),
+            'created_at' => Module::t('module', 'Created At'),
+            'updated_at' => Module::t('module', 'Updated At'),
+            'created_by' => Module::t('module', 'Created By'),
+            'updated_by' => Module::t('module', 'Updated By'),
             'signatures' => 'امضا کنندگان',
         ];
     }
@@ -111,7 +111,7 @@ class ContractTemplatesBase extends \yii\db\ActiveRecord
         if (!empty($this->variables)) {
             foreach ($this->variables as $key => $variable) {
                 if (!$variable) {
-                    $this->addError("variables[$key]", Yii::t('app', 'Variable name is required'));
+                    $this->addError("variables[$key]", Module::t('module', 'Variable name is required'));
                 }
             }
         }
@@ -203,15 +203,15 @@ class ContractTemplatesBase extends \yii\db\ActiveRecord
                 break;
 			case 'Status';
 				$_items = [
-					self::STATUS_ACTIVE => Yii::t('app', 'Status Active'),
-					self::STATUS_DELETED => Yii::t('app', 'Status Delete'),
+					self::STATUS_ACTIVE => Module::t('module', 'Status Active'),
+					self::STATUS_DELETED => Module::t('module', 'Status Delete'),
 				];
 				break;
             case 'Type';
                 $_items = [
-                    self::TYPE_CONTRACT => Yii::t('app', 'Contract'),
-                    self::TYPE_CUSTOMER => Yii::t('app', 'Customer'),
-                    self::TYPE_LETTER => Yii::t('app', 'Letter'),
+                    self::TYPE_CONTRACT => Module::t('module', 'Contract'),
+                    self::TYPE_CUSTOMER => Module::t('module', 'Customer'),
+                    self::TYPE_LETTER => Module::t('module', 'Letter'),
                 ];
                 break;
             case 'TypeText';

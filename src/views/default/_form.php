@@ -1,6 +1,6 @@
 <?php
 
-use common\models\User;
+use hesabro\hris\Module;
 use kartik\select2\Select2;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
@@ -22,7 +22,7 @@ use yii\helpers\Html;
 
             <div class="col-md-4">
                 <?= $form->field($model, 'manager')->widget(Select2::class, array(
-                    'data' => User::getUserWithRoles(['employee']),
+                    'data' => Module::getInstance()->user::getUserWithRoles(['employee']),
                     'options' => array(
                         'placeholder' => '',
                         'dir' => 'rtl',
@@ -32,7 +32,7 @@ use yii\helpers\Html;
 
             <div class="col-md-12">
                 <?= $form->field($model, 'user_ids')->widget(Select2::class, array(
-                    'data' => User::getUserWithRoles(['employee']),
+                    'data' => Module::getInstance()->user::getUserWithRoles(['employee']),
                     'options' => array(
                         'placeholder' => 'کارمندان این شعبه',
                         'dir' => 'rtl',
@@ -43,7 +43,7 @@ use yii\helpers\Html;
         </div>
     </div>
     <div class="card-footer">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app','Create') : Yii::t('app','Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? Module::t('module','Create') : Module::t('module','Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
     <?php ActiveForm::end(); ?>
 </div>

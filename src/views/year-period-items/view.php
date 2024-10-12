@@ -1,7 +1,6 @@
 <?php
 
-use yii\helpers\Html;
-use common\widgets\TableView;
+use hesabro\helpers\widgets\TableView;
 
 /* @var $this yii\web\View */
 /* @var $model hesabro\hris\models\SalaryPeriodItems */

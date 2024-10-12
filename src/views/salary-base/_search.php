@@ -1,5 +1,6 @@
 <?php
 
+use hesabro\hris\Module;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -40,8 +41,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'cost_of_hours') ?>
 
 		<div class="col align-self-center text-right">
-			<?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
-			<?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-secondary']) ?>
+			<?= Html::submitButton(Module::t('module', 'Search'), ['class' => 'btn btn-primary']) ?>
+			<?= Html::resetButton(Module::t('module', 'Reset'), ['class' => 'btn btn-secondary']) ?>
 		</div>
 	</div>
 </div>

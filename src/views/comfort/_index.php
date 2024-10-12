@@ -1,8 +1,7 @@
 <?php
 
-use common\widgets\TableView;
+use hesabro\helpers\widgets\TableView;
 use hesabro\hris\models\Comfort;
-use common\components\Helper;
 
 /* @var $this yii\web\View */
 /* @var $model Comfort */
@@ -22,14 +21,14 @@ use common\components\Helper;
                 [
                     'attribute' => 'married',
                     'value' => function (Comfort $model) {
-                        return Helper::itemAlias('CheckboxIcon',$model->married);
+                        return Yii::$app->helper::itemAlias('CheckboxIcon',$model->married);
                     },
                     'format' => 'raw'
                 ],
                 [
                     'attribute' => 'showcase',
                     'value' => function (Comfort $model) {
-                        return Helper::itemAlias('CheckboxIcon',$model->showcase ?: false);
+                        return Yii::$app->helper::itemAlias('CheckboxIcon',$model->showcase ?: false);
                     },
                     'format' => 'raw'
                 ],

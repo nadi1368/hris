@@ -3,6 +3,7 @@
 namespace hesabro\hris\models;
 
 use hesabro\helpers\validators\DateValidator;
+use hesabro\hris\Module;
 use sadi01\bidashboard\models\ReportWidget;
 use Yii;
 use yii\base\Model;
@@ -33,8 +34,8 @@ class EmployeeRollCallSearch extends EmployeeRollCall
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), [
-            'fromDate' => Yii::t('app', 'From Date'),
-            'toDate' => Yii::t('app', 'To Date'),
+            'fromDate' => Module::t('module', 'From Date'),
+            'toDate' => Module::t('module', 'To Date'),
         ]);
     }
 

@@ -3,6 +3,7 @@
 namespace hesabro\hris\models;
 
 use hesabro\helpers\traits\ModelHelper;
+use hesabro\hris\Module;
 use Ramsey\Uuid\Uuid;
 use Yii;
 use yii\base\Model;
@@ -61,17 +62,17 @@ class EmployeeExperienceBase extends Model
     public function validateDate($attribute, $params): void
     {
         if (is_null(Yii::$app->jdf::jalaliToTimestamp(Yii::$app->jdf::tr_num($this->$attribute), 'Y/m/d'))) {
-            $this->addError($attribute, Yii::t('app', 'Invalid Date'));
+            $this->addError($attribute, Module::t('module', 'Invalid Date'));
         }
     }
 
     public function attributeLabels()
     {
         return [
-            'institute' => Yii::t('app', 'Name') . ' ' . Yii::t('app', 'Corporation') . ' ' . Yii::t('app', 'Or') . ' ' . Yii::t('app', 'Institute'),
-            'start_at' => Yii::t('app', 'Start Work Date'),
-            'end_at' => Yii::t('app', 'End Work Date'),
-            'post' => Yii::t('app', 'Post')
+            'institute' => Module::t('module', 'Name') . ' ' . Module::t('module', 'Corporation') . ' ' . Module::t('module', 'Or') . ' ' . Module::t('module', 'Institute'),
+            'start_at' => Module::t('module', 'Start Work Date'),
+            'end_at' => Module::t('module', 'End Work Date'),
+            'post' => Module::t('module', 'Post')
         ];
     }
 
@@ -80,8 +81,8 @@ class EmployeeExperienceBase extends Model
         if ($this->deleted || $this->added) {
             return [
                 implode(' ', [
-                    Yii::t('app', 'Pending Value'),
-                    Yii::t('app', $this->deleted ? 'Delete' : 'Add')
+                    Module::t('module', 'Pending Value'),
+                    Module::t('module', $this->deleted ? 'Delete' : 'Add')
                 ]),
                 ['class' => 'profile-input-hint' . ($this->deleted ? ' text-danger' : ' text-success')]
             ];

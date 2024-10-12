@@ -5,6 +5,7 @@ namespace hesabro\hris\controllers;
 use hesabro\hris\models\OrganizationMember;
 use hesabro\hris\models\OrganizationMemberSearch;
 use hesabro\helpers\traits\AjaxValidationTrait;
+use hesabro\hris\Module;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -153,7 +154,7 @@ class OrganizationChartController extends Controller
         $model->show_internal_number = !$model->show_internal_number;
         $model->save();
 
-        return $this->asJson(['success' =>true, 'msg' => Yii::t("app", "Item created")]);
+        return $this->asJson(['success' =>true, 'msg' => Module::t('module', "Item created")]);
     }
 
     /**
@@ -167,7 +168,7 @@ class OrganizationChartController extends Controller
         $model->show_job_tag = !$model->show_job_tag;
         $model->save();
 
-        return $this->asJson(['success' =>true, 'msg' => Yii::t("app", "Item created")]);
+        return $this->asJson(['success' =>true, 'msg' => Module::t('module', "Item created")]);
     }
 
     /**
@@ -182,7 +183,7 @@ class OrganizationChartController extends Controller
         $model = $this->findModel($id);
 
         if (OrganizationMember::find()->where(['parent_id' => $id])->exists()) {
-            throw new UnprocessableEntityHttpException(Yii::t('app', 'The memeber has child'));
+            throw new UnprocessableEntityHttpException(Module::t('module', 'The memeber has child'));
         }
 
         $model->delete();
@@ -203,6 +204,6 @@ class OrganizationChartController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 }

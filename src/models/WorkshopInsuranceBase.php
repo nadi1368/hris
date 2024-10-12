@@ -77,17 +77,17 @@ class WorkshopInsuranceBase extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'code' => Yii::t('app', 'WorkShop Code'),
-            'title' => Yii::t('app', 'Title'),
-            'manager' => Yii::t('app', 'Admin'),
-            'additional_data' => Yii::t('app', 'Additional Data'),
-            'creator_id' => Yii::t('app', 'Creator ID'),
-            'update_id' => Yii::t('app', 'Update ID'),
-            'created' => Yii::t('app', 'Created'),
-            'changed' => Yii::t('app', 'Changed'),
-            'address' => Yii::t('app', 'Address'),
-            'branch_id' => Yii::t('app', 'Branch ID'),
+            'id' => Module::t('module', 'ID'),
+            'code' => Module::t('module', 'WorkShop Code'),
+            'title' => Module::t('module', 'Title'),
+            'manager' => Module::t('module', 'Admin'),
+            'additional_data' => Module::t('module', 'Additional Data'),
+            'creator_id' => Module::t('module', 'Creator ID'),
+            'update_id' => Module::t('module', 'Update ID'),
+            'created' => Module::t('module', 'Created'),
+            'changed' => Module::t('module', 'Changed'),
+            'address' => Module::t('module', 'Address'),
+            'branch_id' => Module::t('module', 'Branch ID'),
             'row' => 'ردیف پیمان',
             'account_id' => 'حساب تفضیل هزینه ای حقوق و دستمزد',
         ];

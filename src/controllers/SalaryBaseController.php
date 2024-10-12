@@ -3,6 +3,7 @@
 namespace hesabro\hris\controllers;
 
 use hesabro\helpers\traits\AjaxValidationTrait;
+use hesabro\hris\Module;
 use Yii;
 use hesabro\hris\models\SalaryBase;
 use hesabro\hris\models\SalaryBaseSearch;
@@ -64,7 +65,7 @@ class SalaryBaseController extends Controller
         $model = new SalaryBase();
         $result = [
             'success' => false,
-            'msg' => Yii::t("app", "Error In Save Info")
+            'msg' => Module::t('module', "Error In Save Info")
         ];
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $transaction = Yii::$app->db->beginTransaction();
@@ -73,7 +74,7 @@ class SalaryBaseController extends Controller
                 if ($flag) {
                     $result = [
                         'success' => true,
-                        'msg' => Yii::t("app", "Item Created")
+                        'msg' => Module::t('module', "Item Created")
                     ];
                     $transaction->commit();
                 } else {
@@ -103,7 +104,7 @@ class SalaryBaseController extends Controller
         $model = $this->findModel($id);
         $result = [
             'success' => false,
-            'msg' => Yii::t("app", "Error In Save Info")
+            'msg' => Module::t('module', "Error In Save Info")
         ];
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $transaction = Yii::$app->db->beginTransaction();
@@ -112,7 +113,7 @@ class SalaryBaseController extends Controller
                 if ($flag) {
                     $result = [
                         'success' => true,
-                        'msg' => Yii::t("app", "Item Updated")
+                        'msg' => Module::t('module', "Item Updated")
                     ];
                     $transaction->commit();
                 } else {
@@ -145,12 +146,12 @@ class SalaryBaseController extends Controller
         if ($model->canDelete() && $model->delete()) {
             $result = [
                 'status' => true,
-                'message' => Yii::t("app", "Item Deleted")
+                'message' => Module::t('module', "Item Deleted")
             ];
         } else {
             $result = [
                 'status' => false,
-                'message' => Yii::t("app", "Error In Save Info")
+                'message' => Module::t('module', "Error In Save Info")
             ];
         }
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -170,7 +171,7 @@ class SalaryBaseController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
     public function flash($type, $message)

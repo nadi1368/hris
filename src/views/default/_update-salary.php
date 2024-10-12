@@ -1,5 +1,6 @@
 <?php
 
+use hesabro\hris\Module;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 use yii\widgets\MaskedInput;
@@ -345,7 +346,7 @@ use yii\widgets\MaskedInput;
     </div>
     <div class="card-footer">
         <div class="form-group">
-            <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-flat submit btn-success' : 'btn btn-primary btn-flat']) ?>
+            <?= Html::submitButton($model->isNewRecord ? Module::t('module', 'Create') : Module::t('module', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-flat submit btn-success' : 'btn btn-primary btn-flat']) ?>
         </div>
     </div>
     <?php ActiveForm::end(); ?>

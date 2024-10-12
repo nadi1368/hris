@@ -52,13 +52,13 @@ class SalaryBaseBase extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
+            'id' => Module::t('module', 'ID'),
             'year' => 'سال',
-            'group' => Yii::t('app', 'Group'),
-            'creator_id' => Yii::t('app', 'Creator ID'),
-            'update_id' => Yii::t('app', 'Update ID'),
-            'created' => Yii::t('app', 'Created'),
-            'changed' => Yii::t('app', 'Changed'),
+            'group' => Module::t('module', 'Group'),
+            'creator_id' => Module::t('module', 'Creator ID'),
+            'update_id' => Module::t('module', 'Update ID'),
+            'created' => Module::t('module', 'Created'),
+            'changed' => Module::t('module', 'Changed'),
             'cost_of_year' => 'پایه سنوات',
             'cost_of_work' => 'مزد شغل',
             'cost_of_hours' => 'مزد یک ساعت کار عادی',

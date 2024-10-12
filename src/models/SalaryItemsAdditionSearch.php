@@ -4,6 +4,7 @@ namespace hesabro\hris\models;
 
 use backend\models\AuthAssignment;
 use hesabro\hris\Module;
+use Yii;
 
 class SalaryItemsAdditionSearch extends SalaryItemsAdditionSearchBase
 {
@@ -30,8 +31,8 @@ class SalaryItemsAdditionSearch extends SalaryItemsAdditionSearchBase
             ->groupBy([SalaryItemsAddition::tableName() .'.user_id', 'month'])
             ->orderBy([SalaryItemsAddition::tableName() .'.user_id' => SORT_ASC, 'year' => SORT_ASC, 'month' => SORT_ASC]);
 
-        $from = $this->from_date ? Jdf::jalaliToTimestamp($this->from_date,"Y/m/d") : strtotime('-1 year');
-        $to = $this->to_date ? Jdf::jalaliToTimestamp($this->to_date,"Y/m/d") : time();
+        $from = $this->from_date ? Yii::$app->jdf::jalaliToTimestamp($this->from_date,"Y/m/d") : strtotime('-1 year');
+        $to = $this->to_date ? Yii::$app->jdf::jalaliToTimestamp($this->to_date,"Y/m/d") : time();
 
         $query->andFilterWhere(['>=', 'from_date', $from]);
         $query->andFilterWhere(['<=', 'from_date', $to]);
@@ -39,7 +40,7 @@ class SalaryItemsAdditionSearch extends SalaryItemsAdditionSearchBase
         $items = $query->all();
 
         $chartData = [
-            'names' => [Yii::t('app', 'Month')]
+            'names' => [Module::t('module', 'Month')]
         ];
 
         foreach ($items as $item) {
@@ -61,7 +62,7 @@ class SalaryItemsAdditionSearch extends SalaryItemsAdditionSearchBase
                 $chartData[$key][$userId] = (float) ($userData ? $userData->total : 0);
             }
 
-            $filterTimestamp = Jdf::jalaliToTimestamp(Yii::$app->Pdate->add_month($filterTimestamp), 'Y/m/d');
+            $filterTimestamp = Yii::$app->jdf::jalaliToTimestamp(Yii::$app->Pdate->add_month($filterTimestamp), 'Y/m/d');
         } while ($filterTimestamp < $to);
 
         return array_values(array_map(fn(array $data) => array_values($data), $chartData));

@@ -1,9 +1,10 @@
 <?php
 
+use hesabro\helpers\widgets\DateRangePicker\DateRangePicker;
 use hesabro\hris\models\EmployeeBranchUser;
 use hesabro\hris\models\SalaryInsurance;
-use common\components\DynamicFormWidget;
-use common\widgets\dateRangePicker\dateRangePicker;
+use hesabro\helpers\widgets\DynamicFormWidget;
+use hesabro\hris\Module;
 use yii\bootstrap4\ActiveForm;
 use common\models\Customer;
 use yii\web\View;
@@ -75,7 +76,7 @@ $scenarioAttributes = $model->scenarios()[$model->scenario] ?? [];
                     <i class="fal fa-user-circle fa-6x"></i>
                 <?php endif; ?>
             </div>
-            <button type="button" class="btn btn-sm btn-info" data-file-browser="avatar"><?= Yii::t('app', 'Choose') ?></button>
+            <button type="button" class="btn btn-sm btn-info" data-file-browser="avatar"><?= Module::t('module', 'Choose') ?></button>
             <?= $form->field($model, 'avatar')->fileInput([
                 'data' => [
                     'file-input' => 'avatar',
@@ -111,7 +112,7 @@ $scenarioAttributes = $model->scenarios()[$model->scenario] ?? [];
                             Customer::itemAlias('Sex'),
                             [
                                 'id' => 'sex-select',
-                                'prompt' => Yii::t('app', 'Select...'),
+                                'prompt' => Module::t('module', 'Select...'),
                                 'value' => $model->getAttributeValue('sex', $isAdmin)
                             ]
                         )->hint(...$model->getPendingDataHint('sex', $isAdmin)) ?>
@@ -142,7 +143,7 @@ $scenarioAttributes = $model->scenarios()[$model->scenario] ?? [];
                 ->dropDownList(
                     Customer::itemAlias('National'),
                     [
-                        'prompt' => Yii::t("app", "Select"),
+                        'prompt' => Module::t('module', "Select"),
                         'value' => $model->getAttributeValue('national', $isAdmin)
                     ]
                 )->hint(...$model->getPendingDataHint('national', $isAdmin)) ?>
@@ -177,7 +178,7 @@ $scenarioAttributes = $model->scenarios()[$model->scenario] ?? [];
                 ->dropDownList(
                     EmployeeBranchUser::itemAlias('education'),
                     [
-                        'prompt' => Yii::t('app', 'Select...'),
+                        'prompt' => Module::t('module', 'Select...'),
                         'value' => $model->getAttributeValue('education', $isAdmin)
                     ]
                 )->hint(...$model->getPendingDataHint('education', $isAdmin)) ?>
@@ -189,7 +190,7 @@ $scenarioAttributes = $model->scenarios()[$model->scenario] ?? [];
                     EmployeeBranchUser::itemAlias('marital'),
                     [
                         'id' => 'marital-select',
-                        'prompt' => Yii::t('app', 'Select...'),
+                        'prompt' => Module::t('module', 'Select...'),
                         'value' => $model->getAttributeValue('marital', $isAdmin)
                     ]
                 )->hint(...$model->getPendingDataHint('marital', $isAdmin)) ?>
@@ -219,7 +220,7 @@ $scenarioAttributes = $model->scenarios()[$model->scenario] ?? [];
             </div>
             <div class="col-12 col-md-3">
                 <?= $form->field($model, 'job_code')
-                    ->dropDownList(SalaryInsurance::itemAlias('List'), ['prompt' => Yii::t('app', 'Select...')]) ?>
+                    ->dropDownList(SalaryInsurance::itemAlias('List'), ['prompt' => Module::t('module', 'Select...')]) ?>
             </div>
         <?php endif; ?>
 
@@ -275,7 +276,7 @@ $scenarioAttributes = $model->scenarios()[$model->scenario] ?? [];
                 ->textInput([
                     'type' => 'email',
                     'value' => $model->getAttributeValue('email', $isAdmin)
-                ])->label(Yii::t('app', 'Email') . ' ' . Yii::t('app', 'Organizational'))
+                ])->label(Module::t('module', 'Email') . ' ' . Module::t('module', 'Organizational'))
                 ->hint(...$model->getPendingDataHint('email', $isAdmin)) ?>
         </div>
 
@@ -294,7 +295,7 @@ $scenarioAttributes = $model->scenarios()[$model->scenario] ?? [];
         <div class="col-12">
             <?= $form->field($model, 'employee_address')
                 ->textarea(['rows' => 1, 'value' => $model->getAttributeValue('employee_address', $isAdmin)])
-                ->label(Yii::t('app', 'Address'))
+                ->label(Module::t('module', 'Address'))
                 ->hint(...$model->getPendingDataHint('employee_address', $isAdmin)) ?>
         </div>
 
@@ -315,7 +316,7 @@ $scenarioAttributes = $model->scenarios()[$model->scenario] ?? [];
             ]); ?>
 
             <div class="w-100 d-flex items-center justify-content-between gap-2">
-                <label><?= Yii::t('app', 'Children Information') ?></label>
+                <label><?= Module::t('module', 'Children Information') ?></label>
                 <button type="button" class="btn btn-success add-child btn-xs" style="border-radius: 4px !important;">
                     <i class="fas fa-plus"></i>
                 </button>
@@ -380,7 +381,7 @@ $scenarioAttributes = $model->scenarios()[$model->scenario] ?? [];
             ]); ?>
 
             <div class="w-100 d-flex items-center justify-content-between gap-2">
-                <label><?= Yii::t('app', 'Work Experiences') ?></label>
+                <label><?= Module::t('module', 'Work Experiences') ?></label>
                 <button type="button" class="btn btn-success add-experience btn-xs" style="border-radius: 4px !important;">
                     <i class="fas fa-plus"></i>
                 </button>

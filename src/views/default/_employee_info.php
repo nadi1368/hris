@@ -1,6 +1,7 @@
 <?php
 
 use hesabro\hris\models\EmployeeBranchUser;
+use hesabro\hris\Module;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -12,13 +13,13 @@ use yii\helpers\Url;
 	<div class="panel-group m-bot20" id="accordion">
 		<div class="card-header d-flex justify-content-between">
 			<div>
-				<?= Html::a(Yii::t('app','Update Data'),
+				<?= Html::a(Module::t('module','Update Data'),
 					'javascript:void(0)', [
-						'title' => Yii::t('app', 'Insurance Data'),
+						'title' => Module::t('module', 'Insurance Data'),
 						'id' => 'insurance-data' . $model->user_id,
 						'class' => 'btn btn-primary btn-sm',
 						'data-size' => 'modal-xl',
-						'data-title' => Yii::t('app', 'Insurance Data'),
+						'data-title' => Module::t('module', 'Insurance Data'),
 						'data-toggle' => 'modal',
 						'data-target' => '#modal-pjax',
 						'data-url' => Url::to(['insurance-data', 'branch_id' => $model->branch_id, 'user_id' => $model->user_id]),
@@ -30,11 +31,11 @@ use yii\helpers\Url;
 
 				<?= Html::a('ویرایش اطلاعات حساب',
 					'javascript:void(0)', [
-						'title' => Yii::t('app', 'Update'),
+						'title' => Module::t('module', 'Update'),
 						'id' => 'update-user' . $model->user_id,
 						'class' => 'btn btn-success',
 						'data-size' => 'modal-xl',
-						'data-title' => Yii::t('app', 'Update'),
+						'data-title' => Module::t('module', 'Update'),
 						'data-toggle' => 'modal',
 						'data-target' => '#modal-pjax',
 						'data-url' => Url::to(['update-user', 'branch_id' => $model->branch_id, 'user_id' => $model->user_id]),

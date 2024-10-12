@@ -1,10 +1,14 @@
 <?php
 
+use hesabro\hris\models\AdvanceMoneySearch;
+use hesabro\hris\Module;
+
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\AdvanceMoneySearch */
+/* @var $searchModel AdvanceMoneySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Requests');
+
+$this->title = Module::t('module', 'Requests');
 $this->params['breadcrumbs'][] = $this->title;
 
 echo $this->renderFile('@backend/modules/employee/views/layouts/_requests_tabs.php', [

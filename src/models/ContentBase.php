@@ -169,24 +169,24 @@ class ContentBase extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'title' => Yii::t('app', 'Title'),
-            'description' => Yii::t('app', 'Description'),
-            'type' => Yii::t('app', 'Type'),
-            'status' => Yii::t('app', 'Status'),
-            'sort' => Yii::t('app', 'Sort'),
-            'created' => Yii::t('app', 'Created'),
-            'creator_id' => Yii::t('app', 'Creator ID'),
-            'update_id' => Yii::t('app', 'Update ID'),
-            'changed' => Yii::t('app', 'Creator'),
-            'clauses' => Yii::t('app', 'Clauses'),
-            'include_client_ids' => Yii::t('app', 'Clients Can See This Faq'),
-            'exclude_client_ids' => Yii::t('app', 'Clients Can not See This Faq'),
-            'custom_job_tags' => Yii::t('app', 'Job'),
-            'custom_user_ids' => Yii::t('app', 'Custom Users'),
-            'show_start_at' => Yii::t('app', 'Show Banner From Date'),
-            'show_end_at' => Yii::t('app', 'Show Banner Until Date'),
-            'attachment' => Yii::t('app', 'Attachment'),
+            'id' => Module::t('module', 'ID'),
+            'title' => Module::t('module', 'Title'),
+            'description' => Module::t('module', 'Description'),
+            'type' => Module::t('module', 'Type'),
+            'status' => Module::t('module', 'Status'),
+            'sort' => Module::t('module', 'Sort'),
+            'created' => Module::t('module', 'Created'),
+            'creator_id' => Module::t('module', 'Creator ID'),
+            'update_id' => Module::t('module', 'Update ID'),
+            'changed' => Module::t('module', 'Creator'),
+            'clauses' => Module::t('module', 'Clauses'),
+            'include_client_ids' => Module::t('module', 'Clients Can See This Faq'),
+            'exclude_client_ids' => Module::t('module', 'Clients Can not See This Faq'),
+            'custom_job_tags' => Module::t('module', 'Job'),
+            'custom_user_ids' => Module::t('module', 'Custom Users'),
+            'show_start_at' => Module::t('module', 'Show Banner From Date'),
+            'show_end_at' => Module::t('module', 'Show Banner Until Date'),
+            'attachment' => Module::t('module', 'Attachment'),
         ];
     }
 
@@ -196,7 +196,7 @@ class ContentBase extends ActiveRecord
     public function typeValidator($attribute, $params, $validator)
     {
         if (!self::validateType($this->$attribute)) {
-            $this->addError($attribute, Yii::t('app', 'Invalid type'));
+            $this->addError($attribute, Module::t('module', 'Invalid type'));
         }
     }
 
@@ -327,8 +327,8 @@ class ContentBase extends ActiveRecord
 
         $_items = [
             'Status' => [
-                self::STATUS_ACTIVE => Yii::t('app', 'Status Active'),
-                self::STATUS_DELETED => Yii::t('app', 'Status Delete'),
+                self::STATUS_ACTIVE => Module::t('module', 'Status Active'),
+                self::STATUS_DELETED => Module::t('module', 'Status Delete'),
             ],
             'Type' => array_combine([
                 self::TYPE_BUSINESS,
@@ -340,13 +340,13 @@ class ContentBase extends ActiveRecord
                     self::TYPE_SOFTWARE,
                 ] : []
             ], [
-                Yii::t('app', 'Faq of Type', ['type' => Yii::t('app', 'Faq Type')['business']]),
-                Yii::t('app', 'Faq of Type', ['type' => Yii::t('app', 'Faq Type')['employee']]),
-                Yii::t('app', 'Faq of Type', ['type' => Yii::t('app', 'Faq Type')['job_description']]),
-                Yii::t('app', 'Faq of Type', ['type' => Yii::t('app', 'Faq Type')['announcement']]),
+                Module::t('module', 'Faq of Type', ['type' => Module::t('module', 'Faq Type')['business']]),
+                Module::t('module', 'Faq of Type', ['type' => Module::t('module', 'Faq Type')['employee']]),
+                Module::t('module', 'Faq of Type', ['type' => Module::t('module', 'Faq Type')['job_description']]),
+                Module::t('module', 'Faq of Type', ['type' => Module::t('module', 'Faq Type')['announcement']]),
                 ...$shouldIncludeAllTypes ? [
-                    Yii::t('app', 'Faq of Type', ['type' => Yii::t('app', 'Faq Type')['customer']]),
-                    Yii::t('app', 'Faq of Type', ['type' => Yii::t('app', 'Faq Type')['software']]),
+                    Module::t('module', 'Faq of Type', ['type' => Module::t('module', 'Faq Type')['customer']]),
+                    Module::t('module', 'Faq of Type', ['type' => Module::t('module', 'Faq Type')['software']]),
                 ] : []
             ]),
             'ListEmployee' => $list_data,

@@ -71,15 +71,15 @@ class UserContractsShelves extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'title' => Yii::t('app', 'Title'),
-            'capacity' => Yii::t('app', 'Capacity'),
-            'status' => Yii::t('app', 'Status'),
-            'created_by' => Yii::t('app', 'Created By'),
-            'updated_by' => Yii::t('app', 'Updated By'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'active_contracts_count' => Yii::t('app', 'Active Contracts Count'),
+            'id' => Module::t('module', 'ID'),
+            'title' => Module::t('module', 'Title'),
+            'capacity' => Module::t('module', 'Capacity'),
+            'status' => Module::t('module', 'Status'),
+            'created_by' => Module::t('module', 'Created By'),
+            'updated_by' => Module::t('module', 'Updated By'),
+            'created_at' => Module::t('module', 'Created At'),
+            'updated_at' => Module::t('module', 'Updated At'),
+            'active_contracts_count' => Module::t('module', 'Active Contracts Count'),
         ];
     }
 
@@ -190,8 +190,8 @@ class UserContractsShelves extends \yii\db\ActiveRecord
 				break;
 			case 'Status';
 				$_items = [
-					self::STATUS_ACTIVE => Yii::t('app', 'Status Active'),
-					self::STATUS_DELETED => Yii::t('app', 'Status Delete'),
+					self::STATUS_ACTIVE => Module::t('module', 'Status Active'),
+					self::STATUS_DELETED => Module::t('module', 'Status Delete'),
 				];
 				break;
 		}

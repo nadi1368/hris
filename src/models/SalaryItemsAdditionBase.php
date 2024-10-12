@@ -167,14 +167,14 @@ class SalaryItemsAdditionBase extends \yii\db\ActiveRecord
             $this->from_date = $date_range['start'];
             $this->to_date = $date_range['end'];
             if (empty($this->from_date) || empty($this->to_date)) {
-                $this->addError('range', Yii::t('app', 'Invalid {value} .', ['value' => $this->getAttributeLabel('range')]));
+                $this->addError('range', Module::t('module', 'Invalid {value} .', ['value' => $this->getAttributeLabel('range')]));
             }
         } elseif (in_array($this->getScenario(), [self::SCENARIO_CREATE_LEAVE_DAILY])) {
             $date_range = $this->rangeToTimestampRange($this->range, "Y/m/d", 1, " - ", 00, 00, 00, true);
             $this->from_date = $date_range['start'];
             $this->to_date = $date_range['end'];
             if (empty($this->from_date) || empty($this->to_date)) {
-                $this->addError('range', Yii::t('app', 'Invalid {value} .', ['value' => $this->getAttributeLabel('range')]));
+                $this->addError('range', Module::t('module', 'Invalid {value} .', ['value' => $this->getAttributeLabel('range')]));
             }
         } elseif ($this->getScenario() == self::SCENARIO_CREATE_AUTO) {
             $this->from_date = strtotime(Yii::$app->jdf::Convert_jalali_to_gregorian($this->from_date) . " 00:00:00");
@@ -191,7 +191,7 @@ class SalaryItemsAdditionBase extends \yii\db\ActiveRecord
     public function validateMeritHourly($attribute)
     {
         if (date('z', $this->from_date) !== date('z', $this->to_date)) {
-            $this->addError($attribute, Yii::t('app', 'Hourly leave can only be recorded in one day'));
+            $this->addError($attribute, Module::t('module', 'Hourly leave can only be recorded in one day'));
         }
 
         $max_hours_leave = (int)self::MERIT_HOURLY_REQUESTS_PER_DAY;
@@ -199,17 +199,17 @@ class SalaryItemsAdditionBase extends \yii\db\ActiveRecord
         $meritHourly_Requests = $sum <= 0 ? 1 : ceil(($sum / ($max_hours_leave * 60 * 60)) + 1);
 
         if (($this->to_date - $this->from_date) > ($max_hours_leave * 60 * 60)) {
-            $this->addError($attribute, Yii::t('app', "Maximum Hourly Leave per request is:{max_hours_leave}", ['max_hours_leave' => $max_hours_leave]));
+            $this->addError($attribute, Module::t('module', "Maximum Hourly Leave per request is:{max_hours_leave}", ['max_hours_leave' => $max_hours_leave]));
         }
         if ($meritHourly_Requests <= self::MERIT_HOURLY_REQUESTS_PER_DAY) {
 
             $merit_hours_leftover = (($max_hours_leave * 60 * 60) * self::MERIT_HOURLY_REQUESTS_PER_DAY) - (($this->sumTodayLeaveHours() ?? 0));
 
             if (($this->to_date - $this->from_date) > $merit_hours_leftover) {
-                $this->addError($attribute, Yii::t('app', 'Your merit leave left for current request is  {merit_hour_leftover}', ['merit_hour_leftover' => Yii::$app->formatter->asDuration($merit_hours_leftover)]));
+                $this->addError($attribute, Module::t('module', 'Your merit leave left for current request is  {merit_hour_leftover}', ['merit_hour_leftover' => Yii::$app->formatter->asDuration($merit_hours_leftover)]));
             }
         } else {
-            $this->addError($attribute, Yii::t('app', 'Sum of Your Hourly Merit Leaves Hours are Reached to This day Limit'));
+            $this->addError($attribute, Module::t('module', 'Sum of Your Hourly Merit Leaves Hours are Reached to This day Limit'));
         }
         $this->second = (int)($this->to_date - $this->from_date) / (60);
 
@@ -222,7 +222,7 @@ class SalaryItemsAdditionBase extends \yii\db\ActiveRecord
     public function validateMeritDaily($attribute)
     {
         if ($this->to_date - $this->from_date <= 0) {
-            $this->addError($attribute, Yii::t('app', "Minimum Range of Daily Leave is 1 Day and Days Start From daybreak"));
+            $this->addError($attribute, Module::t('module', "Minimum Range of Daily Leave is 1 Day and Days Start From daybreak"));
         } elseif ((date('z', $this->to_date) - date('z', $this->from_date)) > 1 && Yii::$app->jdf::jdate("Y/m", $this->from_date) != Yii::$app->jdf::jdate("Y/m", $this->to_date)) {
             $this->addError($attribute, 'مرخصی روزانه باید در یک ماه باشد.اگر در دوماه می باشد.لطفا ۲ مرخصی ثبت نمایید.');
         }
@@ -234,22 +234,22 @@ class SalaryItemsAdditionBase extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'user_id' => Yii::t('app', 'User ID'),
+            'id' => Module::t('module', 'ID'),
+            'user_id' => Module::t('module', 'User ID'),
             'kind' => 'عملیات',
-            'type' => Yii::t('app', 'Type'),
+            'type' => Module::t('module', 'Type'),
             'second' => $this->getScenario() == self::SCENARIO_CREATE_COMMISSION || $this->getScenario() == self::SCENARIO_CREATE_COMMISSION_CONST || $this->getScenario() == self::SCENARIO_CREATE_NON_CASH ? 'مبلغ (ریال)' : 'دقیقه',
-            'date' => Yii::t('app', 'Date'),
-            'from_date' => Yii::t('app', 'From Date'),
-            'to_date' => Yii::t('app', 'To Date'),
-            'description' => Yii::t('app', 'Description'),
-            'status' => Yii::t('app', 'State'),
-            'creator_id' => Yii::t('app', 'Creator ID'),
-            'update_id' => Yii::t('app', 'Update ID'),
-            'created' => Yii::t('app', 'Created'),
-            'changed' => Yii::t('app', 'Changed'),
-            'range' => Yii::t('app', 'Range'),
-            'is_auto' => Yii::t('app', 'Is Auto'),
+            'date' => Module::t('module', 'Date'),
+            'from_date' => Module::t('module', 'From Date'),
+            'to_date' => Module::t('module', 'To Date'),
+            'description' => Module::t('module', 'Description'),
+            'status' => Module::t('module', 'State'),
+            'creator_id' => Module::t('module', 'Creator ID'),
+            'update_id' => Module::t('module', 'Update ID'),
+            'created' => Module::t('module', 'Created'),
+            'changed' => Module::t('module', 'Changed'),
+            'range' => Module::t('module', 'Range'),
+            'is_auto' => Module::t('module', 'Is Auto'),
         ];
     }
 
@@ -566,9 +566,9 @@ class SalaryItemsAdditionBase extends \yii\db\ActiveRecord
     {
         $_items = [
             'Status' => [
-                self::STATUS_WAIT_CONFIRM => Yii::t('app', 'Wait Confirm'),
-                self::STATUS_CONFIRM => Yii::t('app', 'Confirm'),
-                self::STATUS_REJECT => Yii::t('app', 'Reject'),
+                self::STATUS_WAIT_CONFIRM => Module::t('module', 'Wait Confirm'),
+                self::STATUS_CONFIRM => Module::t('module', 'Confirm'),
+                self::STATUS_REJECT => Module::t('module', 'Reject'),
             ],
             'StatusClass' => [
                 self::STATUS_WAIT_CONFIRM => 'warning',

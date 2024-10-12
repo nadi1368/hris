@@ -1,5 +1,6 @@
 <?php
 use hesabro\hris\models\EmployeeBranchUser;
+use hesabro\hris\Module;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
@@ -24,7 +25,7 @@ $model->scenario = EmployeeBranchUser::SCENARIO_REJECT_UPDATE;
         ]) ?>
     </div>
     <div class="col-12">
-        <?= Html::submitButton(Yii::t('app', 'Reject Update'), [
+        <?= Html::submitButton(Module::t('module', 'Reject Update'), [
             'class' => 'btn btn-danger w-100'
         ]) ?>
     </div>

@@ -3,6 +3,7 @@
 namespace hesabro\hris\controllers;
 
 use hesabro\hris\models\UserContracts;
+use hesabro\hris\Module;
 use Yii;
 use yii\helpers\Html;
 use common\models\Year;
@@ -36,7 +37,7 @@ class UserContractsController extends UserContractsBase
             $model->setVariables();
 
             if ($model->save()) {
-                $this->flash('success', Yii::t('app', 'Item Created'));
+                $this->flash('success', Module::t('module', 'Item Created'));
                 return $this->redirect(['user-contracts/employee-contracts', 'branch_id' => $model->branch_id, 'user_id' => $model->user_id]);
             } else {
                 if ($model->hasErrors()) {

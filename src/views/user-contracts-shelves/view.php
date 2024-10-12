@@ -1,12 +1,13 @@
 <?php
 
-use common\widgets\TableView;
+use hesabro\helpers\widgets\TableView;
+use hesabro\hris\Module;
 
 /* @var $this yii\web\View */
 /* @var $model hesabro\hris\models\UserContractsShelves */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'User Contracts Shelves'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Module::t('module', 'User Contracts Shelves'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-contracts-shelves-view card">

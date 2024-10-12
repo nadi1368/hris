@@ -77,11 +77,11 @@ class ProfileController extends Controller
             }
 
             if (!$updateAvatar) {
-                $model->addError('avatar', $user->getFirstError('avatar') ?: Yii::t('app', 'Error In Save Information, Please Try Again'));
+                $model->addError('avatar', $user->getFirstError('avatar') ?: Module::t('module', 'Error In Save Information, Please Try Again'));
             }
 
             if ($updateProfile) {
-                Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Item Updated'));
+                Yii::$app->getSession()->setFlash('success', Module::t('module', 'Item Updated'));
                 return $this->redirect(['profile/update']);
             }
         }
@@ -112,7 +112,7 @@ class ProfileController extends Controller
         Yii::$app->response->format = Response::FORMAT_JSON;
         return [
             'success' => $seen,
-            'msg' => Yii::t("app", $seen ? 'Item Updated' : 'Can Not Update')
+            'msg' => Module::t('module', $seen ? 'Item Updated' : 'Can Not Update')
         ];
     }
 

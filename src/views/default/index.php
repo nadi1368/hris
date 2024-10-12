@@ -1,14 +1,15 @@
 <?php
 
 use hesabro\hris\models\EmployeeBranch;
-use common\widgets\grid\GridView;
+use hesabro\helpers\widgets\grid\GridView;
+use hesabro\hris\Module;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $searchModel hesabro\hris\models\EmployeeBranchSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Employee Branch');
+$this->title = Module::t('module', 'Employee Branch');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="employee-branch-index card">
@@ -21,8 +22,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 </a>
             </h4>
             <div>
-                <?= Html::a(Yii::t('app', 'Create'), ['create'], ['class' => 'btn btn-success']) ?>
-                <?= Html::a(Yii::t('app', 'Employee Branch User'), ['users'], ['class' => 'btn btn-info']) ?>
+                <?= Html::a(Module::t('module', 'Create'), ['create'], ['class' => 'btn btn-success']) ?>
+                <?= Html::a(Module::t('module', 'Employee Branch User'), ['users'], ['class' => 'btn btn-info']) ?>
             </div>
         </div>
         <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false">
@@ -73,7 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ['/mongo/log/view-ajax', 'modelId' => $model->id, 'modelClass' => EmployeeBranch::class],
                                 [
                                     'class' => 'text-secondary showModalButton',
-                                    'title' => Yii::t('app', 'Logs'),
+                                    'title' => Module::t('module', 'Logs'),
                                     'data-size' => 'modal-xl'
                                 ]
                             );

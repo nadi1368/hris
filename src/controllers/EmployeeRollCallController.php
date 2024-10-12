@@ -8,6 +8,7 @@ use common\models\UploadExcel;
 use hesabro\helpers\validators\PersianValidator;
 use hesabro\hris\models\EmployeeBranchUser;
 use hesabro\hris\models\EmployeeRollCall;
+use hesabro\hris\Module;
 use Yii;
 use yii\helpers\Html;
 use yii\web\NotFoundHttpException;
@@ -67,7 +68,7 @@ class EmployeeRollCallController extends EmployeeRollCallBase
 
                 } else {
                     $transaction->rollBack();
-                    $this->flash("warning", Yii::t("app", "Error In Save Info"));
+                    $this->flash("warning", Module::t('module', "Error In Save Info"));
                 }
             } catch (\Exception $e) {
                 $transaction->rollBack();
@@ -160,7 +161,7 @@ class EmployeeRollCallController extends EmployeeRollCallBase
 
             } else {
                 $transaction->rollBack();
-                $this->flash("warning", !empty($error) ? $error : Yii::t("app", "Error In Save Info"));
+                $this->flash("warning", !empty($error) ? $error : Module::t('module', "Error In Save Info"));
             }
         } catch (\Exception $e) {
             $transaction->rollBack();
@@ -250,11 +251,11 @@ class EmployeeRollCallController extends EmployeeRollCallBase
             $flag = $flag && $salaryPeriod->save(false);
             if ($flag) {
                 $transaction->commit();
-                $this->flash("success", Yii::t('app', 'Item Created'));
+                $this->flash("success", Module::t('module', 'Item Created'));
 
             } else {
                 $transaction->rollBack();
-                $this->flash("warning", Yii::t("app", "Error In Save Info"));
+                $this->flash("warning", Module::t('module', "Error In Save Info"));
             }
         } catch (\Exception $e) {
             $transaction->rollBack();
@@ -277,6 +278,6 @@ class EmployeeRollCallController extends EmployeeRollCallBase
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 }

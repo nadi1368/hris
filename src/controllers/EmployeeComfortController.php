@@ -6,6 +6,7 @@ use hesabro\hris\models\ComfortItems;
 use hesabro\hris\models\ComfortItemsSearch;
 use hesabro\hris\models\EmployeeBranchUser;
 use hesabro\helpers\traits\AjaxValidationTrait;
+use hesabro\hris\Module;
 use Yii;
 use hesabro\hris\models\Comfort;
 use hesabro\hris\models\ComfortSearch;
@@ -123,7 +124,7 @@ class EmployeeComfortController extends Controller
 
         $result = [
             'success' => false,
-            'msg' => Yii::t("app", "Error In Save Info")
+            'msg' => Module::t('module', "Error In Save Info")
         ];
 
         if ($model->load(Yii::$app->request->post())) {
@@ -139,7 +140,7 @@ class EmployeeComfortController extends Controller
                     if ($flag) {
                         $result = [
                             'success' => true,
-                            'msg' => Yii::t("app", "Item Created")
+                            'msg' => Module::t('module', "Item Created")
                         ];
                         $transaction->commit();
                     } else {
@@ -177,13 +178,13 @@ class EmployeeComfortController extends Controller
                     $transaction->commit();
                     $result = [
                         'status' => true,
-                        'message' => Yii::t("app", "Item Deleted")
+                        'message' => Module::t('module', "Item Deleted")
                     ];
                 } else {
                     $transaction->rollBack();
                     $result = [
                         'status' => false,
-                        'message' => Yii::t("app", "Error In Save Info")
+                        'message' => Module::t('module', "Error In Save Info")
                     ];
                 }
             } catch (\Exception $e) {
@@ -197,7 +198,7 @@ class EmployeeComfortController extends Controller
         } else {
             $result = [
                 'status' => false,
-                'message' => Yii::t("app", "It is not possible to perform this operation")
+                'message' => Module::t('module', "It is not possible to perform this operation")
             ];
         }
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -218,7 +219,7 @@ class EmployeeComfortController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
     /**
@@ -235,7 +236,7 @@ class EmployeeComfortController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
     /**
@@ -251,7 +252,7 @@ class EmployeeComfortController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
     public function flash($type, $message)

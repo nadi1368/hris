@@ -3,6 +3,7 @@
 namespace hesabro\hris\controllers;
 
 use hesabro\helpers\traits\AjaxValidationTrait;
+use hesabro\hris\Module;
 use Yii;
 use hesabro\hris\models\WorkshopInsurance;
 use hesabro\hris\models\WorkshopInsuranceSearch;
@@ -82,7 +83,7 @@ class WorkshopInsuranceController extends Controller
         $model = new WorkshopInsurance(['scenario' => WorkshopInsurance::SCENARIO_CREATE]);
         $result = [
             'success' => false,
-            'msg' => Yii::t("app", "Error In Save Info")
+            'msg' => Module::t('module', "Error In Save Info")
         ];
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $transaction = Yii::$app->db->beginTransaction();
@@ -91,7 +92,7 @@ class WorkshopInsuranceController extends Controller
                 if ($flag) {
                     $result = [
                         'success' => true,
-                        'msg' => Yii::t("app", "Item Created")
+                        'msg' => Module::t('module', "Item Created")
                     ];
                     $transaction->commit();
                 } else {
@@ -121,11 +122,11 @@ class WorkshopInsuranceController extends Controller
         $model = $this->findModel($id);
         $model->setScenario(WorkshopInsurance::SCENARIO_UPDATE);
         if (!$model->canUpdate()) {
-            throw new HttpException(400, Yii::t("app", "It is not possible to perform this operation"));
+            throw new HttpException(400, Module::t('module', "It is not possible to perform this operation"));
         }
         $result = [
             'success' => false,
-            'msg' => Yii::t("app", "Error In Save Info")
+            'msg' => Module::t('module', "Error In Save Info")
         ];
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $transaction = Yii::$app->db->beginTransaction();
@@ -134,7 +135,7 @@ class WorkshopInsuranceController extends Controller
                 if ($flag) {
                     $result = [
                         'success' => true,
-                        'msg' => Yii::t("app", "Item Updated")
+                        'msg' => Module::t('module', "Item Updated")
                     ];
                     $transaction->commit();
                 } else {
@@ -166,12 +167,12 @@ class WorkshopInsuranceController extends Controller
         if ($model->canDelete() && $model->delete()) {
             $result = [
                 'status' => true,
-                'message' => Yii::t("app", "Item Deleted")
+                'message' => Module::t('module', "Item Deleted")
             ];
         } else {
             $result = [
                 'status' => false,
-                'message' => Yii::t("app", "Error In Save Info")
+                'message' => Module::t('module', "Error In Save Info")
             ];
         }
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -191,7 +192,7 @@ class WorkshopInsuranceController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
     public function flash($type, $message)

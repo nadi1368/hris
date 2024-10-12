@@ -1,7 +1,8 @@
 <?php
 
 use common\models\UploadExcel;
-use common\widgets\grid\GridView;
+use hesabro\helpers\widgets\grid\GridView;
+use hesabro\hris\Module;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -89,7 +90,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ['/mongo/log/view-ajax', 'modelId' => $model->id, 'modelClass' => get_class($model)],
                                 [
                                     'class' => 'text-secondary showModalButton',
-                                    'title' => Yii::t('app', 'Logs'),
+                                    'title' => Module::t('module', 'Logs'),
                                     'data-size' => 'modal-xl'
                                 ]
                             );

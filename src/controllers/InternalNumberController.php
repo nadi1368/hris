@@ -4,6 +4,7 @@ namespace hesabro\hris\controllers;
 
 use hesabro\hris\models\InternalNumber;
 use hesabro\hris\models\InternalNumberSearch;
+use hesabro\hris\Module;
 use himiklab\sortablegrid\SortableGridAction;
 use hesabro\helpers\traits\AjaxValidationTrait;
 use Yii;
@@ -181,7 +182,7 @@ class InternalNumberController extends Controller
         if (!$model->canUpdate()) {
             return $this->asJson([
                 'success' => false,
-                'msg' => Yii::t("app", "Can Not Update")
+                'msg' => Module::t('module', "Can Not Update")
             ]);
         }
 
@@ -280,7 +281,7 @@ class InternalNumberController extends Controller
     {
         $result = [
             'success' => false,
-            'msg' => Yii::t('app', 'Error In Save Info'),
+            'msg' => Module::t('module', 'Error In Save Info'),
         ];
 
         $model = new InternalNumber();
@@ -305,7 +306,7 @@ class InternalNumberController extends Controller
                     $transaction->commit();
                     $result = [
                         'success' => true,
-                        'msg' => Yii::t("app", "Item Created")
+                        'msg' => Module::t('module', "Item Created")
                     ];
                 } else {
                     $transaction->rollBack();
@@ -337,7 +338,7 @@ class InternalNumberController extends Controller
         try {
             if ($model->delete()) {
                 $transaction->commit();
-                $this->flash('success', Yii::t('app', 'Item Deleted'));
+                $this->flash('success', Module::t('module', 'Item Deleted'));
             } else {
                 $transaction->rollBack();
             }

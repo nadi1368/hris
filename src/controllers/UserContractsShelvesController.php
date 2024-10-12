@@ -7,6 +7,7 @@ use hesabro\hris\models\UserContractsSearch;
 use hesabro\hris\models\UserContractsShelves;
 use hesabro\hris\models\UserContractsShelvesSearch;
 use hesabro\helpers\traits\AjaxValidationTrait;
+use hesabro\hris\Module;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -114,7 +115,7 @@ class UserContractsShelvesController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $result = [
                 'success' => true,
-                'msg' => Yii::t("app", 'Item Created')
+                'msg' => Module::t('module', 'Item Created')
             ];
 
             Yii::$app->response->format = Response::FORMAT_JSON;
@@ -138,13 +139,13 @@ class UserContractsShelvesController extends Controller
     {
         $model = $this->findModel($id);
         if (!$model->canUpdate()) {
-            $this->flash('danger', Yii::t("app", "Can Not Update"));
+            $this->flash('danger', Module::t('module', "Can Not Update"));
             return $this->redirect(['index']);
         }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $result = [
                 'success' => true,
-                'msg' => Yii::t("app", 'Item Updated')
+                'msg' => Module::t('module', 'Item Updated')
             ];
 
             Yii::$app->response->format = Response::FORMAT_JSON;
@@ -169,9 +170,9 @@ class UserContractsShelvesController extends Controller
         $model = $this->findModel($id);
 
         if ($model->softDelete()) {
-            $this->flash('success', Yii::t("app", "Item Deleted"));
+            $this->flash('success', Module::t('module', "Item Deleted"));
         } else {
-			$this->flash('error', $model->err_msg ?: Yii::t('app','Error In Save Info'));
+			$this->flash('error', $model->err_msg ?: Module::t('module','Error In Save Info'));
 		}
         return $this->redirect(['index']);
     }
@@ -189,7 +190,7 @@ class UserContractsShelvesController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
     public function flash($type, $message)

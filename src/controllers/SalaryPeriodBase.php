@@ -5,6 +5,7 @@ namespace hesabro\hris\controllers;
 use hesabro\hris\models\WorkshopInsurance;
 use hesabro\helpers\components\Jdf;
 use hesabro\helpers\traits\AjaxValidationTrait;
+use hesabro\hris\Module;
 use Yii;
 use hesabro\hris\models\SalaryPeriod;
 use hesabro\hris\models\SalaryPeriodSearch;
@@ -95,7 +96,7 @@ class SalaryPeriodBase extends Controller
                 if ($flag) {
                     $result = [
                         'success' => true,
-                        'msg' => Yii::t("app", "Item Created")
+                        'msg' => Module::t('module', "Item Created")
                     ];
                     $transaction->commit();
                 } else {
@@ -138,7 +139,7 @@ class SalaryPeriodBase extends Controller
                 if ($flag) {
                     $result = [
                         'success' => true,
-                        'msg' => Yii::t("app", "Item Updated")
+                        'msg' => Module::t('module', "Item Updated")
                     ];
                     $transaction->commit();
                 } else {
@@ -179,13 +180,13 @@ class SalaryPeriodBase extends Controller
                 $transaction->commit();
                 $result = [
                     'status' => true,
-                    'message' => Yii::t("app", "Item Deleted")
+                    'message' => Module::t('module', "Item Deleted")
                 ];
             } else {
                 $transaction->rollBack();
                 $result = [
                     'status' => false,
-                    'message' => Yii::t("app", "Error In Save Info")
+                    'message' => Module::t('module', "Error In Save Info")
                 ];
             }
         } catch (\Exception $e) {
@@ -217,7 +218,7 @@ class SalaryPeriodBase extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
     /**
@@ -233,7 +234,7 @@ class SalaryPeriodBase extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
     public function flash($type, $message)

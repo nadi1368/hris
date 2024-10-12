@@ -3,6 +3,7 @@
 use hesabro\hris\models\EmployeeBranch;
 use hesabro\hris\models\EmployeeBranchUser;
 use common\models\Account;
+use hesabro\hris\Module;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
@@ -61,13 +62,13 @@ use yii\widgets\MaskedInput;
                 <?= $form->field($model, 'account_non_cash') ?>
             </div>
             <div class="col-md-3">
-                <?= $form->field($model, 'shift')->dropDownList(EmployeeBranchUser::itemAlias('Shift'), ['prompt' => Yii::t('app', 'Select...')]) ?>
+                <?= $form->field($model, 'shift')->dropDownList(EmployeeBranchUser::itemAlias('Shift'), ['prompt' => Module::t('module', 'Select...')]) ?>
             </div>
             <div class='col-md-3'>
                 <?= $form->field($model, 'roll_call_id') ?>
             </div>
             <div class='col-md-3'>
-                <?= $form->field($model, 'account_id')->dropdownList(ArrayHelper::map($model->user->customer->account,'id', 'fullName'), ['prompt' => Yii::t('app', 'Select...')]) // TODO: What To Do ?>
+                <?= $form->field($model, 'account_id')->dropdownList(ArrayHelper::map($model->user->customer->account,'id', 'fullName'), ['prompt' => Module::t('module', 'Select...')]) // TODO: What To Do ?>
             </div>
             <div class="col-md-12">
                 <?= $form->field($model, "delete_point")->checkbox() ?>
@@ -81,7 +82,7 @@ use yii\widgets\MaskedInput;
         </div>
     </div>
     <div class="card-footer">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? Module::t('module', 'Create') : Module::t('module', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

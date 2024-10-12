@@ -132,20 +132,20 @@ class UserContracts extends \yii\db\ActiveRecord
 	public function attributeLabels()
 	{
 		return [
-			'id' => Yii::t('app', 'ID'),
-			'contract_id' => Yii::t('app', 'Contract Templates'),
-			'branch_id' => Yii::t('app', 'Employee Branch'),
-			'user_id' => Yii::t('app', 'User ID'),
-			'start_date' => Yii::t('app', 'Start Contract'),
-			'end_date' => Yii::t('app', 'End Contract'),
-			'month' => Yii::t('app', 'Number Of Months'),
-			'variables' => Yii::t('app', 'Variables'),
-			'status' => Yii::t('app', 'Status'),
-			'created_at' => Yii::t('app', 'Created At'),
-			'updated_at' => Yii::t('app', 'Updated At'),
-			'created_by' => Yii::t('app', 'Created By'),
-			'updated_by' => Yii::t('app', 'Updated By'),
-			'shelf_id' => Yii::t('app', 'Position'),
+			'id' => Module::t('module', 'ID'),
+			'contract_id' => Module::t('module', 'Contract Templates'),
+			'branch_id' => Module::t('module', 'Employee Branch'),
+			'user_id' => Module::t('module', 'User ID'),
+			'start_date' => Module::t('module', 'Start Contract'),
+			'end_date' => Module::t('module', 'End Contract'),
+			'month' => Module::t('module', 'Number Of Months'),
+			'variables' => Module::t('module', 'Variables'),
+			'status' => Module::t('module', 'Status'),
+			'created_at' => Module::t('module', 'Created At'),
+			'updated_at' => Module::t('module', 'Updated At'),
+			'created_by' => Module::t('module', 'Created By'),
+			'updated_by' => Module::t('module', 'Updated By'),
+			'shelf_id' => Module::t('module', 'Position'),
 			'daily_salary' => 'حقوق پایه روزانه',
 			'right_to_housing' => 'حق مسکن',
 			'right_to_food' => 'حق خواربار',
@@ -420,8 +420,8 @@ class UserContracts extends \yii\db\ActiveRecord
 		switch ($type) {
 			case 'Status';
 				$_items = [
-					self::STATUS_ACTIVE => Yii::t('app', 'Status Active'),
-					self::STATUS_CONFIRM => Yii::t('app', 'Status Confirm'),
+					self::STATUS_ACTIVE => Module::t('module', 'Status Active'),
+					self::STATUS_CONFIRM => Module::t('module', 'Status Confirm'),
 				];
 				break;
 			case 'ContractStaticVariables';

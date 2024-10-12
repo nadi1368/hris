@@ -1,18 +1,20 @@
 <?php
 
 use common\models\Account;
-use common\models\AccountDefinite;
 use common\widgets\WageFormWidget;
+use hesabro\hris\Module;
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
-use yii\helpers\Url;
 use yii\web\JsExpression;
 use yii\widgets\MaskedInput;
 
-
-/* @var $this yii\web\View */
-/* @var $model hesabro\hris\models\AdvanceMoneyForm */
+/**
+ * @var $this yii\web\View
+ * @var $model hesabro\hris\models\AdvanceMoneyForm
+ * @var string $accountList
+ * @var string $accountDefiniteFind
+ */
 
 ?>
 
@@ -24,7 +26,7 @@ use yii\widgets\MaskedInput;
             <div class="col-md-6">
                 <?= $form->field($model, "definite_id_from")->widget(Select2::class, [
                     'initValueText' => $model->definiteFrom ? $model->definiteFrom->title : 0, // set the initial display text
-                    'options' => ['placeholder' => Yii::t("app", "Search"), 'dir' => 'rtl'],
+                    'options' => ['placeholder' => Module::t('module', "Search"), 'dir' => 'rtl'],
                     'pluginOptions' => [
                         'allowClear' => true,
                         'minimumInputLength' => 2,
@@ -37,7 +39,7 @@ use yii\widgets\MaskedInput;
                             'maximumSelected' => new JsExpression("function () { return 'حداکثر انتخاب شده'; }"),
                         ],
                         'ajax' => [
-                            'url' => Url::to(['/account-definite/find', 'level' => AccountDefinite::LEVEL_DEFINITE]),
+                            'url' => $accountDefiniteFind,
                             'dataType' => 'json',
                             'data' => new JsExpression('function(params) { return {q:params.term}; }')
                         ],
@@ -51,7 +53,7 @@ use yii\widgets\MaskedInput;
             <div class="col-md-6">
                 <?= $form->field($model, "account_id_from")->widget(Select2::class, [
                     'initValueText' => $model->accountFrom ? $model->accountFrom->fullName : 0, // set the initial display text
-                    'options' => ['placeholder' => Yii::t("app", "Search")],
+                    'options' => ['placeholder' => Module::t('module', "Search")],
                     'pluginOptions' => [
                         //'allowClear' => true,
                         'minimumInputLength' => 2,
@@ -64,7 +66,7 @@ use yii\widgets\MaskedInput;
                             'maximumSelected' => new JsExpression("function () { return 'حداکثر انتخاب شده'; }"),
                         ],
                         'ajax' => [
-                            'url' => Url::to(['/account/get-account']),
+                            'url' => $accountList,
                             'dataType' => 'json',
                             'data' => new JsExpression('function(params) { return {q:params.term}; }')
                         ],
@@ -106,7 +108,7 @@ use yii\widgets\MaskedInput;
     </div>
 
     <div class="card-footer">
-        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success', 'name' => 'TypeBtn', 'value' => 'save']) ?>
-        <?= Html::submitButton(Yii::t('app', 'Save and see documents'), ['class' => 'btn btn-info', 'name' => 'TypeBtn', 'value' => 'document']) ?>
+        <?= Html::submitButton(Module::t('module', 'Save'), ['class' => 'btn btn-success', 'name' => 'TypeBtn', 'value' => 'save']) ?>
+        <?= Html::submitButton(Module::t('module', 'Save and see documents'), ['class' => 'btn btn-info', 'name' => 'TypeBtn', 'value' => 'document']) ?>
     </div>
 <?php ActiveForm::end(); ?>

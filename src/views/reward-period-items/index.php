@@ -2,12 +2,9 @@
 
 use hesabro\hris\models\SalaryPeriod;
 use hesabro\hris\models\SalaryPeriodItems;
-use yii\helpers\Html;
-use common\widgets\grid\GridView;
-use yii\helpers\Url;
+use hesabro\hris\Module;
 use yii\widgets\Pjax;
-use common\widgets\TableView;
-use common\components\Helper;
+use hesabro\helpers\widgets\TableView;
 
 /* @var $this yii\web\View */
 /* @var $salaryPeriod hesabro\hris\models\SalaryPeriod */
@@ -17,7 +14,7 @@ use common\components\Helper;
 /* @var $dataProviderUser yii\data\ActiveDataProvider */
 
 $this->title = $salaryPeriod->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Salary Periods'), 'url' => ['salary-period/index']];
+$this->params['breadcrumbs'][] = ['label' => Module::t('module', 'Salary Periods'), 'url' => ['salary-period/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php Pjax::begin(['id' => 'p-jax-salary-period-items', 'timeout' => false]); ?>

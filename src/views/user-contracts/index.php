@@ -1,7 +1,8 @@
 <?php
 
 use hesabro\hris\models\UserContracts;
-use common\widgets\grid\GridView;
+use hesabro\helpers\widgets\grid\GridView;
+use hesabro\hris\Module;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
@@ -10,7 +11,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel hesabro\hris\models\UserContractsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Contracts');
+$this->title = Module::t('module', 'Contracts');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php Pjax::begin(['id' => 'user-contracts-p-jax']); ?>
@@ -87,8 +88,8 @@ $this->params['breadcrumbs'][] = $this->title;
 						'confirm' => function ($url, UserContracts $model, $key) {
 							return $model->canConfirm() ? Html::a('تایید نهایی', 'javascript:void(0)',
 								[
-									'title' => Yii::t('app', 'Confirm'),
-									'aria-label' => Yii::t('app', 'Confirm'),
+									'title' => Module::t('module', 'Confirm'),
+									'aria-label' => Module::t('module', 'Confirm'),
 									'data-reload-pjax-container' => 'user-contracts-p-jax',
 									'data-pjax' => '0',
 									'data-url' => Url::to(['user-contracts/confirm', 'id' => $model->id]),
@@ -123,7 +124,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						},
 						'view' => function ($url, $model, $key) {
 							return Html::a('<i class="text-info far fa-eye"></i>', ['user-contracts/view', 'id' => $model->id], [
-								'title' => Yii::t('app', 'View'),
+								'title' => Module::t('module', 'View'),
 								'class' => 'grid-btn grid-btn-view showModalButton',
 								'data-size' => 'modal-xl'
 							]);
@@ -132,7 +133,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							return $model->canDelete(false) ? Html::a('<span class="fal fa-trash"></span>', ['user-contracts/delete', 'id' => $model->id], [
 								'title' => Yii::t('yii', 'Delete'),
 								'class' => 'text-danger',
-								'data-confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+								'data-confirm' => Module::t('module', 'Are you sure you want to delete this item?'),
 								'data-method' => 'post',
 							]) : '';
 						},

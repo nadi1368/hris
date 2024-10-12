@@ -7,6 +7,7 @@ use hesabro\hris\models\EmployeeRollCall;
 use hesabro\hris\models\EmployeeRollCallSearch;
 use hesabro\hris\models\SalaryPeriod;
 use hesabro\helpers\validators\PersianValidator;
+use hesabro\hris\Module;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -70,7 +71,7 @@ class EmployeeRollCallBase extends Controller
         $model = $this->findModelUploadFile($id);
         $result = [
             'status' => false,
-            'message' => Yii::t("app", "Error In Save Info")
+            'message' => Module::t('module', "Error In Save Info")
         ];
         if ($model->canDelete()) {
             $transaction = \Yii::$app->db->beginTransaction();
@@ -81,7 +82,7 @@ class EmployeeRollCallBase extends Controller
                     $transaction->commit();
                     $result = [
                         'status' => true,
-                        'message' => Yii::t("app", "Item Deleted")
+                        'message' => Module::t('module', "Item Deleted")
                     ];
                 } else {
                     $transaction->rollBack();
@@ -112,7 +113,7 @@ class EmployeeRollCallBase extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
     /**
@@ -128,7 +129,7 @@ class EmployeeRollCallBase extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
     public function flash($type, $message)

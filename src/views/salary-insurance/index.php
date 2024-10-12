@@ -1,7 +1,8 @@
 <?php
 
 use hesabro\hris\models\SalaryInsurance;
-use common\widgets\grid\GridView;
+use hesabro\helpers\widgets\grid\GridView;
+use hesabro\hris\Module;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
@@ -10,7 +11,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel hesabro\hris\models\SalaryInsuranceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Salary Insurances');
+$this->title = Module::t('module', 'Salary Insurances');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="salary-insurance-index card">
@@ -23,13 +24,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 </a>
             </h4>
             <div>
-                <?= Html::a(Yii::t('app', 'Create'),
+                <?= Html::a(Module::t('module', 'Create'),
                     'javascript:void(0)', [
-                        'title' => Yii::t('app', 'Create'),
+                        'title' => Module::t('module', 'Create'),
                         'id' => 'create-payment-period',
                         'class' => 'btn btn-success',
                         'data-size' => 'modal-lg',
-                        'data-title' => Yii::t('app', 'Create'),
+                        'data-title' => Module::t('module', 'Create'),
                         'data-toggle' => 'modal',
                         'data-target' => '#modal-pjax',
                         'data-url' => Url::to(['create']),
@@ -77,10 +78,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             return
                                 Html::a('<span class="fa fa-eye text-info"></span>',
                                     'javascript:void(0)', [
-                                        'title' => Yii::t('app', 'Details'),
+                                        'title' => Module::t('module', 'Details'),
                                         'id' => 'view-ipg-btn',
                                         'data-size' => 'modal-lg',
-                                        'data-title' => Yii::t('app', 'Details'),
+                                        'data-title' => Module::t('module', 'Details'),
                                         'data-toggle' => 'modal',
                                         'data-target' => '#modal-pjax',
                                         'data-url' => Url::to(['view', 'id' => $model->id]),
@@ -91,10 +92,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                         'update' => function ($url, $model, $key) {
                             return $model->canUpdate() ? Html::a('<span class="fa fa-edit text-primary"></span>', 'javascript:void(0)', [
-                                    'title' => Yii::t('app', 'Update'),
+                                    'title' => Module::t('module', 'Update'),
                                     'id' => 'edit-ipg-btn',
                                     'data-size' => 'modal-lg',
-                                    'data-title' => Yii::t('app', 'Update'),
+                                    'data-title' => Module::t('module', 'Update'),
                                     'data-toggle' => 'modal',
                                     'data-target' => '#modal-pjax',
                                     'data-url' => Url::to(['update', 'id' => $model->id]),

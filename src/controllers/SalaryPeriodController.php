@@ -4,6 +4,7 @@ namespace hesabro\hris\controllers;
 
 use common\models\Year;
 use hesabro\hris\models\SalaryPeriod;
+use hesabro\hris\Module;
 use Yii;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
@@ -22,7 +23,7 @@ class SalaryPeriodController extends SalaryPeriodBase
         $model = $this->findModelWorkShop($workshop_id);
 
         if (!$model->canCreateReward()) {
-            throw new HttpException(400, Yii::t("app", "It is not possible to perform this operation"));
+            throw new HttpException(400, Module::t('module', "It is not possible to perform this operation"));
         }
         $transaction = \Yii::$app->db->beginTransaction();
         try {
@@ -38,12 +39,12 @@ class SalaryPeriodController extends SalaryPeriodBase
             $flag = $salaryPeriod->save();
             if ($flag) {
                 $transaction->commit();
-                $this->flash("success", Yii::t('app', 'Item Created'));
+                $this->flash("success", Module::t('module', 'Item Created'));
                 return $this->redirect(['reward-period-items/index', 'id' => $salaryPeriod->id]);
 
             } else {
                 $transaction->rollBack();
-                $this->flash("warning", Yii::t("app", "Error In Save Info"));
+                $this->flash("warning", Module::t('module', "Error In Save Info"));
             }
         } catch (\Exception $e) {
             $transaction->rollBack();
@@ -63,7 +64,7 @@ class SalaryPeriodController extends SalaryPeriodBase
     {
         $model = $this->findModelWorkShop($workshop_id);
         if (!$model->canCreateYear()) {
-            throw new HttpException(400, Yii::t("app", "It is not possible to perform this operation"));
+            throw new HttpException(400, Module::t('module', "It is not possible to perform this operation"));
         }
         $transaction = \Yii::$app->db->beginTransaction();
         try {
@@ -78,12 +79,12 @@ class SalaryPeriodController extends SalaryPeriodBase
             $flag = $salaryPeriod->save();
             if ($flag) {
                 $transaction->commit();
-                $this->flash("success", Yii::t('app', 'Item Created'));
+                $this->flash("success", Module::t('module', 'Item Created'));
                 return $this->redirect(['year-period-items/index', 'id' => $salaryPeriod->id]);
 
             } else {
                 $transaction->rollBack();
-                $this->flash("warning", Yii::t("app", "Error In Save Info"));
+                $this->flash("warning", Module::t('module', "Error In Save Info"));
             }
         } catch (\Exception $e) {
             Yii::error($e->getMessage() . $e->getTraceAsString(), __METHOD__ . ':' . __LINE__);

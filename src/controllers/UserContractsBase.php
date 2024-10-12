@@ -7,6 +7,7 @@ use hesabro\hris\models\EmployeeBranchUser;
 use hesabro\hris\models\UserContracts;
 use hesabro\hris\models\UserContractsSearch;
 use hesabro\helpers\traits\AjaxValidationTrait;
+use hesabro\hris\Module;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -154,7 +155,7 @@ class UserContractsBase extends Controller
 		} else {
 			$result = [
 				'status' => false,
-				'message' => $model->err_msg ?: Yii::t('app', 'Error In Save Info'),
+				'message' => $model->err_msg ?: Module::t('module', 'Error In Save Info'),
 			];
 		}
 
@@ -177,7 +178,7 @@ class UserContractsBase extends Controller
 		if ($model->load(Yii::$app->request->post())) {
 			$result = [
 				'success' => true,
-				'msg' => Yii::t("app", 'Item Created'),
+				'msg' => Module::t('module', 'Item Created'),
 				'redirect' => true,
 				'url' => Url::to(['create', 'branch_id' => $model->branch_id, 'user_id' => $model->user_id, 'contract_id' => $model->contract_id]),
 			];
@@ -207,14 +208,14 @@ class UserContractsBase extends Controller
 		$model->setScenario(UserContracts::SCENARIO_UPDATE);
 		$modelUser = $this->findModelUser($model->branch_id, $model->user_id);
 		if (!$model->canUpdate()) {
-			$this->flash('danger', Yii::t("app", "Can Not Update"));
+			$this->flash('danger', Module::t('module', "Can Not Update"));
 			return $this->redirect(['index']);
 		}
 		if ($model->load(Yii::$app->request->post())) {
 			$model->setVariables();
 
 			if ($model->save()) {
-				$this->flash('success', Yii::t('app', 'Item Updated'));
+				$this->flash('success', Module::t('module', 'Item Updated'));
 				return $this->redirect(['user-contracts/employee-contracts', 'branch_id' => $model->branch_id, 'user_id' => $model->user_id]);
 			} else {
 				if ($model->hasErrors()) {
@@ -246,9 +247,9 @@ class UserContractsBase extends Controller
 		try {
 			if ($model->softDelete()) {
 				$transaction->commit();
-				$this->flash('success', Yii::t("app", "Item Deleted"));
+				$this->flash('success', Module::t('module', "Item Deleted"));
 			} else {
-				$this->flash('danger', $model->err_msg ?: Yii::t("app", "Error In Save Info"));
+				$this->flash('danger', $model->err_msg ?: Module::t('module', "Error In Save Info"));
 				$transaction->rollBack();
 			}
 		} catch (\Exception $e) {
@@ -270,9 +271,9 @@ class UserContractsBase extends Controller
 		}
 
 		if ($model->unConfirm()) {
-			$this->flash('success', Yii::t("app", "Item UnConfirmed"));
+			$this->flash('success', Module::t('module', "Item UnConfirmed"));
 		} else {
-			$this->flash('danger', $model->err_msg ?: Yii::t("app", "Error In Save Info"));
+			$this->flash('danger', $model->err_msg ?: Module::t('module', "Error In Save Info"));
 		}
 
 		return $this->redirect(['index']);
@@ -288,7 +289,7 @@ class UserContractsBase extends Controller
 		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			$response = [
 				'success' => true,
-				'msg' => Yii::t('app', 'Item Updated')
+				'msg' => Module::t('module', 'Item Updated')
 			];
 
 			Yii::$app->response->format = Response::FORMAT_JSON;
@@ -365,7 +366,7 @@ class UserContractsBase extends Controller
 			return $model;
 		}
 
-		throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+		throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
 	}
 
 	/**
@@ -377,7 +378,7 @@ class UserContractsBase extends Controller
 			return $model;
 		}
 
-		throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+		throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
 	}
 
 	/**

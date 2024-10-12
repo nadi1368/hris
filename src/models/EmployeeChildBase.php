@@ -3,6 +3,7 @@
 namespace hesabro\hris\models;
 
 use hesabro\helpers\traits\ModelHelper;
+use hesabro\hris\Module;
 use Ramsey\Uuid\Uuid;
 use Yii;
 use yii\base\Model;
@@ -60,16 +61,16 @@ class EmployeeChildBase extends Model
     public function validateBirthday($attribute, $params): void
     {
         if (is_null(Yii::$app->jdf::jalaliToTimestamp(Yii::$app->jdf::tr_num($this->birthday), 'Y/m/d'))) {
-            $this->addError($attribute, Yii::t('app', 'Invalid Date'));
+            $this->addError($attribute, Module::t('module', 'Invalid Date'));
         }
     }
 
     public function attributeLabels(): array
     {
         return [
-            'name' => Yii::t('app', 'Name'),
-            'birthday' => Yii::t('app', 'Birthday'),
-            'insurance' => Yii::t('app', 'Include Child Insurance'),
+            'name' => Module::t('module', 'Name'),
+            'birthday' => Module::t('module', 'Birthday'),
+            'insurance' => Module::t('module', 'Include Child Insurance'),
         ];
     }
 
@@ -78,8 +79,8 @@ class EmployeeChildBase extends Model
         if ($this->deleted || $this->added) {
             return [
                 implode(' ', [
-                    Yii::t('app', 'Pending Value'),
-                    Yii::t('app', $this->deleted ? 'Delete' : 'Add')
+                    Module::t('module', 'Pending Value'),
+                    Module::t('module', $this->deleted ? 'Delete' : 'Add')
                 ]),
                 ['class' => 'profile-input-hint' . ($this->deleted ? ' text-danger' : ' text-success')]
             ];
@@ -92,8 +93,8 @@ class EmployeeChildBase extends Model
     {
         $items = [
             'insurance' => [
-                Yii::t('app', 'Do Not Include Child Insurance'),
-                Yii::t('app', 'Include Child Insurance'),
+                Module::t('module', 'Do Not Include Child Insurance'),
+                Module::t('module', 'Include Child Insurance'),
             ],
         ];
 

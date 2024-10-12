@@ -1,20 +1,22 @@
 <?php
 
-use common\models\Account;
-use common\models\AccountDefinite;
-use common\models\Operation;
+use hesabro\hris\models\AdvanceMoney;
+use hesabro\hris\Module;
 use kartik\select2\Select2;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\web\JsExpression;
 use yii\widgets\MaskedInput;
 
-/* @var $this yii\web\View */
-/* @var $model backend\models\AdvanceMoney */
-/* @var $operation common\models\Operation */
-
-$get_account_url = Url::to(['/account-definite/find', 'level' => AccountDefinite::LEVEL_DEFINITE, 'is_account' => 1]);
+/**
+ * @var object[] $wageTypes
+ * @var yii\web\View $this
+ * @var AdvanceMoney $model
+ * @var object $operation
+ * @var string $getAccountUrl
+ * @var array $toList
+ * @var array $fromList
+ */
 ?>
 
 <div class="customer-adress-form">
@@ -27,7 +29,7 @@ $get_account_url = Url::to(['/account-definite/find', 'level' => AccountDefinite
 			<div class="col-md-4">
                 <?= $form->field($operation, "m_id_debtor")->widget(Select2::class, [
                     'initValueText' => $operation->m_id_debtor ? $operation->mDebtor->title : 0, // set the initial display text
-                    'options' => ['placeholder' => Yii::t("app", "Search"), 'dir' => 'rtl'],
+                    'options' => ['placeholder' => Module::t('module', "Search"), 'dir' => 'rtl'],
                     'pluginOptions' => [
                         'allowClear' => true,
                         'minimumInputLength' => 2,
@@ -40,7 +42,7 @@ $get_account_url = Url::to(['/account-definite/find', 'level' => AccountDefinite
                             'maximumSelected' => new JsExpression("function () { return 'حداکثر انتخاب شده'; }"),
                         ],
                         'ajax' => [
-                            'url' => $get_account_url,
+                            'url' => $getAccountUrl,
                             'dataType' => 'json',
                             'data' => new JsExpression('function(params) { return {q:params.term}; }')
                         ],
@@ -53,8 +55,8 @@ $get_account_url = Url::to(['/account-definite/find', 'level' => AccountDefinite
             </div>
             <div class="col-md-4">
                 <?= $form->field($operation, 'to')->widget(Select2::class, [
-                    'data' => Account::itemAlias('Customer', null, $model->user->customer->id),
-                    'options' => ['placeholder' => Yii::t("app", "Search")],
+                    'data' => $toList,
+                    'options' => ['placeholder' => Module::t('module', "Search")],
                     'pluginOptions' => [
                         //'allowClear' => true
                     ],
@@ -63,8 +65,8 @@ $get_account_url = Url::to(['/account-definite/find', 'level' => AccountDefinite
 
             <div class="col-md-4">
                 <?= $form->field($operation, 'from')->widget(Select2::class, [
-                    'data' => Account::itemAlias('BankOrCashOrPublic'),
-                    'options' => ['placeholder' => Yii::t("app", "Search")],
+                    'data' => $fromList,
+                    'options' => ['placeholder' => Module::t('module', "Search")],
                     'pluginOptions' => [
                         //'allowClear' => true
                     ],
@@ -114,7 +116,7 @@ $get_account_url = Url::to(['/account-definite/find', 'level' => AccountDefinite
             </div>
 
 			<div class="col-md-2">
-				<?= $form->field($operation, 'wage_type')->radioList(Operation::itemAlias('WageType')) ?>
+				<?= $form->field($operation, 'wage_type')->radioList($wageTypes) ?>
 			</div>
 
             <div class="col-md-12">
@@ -123,7 +125,7 @@ $get_account_url = Url::to(['/account-definite/find', 'level' => AccountDefinite
         </div>
     </div>
     <div class="card-footer">
-        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success ']) ?>
+        <?= Html::submitButton(Module::t('module', 'Save'), ['class' => 'btn btn-success ']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

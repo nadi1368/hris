@@ -1,6 +1,7 @@
 <?php
 
-use common\widgets\grid\GridView;
+use hesabro\helpers\widgets\grid\GridView;
+use hesabro\hris\Module;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
@@ -9,7 +10,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel hesabro\hris\models\InternalNumberSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Internal Numbers');
+$this->title = Module::t('module', 'Internal Numbers');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php Pjax::begin(['id' => 'internal-number-p-jax']); ?>

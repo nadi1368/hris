@@ -1,5 +1,6 @@
 <?php
 use hesabro\hris\models\EmployeeRequest;
+use hesabro\hris\Module;
 use yii\web\View;
 
 /**
@@ -23,7 +24,7 @@ $this->registerCss($css);
 
 <?php if (!$content): ?>
 <div class="flex align-items-center justify-content-center">
-    <?= Yii::t('app', 'Not results found.') ?>
+    <?= Module::t('module', 'Not results found.') ?>
 </div>
 <?php else: ?>
     <?= $content ?>

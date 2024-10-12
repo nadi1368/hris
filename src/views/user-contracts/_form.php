@@ -4,6 +4,7 @@ use hesabro\hris\models\ContractTemplates;
 use hesabro\hris\models\EmployeeBranchUser;
 use hesabro\hris\models\UserContracts;
 use hesabro\hris\models\UserContractsShelves;
+use hesabro\hris\Module;
 use kartik\select2\Select2;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
@@ -122,7 +123,7 @@ use yii\widgets\MaskedInput;
 				<?= $form->field($model, 'shelf_id')->widget(Select2::class, [
 					'data' => UserContractsShelves::itemAlias('ListEmpty'),
 					'options' => [
-						'placeholder' => Yii::t('app', 'Select...'),
+						'placeholder' => Module::t('module', 'Select...'),
 						'dir' => 'rtl',
 					],
 				]); ?>
@@ -159,7 +160,7 @@ use yii\widgets\MaskedInput;
 		</div>
 	</div>
 	<div class="card-footer">
-		<?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+		<?= Html::submitButton($model->isNewRecord ? Module::t('module', 'Create') : Module::t('module', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 	</div>
 
 	<?php ActiveForm::end(); ?>

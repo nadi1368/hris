@@ -314,7 +314,7 @@ class EmployeeBranchUserBase extends ActiveRecord
                     const militaryDoc = $('#employeebranchuser-military_doc')
                     return sex.val() === '$sexMan' && !militaryDoc.val() && Boolean($militaryDocIsEmpty)
                 }",
-                'message' => Yii::t('app', 'Required When Field Empty', [
+                'message' => Module::t('module', 'Required When Field Empty', [
                     'attribute' => $this->getAttributeLabel('military_description'),
                     'field' => $this->getAttributeLabel('military_doc')
                 ]),
@@ -355,7 +355,7 @@ class EmployeeBranchUserBase extends ActiveRecord
     public function validateDateOfMarriage($attribute, $params)
     {
         if (is_null(Yii::$app->jdf::jalaliToTimestamp((Yii::$app->jdf::tr_num($this->date_of_marriage)), 'Y/m/d'))) {
-            $this->addError($attribute, Yii::t('app', 'Date Of Marriage Is Invalid'));
+            $this->addError($attribute, Module::t('module', 'Date Of Marriage Is Invalid'));
         }
     }
 

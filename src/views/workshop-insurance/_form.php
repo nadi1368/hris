@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Branch;
+use hesabro\hris\Module;
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
@@ -41,7 +42,7 @@ use yii\web\JsExpression;
             <div class="col-md-12">
                 <?= $form->field($model, "account_id")->widget(Select2::class, [
                     'initValueText' => $model->account_id ? $model->account?->fullName : 0, // set the initial display text
-                    'options' => ['placeholder' => Yii::t("app", "Search"), 'dir' => 'rtl'],
+                    'options' => ['placeholder' => Module::t('module', "Search"), 'dir' => 'rtl'],
                     'pluginOptions' => [
                         'allowClear' => true,
                         'minimumInputLength' => 2,
@@ -73,7 +74,7 @@ use yii\web\JsExpression;
         </div>
     </div>
     <div class="card-footer">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? Module::t('module', 'Create') : Module::t('module', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

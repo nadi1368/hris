@@ -118,16 +118,16 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'comment' => Yii::t('app', 'Description'),
-            'amount' => Yii::t('app', 'Amount'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'status' => Yii::t('app', 'Status'),
-            'creator_id' => Yii::t('app', 'Creator ID'),
-            'update_id' => Yii::t('app', 'Update ID'),
-            'created' => Yii::t('app', 'Created'),
-            'changed' => Yii::t('app', 'Changed'),
-            'iban' => Yii::t('app', 'Shaba Number'),
+            'id' => Module::t('module', 'ID'),
+            'comment' => Module::t('module', 'Description'),
+            'amount' => Module::t('module', 'Amount'),
+            'user_id' => Module::t('module', 'User ID'),
+            'status' => Module::t('module', 'Status'),
+            'creator_id' => Module::t('module', 'Creator ID'),
+            'update_id' => Module::t('module', 'Update ID'),
+            'created' => Module::t('module', 'Created'),
+            'changed' => Module::t('module', 'Changed'),
+            'iban' => Module::t('module', 'Shaba Number'),
         ];
     }
 
@@ -270,9 +270,9 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
 
         $_items = [
             'Status' => [
-                self::STATUS_WAIT_CONFIRM => Yii::t('app', 'Wait Confirm'),
-                self::STATUS_CONFIRM => Yii::t('app', 'Status Confirm'),
-                self::STATUS_REJECT => Yii::t('app', 'Reject'),
+                self::STATUS_WAIT_CONFIRM => Module::t('module', 'Wait Confirm'),
+                self::STATUS_CONFIRM => Module::t('module', 'Status Confirm'),
+                self::STATUS_REJECT => Module::t('module', 'Reject'),
             ],
             'StatusClass' => [
                 self::STATUS_WAIT_CONFIRM => 'warning',

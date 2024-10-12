@@ -1,6 +1,7 @@
 <?php
+
+use hesabro\helpers\widgets\TableView;
 use hesabro\hris\models\EmployeeRequest;
-use common\widgets\TableView;
 
 /**
  * @var EmployeeRequest $model

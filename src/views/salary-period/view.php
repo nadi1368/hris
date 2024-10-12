@@ -1,5 +1,6 @@
 <?php
 
+use hesabro\hris\Module;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -7,7 +8,7 @@ use yii\widgets\DetailView;
 /* @var $model hesabro\hris\models\SalaryPeriod */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Salary Periods'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Module::t('module', 'Salary Periods'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="salary-period-view card">
@@ -27,11 +28,11 @@ $this->params['breadcrumbs'][] = $this->title;
 	]) ?>
 	</div>
 	<div class="card-footer">
-		<?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-		<?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
+		<?= Html::a(Module::t('module', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+		<?= Html::a(Module::t('module', 'Delete'), ['delete', 'id' => $model->id], [
 		'class' => 'btn btn-danger',
 		'data' => [
-		'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+		'confirm' => Module::t('module', 'Are you sure you want to delete this item?'),
 		'method' => 'post',
 		],
 		]) ?>

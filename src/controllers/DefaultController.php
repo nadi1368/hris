@@ -4,6 +4,7 @@ namespace hesabro\hris\controllers;
 
 use backend\models\YearSearch;
 use common\models\Year;
+use hesabro\hris\Module;
 use Yii;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -37,7 +38,7 @@ class DefaultController extends DefaultBase
         $model->setScenario(Year::SCENARIO_UPDATE_SALARY_JSON);
         $result = [
             'success' => false,
-            'msg' => Yii::t("app", "Error In Save Info")
+            'msg' => Module::t('module', "Error In Save Info")
         ];
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $transaction = Yii::$app->db->beginTransaction();
@@ -46,7 +47,7 @@ class DefaultController extends DefaultBase
                 if ($flag) {
                     $result = [
                         'success' => true,
-                        'msg' => Yii::t("app", "Item Created")
+                        'msg' => Module::t('module', "Item Created")
                     ];
                     $transaction->commit();
                 } else {
@@ -77,6 +78,6 @@ class DefaultController extends DefaultBase
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 }

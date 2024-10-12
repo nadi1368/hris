@@ -1,7 +1,8 @@
 <?php
 
 use hesabro\hris\models\InternalNumber;
-use common\components\mobit\SortableGridview\SortableGridView as GridView;
+use hesabro\hris\Module;
+use hesabro\hris\widgets\SortableGridView as GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
@@ -10,7 +11,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel hesabro\hris\models\InternalNumberSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Internal Numbers');
+$this->title = Module::t('module', 'Internal Numbers');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php Pjax::begin(['id' => 'internal-number-p-jax']); ?>
@@ -25,24 +26,24 @@ $this->params['breadcrumbs'][] = $this->title;
             </h4>
             <div>
                 <?= Html::a(
-                    Yii::t('app', 'Create'),
+                    Module::t('module', 'Create'),
                     "javascript:void(0)",
                     [
                         'id' => 'create-internal-number',
                         'class' => 'btn btn-success',
                         'data-size' => 'modal-lg',
-                        'title' => Yii::t('app', 'Create'),
-                        'data-title' => Yii::t('app', 'Create'),
+                        'title' => Module::t('module', 'Create'),
+                        'data-title' => Module::t('module', 'Create'),
                         'data-toggle' => 'modal',
                         'data-target' => '#modal-pjax',
                         'data-url' => Url::to(['create']),
                         'data-reload-pjax-container' => "internal-number-p-jax",
                     ]
                 ) ?>
-                <?= Html::a(Yii::t('app', 'Import Json'), 'javascript:void(0)', [
+                <?= Html::a(Module::t('module', 'Import Json'), 'javascript:void(0)', [
                     'class' => 'btn btn-info',
                     'data-size' => 'modal-md',
-                    'data-title' => Yii::t('app', 'Import Json'),
+                    'data-title' => Module::t('module', 'Import Json'),
                     'data-toggle' => 'modal',
                     'data-target' => '#modal-pjax',
                     'data-url' => Url::to(['json-import']),
@@ -50,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'disabled' => true
                 ]); ?>
 
-                <?= Html::a(Yii::t('app', 'Export Json All'), Url::to(['json-export-all']), [
+                <?= Html::a(Module::t('module', 'Export Json All'), Url::to(['json-export-all']), [
                     'class' => 'btn btn-info grid-btn grid-btn-update',
                     'data-pjax' => 0
                 ]); ?>
@@ -70,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['class' => 'yii\grid\SerialColumn'],
                 [
                     'attribute' => 'sort',
-                    'label' => Yii::t('app', 'Sort'),
+                    'label' => Module::t('module', 'Sort'),
                     'headerOptions' => ['style' => 'width:100px; text-align: right;'],
                     'format' => 'raw',
                     'value' => function () {
@@ -102,11 +103,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                 '<i class="text-success far fa-edit"></i>',
                                 ['internal-number/update', 'id' => $model->id],
                                 [
-                                    'title' => Yii::t('app', 'Update'),
+                                    'title' => Module::t('module', 'Update'),
                                     'class' => 'grid-btn grid-btn-update',
                                     'id' => 'update-organization-member',
                                     'data-size' => 'modal-lg',
-                                    'data-title' => Yii::t('app', 'Update'),
+                                    'data-title' => Module::t('module', 'Update'),
                                     'data-toggle' => 'modal',
                                     'data-target' => '#modal-pjax',
                                     'data-url' => Url::to(['update', 'id' => $model->id]),
@@ -129,7 +130,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $model->canDelete(false) ? Html::a('<span class="fal fa-trash"></span>', ['internal-number/delete', 'id' => $model->id], [
                                 'title' => Yii::t('yii', 'Delete'),
                                 'class' => 'text-danger',
-                                'data-confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                                'data-confirm' => Module::t('module', 'Are you sure you want to delete this item?'),
                                 'data-method' => 'post',
                             ]) : '';
                         },

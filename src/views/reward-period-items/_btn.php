@@ -1,30 +1,31 @@
 <?php
 
 use hesabro\hris\models\SalaryPeriod;
+use hesabro\hris\Module;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $salaryPeriod hesabro\hris\models\SalaryPeriod */
 ?>
-<?= $salaryPeriod->status !== SalaryPeriod::STATUS_WAIT_CONFIRM ? Html::a(Yii::t('app', 'Document'), $salaryPeriod->getDocumentLink(), [
+<?= $salaryPeriod->status !== SalaryPeriod::STATUS_WAIT_CONFIRM ? Html::a(Module::t('module', 'Document'), $salaryPeriod->getDocumentLink(), [
     'class' => 'btn btn-success',
 ]) : '' ?>
 <?php if ($salaryPeriod->status == SalaryPeriod::STATUS_WAIT_CONFIRM): ?>
     <?= $salaryPeriod->canConfirm() ?
-        Html::a(Yii::t('app', 'Confirm'),
+        Html::a(Module::t('module', 'Confirm'),
             'javascript:void(0)',
             [
-                'title' => Yii::t('app', 'Confirm'),
-                'aria-label' => Yii::t('app', 'Confirm'),
+                'title' => Module::t('module', 'Confirm'),
+                'aria-label' => Module::t('module', 'Confirm'),
                 'data-reload-pjax-container' => 'p-jax-salary-period-items',
                 'data-pjax' => '0',
                 'data-url' => Url::to(['confirm', 'id' => $salaryPeriod->id]),
                 'class' => "p-jax-btn btn btn-primary ml-1 ",
-                'data-title' => Yii::t('app', 'Confirm'),
+                'data-title' => Module::t('module', 'Confirm'),
                 'data-method' => 'post',
-                'data-confirm' => Yii::t('app', 'Are you sure?'),
-            ]) : Html::a(Yii::t('app', 'Confirm'),
+                'data-confirm' => Module::t('module', 'Are you sure?'),
+            ]) : Html::a(Module::t('module', 'Confirm'),
             'javascript:void(0)',
             [
                 'data-pjax' => '0',
@@ -34,27 +35,27 @@ use yii\helpers\Url;
             ]) ?>
 <?php endif; ?>
 <?= $salaryPeriod->canReturnConfirm() ?
-    Html::a(Yii::t('app', 'Return State'),
+    Html::a(Module::t('module', 'Return State'),
         'javascript:void(0)',
         [
-            'title' => Yii::t('app', 'Return State'),
-            'aria-label' => Yii::t('app', 'Return State'),
+            'title' => Module::t('module', 'Return State'),
+            'aria-label' => Module::t('module', 'Return State'),
             'data-reload-pjax-container' => 'p-jax-salary-period-items',
             'data-pjax' => '0',
             'data-url' => Url::to(['return-confirm', 'id' => $salaryPeriod->id]),
             'class' => "p-jax-btn btn btn-danger ml-1 ",
-            'data-title' => Yii::t('app', 'Return State'),
+            'data-title' => Module::t('module', 'Return State'),
             'data-method' => 'post',
-            'data-confirm' => Yii::t('app', 'Are you sure?'),
+            'data-confirm' => Module::t('module', 'Are you sure?'),
         ]) : '' ?>
 <?php if ($salaryPeriod->status == SalaryPeriod::STATUS_CONFIRM): ?>
 <?= $salaryPeriod->canPayment() ?
-    Html::a(Yii::t('app', 'Payment'),
+    Html::a(Module::t('module', 'Payment'),
                 'javascript:void(0)', [
-                    'title' => Yii::t('app', 'Payment'),
+                    'title' => Module::t('module', 'Payment'),
                     'id' => 'create-payment-period-salary',
                     'class' => 'btn btn-primary ml-1',
-                    'data-title' => Yii::t('app', 'Payment'),
+                    'data-title' => Module::t('module', 'Payment'),
                     'data-toggle' => 'modal',
                     'data-target' => '#modal-pjax',
                     'data-url' => Url::to(['payment', 'id' => $salaryPeriod->id]),
@@ -62,7 +63,7 @@ use yii\helpers\Url;
                     'data-reload-pjax-container' => 'p-jax-salary-period-items',
                     'data-handleFormSubmit' => 1,
                     'disabled' => true
-        ]) : Html::a(Yii::t('app', 'Payment'),
+        ]) : Html::a(Module::t('module', 'Payment'),
             'javascript:void(0)',
             [
                 'data-pjax' => '0',
@@ -72,45 +73,45 @@ use yii\helpers\Url;
             ]) ?>
 <?php endif; ?>
 <?= $salaryPeriod->canReturnPayment() ?
-    Html::a(Yii::t('app', 'Return State'),
+    Html::a(Module::t('module', 'Return State'),
         'javascript:void(0)',
         [
-            'title' => Yii::t('app', 'Return State'),
-            'aria-label' => Yii::t('app', 'Return State'),
+            'title' => Module::t('module', 'Return State'),
+            'aria-label' => Module::t('module', 'Return State'),
             'data-reload-pjax-container' => 'p-jax-salary-period-items',
             'data-pjax' => '0',
             'data-url' => Url::to(['return-payment', 'id' => $salaryPeriod->id]),
             'class' => "p-jax-btn btn btn-danger ml-1 ",
-            'data-title' => Yii::t('app', 'Return State'),
+            'data-title' => Module::t('module', 'Return State'),
             'data-method' => 'post',
-            'data-confirm' => Yii::t('app', 'Are you sure?'),
+            'data-confirm' => Module::t('module', 'Are you sure?'),
         ]) : '' ?>
 
 <?= $salaryPeriod->canDeleteItems() ?
-    Html::a(Yii::t('app', 'Delete All'),
+    Html::a(Module::t('module', 'Delete All'),
         'javascript:void(0)',
         [
-            'title' => Yii::t('app', 'Delete All'),
-            'aria-label' => Yii::t('app', 'Delete All'),
+            'title' => Module::t('module', 'Delete All'),
+            'aria-label' => Module::t('module', 'Delete All'),
             'data-reload-pjax-container' => 'p-jax-salary-period-items',
             'data-pjax' => '0',
             'data-url' => Url::to(['delete-all', 'id' => $salaryPeriod->id]),
             'class' => "p-jax-btn btn btn-danger ml-1 ",
-            'data-title' => Yii::t('app', 'Delete All'),
+            'data-title' => Module::t('module', 'Delete All'),
             'data-method' => 'post',
-            'data-confirm' => Yii::t('app', 'Are you sure?'),
+            'data-confirm' => Module::t('module', 'Are you sure?'),
         ]) : '' ?>
 <?= $salaryPeriod->canCopyPreviousPeriod() ?
-    Html::a(Yii::t('app', 'Copy From Previous Period'),
+    Html::a(Module::t('module', 'Copy From Previous Period'),
         ['copy-from-previous-period', 'id' => $salaryPeriod->id],
         [
-            'title' => Yii::t('app', 'Copy From Previous Period'),
+            'title' => Module::t('module', 'Copy From Previous Period'),
             'data-pjax' => '0',
             'class' => "btn btn-info ml-1",
             'data-method' => 'post',
-            'data-confirm' => Yii::t('app', 'Are you sure?'),
+            'data-confirm' => Module::t('module', 'Are you sure?'),
         ]) : '' ?>
-<?= $salaryPeriod->status !== SalaryPeriod::STATUS_WAIT_CONFIRM ? Html::a(Yii::t('app', 'Excel'), ['export', 'id' => $salaryPeriod->id], ['class' => 'btn btn-info', 'data-pjax' => '0']) : '' ?>
+<?= $salaryPeriod->status !== SalaryPeriod::STATUS_WAIT_CONFIRM ? Html::a(Module::t('module', 'Excel'), ['export', 'id' => $salaryPeriod->id], ['class' => 'btn btn-info', 'data-pjax' => '0']) : '' ?>
 <?= $salaryPeriod->status === SalaryPeriod::STATUS_PAYMENT ? Html::a('اکسل بانک با ابرسا',
     'javascript:void(0)', [
         'title' => 'اکسل بانک با ابرسا',
@@ -156,17 +157,17 @@ use yii\helpers\Url;
         'data-handleFormSubmit' => 1,
         'disabled' => true
     ]) : ''; ?>
-<?= $salaryPeriod->status == SalaryPeriod::STATUS_PAYMENT ? Html::a(Yii::t('app', 'Print'), ['print', 'id' => $salaryPeriod->id],
+<?= $salaryPeriod->status == SalaryPeriod::STATUS_PAYMENT ? Html::a(Module::t('module', 'Print'), ['print', 'id' => $salaryPeriod->id],
     [
         'class' => 'btn btn-success ml-1 ',
         'data-pjax' => 0
     ]) : ''
 ?>
-<?= Html::a(Yii::t('app', 'Logs'),
+<?= Html::a(Module::t('module', 'Logs'),
     ['/mongo/log/view-ajax', 'modelId' => $salaryPeriod->id, 'modelClass' => SalaryPeriod::class],
     [
         'class' => 'btn btn-secondary showModalButton ml-1 ',
-        'title' => Yii::t('app', 'Logs'),
+        'title' => Module::t('module', 'Logs'),
         'data-size' => 'modal-xl'
     ]
 );

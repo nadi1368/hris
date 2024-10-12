@@ -3,7 +3,7 @@
 use hesabro\hris\models\SalaryItemsAddition;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use common\widgets\grid\GridView;
+use hesabro\helpers\widgets\grid\GridView;
 use yii\web\View;
 use yii\widgets\Pjax;
 

@@ -9,6 +9,7 @@ use common\models\DocumentDetails;
 use hesabro\changelog\models\MGLogs;
 use hesabro\hris\models\EmployeeBranchUser;
 use hesabro\hris\models\SalaryPeriod;
+use hesabro\hris\Module;
 use Yii;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
@@ -43,7 +44,7 @@ class YearPeriodItemsController extends YearPeriodItemsBase
                         $totalCount++;
                     }
                 } else {
-                    throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.=>' . $item->id));
+                    throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.=>' . $item->id));
                 }
 
             }
@@ -161,7 +162,7 @@ class YearPeriodItemsController extends YearPeriodItemsBase
             MGLogs::saveManual(SalaryPeriod::class, $model->id, $rows);
             return [
                 'success' => true,
-                'msg' => Yii::t("app", "Item Created"),
+                'msg' => Module::t('module', "Item Created"),
                 'html' => $this->renderAjax('_excel-bank-send-to-native', [
                     'model' => $model,
                     'rows' => json_encode($rows),

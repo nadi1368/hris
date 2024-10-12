@@ -1,7 +1,6 @@
 <?php
 
-use common\components\Helper;
-use common\widgets\TableView;
+use hesabro\helpers\widgets\TableView;
 
 /* @var $this yii\web\View */
 /* @var $model hesabro\hris\models\SalaryPeriodItems */
@@ -41,7 +40,7 @@ use common\widgets\TableView;
                     'attribute' => 'hours_of_overtime',
                     'value' => function ($model) {
                         return isset($model->detailAddition['hours_of_overtime']) ?
-                            Helper::renderLabelHelp($model->hours_of_overtime . ' (' . number_format((float)$model->getHoursOfOvertimeCost()) . ')', implode("<br />", $model->detailAddition['hours_of_overtime'])) :
+                            Yii::$app->helper::renderLabelHelp($model->hours_of_overtime . ' (' . number_format((float)$model->getHoursOfOvertimeCost()) . ')', implode("<br />", $model->detailAddition['hours_of_overtime'])) :
                             $model->hours_of_overtime;
                     },
                     'format' => 'raw',
@@ -50,7 +49,7 @@ use common\widgets\TableView;
                     'attribute' => 'holiday_of_overtime',
                     'value' => function ($model) {
                         return isset($model->detailAddition['holiday_of_overtime']) ?
-                            Helper::renderLabelHelp($model->holiday_of_overtime . ' (' . number_format((float)$model->getHolidayOfOvertimeCost()) . ')', implode("<br />", $model->detailAddition['holiday_of_overtime'])) :
+                            Yii::$app->helper::renderLabelHelp($model->holiday_of_overtime . ' (' . number_format((float)$model->getHolidayOfOvertimeCost()) . ')', implode("<br />", $model->detailAddition['holiday_of_overtime'])) :
                             $model->holiday_of_overtime;
                     },
                     'format' => 'raw',
@@ -59,7 +58,7 @@ use common\widgets\TableView;
                     'attribute' => 'night_of_overtime',
                     'value' => function ($model) {
                         return isset($model->detailAddition['night_of_overtime']) ?
-                            Helper::renderLabelHelp($model->night_of_overtime . ' (' . number_format((float)$model->getNightOfOvertimeCost()) . ')', implode("<br />", $model->detailAddition['night_of_overtime'])) :
+                            Yii::$app->helper::renderLabelHelp($model->night_of_overtime . ' (' . number_format((float)$model->getNightOfOvertimeCost()) . ')', implode("<br />", $model->detailAddition['night_of_overtime'])) :
                             $model->night_of_overtime;
                     },
                     'format' => 'raw',
@@ -68,7 +67,7 @@ use common\widgets\TableView;
                     'attribute' => 'hoursOfLowTime',
                     'value' => function ($model) {
                         return isset($model->detailAddition['hoursOfLowTime']) ?
-                            Helper::renderLabelHelp($model->hoursOfLowTime . ' (' . number_format((float)$model->getHoursOfLowTimeCost()) . ')', implode("<br />", $model->detailAddition['hoursOfLowTime'])) :
+                            Yii::$app->helper::renderLabelHelp($model->hoursOfLowTime . ' (' . number_format((float)$model->getHoursOfLowTimeCost()) . ')', implode("<br />", $model->detailAddition['hoursOfLowTime'])) :
                             $model->hoursOfLowTime;
                     },
                     'format' => 'raw',
@@ -77,7 +76,7 @@ use common\widgets\TableView;
                     'attribute' => 'commission',
                     'value' => function ($model) {
                         return isset($model->detailAddition['commission']) ?
-                            Helper::renderLabelHelp(number_format((float)$model->commission), implode("<br />", $model->detailAddition['commission'])) :
+                            Yii::$app->helper::renderLabelHelp(number_format((float)$model->commission), implode("<br />", $model->detailAddition['commission'])) :
                             number_format((float)$model->commission);
                     },
                     'format' => 'raw',
@@ -100,7 +99,7 @@ use common\widgets\TableView;
                     'attribute' => 'non_cash_commission',
                     'value' => function ($model) {
                         return isset($model->detailAddition['non_cash_commission']) ?
-                            Helper::renderLabelHelp(number_format($model->non_cash_commission),implode("<br />", $model->detailAddition['non_cash_commission'])) :
+                            Yii::$app->helper::renderLabelHelp(number_format($model->non_cash_commission),implode("<br />", $model->detailAddition['non_cash_commission'])) :
                             number_format($model->non_cash_commission);
                     },
                     'format' => 'raw',

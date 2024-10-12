@@ -1,6 +1,7 @@
 <?php
 
 use common\models\UserUpload;
+use hesabro\hris\Module;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -17,13 +18,13 @@ use yii\web\View;
 	<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
 	<div class="card-body">
 
-		<?= $form->field($userUploadModel, 'type')->dropDownList(UserUpload::itemAlias('Type'), ['prompt' => Yii::t("app", "Select...")]); ?>
+		<?= $form->field($userUploadModel, 'type')->dropDownList(UserUpload::itemAlias('Type'), ['prompt' => Module::t('module', "Select...")]); ?>
 
 		<?= $form->field($userUploadModel, 'file_name')->fileInput() ?>
 
 	</div>
 	<div class="card-footer">
-		<?= Html::submitButton(Yii::t("app", "Upload"), ['class' => 'btn btn-success btn btn-flat']); ?>
+		<?= Html::submitButton(Module::t('module', "Upload"), ['class' => 'btn btn-success btn btn-flat']); ?>
 	</div>
 </div>
 
@@ -62,7 +63,7 @@ use yii\web\View;
 					<?= $item->status == UserUpload::STATUS_ACTIVE ? Html::a('<span class="fa fa-check"></span>', ['confirm-document', 'id' => $item->id], [
 						'class' => 'grid-btn grid-btn-update ajax-btn',
 						'data-url' => Url::to(['confirm-document', 'id' => $item->id]),
-						'data-confirm' => Yii::t('app', 'Are you sure?'),
+						'data-confirm' => Module::t('module', 'Are you sure?'),
 						'data-view' => 'index',
 						'data-p-jax' => '#employee-documents-pjax',
 						'data-method' => 'post',

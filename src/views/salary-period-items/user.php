@@ -1,22 +1,22 @@
 <?php
 
 use common\models\BalanceDetailed;
-use hesabro\hris\models\SalaryPeriodItems;
 use common\models\Settings;
+use hesabro\hris\models\SalaryPeriodItems;
+use hesabro\hris\Module;
 use yii\helpers\Html;
-use common\widgets\grid\GridView;
+use hesabro\helpers\widgets\grid\GridView;
 use yii\helpers\Url;
-use common\components\Helper;
 
 
 /* @var $this yii\web\View */
-/* @var $user backend\models\User */
+/* @var $user object */
 /* @var $searchModel hesabro\hris\models\SalaryPeriodItemsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 
 $this->title = "مشاهده دروه حقوق های قبلی - ".$user->fullName;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Salary Periods'), 'url' => ['salary-period/index']];
+$this->params['breadcrumbs'][] = ['label' => Module::t('module', 'Salary Periods'), 'url' => ['salary-period/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="card">
@@ -167,13 +167,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => function ($model) {
                         return Html::a(Html::tag('span', '', ['class' => $model->can_payment ? "fa fa-check" : "fa fa-times"]), 'javascript:void(0)',
                             [
-                                'title' => !$model->can_payment ? Yii::t('app', 'Add To Payment List') : Yii::t('app', 'Delete Payment List'),
-                                'aria-label' => !$model->can_payment ? Yii::t('app', 'Add To Payment List') : Yii::t('app', 'Delete Payment List'),
+                                'title' => !$model->can_payment ? Module::t('module', 'Add To Payment List') : Module::t('module', 'Delete Payment List'),
+                                'aria-label' => !$model->can_payment ? Module::t('module', 'Add To Payment List') : Module::t('module', 'Delete Payment List'),
                                 'data-reload-pjax-container' => 'p-jax-salary-period-items',
                                 'data-pjax' => '0',
-                                'data-url' => Url::to(['add-to-payment-list', 'id' => $model->id, 'type' => $model->can_payment ? Helper::UN_CHECKED : Helper::CHECKED]),
+                                'data-url' => Url::to(['add-to-payment-list', 'id' => $model->id, 'type' => $model->can_payment ? Yii::$app->helper::UN_CHECKED : Yii::$app->helper::CHECKED]),
                                 'class' => $model->can_payment ? "text-success p-jax-btn" : "text-danger p-jax-btn",
-                                'data-title' => !$model->can_payment ? Yii::t('app', 'Add To Payment List') : Yii::t('app', 'Delete Payment List'),
+                                'data-title' => !$model->can_payment ? Module::t('module', 'Add To Payment List') : Module::t('module', 'Delete Payment List'),
                                 'data-method' => 'post',
 
                             ]);
@@ -205,10 +205,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'view' => function ($url, $model, $key) {
                             return Html::a('<span class="fa fa-eye text-info"></span>',
                                 'javascript:void(0)', [
-                                    'title' => Yii::t('app', 'Details'),
+                                    'title' => Module::t('module', 'Details'),
                                     'id' => 'view-ipg-btn',
                                     'data-size' => 'modal-xl',
-                                    'data-title' => Yii::t('app', 'Details'),
+                                    'data-title' => Module::t('module', 'Details'),
                                     'data-toggle' => 'modal',
                                     'data-target' => '#modal-pjax',
                                     'data-url' => Url::to(['view', 'id' => $model->id]),
@@ -220,10 +220,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'update' => function ($url, $model, $key) {
                             return $model->canUpdate() ? Html::a('<span class="fa fa-edit text-primary"></span>',
                                 'javascript:void(0)', [
-                                    'title' => Yii::t('app', 'Update'),
+                                    'title' => Module::t('module', 'Update'),
                                     'id' => 'edit-ipg-btn',
                                     'data-size' => 'modal-xl',
-                                    'data-title' => Yii::t('app', 'Update') . ' - ' . $model->user->fullName,
+                                    'data-title' => Module::t('module', 'Update') . ' - ' . $model->user->fullName,
                                     'data-toggle' => 'modal',
                                     'data-target' => '#modal-pjax',
                                     'data-url' => Url::to(['update', 'id' => $model->id]),
@@ -236,10 +236,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'updateAfterConfirm' => function ($url, $model, $key) {
                             return $model->canUpdateAfterConfirm() ? Html::a('<span class="fa fa-edit text-primary"></span>',
                                 'javascript:void(0)', [
-                                    'title' => Yii::t('app', 'Update'),
+                                    'title' => Module::t('module', 'Update'),
                                     'id' => 'edit-ipg-btn',
                                     'data-size' => 'modal-xl',
-                                    'data-title' => Yii::t('app', 'Update') . ' - ' . $model->user->fullName,
+                                    'data-title' => Module::t('module', 'Update') . ' - ' . $model->user->fullName,
                                     'data-toggle' => 'modal',
                                     'data-target' => '#modal-pjax',
                                     'data-url' => Url::to(['update-after-confirm', 'id' => $model->id]),
@@ -269,7 +269,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ['/mongo/log/view-ajax', 'modelId' => $model->id, 'modelClass' => SalaryPeriodItems::class],
                                 [
                                     'class' => 'text-secondary showModalButton',
-                                    'title' => Yii::t('app', 'Logs'),
+                                    'title' => Module::t('module', 'Logs'),
                                     'data-size' => 'modal-xl'
                                 ]
                             );

@@ -1,14 +1,15 @@
 <?php
 
+use hesabro\hris\models\AdvanceMoney;
 use hesabro\hris\models\ComfortItems;
 use hesabro\hris\models\ContractTemplates;
 use hesabro\hris\models\EmployeeBranchUser;
 use hesabro\hris\models\EmployeeRequest;
 use common\components\Menu;
 use common\models\Faq;
+use hesabro\hris\Module;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
-use backend\models\AdvanceMoney;
 
 $advanceMoneyRequest = AdvanceMoney::find()->wait()->exists();
 $employeeRequest = EmployeeRequest::find()->pending()->exists();
@@ -30,73 +31,73 @@ $menu_items = [
         'level' => "first-level",
         'items' => [
             [
-                'label' => Yii::t("app", "Salary Years Settings"),
+                'label' => Module::t('module', "Salary Years Settings"),
                 'icon' => 'far fa-layer-group',
                 'url' => ['/employee/default/year-setting'],
                 'group' => 'GeneralInfo',
             ],
             [
-                'label' => Yii::t('app', 'Rate Of Year Salaries'),
+                'label' => Module::t('module', 'Rate Of Year Salaries'),
                 'icon' => 'far fa-layer-group',
                 'url' => ['/employee/rate-of-year-salary/index'],
                 'group' => 'GeneralInfo',
             ],
             [
-                'label' => Yii::t("app", "Salary Insurances"),
+                'label' => Module::t('module', "Salary Insurances"),
                 'icon' => 'far fa-hashtag',
                 'url' => ['/employee/salary-insurance/index'],
                 'group' => 'GeneralInfo',
             ],
             [
-                'label' => Yii::t("app", "Workshop Insurances"),
+                'label' => Module::t('module', "Workshop Insurances"),
                 'icon' => 'far fa-briefcase',
                 'url' => ['/employee/workshop-insurance/index'],
                 'group' => 'GeneralInfo',
             ],
             [
-                'label' => Yii::t("app", "Contract Templates"),
+                'label' => Module::t('module', "Contract Templates"),
                 'icon' => 'far fa-file-contract',
                 'url' => ['/employee/contract-templates/index', 'type' => ContractTemplates::TYPE_CONTRACT],
                 'group' => 'GeneralInfo',
             ],
             [
-                'label' => Yii::t("app", "Letter Templates"),
+                'label' => Module::t('module', "Letter Templates"),
                 'icon' => 'far fa-file-contract',
                 'url' => ['/employee/contract-templates/index', 'type' => ContractTemplates::TYPE_LETTER],
                 'group' => 'GeneralInfo',
             ],
             [
-                'label' => Yii::t("app", "User Contracts Shelves"),
+                'label' => Module::t('module', "User Contracts Shelves"),
                 'icon' => 'far fa-file-contract',
                 'url' => ['/employee/user-contracts-shelves/index'],
                 'group' => 'GeneralInfo',
             ],
             [
-                'label' => Yii::t("app", "Faq Type")['job_description'],
+                'label' => Module::t('module', "Faq Type")['job_description'],
                 'icon' => 'far fa-file-contract',
                 'url' => ['/faq/index', 'type' => Faq::TYPE_JOB_DESCRIPTION],
                 'group' => 'GeneralInfo'
             ],
             [
-                'label' => Yii::t("app", "Faq Type")['announcement'],
+                'label' => Module::t('module', "Faq Type")['announcement'],
                 'icon' => 'far fa-file-contract',
                 'url' => ['/faq/index', 'type' => Faq::TYPE_ANNOUNCEMENT],
                 'group' => 'GeneralInfo'
             ],
             [
-                'label' => Yii::t("app", "Faq Type")['employee'],
+                'label' => Module::t('module', "Faq Type")['employee'],
                 'icon' => 'far fa-file-contract',
                 'url' => ['/faq/index', 'type' => Faq::TYPE_EMPLOYEE],
                 'group' => 'GeneralInfo'
             ],
             [
-                'label' => Yii::t("app", "Internal Numbers"),
+                'label' => Module::t('module', "Internal Numbers"),
                 'icon' => 'far fa-phone',
                 'url' => ['/employee/internal-number/index'],
                 'group' => 'GeneralInfo'
             ],
             [
-                'label' => Yii::t("app", "Organization Chart"),
+                'label' => Module::t('module', "Organization Chart"),
                 'icon' => 'far fa-id-card',
                 'url' => ['/employee/organization-chart/index'],
                 'group' => 'GeneralInfo',
@@ -123,7 +124,7 @@ $menu_items = [
                 'group' => 'RollCall',
             ],
             [
-                'label' => Yii::t("app", "Salary Items Additions"),
+                'label' => Module::t('module', "Salary Items Additions"),
                 'icon' => 'far fa-money-check',
                 'url' => ['/employee/salary-items-addition/index'],
                 'group' => 'RollCall',
@@ -149,14 +150,14 @@ $menu_items = [
         ]
     ],
     [
-        'label' => Yii::t("app", "Comforts"),
+        'label' => Module::t('module', "Comforts"),
         'icon' => 'far fa-gift ',
         'url' => ['/employee/comfort/index'],
         'level' => "first-level",
         'group' => 'comforts',
     ],
     [
-        'label' => Html::tag('span', Yii::t('app', 'Requests'), ['class' => $advanceMoneyRequest || $employeeRequest || $comfortItemRequest ? 'pulse-notification' : '']),
+        'label' => Html::tag('span', Module::t('module', 'Requests'), ['class' => $advanceMoneyRequest || $employeeRequest || $comfortItemRequest ? 'pulse-notification' : '']),
         'icon' => 'far fa-hand-paper',
         'url' => ['/employee/comfort-items/index'],
         'level' => "first-level",
@@ -164,14 +165,14 @@ $menu_items = [
         'encode' => false
     ],
     [
-        'label' => Yii::t("app", "Employee Branches"),
+        'label' => Module::t('module', "Employee Branches"),
         'icon' => 'far fa-building',
         'url' => ['/employee/default/index'],
         'group' => 'EmployeeBranch',
         'level' => "first-level",
     ],
     [
-        'label' => Html::tag('span', Yii::t("app", "Employee Branch User"), ['class' => $employeePendingUpdate ? 'pulse-notification' : '']),
+        'label' => Html::tag('span', Module::t('module', "Employee Branch User"), ['class' => $employeePendingUpdate ? 'pulse-notification' : '']),
         'icon' => 'far fa-users',
         'url' => ['/employee/default/users'],
         'group' => 'EmployeeBranchUser',
@@ -179,14 +180,14 @@ $menu_items = [
         'encode' => false
     ],
     [
-        'label' => Yii::t("app", "Salary Periods"),
+        'label' => Module::t('module', "Salary Periods"),
         'icon' => 'far fa-money-check',
         'url' => ['/employee/salary-period/index'],
         'group' => 'EmployeeSalaryPeriods',
         'level' => "first-level",
     ],
     [
-        'label' => Yii::t("app", "Contracts"),
+        'label' => Module::t('module', "Contracts"),
         'icon' => 'far fa-file-contract',
         'url' => ['/employee/user-contracts/index'],
         'group' => 'EmployeeContracts',
@@ -199,14 +200,14 @@ $menu_items = [
         'icon' => 'fa fa-user',
         'items' => [
             [
-                'label' => Yii::t('app', 'Department Manager'),
+                'label' => Module::t('module', 'Department Manager'),
                 'url' => ['/request-leave/manage'],
                 'group' => 'request-leave-manage',
                 'level' => 'second-level',
                 'icon' => 'fa fa-user'
             ],
             [
-                'label' => Yii::t('app', 'General Manager'),
+                'label' => Module::t('module', 'General Manager'),
                 'url' => ['/request-leave/admin'],
                 'group' => 'request-leave-manage',
                 'level' => 'second-level',

@@ -1,7 +1,7 @@
 <?php
 use hesabro\hris\models\EmployeeBranchUser;
 use hesabro\hris\assets\ProfileUpdateAssets;
-use common\models\User;
+use hesabro\hris\Module;
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Tabs;
 use yii\helpers\Html;
@@ -18,7 +18,7 @@ $this->registerAssetBundle(ProfileUpdateAssets::class, View::POS_END);
 
 $isAdmin = $model->scenario === EmployeeBranchUser::SCENARIO_INSURANCE;
 
-$this->title = Yii::t('app', 'Edit') . ' ' . Yii::t('app', 'Profile');
+$this->title = Module::t('module', 'Edit') . ' ' . Module::t('module', 'Profile');
 $this->params['breadcrumbs'][] = $this->title;
 
 $form = ActiveForm::begin(['id' => 'ajax-form-employee-update-profile', 'options' => ['enctype' => 'multipart/form-data']]);
@@ -32,12 +32,12 @@ $rejectForm = $rejectForm ? trim(preg_replace('/\s\s+/', ' ', preg_replace("/(\/
     <?= Tabs::Widget([
         'items' => [
             [
-                'label' => Yii::t('app', 'User Info'),
+                'label' => Module::t('module', 'User Info'),
                 'content' => $this->blocks['information'] ?? '',
                 'active' => true
             ],
             [
-                'label' => Yii::t('app', 'Identity Documents'),
+                'label' => Module::t('module', 'Identity Documents'),
                 'content' => $this->blocks['documents'] ?? '',
                 'active' => false
             ]
@@ -45,12 +45,12 @@ $rejectForm = $rejectForm ? trim(preg_replace('/\s\s+/', ' ', preg_replace("/(\/
     ]) ?>
 
     <div class="card-footer" style="background-color: #f7f7f7">
-        <?= Html::submitButton(Yii::t('app', $isAdmin && $model->pending_data ? 'Accept And Update Information' : 'Update'), [
+        <?= Html::submitButton(Module::t('module', $isAdmin && $model->pending_data ? 'Accept And Update Information' : 'Update'), [
             'class' => 'btn' . ($isAdmin && $model->pending_data ? ' btn-success' : ' btn-primary')
         ]) ?>
         <?php if ($rejectForm): ?>
-            <button type="button" class="btn btn-danger" data-toggle="popover" title="<?= Yii::t('app', 'Reject Update') ?>" data-html="true" data-placement="top" data-content="<?= htmlspecialchars($rejectForm)?>">
-                <?= Yii::t('app', 'Reject Update') ?>
+            <button type="button" class="btn btn-danger" data-toggle="popover" title="<?= Module::t('module', 'Reject Update') ?>" data-html="true" data-placement="top" data-content="<?= htmlspecialchars($rejectForm)?>">
+                <?= Module::t('module', 'Reject Update') ?>
             </button>
         <?php endif; ?>
     </div>
@@ -59,7 +59,7 @@ $rejectForm = $rejectForm ? trim(preg_replace('/\s\s+/', ' ', preg_replace("/(\/
 <?php
 ActiveForm::end();
 $marital = EmployeeBranchUser::MARITAL_MARRIED;
-$man = User::SEX_MAN;
+$man = Module::getInstance()->user::SEX_MAN;
 $seenRejectUrl = Url::to(['profile/seen-reject']);
 $js = <<<JS
 window.seenRejectUrl = '$seenRejectUrl';

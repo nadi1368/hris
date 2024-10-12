@@ -139,18 +139,18 @@ class SalaryPeriodBase extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'workshop_id' => Yii::t('app', 'Workshop Insurances'),
-            'title' => Yii::t('app', 'Title'),
-            'month' => Yii::t('app', 'Date'),
-            'start_date' => Yii::t('app', 'Date'),
-            'end_date' => Yii::t('app', 'End Date'),
-            'creator_id' => Yii::t('app', 'Creator ID'),
-            'update_id' => Yii::t('app', 'Update ID'),
-            'created' => Yii::t('app', 'Created'),
-            'changed' => Yii::t('app', 'Changed'),
-            'status' => Yii::t('app', 'Status'),
-            'kind' => Yii::t('app', 'Type'),
+            'id' => Module::t('module', 'ID'),
+            'workshop_id' => Module::t('module', 'Workshop Insurances'),
+            'title' => Module::t('module', 'Title'),
+            'month' => Module::t('module', 'Date'),
+            'start_date' => Module::t('module', 'Date'),
+            'end_date' => Module::t('module', 'End Date'),
+            'creator_id' => Module::t('module', 'Creator ID'),
+            'update_id' => Module::t('module', 'Update ID'),
+            'created' => Module::t('module', 'Created'),
+            'changed' => Module::t('module', 'Changed'),
+            'status' => Module::t('module', 'Status'),
+            'kind' => Module::t('module', 'Type'),
             'DSK_KIND' => 'نوع لیست',
             'DSK_LISTNO' => 'شماره لیست',
             'DSK_DISC' => 'شرح لیست',
@@ -537,9 +537,9 @@ class SalaryPeriodBase extends \yii\db\ActiveRecord
 
         $_items = [
             'Status' => [
-                self::STATUS_WAIT_CONFIRM => Yii::t('app', 'Wait Confirm'),
-                self::STATUS_CONFIRM => Yii::t('app', 'Confirm And Wait Payment'),
-                self::STATUS_PAYMENT => Yii::t('app', 'Payment'),
+                self::STATUS_WAIT_CONFIRM => Module::t('module', 'Wait Confirm'),
+                self::STATUS_CONFIRM => Module::t('module', 'Confirm And Wait Payment'),
+                self::STATUS_PAYMENT => Module::t('module', 'Payment'),
             ],
             'StatusColor' => [
                 self::STATUS_WAIT_CONFIRM => 'warning',

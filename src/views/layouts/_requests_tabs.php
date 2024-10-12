@@ -3,9 +3,10 @@
  * @var string $content
  */
 
-use backend\models\AdvanceMoney;
+use hesabro\hris\models\AdvanceMoney;
 use hesabro\hris\models\ComfortItems;
 use hesabro\hris\models\EmployeeRequest;
+use hesabro\hris\Module;
 use yii\bootstrap4\Nav;
 use yii\helpers\Html;
 
@@ -21,7 +22,7 @@ Nav::begin([
     'items' => [
         [
             'label'=> Html::tag('span', implode('', [
-                Html::tag('span', Yii::t('app', 'Comforts')),
+                Html::tag('span', Module::t('module', 'Comforts')),
                 $comfortItemRequest ? Html::tag('span', $comfortItemRequest, ['class' => 'badge badge-pill badge-danger badge-employee-tab']) : ''
             ]), ['class' => 'd-flex align-center justify-center gap-2']),
             'url' => ['/employee/comfort-items/index'],
@@ -32,7 +33,7 @@ Nav::begin([
         ],
         [
             'label'=> Html::tag('span', implode('', [
-                Html::tag('span', Yii::t('app', 'Advance Money')),
+                Html::tag('span', Module::t('module', 'Advance Money')),
                 $advanceMoneyRequest ? Html::tag('span', $advanceMoneyRequest, ['class' => 'badge badge-pill badge-danger badge-employee-tab']) : ''
             ]), ['class' => 'd-flex align-center justify-center gap-2']),
             'url' => ['/employee/advance-money-manage/index'],
@@ -43,7 +44,7 @@ Nav::begin([
         ],
         [
             'label'=> Html::tag('span', implode('', [
-                Html::tag('span', Yii::t('app', 'Letter')),
+                Html::tag('span', Module::t('module', 'Letter')),
                 $employeeRequestLetter ? Html::tag('span', $employeeRequestLetter, ['class' => 'badge badge-pill badge-danger badge-employee-tab']) : ''
             ]), ['class' => 'd-flex align-center justify-center gap-2']),
             'url' => ['/employee/employee-request/index', 'EmployeeRequestSearch' => ['type' => EmployeeRequest::TYPE_LETTER]],
@@ -54,7 +55,7 @@ Nav::begin([
         ],
         [
             'label'=> Html::tag('span', implode('', [
-                Html::tag('span', Yii::t('app', 'Leave') . ' (' . Yii::t('app', 'Department Manager') . ')'),
+                Html::tag('span', Module::t('module', 'Leave') . ' (' . Module::t('module', 'Department Manager') . ')'),
                 $employeeRequestLetter ? Html::tag('span', $employeeRequestLetter, ['class' => 'badge badge-pill badge-danger badge-employee-tab']) : ''
             ]), ['class' => 'd-flex align-center justify-center gap-2']),
             'url' => ['/request-leave/manage'],
@@ -65,7 +66,7 @@ Nav::begin([
         ],
         [
             'label'=> Html::tag('span', implode('', [
-                Html::tag('span', Yii::t('app', 'Leave') . ' (' . Yii::t('app', 'General Manager') . ')'),
+                Html::tag('span', Module::t('module', 'Leave') . ' (' . Module::t('module', 'General Manager') . ')'),
                 $employeeRequestLetter ? Html::tag('span', $employeeRequestLetter, ['class' => 'badge badge-pill badge-danger badge-employee-tab']) : ''
             ]), ['class' => 'd-flex align-center justify-center gap-2']),
             'url' => ['/request-leave/admin'],

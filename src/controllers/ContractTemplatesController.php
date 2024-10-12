@@ -6,6 +6,7 @@ use hesabro\hris\models\ContractClausesModel;
 use hesabro\hris\models\ContractTemplates;
 use hesabro\hris\models\ContractTemplatesSearch;
 use hesabro\helpers\traits\AjaxValidationTrait;
+use hesabro\hris\Module;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -150,7 +151,7 @@ class ContractTemplatesController extends Controller
     {
         $model = $this->findModel($id);
         if (!$model->canUpdate()) {
-            $this->flash('danger', Yii::t("app", "Can Not Update"));
+            $this->flash('danger', Module::t('module', "Can Not Update"));
             return $this->redirect(['index', 'type' => $model->type ?: ContractTemplates::TYPE_CONTRACT]);
         }
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -181,7 +182,7 @@ class ContractTemplatesController extends Controller
         $model = $this->findModel($id);
 
         if ($model->softDelete()) {
-            $this->flash('success', Yii::t("app", "Item Deleted"));
+            $this->flash('success', Module::t('module', "Item Deleted"));
         }
         return $this->redirect(['index', 'type' => $model->type ?: ContractTemplates::TYPE_CONTRACT]);
     }
@@ -215,7 +216,7 @@ class ContractTemplatesController extends Controller
     {
         $result = [
             'success' => false,
-            'msg' => Yii::t('app', 'Error In Save Info'),
+            'msg' => Module::t('module', 'Error In Save Info'),
         ];
 
         $model = new ContractTemplates();
@@ -229,7 +230,7 @@ class ContractTemplatesController extends Controller
             if($model->save()){
                 $result = [
                     'success' => true,
-                    'msg' => Yii::t("app", "Item Created")
+                    'msg' => Module::t('module', "Item Created")
                 ];
             } else {
                 $result['msg'] = $model->hasErrors() ? Html::errorSummary($model) : $result['msg'];
@@ -255,7 +256,7 @@ class ContractTemplatesController extends Controller
         if (($model = ContractTemplates::findOne($id)) !== null) {
             return $model;
         }
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
     }
 
     public function flash($type, $message)

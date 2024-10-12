@@ -2,7 +2,8 @@
 
 use hesabro\hris\models\EmployeeRequest;
 use hesabro\hris\models\EmployeeRequestSearch;
-use common\widgets\grid\GridView;
+use hesabro\helpers\widgets\grid\GridView;
+use hesabro\hris\Module;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -13,8 +14,8 @@ use yii\widgets\Pjax;
  * @var ActiveDataProvider $dataProvider
  */
 
-$this->title = Yii::t('app', 'Request') .' '. Yii::t('app', 'Letter');
-$this->params['breadcrumbs'][] = Yii::t('app', 'Profile');
+$this->title = Module::t('module', 'Request') .' '. Module::t('module', 'Letter');
+$this->params['breadcrumbs'][] = Module::t('module', 'Profile');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php Pjax::begin(['id' => 'pjax-official-letter']) ?>
@@ -24,15 +25,15 @@ $this->params['breadcrumbs'][] = $this->title;
             <h4 class="panel-title mb-0">
                 <a class="accordion-toggle collapsed d-flex align-items-center gap-2" data-toggle="collapse" data-parent="#accordion" href="#searchBox" aria-expanded="false">
                     <i class="far fa-search"></i>
-                    <span><?= Yii::t('app', 'Search') ?></span>
+                    <span><?= Module::t('module', 'Search') ?></span>
                 </a>
             </h4>
-            <?= Html::a(Yii::t('app', 'Create'),
+            <?= Html::a(Module::t('module', 'Create'),
                 'javascript:void(0)', [
-                    'title' => Yii::t('app', 'Create'),
+                    'title' => Module::t('module', 'Create'),
                     'class' => 'btn btn-success',
                     'data-size' => 'modal-md',
-                    'data-title' => Yii::t('app', 'Request') .' '. Yii::t('app', 'Letter'),
+                    'data-title' => Module::t('module', 'Request') .' '. Module::t('module', 'Letter'),
                     'data-toggle' => 'modal',
                     'data-target' => '#modal-pjax',
                     'data-url' => Url::to(['create', 'type' => EmployeeRequest::TYPE_LETTER]),
@@ -91,10 +92,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'update' => function ($url, EmployeeRequest $model, $key) {
                             return $model->canUpdate() ? Html::a('<span class="far fa-edit text-success"></span>',
                                 'javascript:void(0)', [
-                                    'title' => Yii::t('app', 'Update'),
+                                    'title' => Module::t('module', 'Update'),
                                     'class' => 'text-success',
                                     'data-size' => 'modal-md',
-                                    'data-title' => Yii::t('app', 'Update'),
+                                    'data-title' => Module::t('module', 'Update'),
                                     'data-toggle' => 'modal',
                                     'data-target' => '#modal-pjax',
                                     'data-url' => Url::to(['update', 'id' => $model->id]),
@@ -117,14 +118,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         'view' => function ($url, EmployeeRequest $model, $key) {
                             return $model->status == EmployeeRequest::STATUS_ACCEPT ? Html::a(Html::tag('span', '', ['class' => 'far fa-eye']),
                                 'javascript:void(0)', [
-                                    'title' => Yii::t('app', 'View'),
+                                    'title' => Module::t('module', 'View'),
                                     'class' => 'text-primary',
                                     'data-size' => 'modal-lg',
                                     'data-title' => implode(' ', [
-                                        Yii::t('app', 'View'),
-                                        Yii::t('app', 'Letter'),
+                                        Module::t('module', 'View'),
+                                        Module::t('module', 'Letter'),
                                         "({$model->contractTemplate?->title})",
-                                        Yii::t('app', 'For'),
+                                        Module::t('module', 'For'),
                                         $model->user->fullName
                                     ]),
                                     'data-toggle' => 'modal',
@@ -138,7 +139,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'print' => function ($url, EmployeeRequest $model, $key) {
                             return $model->status === EmployeeRequest::STATUS_ACCEPT ? Html::a(Html::tag('span', '', ['class' => 'fas fa-print']), Url::to(['view', 'id' => $model->id, 'print' => 1]),
                                 [
-                                    'title' => Yii::t('app', 'Print'),
+                                    'title' => Module::t('module', 'Print'),
                                     'class' => 'text-info popup-link',
                                     'data' => [
                                         'popup-width' => '620',

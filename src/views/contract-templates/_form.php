@@ -1,8 +1,10 @@
 <?php
 
 use hesabro\hris\models\ContractClausesModel;
+use hesabro\hris\models\ContractTemplates;
 use hesabro\hris\models\EmployeeBranchUser;
-use common\widgets\CKEditorWidget;
+use hesabro\helpers\widgets\CKEditorWidget;
+use hesabro\hris\Module;
 use wbraganca\dynamicform\DynamicFormWidget;
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Alert;
@@ -25,7 +27,7 @@ foreach (EmployeeBranchUser::itemAlias('insuranceDataDefaultVariables') as $vari
 	$counter++;
 }
 
-$typeTextFa = Yii::t('app', $model->typeText);
+$typeTextFa = Module::t('module', $model->typeText);
 ?>
 	<span class="copy" onclick="return copyToClipboard('')"></span>
 	<div class="contract-templates-form">
@@ -107,11 +109,11 @@ $typeTextFa = Yii::t('app', $model->typeText);
 				<div class="card-header d-flex justify-content-between align-items-center">
                 <span>
                     <i class="fas fa-clipboard-list-check fa-lg"></i>
-                    <?= Yii::t('app', "$model->typeText Clauses") ?>
+                    <?= Module::t('module', "$model->typeText Clauses") ?>
                 </span>
 					<button type="button" class="add-field btn btn-success btn-xs">
 						<i class="fas fa-plus"></i>
-						<?= Yii::t('app', "Add $model->typeText Clause") ?>
+						<?= Module::t('module', "Add $model->typeText Clause") ?>
 					</button>
 				</div>
 				<div class="card-body container-items"><!-- widgetContainer -->
@@ -125,7 +127,7 @@ $typeTextFa = Yii::t('app', $model->typeText);
 								 aria-expanded="<?= $i > 0 ? 'false' : 'true' ?>"
 								 aria-controls=".collapse-<?= $i ?>">
                              <span class="panel-title-field text-bold text-dark">
-                                <?= $modelClause->title ?? Yii::t('app', "{0}: $model->typeText Clause", [0 => $i + 1]) ?>
+                                <?= $modelClause->title ?? Module::t('module', "{0}: $model->typeText Clause", [0 => $i + 1]) ?>
                             </span>
 								<button type="button" class="remove-field btn btn-danger btn-xs">
 									<i class="fas fa-minus"></i>
@@ -170,7 +172,7 @@ $typeTextFa = Yii::t('app', $model->typeText);
 
 		</div>
 		<div class="card-footer">
-			<?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+			<?= Html::submitButton($model->isNewRecord ? Module::t('module', 'Create') : Module::t('module', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 		</div>
 
 		<?php ActiveForm::end(); ?>
@@ -179,8 +181,8 @@ $typeTextFa = Yii::t('app', $model->typeText);
 
 <?php
 
-$fieldText = Yii::t('app', "$model->typeText Clause:");
-$optionText = Yii::t('app', 'Option:');
+$fieldText = Module::t('module', "$model->typeText Clause:");
+$optionText = Module::t('module', 'Option:');
 
 $variables = json_encode($model->variables);
 $js = <<< JS

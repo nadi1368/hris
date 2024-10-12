@@ -1,12 +1,7 @@
 <?php
 
-use common\widgets\TableView;
-use yii\helpers\Html;
-use common\widgets\grid\GridView;
-use backend\models\AdvanceMoney;
-use yii\helpers\Url;
-use yii\widgets\Pjax;
-use common\models\Process;
+use hesabro\helpers\widgets\TableView;
+use hesabro\hris\models\AdvanceMoney;
 
 /* @var $this yii\web\View */
 /* @var $model AdvanceMoney */
@@ -20,8 +15,7 @@ use common\models\Process;
                 'id',
                 'comment',
                 'reject_comment',
-                ]
-            ]);
-        ?>
+            ]
+        ]); ?>
     </div>
 </div>
