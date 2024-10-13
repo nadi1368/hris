@@ -26,7 +26,7 @@ class Bootstrap implements BootstrapInterface
             'basePath' => '@hesabro/hris/messages',
             'sourceLanguage' => 'en-US',
             'fileMap' => [
-                'hesabro/automation/module' => 'module.php'
+                'hesabro/hris/module' => 'module.php'
             ],
         ];
     }
