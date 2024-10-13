@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $form = ActiveForm::begin(['id' => 'ajax-form-employee-update-profile', 'options' => ['enctype' => 'multipart/form-data']]);
 $this->render('update/_information', compact('model', 'form', 'isAdmin'));
 $this->render('update/_documents', compact('model', 'form', 'isAdmin'));
-$rejectForm = $isAdmin && $model->pending_data ? $this->renderFile('@backend/modules/employee/views/default/_reject-update.php', ['model' => $model]) : null;
+$rejectForm = $isAdmin && $model->pending_data ? $this->renderFile('@hesabro/hris/views/default/_reject-update.php', ['model' => $model]) : null;
 $rejectForm = $rejectForm ? trim(preg_replace('/\s\s+/', ' ', preg_replace("/(\/[^>]*>)([^<]*)(<)/","\\1\\3", preg_replace("/[\r\n]*/","",$rejectForm)))) : $rejectForm;
 ?>
 

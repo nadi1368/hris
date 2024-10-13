@@ -55,7 +55,7 @@ class EmployeeComfortController extends Controller
      */
     public function actionIndex()
     {
-        $this->layout = '@backend/modules/employee/views/layouts/panel.php';
+        $this->layout = Module::getInstance()->layoutPanel;
         $employee = $this->findModelEmployee(Yii::$app->user->id);
         $searchModel = new ComfortSearch();
         $dataProvider = $searchModel->searchUser(Yii::$app->request->queryParams, $employee);
@@ -68,7 +68,7 @@ class EmployeeComfortController extends Controller
 
     public function actionItems()
     {
-        $this->layout = '@backend/modules/employee/views/layouts/panel.php';
+        $this->layout = Module::getInstance()->layoutPanel;
         $searchModel = new ComfortItemsSearch();
         $dataProvider = $searchModel->searchUser(Yii::$app->request->queryParams);
 

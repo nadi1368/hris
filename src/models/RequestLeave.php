@@ -7,6 +7,7 @@ use common\interfaces\SendAutoCommentInterface;
 use common\models\CommentsType;
 use common\models\SettingsAccount;
 use hesabro\helpers\traits\CoreTrait;
+use hesabro\hris\Module;
 use Yii;
 use yii\helpers\Html;
 
@@ -60,7 +61,7 @@ class RequestLeave extends RequestLeaveBase implements SendAutoCommentInterface
         if (in_array($this->getScenario(), [self::SCENARIO_CONFIRM, self::SCENARIO_REJECT])) {
             return '';
         }
-        return Yii::$app->urlManager->createAbsoluteUrl(['/request-leave/manage', 'RequestLeaveSearch[id]' => $this->id]);
+        return Yii::$app->urlManager->createAbsoluteUrl([Module::createUrl('request-leave/manage'), 'RequestLeaveSearch[id]' => $this->id]);
 
     }
 

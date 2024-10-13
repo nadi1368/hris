@@ -20,7 +20,12 @@ use yii\web\NotFoundHttpException;
 class EmployeeProfileBase extends Controller
 {
     use AjaxValidationTrait;
-    public $layout = '@backend/modules/employee/views/layouts/panel.php';
+
+    public function init()
+    {
+        parent::init();
+        $this->layout = Module::getInstance()->layoutPanel;
+    }
 
     /**
      * {@inheritdoc}

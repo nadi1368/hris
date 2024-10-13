@@ -81,7 +81,7 @@ use yii\helpers\Url;
                                     'data-title' => Module::t('module', 'Insurance Data'). ' - '.$model->user->fullName,
                                     'data-toggle' => 'modal',
                                     'data-target' => '#modal-pjax',
-                                    'data-url' => Url::to(['/employee/default/insurance-data', 'branch_id' => $model->branch_id, 'user_id' => $model->user_id]),
+                                    'data-url' => Url::to([Module::createUrl('default/insurance-data'), 'branch_id' => $model->branch_id, 'user_id' => $model->user_id]),
                                     'data-reload-pjax-container-on-show' => 1,
                                     'data-reload-pjax-container' => "p-jax-salary-period-items",
                                     'data-handle-form-submit' => 1,

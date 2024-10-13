@@ -84,7 +84,7 @@ class EmployeeRequestController extends Controller
                 'employeeRequest' => $employeeRequest
             ]);
 
-            $content = $this->renderFile('@backend/modules/employee/views/employee-request/letter/template.php', [
+            $content = $this->renderFile('@hesabro/hris/views/employee-request/letter/template.php', [
                 'letter' => $letter
             ]);
         }

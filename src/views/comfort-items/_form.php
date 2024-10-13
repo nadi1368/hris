@@ -50,7 +50,7 @@ use yii\widgets\MaskedInput;
                 <div class="position-relative pt-3 col-12" style="border: 3px dotted #bbbbbb; border-radius: 8px;">
                     <label class="position-absolute"
                            style="top: -14px; right: 16px; font-size: 18px; background: white; padding: 0 4px;"><?= Module::t('module', 'Refer') ?></label>
-                    <?= $this->renderFile('@backend/modules/employee/views/comfort-items/_refer.php', [
+                    <?= $this->renderFile('@hesabro/hris/views/comfort-items/_refer.php', [
                         'model' => $model,
                         'comment' => $comment,
                         'form' => $form

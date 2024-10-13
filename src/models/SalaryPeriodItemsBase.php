@@ -194,9 +194,9 @@ class SalaryPeriodItemsBase extends \yii\db\ActiveRecord
         if (!$this->hasErrors() && $this->non_cash_commission > 0) {
             $year = $this->period->year;
             if ($this->employee->start_work > $year->start) {
-                $startTime = strtotime(Jdf::Convert_jalali_to_gregorian($this->employee->start_work) . ' 00:00:00');
+                $startTime = strtotime(Yii::$app->jdf::Convert_jalali_to_gregorian($this->employee->start_work) . ' 00:00:00');
             } else {
-                $startTime = strtotime(Jdf::Convert_jalali_to_gregorian($year->start) . ' 00:00:00');
+                $startTime = strtotime(Yii::$app->jdf::Convert_jalali_to_gregorian($year->start) . ' 00:00:00');
             }
 
             $totalNonCashCommission = SalaryPeriodItems::find()
@@ -307,7 +307,7 @@ class SalaryPeriodItemsBase extends \yii\db\ActiveRecord
 
     public function setHistoryOfWork()
     {
-        $startTime = strtotime(Jdf::Convert_jalali_to_gregorian($this->employee->start_work) . ' 00:00:00');
+        $startTime = strtotime(Yii::$app->jdf::Convert_jalali_to_gregorian($this->employee->start_work) . ' 00:00:00');
         $this->_historyOfWork =
             (int)self::find()
                 ->andWhere(['user_id' => $this->user_id])
@@ -371,8 +371,8 @@ class SalaryPeriodItemsBase extends \yii\db\ActiveRecord
 
     public function getTotalInYear($field = 'total_salary')
     {
-        $startTime = strtotime(Jdf::Convert_jalali_to_gregorian($this->year->start) . ' 00:00:00');
-        $endTime = strtotime(Jdf::Convert_jalali_to_gregorian($this->year->end) . ' 23:59:59');
+        $startTime = strtotime(Yii::$app->jdf::Convert_jalali_to_gregorian($this->year->start) . ' 00:00:00');
+        $endTime = strtotime(Yii::$app->jdf::Convert_jalali_to_gregorian($this->year->end) . ' 23:59:59');
 
         $query = SalaryPeriodItems::find()
             ->andWhere(['user_id' => $this->user_id])
@@ -612,11 +612,11 @@ class SalaryPeriodItemsBase extends \yii\db\ActiveRecord
     {
 
         if ($this->employee->start_work > $year->start) {
-            $startTime = strtotime(Jdf::Convert_jalali_to_gregorian($this->employee->start_work) . ' 00:00:00');
+            $startTime = strtotime(Yii::$app->jdf::Convert_jalali_to_gregorian($this->employee->start_work) . ' 00:00:00');
         } else {
-            $startTime = strtotime(Jdf::Convert_jalali_to_gregorian($year->start) . ' 00:00:00');
+            $startTime = strtotime(Yii::$app->jdf::Convert_jalali_to_gregorian($year->start) . ' 00:00:00');
         }
-        $endTime = strtotime(Jdf::Convert_jalali_to_gregorian($year->end) . ' 23:59:59');
+        $endTime = strtotime(Yii::$app->jdf::Convert_jalali_to_gregorian($year->end) . ' 23:59:59');
 
         $this->hours_of_work = SalaryPeriodItems::find()
                 ->andWhere(['user_id' => $this->user_id])
@@ -679,11 +679,11 @@ class SalaryPeriodItemsBase extends \yii\db\ActiveRecord
     {
 
         if ($this->employee->start_work > $year->start) {
-            $startTime = strtotime(Jdf::Convert_jalali_to_gregorian($this->employee->start_work) . ' 00:00:00');
+            $startTime = strtotime(Yii::$app->jdf::Convert_jalali_to_gregorian($this->employee->start_work) . ' 00:00:00');
         } else {
             $startTime = 0;
         }
-        $endTime = strtotime(Jdf::Convert_jalali_to_gregorian($year->end) . ' 23:59:59');
+        $endTime = strtotime(Yii::$app->jdf::Convert_jalali_to_gregorian($year->end) . ' 23:59:59');
 
         $this->hours_of_work = SalaryPeriodItems::find()
                 ->andWhere(['user_id' => $this->user_id])

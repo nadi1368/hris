@@ -69,7 +69,7 @@ class ComfortItems extends ComfortItemsBase implements SendAutoCommentInterface
         $comment->class_name = self::class;
         $comment->class_id = $this->id;
         $comment->creator_id = Yii::$app->user->identity->getId();
-        $comment->link = Yii::$app->urlManager->createAbsoluteUrl(['/employee/comfort-items/index', $formName . '[id]' => $this->id]);
+        $comment->link = Yii::$app->urlManager->createAbsoluteUrl([Module::createUrl('comfort-items/index'), $formName . '[id]' => $this->id]);
         $comment->title = implode(' ', [
             Module::t('module', 'Refer'),
             Module::t('module', 'Comfort Items'),

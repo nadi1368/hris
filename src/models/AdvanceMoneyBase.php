@@ -231,7 +231,7 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
             return false;
         }
 
-        [$start, $end] = Jdf::getStartAndEndOfCurrentMonth();
+        [$start, $end] = Yii::$app->jdf::getStartAndEndOfCurrentMonth();
 
 //        $countRequest = self::find()
 //            ->my($this->user_id)

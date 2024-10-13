@@ -121,7 +121,7 @@ class LetterBase extends Model
             $this->employeeRequest->indicator_id = $indicator->id;
             $confirm = $this->employeeRequest->confirm();
 
-            $indicator->file_text = (Yii::$app->getView())->renderFile('@backend/modules/employee/views/employee-request/letter/template.php', [
+            $indicator->file_text = (Yii::$app->getView())->renderFile('@hesabro/hris/views/employee-request/letter/template.php', [
                 'letter' => $this
             ]);
             $indicator->save();

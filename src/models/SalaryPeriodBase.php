@@ -126,7 +126,7 @@ class SalaryPeriodBase extends \yii\db\ActiveRecord
     public function validateStartDate($attribute, $params)
     {
         if (!$this->hasErrors()) {
-            $start_time = strtotime(Jdf::Convert_jalali_to_gregorian($this->start_date));
+            $start_time = strtotime(Yii::$app->jdf::Convert_jalali_to_gregorian($this->start_date));
             if (self::find()->andWhere(['start_date' => $start_time, 'workshop_id' => $this->workshop_id])->bySalary()->limit(1)->one() !== null) {
                 $this->addError($attribute, 'برای تاریخ مد نظر قبلا دروه حقوق ایجاد شده است.');
             }
@@ -295,8 +295,8 @@ class SalaryPeriodBase extends \yii\db\ActiveRecord
 
     public function canConfirm()
     {
-        $startTime = strtotime(Jdf::Convert_jalali_to_gregorian($this->year->start) . ' 00:00:00');
-        $endTime = strtotime(Jdf::Convert_jalali_to_gregorian($this->year->end) . ' 23:59:59');
+        $startTime = strtotime(Yii::$app->jdf::Convert_jalali_to_gregorian($this->year->start) . ' 00:00:00');
+        $endTime = strtotime(Yii::$app->jdf::Convert_jalali_to_gregorian($this->year->end) . ' 23:59:59');
         if ($this->status != self::STATUS_WAIT_CONFIRM) {
             return false;
         }
@@ -338,8 +338,8 @@ class SalaryPeriodBase extends \yii\db\ActiveRecord
 
     public function canPayment()
     {
-        $startTime = strtotime(Jdf::Convert_jalali_to_gregorian($this->year->start) . ' 00:00:00');
-        $endTime = strtotime(Jdf::Convert_jalali_to_gregorian($this->year->end) . ' 23:59:59');
+        $startTime = strtotime(Yii::$app->jdf::Convert_jalali_to_gregorian($this->year->start) . ' 00:00:00');
+        $endTime = strtotime(Yii::$app->jdf::Convert_jalali_to_gregorian($this->year->end) . ' 23:59:59');
         if ($this->status != self::STATUS_CONFIRM) {
             return false;
         }
@@ -444,17 +444,17 @@ class SalaryPeriodBase extends \yii\db\ActiveRecord
         if (($preModel = self::find()->andWhere(['workshop_id' => $this->workshop_id])->bySalary()->orderBy(['end_date' => SORT_DESC])->limit(1)->one()) !== null) {
             $this->start_date = strtotime('+1 DAY', $preModel->end_date);
         } else {
-            $this->start_date = Jdf::getStartAndEndOfCurrentYear()['start'];
+            $this->start_date = Yii::$app->jdf::getStartAndEndOfCurrentYear()['start'];
             $this->disableStartDate = true;
         }
     }
 
     public function setEndDate()
     {
-        $start_date = strtotime(Jdf::Convert_jalali_to_gregorian($this->start_date));
+        $start_date = strtotime(Yii::$app->jdf::Convert_jalali_to_gregorian($this->start_date));
         $year = Yii::$app->jdf->jdate("Y", $start_date);
         $month = Yii::$app->jdf->jdate("m", $start_date);
-        $this->end_date = $year . '/' . $month . '/' . Jdf::lastDayInMonth($year, (int)$month);
+        $this->end_date = $year . '/' . $month . '/' . Yii::$app->jdf::lastDayInMonth($year, (int)$month);
     }
 
     public function loadDefaultValuesBeforeInsuranceExport($endWorkAll = false)
@@ -502,7 +502,7 @@ class SalaryPeriodBase extends \yii\db\ActiveRecord
 
     public function getCountDay()
     {
-        return Jdf::lastDayInMonth(Yii::$app->jdf->jdate("Y", $this->start_date), (int)Yii::$app->jdf->jdate("m", $this->start_date));
+        return Yii::$app->jdf::lastDayInMonth(Yii::$app->jdf->jdate("Y", $this->start_date), (int)Yii::$app->jdf->jdate("m", $this->start_date));
     }
 
     /**
@@ -570,8 +570,8 @@ class SalaryPeriodBase extends \yii\db\ActiveRecord
             $this->creator_id = Yii::$app->user->id;
         }
         if (in_array($this->getScenario(), [self::SCENARIO_CREATE, self::SCENARIO_CREATE_YEAR])) {
-            $this->start_date = strtotime(Jdf::Convert_jalali_to_gregorian($this->start_date) . ' 00:00:00');
-            $this->end_date = strtotime(Jdf::Convert_jalali_to_gregorian($this->end_date) . ' 00:00:00');
+            $this->start_date = strtotime(Yii::$app->jdf::Convert_jalali_to_gregorian($this->start_date) . ' 00:00:00');
+            $this->end_date = strtotime(Yii::$app->jdf::Convert_jalali_to_gregorian($this->end_date) . ' 00:00:00');
         }
         $this->update_id = Yii::$app->user->id;
         $this->changed = time();

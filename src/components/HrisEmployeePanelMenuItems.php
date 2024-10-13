@@ -39,7 +39,7 @@ class HrisEmployeePanelMenuItems
             ],
             [
                 'label' => 'قراردادها',
-                'url' => ["/$moduleId/employee/user-contracts/my-contracts"],
+                'url' => ["/$moduleId/user-contracts/my-contracts"],
                 'group' => 'contract',
                 'level' => 'first-level',
                 'icon' => 'far fa-handshake'
@@ -80,7 +80,7 @@ class HrisEmployeePanelMenuItems
                     ],
                     [
                         'label' => Module::t('module', 'Request') . ' ' . Module::t('module', 'Letter'),
-                        'url' => ["/$moduleId/employee/employee-request/my", 'type' => EmployeeRequest::TYPE_LETTER],
+                        'url' => ["/$moduleId/employee-request/my", 'type' => EmployeeRequest::TYPE_LETTER],
                         'group' => 'requests',
                         'level' => 'second-level',
                         'icon' => 'far fa-envelope'
@@ -127,13 +127,13 @@ class HrisEmployeePanelMenuItems
                     [
                         'label' => Module::t('module', 'Internal Numbers'),
                         'icon' => 'far fa-phone',
-                        'url' => ["/$moduleId/employee/internal-number/public"],
+                        'url' => ["/$moduleId/internal-number/public"],
                         'group' => 'InternalNumber',
                         'level' => "second-level",
                     ],
                     [
                         'label' => Module::t('module', 'Organization Chart'),
-                        'url' => "/$moduleId/employee/organization-chart/public",
+                        'url' => "/$moduleId/organization-chart/public",
                         'group' => 'organization-chart',
                         'level' => 'second-level',
                         'icon' => 'fa fa-id-card'

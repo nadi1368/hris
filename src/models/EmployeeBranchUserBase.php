@@ -1039,7 +1039,7 @@ class EmployeeBranchUserBase extends ActiveRecord
 
     public function getLinkMail(): string
     {
-        return Yii::$app->urlManager->createAbsoluteUrl(['/comfort/items']);
+        return Yii::$app->urlManager->createAbsoluteUrl([Module::createUrl('comfort/items')]);
     }
 
     public function getUserMail(): array

@@ -885,7 +885,7 @@ class SalaryPeriodItemsController extends Controller
                     'DSW_NAT' => $employee->national,  // ملیت
                     'DSW_OCP' => $employee->salaryInsurance->group,  // شرح شفل
                     'DSW_SDATE' => \Yii::$app->phpNewVer->strReplace('/', '', $employee->start_work),  // شروع کار
-                    'DSW_EDATE' => $employee->end_work > 1 && $item->total_salary == 0 ? \Yii::$app->phpNewVer->strReplace('/', '', Jdf::plusDay($employee->end_work, 1)) : '',  // ترک کار
+                    'DSW_EDATE' => $employee->end_work > 1 && $item->total_salary == 0 ? \Yii::$app->phpNewVer->strReplace('/', '', Yii::$app->jdf::plusDay($employee->end_work, 1)) : '',  // ترک کار
                     'DSW_DD' => $item->hours_of_work,  // نعداد روز کارکرد
                     'DSW_ROOZ' => $item->basic_salary,  // دستمزد روزانه
                     'DSW_MAH' => ($item->hours_of_work * $item->basic_salary),  // دستمزد ماهانه
@@ -1000,7 +1000,7 @@ class SalaryPeriodItemsController extends Controller
                     'DSW_NAT' => $employee->national,  // ملیت
                     'DSW_OCP' => $employee->salaryInsurance->group,  // شرح شفل
                     'DSW_SDATE' => \Yii::$app->phpNewVer->strReplace('/', '', $employee->start_work),  // شروع کار
-                    'DSW_EDATE' => \Yii::$app->phpNewVer->strReplace('/', '', Jdf::plusDay(Yii::$app->jdf->jdate("Y/m/d", $model->end_date), 1)),  // ترک کار
+                    'DSW_EDATE' => \Yii::$app->phpNewVer->strReplace('/', '', Yii::$app->jdf::plusDay(Yii::$app->jdf->jdate("Y/m/d", $model->end_date), 1)),  // ترک کار
                     'DSW_DD' => 0,  // نعداد روز کارکرد
                     'DSW_ROOZ' => 0,  // دستمزد روزانه
                     'DSW_MAH' => 0,  // دستمزد ماهانه
@@ -1189,7 +1189,7 @@ class SalaryPeriodItemsController extends Controller
                     'DSW_NAT' => $employee->national,  // ملیت
                     'DSW_OCP' => $employee->salaryInsurance->group,  // شرح شفل
                     'DSW_SDATE' => \Yii::$app->phpNewVer->strReplace('/', '', $employee->start_work),  // شروع کار
-                    'DSW_EDATE' => $employee->end_work > 1 && $item->total_salary == 0 ? \Yii::$app->phpNewVer->strReplace('/', '', Jdf::plusDay($employee->end_work, 1)) : '',  // ترک کار
+                    'DSW_EDATE' => $employee->end_work > 1 && $item->total_salary == 0 ? \Yii::$app->phpNewVer->strReplace('/', '', Yii::$app->jdf::plusDay($employee->end_work, 1)) : '',  // ترک کار
                     'DSW_DD' => $item->hours_of_work,  // نعداد روز کارکرد
                     'DSW_ROOZ' => $item->basic_salary,  // دستمزد روزانه
                     'DSW_MAH' => ($item->hours_of_work * $item->basic_salary),  // دستمزد ماهانه

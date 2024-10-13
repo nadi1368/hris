@@ -19,4 +19,10 @@ class Module extends BaseModule
     {
         return Yii::t('hesabro/hris/' . $category, $message, $params, $language);
     }
+
+    public static function createUrl($path = null) {
+        $moduleId = self::getInstance()->moduleId;
+
+        return "/$moduleId/$path";
+    }
 }

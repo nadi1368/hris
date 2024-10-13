@@ -6,6 +6,7 @@ use common\models\AccountDefinite;
 use common\models\CommentsType;
 use common\behaviors\SendAutoCommentsBehavior;
 use common\interfaces\SendAutoCommentInterface;
+use hesabro\hris\Module;
 use Yii;
 use yii\helpers\Html;
 
@@ -64,7 +65,7 @@ class AdvanceMoney extends AdvanceMoneyBase implements SendAutoCommentInterface
         if (in_array($this->getScenario(), [self::SCENARIO_CONFIRM, self::SCENARIO_REJECT])) {
             return '';
         }
-        return Yii::$app->urlManager->createAbsoluteUrl(['/employee/advance-money-manage/index', 'id' => $this->id]);
+        return Yii::$app->urlManager->createAbsoluteUrl([Module::createUrl('advance-money-manage/index'), 'id' => $this->id]);
     }
 
     /**

@@ -139,7 +139,7 @@ class ComfortItemsBase extends Controller
                     }
                 } catch (Exception $e) {
                     $transaction->rollBack();
-                    Yii::error($e->getMessage() . $e->getTraceAsString(), 'employee/comfort-items/reject');
+                    Yii::error($e->getMessage() . $e->getTraceAsString(), Module::getInstance()->moduleId . '/comfort-items/reject');
                     $result = [
                         'success' => false,
                         'msg' => $e->getMessage()
@@ -179,7 +179,7 @@ class ComfortItemsBase extends Controller
                 $transaction->rollBack();
             } catch (Exception $e) {
                 $transaction->rollBack();
-                Yii::error($e->getMessage() . $e->getTraceAsString(), 'employee/comfort-items/revert');
+                Yii::error($e->getMessage() . $e->getTraceAsString(), Module::getInstance()->moduleId . '/comfort-items/revert');
             }
         }
 
