@@ -69,10 +69,10 @@ use yii\web\View;
 						'data-method' => 'post',
 					]) : ''; ?>
 					<?= $item->canDelete() ? Html::a('<span class="far fa-trash-alt text-danger"></span>', ['delete-document', 'id' => $item->id], [
-						'title' => Yii::t('yii', 'Delete'),
+						'title' => Module::t('module', 'Delete'),
 						'class' => 'ajax-btn',
 						'data-url' => Url::to(['delete-document', 'id' => $item->id]),
-						'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+						'data-confirm' => Module::t('module', 'Are you sure you want to delete this item?'),
 						'data-view' => 'index',
 						'data-p-jax' => '#employee-documents-pjax',
 						'data-method' => 'post',

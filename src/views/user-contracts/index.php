@@ -114,7 +114,7 @@ $this->params['breadcrumbs'][] = $this->title;
 									'id' => 'change-shelf',
 									'class' => 'grid-btn grid-btn-update',
 									'data-size' => 'modal-lg',
-									'data-title' => Yii::t('yii', 'Update'),
+									'data-title' => Module::t('module', 'Update'),
 									'data-toggle' => 'modal',
 									'data-target' => '#modal-pjax',
 									'data-url' => Url::to(['user-contracts/change-shelf', 'id' => $model->id]),
@@ -131,7 +131,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						},
 						'delete' => function ($url, $model, $key) use ($searchModel) {
 							return $model->canDelete(false) ? Html::a('<span class="fal fa-trash"></span>', ['user-contracts/delete', 'id' => $model->id], [
-								'title' => Yii::t('yii', 'Delete'),
+								'title' => Module::t('module', 'Delete'),
 								'class' => 'text-danger',
 								'data-confirm' => Module::t('module', 'Are you sure you want to delete this item?'),
 								'data-method' => 'post',

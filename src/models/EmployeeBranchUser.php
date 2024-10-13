@@ -34,7 +34,7 @@ class EmployeeBranchUser extends EmployeeBranchUserBase implements SendAutoComme
     {
         if (!$this->hasErrors()) {
             if ($this->end_work < $this->start_work || $this->end_work > Yii::$app->jdf::jdate("Y/m/d")) {
-                $this->addError($attribute, Yii::t('yii', '{attribute} is invalid.', ['attribute' => $this->getAttributeLabel($attribute)]));
+                $this->addError($attribute, Module::t('module', '{attribute} is invalid.', ['attribute' => $this->getAttributeLabel($attribute)]));
             } elseif (($year = Year::find()->byDate($this->end_work)->one()) === null || !$year->isSetSettingForYearPeriod()) {
                 $this->addError($attribute, 'برای سال مورد نظر تنظیمات اولیه حقوق و دستمزد ست نشده است');
             } elseif (($lastPayment = SalaryPeriodItems::find()->byUser($this->user_id)->joinWith(['period'])->limit(1)->andWhere(['>', 'basic_salary', 0])->orderBy(['start_date' => SORT_DESC])->one()) !== null && $this->end_work != Yii::$app->jdf::jdate("Y/m/d", $lastPayment->period->end_date)) {

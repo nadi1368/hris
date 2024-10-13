@@ -102,7 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                             return Html::a('<span class="far fa-eye text-info"></span>',
                                 ArrayHelper::merge(['index'], $link), [
-                                    'title' => Yii::t('yii', 'View'),
+                                    'title' => Module::t('module', 'View'),
                                     'class' => 'target'
                                 ]);
                         },

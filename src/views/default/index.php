@@ -59,13 +59,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     'buttons' => [
                         'update' => function ($url, $model, $key) {
                             return $model->canUpdate() ? Html::a('<span class="far fa-edit text-success"></span>', ['update', 'id' => $key], [
-                                'title' => Yii::t('yii', 'Update'),
+                                'title' => Module::t('module', 'Update'),
                             ]) : '';
                         },
                         'delete' => function ($url, $model, $key) {
                             return $model->canDelete() ? Html::a('<span class="far fa-trash-alt text-danger"></span>', ['delete', 'id' => $key], [
-                                'title' => Yii::t('yii', 'Delete'),
-                                'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                                'title' => Module::t('module', 'Delete'),
+                                'data-confirm' => Module::t('module', 'Are you sure you want to delete this item?'),
                                 'data-method' => 'post',
                             ]) : '';
                         },

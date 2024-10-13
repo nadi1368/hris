@@ -107,8 +107,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         'delete' => function ($url, EmployeeRequest $model, $key) {
                             return $model->canDelete() ? Html::a(Html::tag('span', '', ['class' => "far fa-trash-alt ml-2"]), Url::to(['delete', 'id' => $model->id]),
                                 [
-                                    'title' => Yii::t('yii', 'Delete'),
-                                    'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                                    'title' => Module::t('module', 'Delete'),
+                                    'data-confirm' => Module::t('module', 'Are you sure you want to delete this item?'),
                                     'data-method' => 'post',
                                     'class' => 'ajax-btn text-danger',
                                     'data-view' => 'index',

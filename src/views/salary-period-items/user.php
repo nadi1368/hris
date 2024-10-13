@@ -252,13 +252,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         'delete' => function ($url, $model, $key) {
                             return $model->canDelete() ? Html::a(Html::tag('span', '', ['class' => "far fa-trash-alt ml-2"]), 'javascript:void(0)',
                                 [
-                                    'title' => Yii::t('yii', 'Delete'),
-                                    'aria-label' => Yii::t('yii', 'Delete'),
+                                    'title' => Module::t('module', 'Delete'),
+                                    'aria-label' => Module::t('module', 'Delete'),
                                     'data-reload-pjax-container' => 'p-jax-salary-period-items',
                                     'data-pjax' => '0',
                                     'data-url' => Url::to(['delete', 'id' => $model->id]),
                                     'class' => " text-danger p-jax-btn",
-                                    'data-title' => Yii::t('yii', 'Delete'),
+                                    'data-title' => Module::t('module', 'Delete'),
                                     'data-method' => 'post'
 
                                 ]) : '';

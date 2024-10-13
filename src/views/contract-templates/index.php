@@ -118,7 +118,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						},
 						'delete' => function ($url, ContractTemplates $model, $key) use ($searchModel) {
 							return $model->canDelete() ? Html::a('<span class="fal fa-trash"></span>', ['delete', 'id' => $model->id], [
-								'title' => Yii::t('yii', 'Delete'),
+								'title' => Module::t('module', 'Delete'),
 								'class' => 'text-danger',
 								'data-confirm' => Module::t('module', 'Are you sure you want to delete this item?'),
 								'data-method' => 'post',

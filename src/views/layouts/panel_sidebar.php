@@ -18,7 +18,7 @@ if (Yii::$app->user->identity->canAccess(['comments/inbox', 'comments/create']))
 
 $menuItems = [
     [
-        'label' => Yii::t('app' , 'Home') . ' ' . Module::t('module', 'HR'),
+        'label' => Yii::t('module' , 'Home') . ' ' . Module::t('module', 'HR'),
         'url' => ['/profile/index'],
         'group' => 'dashboard',
         'level' => 'first-level',
