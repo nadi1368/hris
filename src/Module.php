@@ -7,10 +7,13 @@ use yii\base\Module as BaseModule;
 
 class Module extends BaseModule
 {
+    public string $moduleId = 'hris';
 
     public string | null $user = null;
 
     public string | null $settings = null;
+
+    public string | null $layoutPanel = null;
 
     public static function t($category, $message, $params = [], $language = null): string
     {

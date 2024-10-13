@@ -18,7 +18,7 @@ $this->registerJsFile("@web/js/reward-calculate.js?v=1.1.8", ['depends' => [\yii
 $js = 'calculateSalary();';
 $this->registerJs($js);
 
-$paymentReward = BalanceDaily::find()->byDefinite(Settings::get('reward_period_payment_m_id'))->byAccount($model->employee->account_id)->andWhere(['between', 'b_date', Year::getDefault('start'), Year::getDefault('end')])->one();
+$paymentReward = BalanceDaily::find()->byDefinite(Module::getInstance()->settings::get('reward_period_payment_m_id'))->byAccount($model->employee->account_id)->andWhere(['between', 'b_date', Year::getDefault('start'), Year::getDefault('end')])->one();
 $totalPaymentInYear=$model->getTotalInYear()  - ($model->year->COST_TAX_STEP_1_MIN) - ((int)$model->getTotalInYear('insurance') * 2 / 7);
 ?>
 
@@ -31,7 +31,7 @@ $totalPaymentInYear=$model->getTotalInYear()  - ($model->year->COST_TAX_STEP_1_M
                 <div class="col-md-12">
                     <div class="alert alert-info">
                         <p>این کاربر در این سال مالی گردش عیدی پاداش دارد.</p>
-                        <p><?= Html::a(Module::t('module', 'Details'), ['/account/cycle', 'DocumentDetailsSearch[definite_id]' => Settings::get('reward_period_payment_m_id'), 'DocumentDetailsSearch[a_id]' => $model->employee->account_id, 'DocumentDetailsSearch[fromDate]' => Year::getDefault('start'), 'DocumentDetailsSearch[toDate]' => Year::getDefault('end')], ['class' => 'text-info']) ?></p>
+                        <p><?= Html::a(Module::t('module', 'Details'), ['/account/cycle', 'DocumentDetailsSearch[definite_id]' => Module::getInstance()->settings::get('reward_period_payment_m_id'), 'DocumentDetailsSearch[a_id]' => $model->employee->account_id, 'DocumentDetailsSearch[fromDate]' => Year::getDefault('start'), 'DocumentDetailsSearch[toDate]' => Year::getDefault('end')], ['class' => 'text-info']) ?></p>
                     </div>
                 </div>
             <?php endif; ?>

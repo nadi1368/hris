@@ -29,7 +29,7 @@ $link['SalaryPeriodItemsSearch']['user_id'] = [];
 <div class="card">
     <div class="card-body">
         <?php foreach ($model->getSalaryPeriodItems()->all() as $index => $item): ?>
-            <?php if (($amount = (BalanceDetailed::getBalance(Settings::get('salary_period_payment_m_id', true), $item->employee->account_id) * (-1))) !== $item->finalPayment): ?>
+            <?php if (($amount = (BalanceDetailed::getBalance(Module::getInstance()->settings::get('salary_period_payment_m_id', true), $item->employee->account_id) * (-1))) !== $item->finalPayment): ?>
                 <?php
                 $showUpdateBtn = true;
                 $link['SalaryPeriodItemsSearch']['user_id'][] = $item->user_id;

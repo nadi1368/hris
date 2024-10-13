@@ -16,7 +16,7 @@ use common\models\Company;
 /* @var $orderCount integer */
 /* @var $cancelRequestCount integer */
 
-$websiteName = Settings::get('web_site_name');
+$websiteName = Module::getInstance()->settings::get('web_site_name');
 ?>
 <header class="topbar">
     <nav class="navbar top-navbar navbar-expand-md navbar-dark">

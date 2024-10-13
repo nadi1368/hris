@@ -64,11 +64,11 @@ class EmployeeBranchUser extends EmployeeBranchUserBase implements SendAutoComme
 
         if ($for_contract) {
             $data += [
-                'company_name' => Settings::get('business_name', true),
-                'company_ceo' => Settings::get('employee_company_ceo', true),
-                'company_number' => Settings::get('business_phone_number', true),
-                'company_address' => Settings::get('business_address', true),
-                'company_national_code' => Settings::get('national_id', true),
+                'company_name' => Module::getInstance()->settings::get('business_name', true),
+                'company_ceo' => Module::getInstance()->settings::get('employee_company_ceo', true),
+                'company_number' => Module::getInstance()->settings::get('business_phone_number', true),
+                'company_address' => Module::getInstance()->settings::get('business_address', true),
+                'company_national_code' => Module::getInstance()->settings::get('national_id', true),
             ];
         }
 
@@ -91,13 +91,13 @@ class EmployeeBranchUser extends EmployeeBranchUserBase implements SendAutoComme
         /****************** محاسبه سنوات ******************/
         $modelSalaryPeriodItemsYear = new SalaryPeriodItems(['user_id' => $this->user_id, 'yearModel' => $year]);
         $modelSalaryPeriodItemsYear->loadDefaultValuesBeforeCreateYear(strtotime(Yii::$app->jdf::Convert_jalali_to_gregorian($this->end_work) . ' 23:59:59'), $year);
-        $debtor = BalanceDetailed::getBalance(Settings::get('year_period_m_id', true), $this->account_id, true);
+        $debtor = BalanceDetailed::getBalance(Module::getInstance()->settings::get('year_period_m_id', true), $this->account_id, true);
 
         if (($yearPayment = $modelSalaryPeriodItemsYear->payment_salary - $debtor) > 0) {
             /****************** بدهکار ******************/
-            $flag = $flag && $document->saveDetailWitDefinite(Settings::get('year_period_interface', true), null, $yearPayment, 0, $document->des . ' - سنوات ' . $modelSalaryPeriodItemsYear->hours_of_work . ' روز');
+            $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('year_period_interface', true), null, $yearPayment, 0, $document->des . ' - سنوات ' . $modelSalaryPeriodItemsYear->hours_of_work . ' روز');
             /****************** بستانکار ******************/
-            $flag = $flag && $document->saveDetailWitDefinite(Settings::get('year_period_m_id', true), $this->account_id, 0, $yearPayment, $document->des . ' - سنوات ' . $modelSalaryPeriodItemsYear->hours_of_work . ' روز');
+            $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('year_period_m_id', true), $this->account_id, 0, $yearPayment, $document->des . ' - سنوات ' . $modelSalaryPeriodItemsYear->hours_of_work . ' روز');
         }
 
         /****************** محاسبه عیدی پاداش ******************/
@@ -109,24 +109,24 @@ class EmployeeBranchUser extends EmployeeBranchUserBase implements SendAutoComme
         $modelSalaryPeriodItemsReward->payment_salary = (int)($modelSalaryPeriodItemsReward->total_salary - $modelSalaryPeriodItemsReward->tax);
         /****************** بدهکار ******************/
         if ($modelSalaryPeriodItemsReward->total_salary > 0) {
-            $flag = $flag && $document->saveDetailWitDefinite(Settings::get('reward_period_m_id', true), null, $modelSalaryPeriodItemsReward->total_salary, 0, $document->des . ' - عیدی پاداش ');
+            $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('reward_period_m_id', true), null, $modelSalaryPeriodItemsReward->total_salary, 0, $document->des . ' - عیدی پاداش ');
         }
 
         /****************** بستانکار ******************/
         if ($modelSalaryPeriodItemsReward->tax > 0) {
-            $flag = $flag && $document->saveDetailWitDefinite(Settings::get('salary_period_tax_m_id', true), Settings::get('salary_period_tax_t_id', true), 0, $modelSalaryPeriodItemsReward->tax, $document->des . ' - عیدی پاداش ');
+            $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('salary_period_tax_m_id', true), Module::getInstance()->settings::get('salary_period_tax_t_id', true), 0, $modelSalaryPeriodItemsReward->tax, $document->des . ' - عیدی پاداش ');
         }
 
         if ($modelSalaryPeriodItemsReward->payment_salary > 0) {
-            $flag = $flag && $document->saveDetailWitDefinite(Settings::get('reward_period_payment_m_id', true), $this->account_id, 0, $modelSalaryPeriodItemsReward->payment_salary, $document->des . ' - عیدی پاداش ');
+            $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('reward_period_payment_m_id', true), $this->account_id, 0, $modelSalaryPeriodItemsReward->payment_salary, $document->des . ' - عیدی پاداش ');
         }
 
         /****************** کسر مساعده ******************/
         if ($modelSalaryPeriodItemsReward->advance_money > 0) {
             /****************** بدهکار ******************/
-            $flag = $flag && $document->saveDetailWitDefinite(Settings::get('salary_period_payment_m_id', true), $this->account_id, $modelSalaryPeriodItemsReward->advance_money, 0, $document->des . ' - کسر مساعده');
+            $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('salary_period_payment_m_id', true), $this->account_id, $modelSalaryPeriodItemsReward->advance_money, 0, $document->des . ' - کسر مساعده');
             /****************** بستانکار ******************/
-            $flag = $flag && $document->saveDetailWitDefinite(Settings::get('m_debtor_advance_money', true), $this->account_id, 0, $modelSalaryPeriodItemsReward->advance_money, $document->des . ' - کسر مساعده');
+            $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('m_debtor_advance_money', true), $this->account_id, 0, $modelSalaryPeriodItemsReward->advance_money, $document->des . ' - کسر مساعده');
 
         }
         return $flag && $document->validateTaraz();

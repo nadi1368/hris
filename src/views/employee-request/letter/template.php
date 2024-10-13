@@ -13,19 +13,19 @@ use yii\bootstrap4\Html;
 $variables = $letter->getVariablesValue();
 $with_header=true;
 
-$position = Settings::get('position_indicator_number_print') ?: '0,0';
+$position = Module::getInstance()->settings::get('position_indicator_number_print') ?: '0,0';
 $position = explode(',', str_replace('،', ',', $position));
 $x = $position[0];
 $y = $position[1];
 $y2 = $position[2] ?? 20;
 ?>
 
-<table <?= $with_header ? 'style="margin-top:'. Settings::get('top_margin_factor_print').'cm; width:100%;' : 'style="width: 100%;"'?>>
+<table <?= $with_header ? 'style="margin-top:'. Module::getInstance()->settings::get('top_margin_factor_print').'cm; width:100%;' : 'style="width: 100%;"'?>>
     <thead>
     <?php if (!$with_header): ?>
         <tr>
             <th class="text-right">
-                <?= Html::img(Settings::get('company_logo_for_contracts'), ['class' => 'mt-2 mb-2', 'style' => ['height' => '17.2mm', 'text-align' => 'right', 'display' => 'block']]); ?>
+                <?= Html::img(Module::getInstance()->settings::get('company_logo_for_contracts'), ['class' => 'mt-2 mb-2', 'style' => ['height' => '17.2mm', 'text-align' => 'right', 'display' => 'block']]); ?>
             </th>
             <th class="text-right" style="width: 33%">
                 <p style="position: absolute; top: <?= $x ?>; left: <?= $y ?>; margin-block-start: 0 !important; margin-block-end: 0 !important; font-weight: normal;">

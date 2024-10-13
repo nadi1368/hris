@@ -141,7 +141,7 @@ $startAndEndOfPreMonth = Jdf::getStartAndEndOfPreMonth();
 $pre_first_month = Yii::$app->jdf->jdate('Y/m/d', $startAndEndOfPreMonth[0]);
 $pre_last_month = Yii::$app->jdf->jdate('Y/m/d', $startAndEndOfPreMonth[1]);
 
-$main_domain = YII_DEBUG ? "http://localhost/crm/managerCrm/" : Settings::get("web_site_domain");
+$main_domain = YII_DEBUG ? "http://localhost/crm/managerCrm/" : Module::getInstance()->settings::get("web_site_domain");
 $script_doday_value = <<< JS
 today_date="$today_date";
 first_month="$first_month";

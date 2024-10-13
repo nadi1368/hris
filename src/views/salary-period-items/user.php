@@ -133,7 +133,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'label' => 'مساعده دریافتی',
                     'value' => function ($model) {
-                        return number_format((float)BalanceDetailed::getBalance(Settings::get('m_debtor_advance_money'), $model->user->tafzil->id, false));
+                        return number_format((float)BalanceDetailed::getBalance(Module::getInstance()->settings::get('m_debtor_advance_money'), $model->user->tafzil->id, false));
                     },
                     'format' => 'raw',
 

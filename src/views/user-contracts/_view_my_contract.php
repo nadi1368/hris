@@ -31,7 +31,7 @@ $this->registerCss($css);
 	<thead>
 		<tr>
 			<th>
-				<?= \yii\bootstrap4\Html::img(Settings::get('company_logo_for_contracts'), ['class' => 'mt-2 mb-2', 'style' => ['height' => '17.2mm', 'text-align' => 'right', 'display' => 'block']]); ?>
+				<?= \yii\bootstrap4\Html::img(Module::getInstance()->settings::get('company_logo_for_contracts'), ['class' => 'mt-2 mb-2', 'style' => ['height' => '17.2mm', 'text-align' => 'right', 'display' => 'block']]); ?>
 				<hr>
 			</th>
 		</tr>

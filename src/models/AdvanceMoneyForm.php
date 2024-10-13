@@ -9,6 +9,7 @@ use common\models\Account;
 use common\models\AccountDefinite;
 use common\models\Document;
 use common\models\Settings;
+use hesabro\hris\Module;
 use Yii;
 
 /**
@@ -75,8 +76,8 @@ class AdvanceMoneyForm extends AdvanceMoneyFormBase
     public function loadDefaultValues()
     {
         $this->date = Yii::$app->jdf->jdate("Y/m/d");
-        $this->definite_id_from = Settings::get('AdvanceMoneyForm_DefaultDefiniteCreditor');
-        $this->account_id_from = Settings::get('AdvanceMoneyForm_DefaultAccountCreditor');
+        $this->definite_id_from = Module::getInstance()->settings::get('AdvanceMoneyForm_DefaultDefiniteCreditor');
+        $this->account_id_from = Module::getInstance()->settings::get('AdvanceMoneyForm_DefaultAccountCreditor');
     }
 
     /**
@@ -93,7 +94,7 @@ class AdvanceMoneyForm extends AdvanceMoneyFormBase
         $document->des = $this->description;
         $flag = $document->save();
         /****************** بدهکار ******************/
-        $flag = $flag && $document->saveDetailWitDefinite(Settings::get('m_debtor_advance_money', true), $this->account_id_to, $this->amount, 0, $document->des, $document->h_date); // مساعده حقوق به تفضیل کارمند
+        $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('m_debtor_advance_money', true), $this->account_id_to, $this->amount, 0, $document->des, $document->h_date); // مساعده حقوق به تفضیل کارمند
         /****************** بستانکار ******************/
         $flag = $flag && $document->saveDetailWithWage($this->definite_id_from, $this->account_id_from, 0, $this->amount, $this->wage_type, $this->wage_amount, $document->des, $document->h_date);
 

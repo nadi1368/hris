@@ -25,7 +25,7 @@ $this->registerCss($css);
 			<a class="navbar-brand" href="<?= Url::to(['/site/index']) ?>">
 				<!-- Logo icon -->
 				<b class="logo-icon">
-					<?= Settings::get('web_site_name') ?> <span class="hris-tag">Pulse</span>
+					<?= Module::getInstance()->settings::get('web_site_name') ?> <span class="hris-tag">Pulse</span>
 				</b>
 				<!--End Logo icon -->
 			</a>

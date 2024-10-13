@@ -1,0 +1,207 @@
+<?php
+
+namespace hesabro\hris\components;
+
+use hesabro\helpers\traits\MenuHelper;
+use hesabro\hris\models\AdvanceMoney;
+use hesabro\hris\models\ComfortItems;
+use hesabro\hris\models\Content;
+use hesabro\hris\models\ContractTemplates;
+use hesabro\hris\models\EmployeeBranchUser;
+use hesabro\hris\models\EmployeeRequest;
+use hesabro\hris\Module;
+use yii\helpers\Html;
+
+class HrisAdminPanelMenuItems
+{
+    use MenuHelper;
+
+    public static function items()
+    {
+        $moduleId = Module::getInstance()->moduleId;
+        $advanceMoneyRequest = AdvanceMoney::find()->wait()->exists();
+        $employeeRequest = EmployeeRequest::find()->pending()->exists();
+        $comfortItemRequest = ComfortItems::find()->waiting()->exists();
+        $employeePendingUpdate = EmployeeBranchUser::find()->havePendingData()->exists();
+
+        return [
+            [
+                'label' => "داشبورد",
+                'iconWidget' => 'ph:house-bold',
+                'group' => 'settings',
+                'url' => ["/$moduleId"],
+            ],
+            [
+                'label' => 'اطلاعات اولیه',
+                'iconWidget' => 'ph:database-bold',
+                'group' => 'GeneralInfo',
+                'level' => "first-level",
+                'items' => [
+                    [
+                        'label' => Module::t('module', "Salary Years Settings"),
+                        'url' => ["/$moduleId/default/year-setting"],
+                        'group' => 'GeneralInfo',
+                    ],
+                    [
+                        'label' => Module::t('module', 'Rate Of Year Salaries'),
+                        'url' => ["/$moduleId/rate-of-year-salary/index"],
+                        'group' => 'GeneralInfo',
+                    ],
+                    [
+                        'label' => Module::t('module', "Salary Insurances"),
+                        'url' => ["/$moduleId/salary-insurance/index"],
+                        'group' => 'GeneralInfo',
+                    ],
+                    [
+                        'label' => Module::t('module', "Workshop Insurances"),
+                        'url' => ["/$moduleId/workshop-insurance/index"],
+                        'group' => 'GeneralInfo',
+                    ],
+                    [
+                        'label' => Module::t('module', "Contract Templates"),
+                        'url' => ["/$moduleId/contract-templates/index", 'type' => ContractTemplates::TYPE_CONTRACT],
+                        'group' => 'GeneralInfo',
+                    ],
+                    [
+                        'label' => Module::t('module', "Letter Templates"),
+                        'url' => ["/$moduleId/contract-templates/index", 'type' => ContractTemplates::TYPE_LETTER],
+                        'group' => 'GeneralInfo',
+                    ],
+                    [
+                        'label' => Module::t('module', "User Contracts Shelves"),
+                        'url' => ["/$moduleId/user-contracts-shelves/index"],
+                        'group' => 'GeneralInfo',
+                    ],
+                    [
+                        'label' => Module::t('module', 'Job Description'),
+                        'url' => ["/$moduleId/content/index", 'type' => Content::TYPE_JOB_DESCRIPTION],
+                        'group' => 'GeneralInfo'
+                    ],
+                    [
+                        'label' => Module::t('module', 'Announcement'),
+                        'url' => ["/$moduleId/content/index", 'type' => Content::TYPE_ANNOUNCEMENT],
+                        'group' => 'GeneralInfo'
+                    ],
+                    [
+                        'label' => Module::t('module', 'Employee'),
+                        'url' => ["/$moduleId/content/index", 'type' => Content::TYPE_EMPLOYEE],
+                        'group' => 'GeneralInfo'
+                    ],
+                    [
+                        'label' => Module::t('module', 'Internal Numbers'),
+                        'url' => ["/$moduleId/internal-number/index"],
+                        'group' => 'GeneralInfo'
+                    ],
+                    [
+                        'label' => Module::t('module', 'Organization Chart'),
+                        'url' => ["/$moduleId/organization-chart/index"],
+                        'group' => 'GeneralInfo',
+                    ],
+                ]
+            ],
+            [
+                'label' => 'حضور و غیاب',
+                'icon' => 'far fa-analytics',
+                'iconWidget' => 'ph:user-circle-check-bold',
+                'group' => 'RollCall',
+                'level' => "first-level",
+                'items' => [
+                    [
+                        'label' => 'فایل های اکسل حضور و غیاب',
+                        'url' => ["/$moduleId/employee-roll-call/list-csv"],
+                        'group' => 'RollCall',
+                    ],
+                    [
+                        'label' => 'وضعیت تردد',
+                        'url' => ["/$moduleId/employee-roll-call/index"],
+                        'group' => 'RollCall',
+                    ],
+                    [
+                        'label' => Module::t('module', "Salary Items Additions"),
+                        'url' => ["/$moduleId/salary-items-addition/index"],
+                        'group' => 'RollCall',
+                    ],
+                    [
+                        'label' => 'فایل های اکسل مزایای غیر نقدی',
+                        'url' => ["/$moduleId/salary-items-addition/list-csv-salary-non-cash"],
+                        'group' => 'RollCall',
+                    ],
+                    [
+                        'label' => 'گزارش مرخصی کارمندان',
+                        'url' => ["/$moduleId/salary-items-addition/report-leave"],
+                        'group' => 'RollCall',
+                    ],
+                    [
+                        'label' => 'نمودار مرخصی کارمندان',
+                        'url' => ["/$moduleId/salary-items-addition/chart-leave"],
+                        'group' => 'RollCall',
+                    ],
+                ]
+            ],
+            [
+                'label' => Module::t('module', 'Comforts'),
+                'iconWidget' => 'ph:gift-bold',
+                'url' => ["/$moduleId/comfort/index"],
+                'level' => "first-level",
+                'group' => 'comforts',
+            ],
+            [
+                'label' => Html::tag('span', Module::t('module', 'Requests'), ['class' => $advanceMoneyRequest || $employeeRequest || $comfortItemRequest ? 'pulse-notification' : '']),
+                'iconWidget' => 'ph:gift-bold',
+                'url' => ["/$moduleId/comfort-items/index"],
+                'level' => "first-level",
+                'group' => 'Requests',
+                'encode' => false
+            ],
+            [
+                'label' => Module::t('module', 'Employee Branches'),
+                'icon' => 'far fa-building',
+                'url' => ["/$moduleId/default/index"],
+                'group' => 'EmployeeBranch',
+                'level' => "first-level",
+            ],
+            [
+                'label' => Html::tag('span', Module::t('module', "Employee Branch User"), ['class' => $employeePendingUpdate ? 'pulse-notification' : '']),
+                'icon' => 'far fa-users',
+                'url' => ["/$moduleId/default/users"],
+                'group' => 'EmployeeBranchUser',
+                'level' => "first-level",
+                'encode' => false
+            ],
+            [
+                'label' => Module::t('module', 'Salary Periods'),
+                'icon' => 'far fa-money-check',
+                'url' => ["/$moduleId/salary-period/index"],
+                'group' => 'EmployeeSalaryPeriods',
+                'level' => "first-level",
+            ],
+            [
+                'label' => Module::t('module', 'Contracts'),
+                'icon' => 'far fa-file-contract',
+                'url' => ["/$moduleId/user-contracts/index"],
+                'group' => 'EmployeeContracts',
+                'level' => 'first-level'
+            ],
+            [
+                'label' => 'مدیریت درخواست مرخصی',
+                'group' => 'request-leave-manage',
+                'level' => 'first-level',
+                'icon' => 'fa fa-user',
+                'items' => [
+                    [
+                        'label' => Module::t('module', 'Department Manager'),
+                        'url' => ["/$moduleId/request-leave/manage"],
+                        'group' => 'request-leave-manage',
+                        'level' => 'second-level',
+                    ],
+                    [
+                        'label' => Module::t('module', 'General Manager'),
+                        'url' => ["/$moduleId/request-leave/admin"],
+                        'group' => 'request-leave-manage',
+                        'level' => 'second-level',
+                    ]
+                ]
+            ],
+        ];
+    }
+}

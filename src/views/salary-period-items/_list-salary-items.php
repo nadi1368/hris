@@ -336,7 +336,7 @@ $this->registerCss($style);
                 [
                     'label' => 'مساعده دریافتی',
                     'value' => function ($model) {
-                        return number_format((float)BalanceDetailed::getBalance(Settings::get('m_debtor_advance_money'), $model->user->customer->oneAccount->id, false));
+                        return number_format((float)BalanceDetailed::getBalance(Module::getInstance()->settings::get('m_debtor_advance_money'), $model->user->customer->oneAccount->id, false));
                     },
                     'format' => 'raw',
 

@@ -4,6 +4,7 @@ namespace hesabro\hris\models;
 
 use hesabro\changelog\behaviors\LogBehavior;
 use hesabro\helpers\behaviors\JsonAdditional;
+use hesabro\hris\Module;
 use Yii;
 use hesabro\helpers\components\Helper;
 use common\models\BalanceDetailed;
@@ -57,17 +58,17 @@ class SalaryPeriod extends SalaryPeriodBase
         $flag = $document->save();
 
         /****************** بدهکار ******************/
-        $flag = $flag && $document->saveDetailWitDefinite(Settings::get('salary_period_m_id', true), ($this->workshop->account_id ?: null), $this->getSalaryPeriodItems()->sum('total_salary'), 0, $document->des, $document->h_date); // حقوق و دستمزد
-        $flag = $flag && $document->saveDetailWitDefinite(Settings::get('salary_period_insurance_owner_m_id', true), null, $this->getSalaryPeriodItems()->sum('insurance_owner'), 0, $document->des, $document->h_date); // بیمه سهم کارفرما
+        $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('salary_period_m_id', true), ($this->workshop->account_id ?: null), $this->getSalaryPeriodItems()->sum('total_salary'), 0, $document->des, $document->h_date); // حقوق و دستمزد
+        $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('salary_period_insurance_owner_m_id', true), null, $this->getSalaryPeriodItems()->sum('insurance_owner'), 0, $document->des, $document->h_date); // بیمه سهم کارفرما
 
 
         /****************** بستانکار ******************/
-        $flag = $flag && $document->saveDetailWitDefinite(Settings::get('salary_period_insurance_m_id', true), Settings::get('salary_period_insurance_t_id', true), 0, $this->getSalaryPeriodItems()->sum('insurance+insurance_owner'), $document->des, $document->h_date); // سازمان تامین اجتماعی
-        $flag = $flag && $document->saveDetailWitDefinite(Settings::get('salary_period_tax_m_id', true), Settings::get('salary_period_tax_t_id', true), 0, $this->getSalaryPeriodItems()->sum('tax'), $document->des, $document->h_date); // سازمان امور مالیاتی
+        $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('salary_period_insurance_m_id', true), Module::getInstance()->settings::get('salary_period_insurance_t_id', true), 0, $this->getSalaryPeriodItems()->sum('insurance+insurance_owner'), $document->des, $document->h_date); // سازمان تامین اجتماعی
+        $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('salary_period_tax_m_id', true), Module::getInstance()->settings::get('salary_period_tax_t_id', true), 0, $this->getSalaryPeriodItems()->sum('tax'), $document->des, $document->h_date); // سازمان امور مالیاتی
         foreach ($this->getSalaryPeriodItems()->all() as $item) {
             /** @var SalaryPeriodItems $item * */
             if ($item->payment_salary > 0) {
-                $flag = $flag && $document->saveDetailWitDefinite(Settings::get('salary_period_payment_m_id', true), $item->employee->account_id, 0, $item->payment_salary, $document->des, $document->h_date); // حقوق ودستمزد پرداختنی
+                $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('salary_period_payment_m_id', true), $item->employee->account_id, 0, $item->payment_salary, $document->des, $document->h_date); // حقوق ودستمزد پرداختنی
             }
         }
         return $flag && $document->validateTaraz();
@@ -87,15 +88,15 @@ class SalaryPeriod extends SalaryPeriodBase
         $flag = $document->save();
 
         /****************** بدهکار ******************/
-        $flag = $flag && $document->saveDetailWitDefinite(Settings::get('reward_period_m_id', true), null, $this->getSalaryPeriodItems()->sum('total_salary'), 0, $document->des, $document->h_date); // حقوق و دستمزد
+        $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('reward_period_m_id', true), null, $this->getSalaryPeriodItems()->sum('total_salary'), 0, $document->des, $document->h_date); // حقوق و دستمزد
 
 
         /****************** بستانکار ******************/
-        $flag = $flag && $document->saveDetailWitDefinite(Settings::get('salary_period_tax_m_id', true), Settings::get('salary_period_tax_t_id', true), 0, $this->getSalaryPeriodItems()->sum('tax'), $document->des, $document->h_date); // سازمان امور مالیاتی
+        $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('salary_period_tax_m_id', true), Module::getInstance()->settings::get('salary_period_tax_t_id', true), 0, $this->getSalaryPeriodItems()->sum('tax'), $document->des, $document->h_date); // سازمان امور مالیاتی
         foreach ($this->getSalaryPeriodItems()->all() as $item) {
             /** @var SalaryPeriodItems $item * */
             if ($item->payment_salary > 0) {
-                $flag = $flag && $document->saveDetailWitDefinite(Settings::get('reward_period_payment_m_id', true), $item->employee->account_id, 0, $item->payment_salary, $document->des, $document->h_date); // حقوق ودستمزد پرداختنی
+                $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('reward_period_payment_m_id', true), $item->employee->account_id, 0, $item->payment_salary, $document->des, $document->h_date); // حقوق ودستمزد پرداختنی
             }
         }
         return $flag && $document->validateTaraz();
@@ -110,7 +111,7 @@ class SalaryPeriod extends SalaryPeriodBase
         $totalDebtor = 0;
         foreach ($this->getSalaryPeriodItems()->all() as $item) {
             /** @var SalaryPeriodItems $item */
-            $debtor = BalanceDetailed::getBalance(Settings::get('year_period_m_id', true), $item->employee->account_id, true);
+            $debtor = BalanceDetailed::getBalance(Module::getInstance()->settings::get('year_period_m_id', true), $item->employee->account_id, true);
             if ($debtor > 0) {
                 $totalDebtor += $debtor;
             }
@@ -130,14 +131,14 @@ class SalaryPeriod extends SalaryPeriodBase
         /****************** بدهکار ******************/
         foreach ($this->getSalaryPeriodItems()->all() as $item) {
             /** @var SalaryPeriodItems $item */
-            $debtor = BalanceDetailed::getBalance(Settings::get('year_period_m_id', true), $item->employee->account_id, true);
+            $debtor = BalanceDetailed::getBalance(Module::getInstance()->settings::get('year_period_m_id', true), $item->employee->account_id, true);
             if ($debtor > 0) {
-                $flag = $flag && $document->saveDetailWitDefinite(Settings::get('year_period_m_id', true), $item->employee->account_id, $debtor, 0, $document->des, $document->h_date); //  سنوات پایان خدمت پرداختنی / تفصیلی پذیر
+                $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('year_period_m_id', true), $item->employee->account_id, $debtor, 0, $document->des, $document->h_date); //  سنوات پایان خدمت پرداختنی / تفصیلی پذیر
                 $totalDebtor += $debtor;
             }
         }
         /****************** بستانکار ******************/
-        $flag = $flag && $document->saveDetailWitDefinite(Settings::get('year_period_interface', true), null, 0, $totalDebtor, $document->des, $document->h_date); // هزینه مزد سنوات پرسنل
+        $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('year_period_interface', true), null, 0, $totalDebtor, $document->des, $document->h_date); // هزینه مزد سنوات پرسنل
         return $flag && $document->validateTaraz();
     }
 
@@ -157,13 +158,13 @@ class SalaryPeriod extends SalaryPeriodBase
         $flag = $document->save();
 
         /****************** بدهکار ******************/
-        $flag = $flag && $document->saveDetailWitDefinite(Settings::get('year_period_interface', true), null, $this->getSalaryPeriodItems()->sum('total_salary'), 0, $document->des, $document->h_date);
+        $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('year_period_interface', true), null, $this->getSalaryPeriodItems()->sum('total_salary'), 0, $document->des, $document->h_date);
 
         /****************** بستانکار ******************/
         foreach ($this->getSalaryPeriodItems()->all() as $item) {
             /** @var SalaryPeriodItems $item * */
             if ($item->payment_salary > 0) {
-                $flag = $flag && $document->saveDetailWitDefinite(Settings::get('year_period_m_id', true), $item->employee->account_id, 0, $item->payment_salary, $document->des, $document->h_date); // حقوق ودستمزد پرداختنی
+                $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('year_period_m_id', true), $item->employee->account_id, 0, $item->payment_salary, $document->des, $document->h_date); // حقوق ودستمزد پرداختنی
             }
         }
         return $flag && $document->validateTaraz();
@@ -186,16 +187,16 @@ class SalaryPeriod extends SalaryPeriodBase
             foreach ($this->getSalaryPeriodItems()->andWhere('advance_money>0')->all() as $item) {
                 /** @var SalaryPeriodItems $item * */
                 /****************** بدهکار ******************/
-                $flag = $flag && $document->saveDetailWitDefinite(Settings::get('salary_period_payment_m_id', true), $item->employee->account_id, $item->advance_money, 0, $document->des, $document->h_date);
+                $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('salary_period_payment_m_id', true), $item->employee->account_id, $item->advance_money, 0, $document->des, $document->h_date);
                 /****************** بستانکار ******************/
-                $flag = $flag && $document->saveDetailWitDefinite(Settings::get('m_debtor_advance_money', true), $item->employee->account_id, 0, $item->advance_money, $document->des, $document->h_date);
+                $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('m_debtor_advance_money', true), $item->employee->account_id, 0, $item->advance_money, $document->des, $document->h_date);
             }
             foreach ($this->getSalaryPeriodItems()->andWhere('JSON_EXTRACT(' . SalaryPeriodItems::tableName() . '.`additional_data`, "$.salary_decrease")>0')->all() as $item) {
                 /** @var SalaryPeriodItems $item * */
                 /****************** بدهکار ******************/
-                $flag = $flag && $document->saveDetailWitDefinite(Settings::get('salary_period_payment_m_id', true), $item->employee->account_id, $item->salary_decrease, 0, $document->des . ' - کسر حقوق ', $document->h_date);
+                $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('salary_period_payment_m_id', true), $item->employee->account_id, $item->salary_decrease, 0, $document->des . ' - کسر حقوق ', $document->h_date);
                 /****************** بستانکار ******************/
-                $flag = $flag && $document->saveDetailWitDefinite(Settings::get('m_debtor_salary_decrease', true), null, 0, $item->salary_decrease, $document->des . ' - کسر حقوق ' . ' - ' . $item->user->customer->fullName, $document->h_date);
+                $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('m_debtor_salary_decrease', true), null, 0, $item->salary_decrease, $document->des . ' - کسر حقوق ' . ' - ' . $item->user->customer->fullName, $document->h_date);
             }
             return $flag && $document->validateTaraz();
         } else {
@@ -223,9 +224,9 @@ class SalaryPeriod extends SalaryPeriodBase
             foreach ($this->getSalaryPeriodItems()->andWhere('non_cash_commission>0')->all() as $item) {
                 /** @var SalaryPeriodItems $item * */
                 /****************** بدهکار ******************/
-                $flag = $flag && $document->saveDetailWitDefinite(Settings::get('salary_period_payment_m_id', true), $item->employee->account_id, $item->non_cash_commission, 0, $document->des, $document->h_date);
+                $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('salary_period_payment_m_id', true), $item->employee->account_id, $item->non_cash_commission, 0, $document->des, $document->h_date);
                 /****************** بستانکار ******************/
-                $flag = $flag && $document->saveDetailWitDefinite(Settings::get('salary_period_non_cash_payment_m_id', true), $item->employee->account_id, 0, $item->non_cash_commission, $document->des, $document->h_date);
+                $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('salary_period_non_cash_payment_m_id', true), $item->employee->account_id, 0, $item->non_cash_commission, $document->des, $document->h_date);
 
             }
             return $flag && $document->validateTaraz();
@@ -253,9 +254,9 @@ class SalaryPeriod extends SalaryPeriodBase
             foreach ($this->getSalaryPeriodItems()->andWhere('insurance_addition>0')->all() as $item) {
                 /** @var SalaryPeriodItems $item * */
                 /****************** بدهکار ******************/
-                $flag = $flag && $document->saveDetailWitDefinite(Settings::get('salary_period_payment_m_id', true), $item->employee->account_id, $item->insurance_addition, 0, $document->des, $document->h_date);
+                $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('salary_period_payment_m_id', true), $item->employee->account_id, $item->insurance_addition, 0, $document->des, $document->h_date);
                 /****************** بستانکار ******************/
-                $flag = $flag && $document->saveDetailWitDefinite(Settings::get('salary_period_insurance_addition_m_id', true), $item->employee->account_id, 0, $item->insurance_addition, $document->des, $document->h_date);
+                $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('salary_period_insurance_addition_m_id', true), $item->employee->account_id, 0, $item->insurance_addition, $document->des, $document->h_date);
 
             }
             return $flag && $document->validateTaraz();
@@ -281,9 +282,9 @@ class SalaryPeriod extends SalaryPeriodBase
             foreach ($this->getSalaryPeriodItems()->andWhere('advance_money>0')->all() as $item) {
                 /** @var SalaryPeriodItems $item * */
                 /****************** بدهکار ******************/
-                $flag = $flag && $document->saveDetailWitDefinite(Settings::get('reward_period_payment_m_id', true), $item->employee->account_id, $item->advance_money, 0, $document->des, $document->h_date);
+                $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('reward_period_payment_m_id', true), $item->employee->account_id, $item->advance_money, 0, $document->des, $document->h_date);
                 /****************** بستانکار ******************/
-                $flag = $flag && $document->saveDetailWitDefinite(Settings::get('m_debtor_advance_money', true), $item->employee->account_id, 0, $item->advance_money, $document->des, $document->h_date);
+                $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('m_debtor_advance_money', true), $item->employee->account_id, 0, $item->advance_money, $document->des, $document->h_date);
             }
             return $flag && $document->validateTaraz();
         } else {
@@ -307,16 +308,16 @@ class SalaryPeriod extends SalaryPeriodBase
         $totalAmount = 0;
         foreach ($this->getSalaryPeriodItems()->all() as $item) {
             /** @var SalaryPeriodItems $item * */
-            $amount = BalanceDetailed::getBalance(Settings::get('salary_period_payment_m_id', true), $item->employee->account_id) * (-1);
+            $amount = BalanceDetailed::getBalance(Module::getInstance()->settings::get('salary_period_payment_m_id', true), $item->employee->account_id) * (-1);
             if ($amount > 0 && $item->can_payment == Helper::CHECKED) {
                 /** @var SalaryPeriodItems $item * */
                 /****************** بدهکار ******************/
-                $flag = $flag && $document->saveDetailWitDefinite(Settings::get('salary_period_payment_m_id', true), $item->employee->account_id, $amount, 0, $document->des, $document->h_date);
+                $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('salary_period_payment_m_id', true), $item->employee->account_id, $amount, 0, $document->des, $document->h_date);
                 $totalAmount += $amount;
             }
         }
         /****************** بستانکار ******************/
-        $flag = $flag && $document->saveDetailWitDefinite(Settings::get('m_interface_salary_period_item', true), null, 0, $totalAmount, $document->des, $document->h_date);
+        $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('m_interface_salary_period_item', true), null, 0, $totalAmount, $document->des, $document->h_date);
         return $flag && $document->validateTaraz();
 
     }
@@ -336,16 +337,16 @@ class SalaryPeriod extends SalaryPeriodBase
         $totalAmount = 0;
         foreach ($this->getSalaryPeriodItems()->all() as $item) {
             /** @var SalaryPeriodItems $item * */
-            $amount = BalanceDetailed::getBalance(Settings::get('reward_period_payment_m_id', true), $item->employee->account_id) * (-1);
+            $amount = BalanceDetailed::getBalance(Module::getInstance()->settings::get('reward_period_payment_m_id', true), $item->employee->account_id) * (-1);
             if ($amount > 0 && $item->can_payment == Helper::CHECKED) {
                 /** @var SalaryPeriodItems $item * */
                 /****************** بدهکار ******************/
-                $flag = $flag && $document->saveDetailWitDefinite(Settings::get('reward_period_payment_m_id', true), $item->employee->account_id, $amount, 0, $document->des, $document->h_date);
+                $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('reward_period_payment_m_id', true), $item->employee->account_id, $amount, 0, $document->des, $document->h_date);
                 $totalAmount += $amount;
             }
         }
         /****************** بستانکار ******************/
-        $flag = $flag && $document->saveDetailWitDefinite(Settings::get('m_interface_salary_period_item', true), null, 0, $totalAmount, $document->des, $document->h_date);
+        $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('m_interface_salary_period_item', true), null, 0, $totalAmount, $document->des, $document->h_date);
         return $flag && $document->validateTaraz();
 
     }
@@ -365,16 +366,16 @@ class SalaryPeriod extends SalaryPeriodBase
         $totalAmount = 0;
         foreach ($this->getSalaryPeriodItems()->all() as $item) {
             /** @var SalaryPeriodItems $item * */
-            $amount = BalanceDetailed::getBalance(Settings::get('reward_period_payment_m_id', true), $item->employee->account_id) * (-1);
+            $amount = BalanceDetailed::getBalance(Module::getInstance()->settings::get('reward_period_payment_m_id', true), $item->employee->account_id) * (-1);
             if ($amount > 0) {
                 /** @var SalaryPeriodItems $item * */
                 /****************** بدهکار ******************/
-                $flag = $flag && $document->saveDetailWitDefinite(Settings::get('reward_period_payment_m_id', true), $item->employee->account_id, $amount, 0, $document->des, $document->h_date);
+                $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('reward_period_payment_m_id', true), $item->employee->account_id, $amount, 0, $document->des, $document->h_date);
                 $totalAmount += $amount;
             }
         }
         /****************** بستانکار ******************/
-        $flag = $flag && $document->saveDetailWitDefinite(Settings::get('m_interface_salary_period_item', true), null, 0, $totalAmount, $document->des, $document->h_date);
+        $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('m_interface_salary_period_item', true), null, 0, $totalAmount, $document->des, $document->h_date);
         return $flag && $document->validateTaraz();
 
     }

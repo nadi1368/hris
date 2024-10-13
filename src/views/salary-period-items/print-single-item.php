@@ -14,7 +14,7 @@ $this->title = '  فیش حقوقی دوره ' . $model->period->getTitleWithYea
 <div class="row d-flex justify-content-center align-items-center" dir="rtl">
     <div class="col-12">
         <div class="row d-flex justify-content-center align-items-center">
-            <?php if (($logo = Settings::get('company_logo_for_contracts'))): ?>
+            <?php if (($logo = Module::getInstance()->settings::get('company_logo_for_contracts'))): ?>
                 <h1 class="text-center" style="margin-bottom: 0;">
                     <?= Html::img($logo, ['class' => 'mt-2 mb-2', 'style' => ['width' => '80.11mm']]); ?>
                 </h1>
