@@ -11,8 +11,8 @@ use hesabro\hris\Module;
 $this->title = Module::t('module', 'Requests');
 $this->params['breadcrumbs'][] = $this->title;
 
-echo $this->renderFile('@backend/modules/employee/views/layouts/_requests_tabs.php', [
-    'content' => $this->renderFile('@backend/modules/employee/views/advance-money-manage/_index.php', [
+echo $this->renderFile('@hesabro/hris/views/layouts/_requests_tabs.php', [
+    'content' => $this->renderFile('@hesabro/hris/views/advance-money-manage/_index.php', [
         'searchModel' => $searchModel,
         'dataProvider' => $dataProvider
     ])
