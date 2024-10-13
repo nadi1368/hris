@@ -49,27 +49,27 @@ class DefaultBase extends Controller
                     [
                         [
                             'allow' => true,
-                            'roles' => ['EmployeeBranch/index'],
+                            'roles' => ['EmployeeBranch/index', 'superadmin'],
                             'actions' => ['index', 'users']
                         ],
                         [
                             'allow' => true,
-                            'roles' => ['EmployeeBranch/create'],
+                            'roles' => ['EmployeeBranch/create', 'superadmin'],
                             'actions' => ['create']
                         ],
                         [
                             'allow' => true,
-                            'roles' => ['EmployeeBranch/update'],
+                            'roles' => ['EmployeeBranch/update', 'superadmin'],
                             'actions' => ['update', 'update-user', 'insurance-data', 'reject-update', 'year-setting', 'update-year-setting', 'set-end-work', 'start-work-again', 'return-end-work']
                         ],
                         [
                             'allow' => true,
-                            'roles' => ['EmployeeBranch/delete'],
+                            'roles' => ['EmployeeBranch/delete', 'superadmin'],
                             'actions' => ['delete', 'migrate']
                         ],
                         [
                             'allow' => true,
-                            'roles' => ['EmployeeBranch/view'],
+                            'roles' => ['EmployeeBranch/view', 'superadmin'],
                             'actions' => ['view', 'view-user', 'view-user-documents', 'view-user-contracts', 'confirm-document', 'delete-document']
                         ],
                     ]
