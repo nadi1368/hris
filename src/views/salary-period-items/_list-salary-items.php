@@ -1,8 +1,6 @@
 <?php
 
 use hesabro\hris\models\SalaryPeriodItems;
-use common\models\BalanceDetailed;
-use common\models\Settings;
 use hesabro\helpers\widgets\grid\GridView;
 use hesabro\hris\Module;
 use yii\bootstrap4\ButtonDropdown;
@@ -336,7 +334,7 @@ $this->registerCss($style);
                 [
                     'label' => 'مساعده دریافتی',
                     'value' => function ($model) {
-                        return number_format((float)BalanceDetailed::getBalance(Module::getInstance()->settings::get('m_debtor_advance_money'), $model->user->customer->oneAccount->id, false));
+                        return number_format((float)Module::getInstance()->balanceDetailedClass::getBalance(Module::getInstance()->settings::get('m_debtor_advance_money'), $model->user->customer->oneAccount->id, false));
                     },
                     'format' => 'raw',
 

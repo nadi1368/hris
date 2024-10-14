@@ -5,8 +5,6 @@
 
 use hesabro\hris\models\ComfortItems;
 use hesabro\hris\models\SalaryItemsAddition;
-use common\models\BalanceDetailed;
-use common\models\Settings;
 use hesabro\hris\Module;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
