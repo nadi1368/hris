@@ -6,6 +6,7 @@ use yii\helpers\Html;
 use hesabro\helpers\widgets\grid\GridView;
 use yii\web\View;
 use yii\widgets\Pjax;
+use hesabro\hris\Module;
 
 /* @var $this View */
 /* @var $searchModel hesabro\hris\models\SalaryItemsAdditionSearch */
@@ -103,7 +104,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             return Html::a('<span class="far fa-eye text-info"></span>',
                                 ArrayHelper::merge(['index'], $link), [
                                     'title' => Module::t('module', 'View'),
-                                    'class' => 'target'
+                                    'class' => 'target',
+                                    'data-pjax'=>'0'
                                 ]);
                         },
                     ]

@@ -262,7 +262,7 @@ class ComfortBase extends ActiveRecord
      */
     public function getComfortItems(): ActiveQuery
     {
-        return $this->hasMany(Module::getInstance()->user, ['comfort_id' => 'id']);
+        return $this->hasMany(ComfortItems::class, ['comfort_id' => 'id']);
     }
 
     /**
