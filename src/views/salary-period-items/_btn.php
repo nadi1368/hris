@@ -136,8 +136,7 @@ use yii\helpers\Url;
         ]) : '' ?>
 <?php
 $operationItems = [];
-if($salaryPeriod->status !== SalaryPeriod::STATUS_WAIT_CONFIRM)
-{
+if ($salaryPeriod->status !== SalaryPeriod::STATUS_WAIT_CONFIRM) {
     $operationItems[] = [
         'label' => Html::tag('span', '', ['class' => 'fa fa-file-excel']) . ' ' . Module::t('module', 'Excel'),
         'url' => ['export', 'id' => $salaryPeriod->id],
@@ -147,8 +146,7 @@ if($salaryPeriod->status !== SalaryPeriod::STATUS_WAIT_CONFIRM)
         ],
     ];
 }
-if($salaryPeriod->status === SalaryPeriod::STATUS_PAYMENT)
-{
+if ($salaryPeriod->status === SalaryPeriod::STATUS_PAYMENT) {
     $operationItems[] = [
         'label' => Html::tag('span', '', ['class' => 'fa fa-file-excel']) . ' ' . 'اکسل بانک با ابرسا',
         'url' => 'javascript:void(0)',
@@ -258,3 +256,15 @@ $operationItems[] = [
     ],
 ])
 ?>
+<?php if ( ($documentItems =$salaryPeriod->buttonDropdownDocument([])) && count($documentItems) > 0): ?>
+    <?= ButtonDropdown::widget([
+        'label' => 'اسناد',
+        'options' => ['class' => ''],
+        'buttonOptions' => ['class' => 'btn btn-secondary dropdown-toggle ml-1', 'title' => Module::t('module', 'Actions')],
+        'encodeLabel' => false,
+        'dropdown' => [
+            'items' => $documentItems,
+        ],
+    ])
+    ?>
+<?php endif; ?>

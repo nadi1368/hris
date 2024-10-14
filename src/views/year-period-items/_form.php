@@ -1,6 +1,5 @@
 <?php
 
-use backend\models\BalanceDaily;
 use hesabro\hris\models\SalaryBase;
 use hesabro\hris\models\SalaryPeriodItems;
 use common\models\Settings;
@@ -19,7 +18,7 @@ $js = 'calculateYearPeriod();';
 $this->registerJs($js);
 
 
-$paymentReward = BalanceDaily::find()->byDefinite(Module::getInstance()->settings::get('reward_period_payment_m_id'))->byAccount($model->employee->account_id)->andWhere(['between', 'b_date', Year::getDefault('start'), Year::getDefault('end')])->one();
+$paymentReward = Module::getInstance()->balanceDetailedClass::find()->byDefinite(Module::getInstance()->settings::get('reward_period_payment_m_id'))->byAccount($model->employee->account_id)->andWhere(['between', 'b_date', Year::getDefault('start'), Year::getDefault('end')])->one();
 ?>
 
 <div class="salary-period-items-form">

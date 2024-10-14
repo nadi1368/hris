@@ -3,6 +3,7 @@
 namespace hesabro\hris\models;
 
 use hesabro\changelog\behaviors\LogBehavior;
+use hesabro\helpers\behaviors\DocumentsDataBehavior;
 use hesabro\helpers\behaviors\JsonAdditional;
 use hesabro\hris\Module;
 use Yii;
@@ -444,6 +445,32 @@ class SalaryPeriod extends SalaryPeriodBase
     }
 
     /**
+     * @return bool
+     * کارمندانی که ترک کار شده اند و در دوره ثبت نشده اند.
+     */
+    public function addEndWorkEmployee()
+    {
+        $flag = true;
+        if (($previousModel = self::find()->byPrevious($this->workshop_id, $this->start_date)->limit(1)->one()) !== null) {
+            foreach ($previousModel->getSalaryPeriodItems()->joinWith(['employee'])
+                         ->andWhere(['>=', 'JSON_EXTRACT(' . EmployeeBranchUser::tableName() . '.`additional_data`, "$.end_work")', Yii::$app->jdate->date("Y/m/d", $previousModel->start_date)])
+                         ->andWhere(['=', 'JSON_EXTRACT(' . EmployeeBranchUser::tableName() . '.`additional_data`, "$.end_work")', Yii::$app->jdate->date("Y/m/d", $previousModel->end_date)])
+                         ->andWhere(['NOT IN', SalaryPeriodItems::tableName() . '.user_id', $this->getSalaryPeriodItems()->select(['user_id'])])
+                         ->all() as $employeeLost) {
+                /** @var SalaryPeriodItems $employeeLost */
+                $model = new SalaryPeriodItems([
+                    'period_id' => $this->id,
+                    'user_id' => $employeeLost->user_id,
+                ]);
+                $model->description = 'ترک کار ' . $employeeLost->employee->end_work;
+                $flag = $flag && $model->save(false);
+            }
+
+        }
+        return $flag;
+    }
+
+    /**
      * @return mixed
      */
     public function getDocumentLink()
@@ -460,44 +487,17 @@ class SalaryPeriod extends SalaryPeriodBase
         return Yii::$app->urlManager->createUrl(ArrayHelper::merge(['/document/index'], $link));
     }
 
-
     public function behaviors()
     {
-        return [
-            [
-                'class' => LogBehavior::class,
-                'ownerClassName' => self::class,
-                'saveAfterInsert' => true
-            ],
+        return array_merge(parent::behaviors(), [
             [
                 'class' => MutexBehavior::class,
             ],
             [
-                'class' => JsonAdditional::class,
-                'ownerClassName' => self::class,
-                'fieldAdditional' => 'additional_data',
-                'AdditionalDataProperty' => [
-                    'DSK_KIND' => 'String',
-                    'DSK_LISTNO' => 'String',
-                    'DSK_DISC' => 'String',
-                    'DSK_NUM' => 'String',
-                    'DSK_TDD' => 'String',
-                    'DSK_TROOZ' => 'String',
-                    'DSK_TMAH' => 'String',
-                    'DSK_TMAZ' => 'String',
-                    'DSK_TMASH' => 'String',
-                    'DSK_TTOTL' => 'String',
-                    'DSK_TBIME' => 'String',
-                    'DSK_TKOSO' => 'String',
-                    'DSK_BIC' => 'String',
-                    'DSK_RATE' => 'String',
-                    'DSK_PRATE' => 'String',
-                    'DSK_BIMH' => 'String',
-                    'sms_payment' => 'Integer',
-                    'kind' => 'Integer',
-                    'setRollCall' => 'Integer',
-                ],
+                'class' => DocumentsDataBehavior::class,
+                'documentArrayField' => 'documentsArray',
+                'documentClass' => Document::class
             ],
-        ];
+        ]);
     }
 }

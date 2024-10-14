@@ -29,7 +29,7 @@ $form = ActiveForm::begin(['id' => 'internal-number-form']); ?>
 
         <div class="col-md-6">
             <?= $form->field($model, 'user_id')->widget(Select2::class, [
-                'data' => Module::getInstance()->user::getUserWithRoles(['user']),
+                'data' => Module::getInstance()->user::getUserWithRoles(Module::getInstance()->employeeRole),
                 'pluginOptions' => [
                     'allowClear' => true,
                 ],

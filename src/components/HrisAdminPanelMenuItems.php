@@ -14,15 +14,16 @@ use yii\helpers\Html;
 
 class HrisAdminPanelMenuItems
 {
-    use MenuHelper;
 
-    public static function items()
+
+    public static function items($moduleId='hris')
     {
-        $moduleId = Module::getInstance()->moduleId;
         $advanceMoneyRequest = AdvanceMoney::find()->wait()->exists();
-        $employeeRequest = EmployeeRequest::find()->pending()->exists();
+        //$employeeRequest = EmployeeRequest::find()->pending()->exists();
+        $employeeRequest = false;
         $comfortItemRequest = ComfortItems::find()->waiting()->exists();
-        $employeePendingUpdate = EmployeeBranchUser::find()->havePendingData()->exists();
+        //$employeePendingUpdate = EmployeeBranchUser::find()->havePendingData()->exists();
+        $employeePendingUpdate = false;
 
         return [
             [

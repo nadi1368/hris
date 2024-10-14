@@ -3,7 +3,7 @@
 use hesabro\hris\models\WorkshopInsurance;
 use hesabro\hris\Module;
 use yii\helpers\Html;
-use sadi01\bidashboard\widgets\grid\GridView;
+use hesabro\helpers\widgets\grid\GridView;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 
@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'attribute' => 'account_id',
                     'value' => function (WorkshopInsurance $model) {
-                        return $model->branch_id ? $model->account?->getLink() : '';
+                        return $model->account_id ? $model->account?->getLink() : '';
                     },
                     'format' => 'raw'
                 ],

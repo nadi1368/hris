@@ -31,7 +31,7 @@ use yii\widgets\MaskedInput;
 
 			<div class="col-md-4">
 				<?= $form->field($model, 'user_id')->widget(Select2::class, [
-					'data' => Module::getInstance()->user::getUserWithRoles(['employee']),
+					'data' => Module::getInstance()->user::getUserWithRoles(Module::getInstance()->employeeRole),
 					'pluginOptions' => [
 						'allowClear' => true,
 					],

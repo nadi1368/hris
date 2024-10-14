@@ -1,8 +1,6 @@
 <?php
 
 use hesabro\hris\models\SalaryPeriodItems;
-use common\models\BalanceDetailed;
-use common\models\Settings;
 use hesabro\helpers\widgets\grid\GridView;
 use hesabro\hris\Module;
 use yii\bootstrap4\ButtonDropdown;
@@ -336,7 +334,7 @@ $this->registerCss($style);
                 [
                     'label' => 'مساعده دریافتی',
                     'value' => function ($model) {
-                        return number_format((float)BalanceDetailed::getBalance(Module::getInstance()->settings::get('m_debtor_advance_money'), $model->user->customer->oneAccount->id, false));
+                        return number_format((float)Module::getInstance()->balanceDetailedClass::getBalance(Module::getInstance()->settings::get('m_debtor_advance_money'), $model->user->customer->oneAccount->id, false));
                     },
                     'format' => 'raw',
 
@@ -352,7 +350,7 @@ $this->registerCss($style);
                 [
                     'attribute' => 'non_cash_commission',
                     'value' => function ($model) {
-                        return number_format($model->non_cash_commission);
+                        return number_format((int)$model->non_cash_commission);
                     },
                     'footer' => number_format((int)$dataProvider->query->sum('non_cash_commission')),
                     'format' => 'raw',
@@ -360,9 +358,9 @@ $this->registerCss($style);
                 [
                     'attribute' => 'payment_salary',
                     'value' => function ($model) {
-                        return number_format((float)$model->payment_salary);
+                        return number_format((int)$model->payment_salary);
                     },
-                    'footer' => number_format((float)$dataProvider->query->sum('payment_salary')),
+                    'footer' => number_format((int)$dataProvider->query->sum('payment_salary')),
                     'format' => 'raw',
                 ],
             ],

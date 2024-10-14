@@ -2,6 +2,8 @@
 
 namespace hesabro\hris\models;
 
+use hesabro\changelog\behaviors\LogBehavior;
+use hesabro\helpers\behaviors\JsonAdditional;
 use hesabro\hris\Module;
 use hesabro\helpers\components\Jdf;
 use hesabro\helpers\validators\DateValidator;
@@ -61,6 +63,7 @@ class SalaryPeriodBase extends \yii\db\ActiveRecord
     public $sms_payment = 0;
     public $kind = 0;
     public $setRollCall;
+    public $documentsArray;
 
     /**f
      * {@inheritdoc}
@@ -582,5 +585,43 @@ class SalaryPeriodBase extends \yii\db\ActiveRecord
     public function getRangeDate()
     {
         return Yii::$app->jdf->jdate('Y/m/d', $this->start_date) . " - " . Yii::$app->jdf->jdate('Y/m/d', $this->end_date);
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => LogBehavior::class,
+                'ownerClassName' => self::class,
+                'saveAfterInsert' => true
+            ],
+            [
+                'class' => JsonAdditional::class,
+                'ownerClassName' => self::class,
+                'fieldAdditional' => 'additional_data',
+                'AdditionalDataProperty' => [
+                    'DSK_KIND' => 'String',
+                    'DSK_LISTNO' => 'String',
+                    'DSK_DISC' => 'String',
+                    'DSK_NUM' => 'String',
+                    'DSK_TDD' => 'String',
+                    'DSK_TROOZ' => 'String',
+                    'DSK_TMAH' => 'String',
+                    'DSK_TMAZ' => 'String',
+                    'DSK_TMASH' => 'String',
+                    'DSK_TTOTL' => 'String',
+                    'DSK_TBIME' => 'String',
+                    'DSK_TKOSO' => 'String',
+                    'DSK_BIC' => 'String',
+                    'DSK_RATE' => 'String',
+                    'DSK_PRATE' => 'String',
+                    'DSK_BIMH' => 'String',
+                    'sms_payment' => 'Integer',
+                    'kind' => 'Integer',
+                    'setRollCall' => 'Integer',
+                    'documentsArray' => 'Any',
+                ],
+            ],
+        ];
     }
 }

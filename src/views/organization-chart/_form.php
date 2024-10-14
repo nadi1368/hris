@@ -20,7 +20,7 @@ use yii\helpers\Html;
 
     <div class="col-md-4">
         <?= $form->field($model, 'user_id')->widget(Select2::class, [
-            'data' => Module::getInstance()->user::getUserWithRoles(['user']),
+            'data' => Module::getInstance()->user::getUserWithRoles(Module::getInstance()->employeeRole),
             'options' => [
                 'placeholder' => 'کاربر مرتبط',
                 'dir' => 'rtl',
