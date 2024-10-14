@@ -3,10 +3,10 @@
 namespace hesabro\hris\models;
 
 use common\models\UserPoints;
-use backend\models\BalanceDaily;
 use console\job\SmsArrayJob;
 use common\models\Year;
 use Yii;
+use hesabro\hris\Module;
 
 /**
  * Class SalaryPeriodItems
@@ -53,7 +53,7 @@ class SalaryPeriodItems extends SalaryPeriodItemsBase
      */
     public function getAdvanceMoneyUntilThisMonth()
     {
-        return (int)BalanceDaily::getBalanceDaily(Module::getInstance()->settings::get('m_debtor_advance_money'), $this->user->customer->oneAccount->id, Yii::$app->jdf->jdate("Y/m/d", $this->period->end_date));
+        return (int)Module::getInstance()->balanceDetailedClass::getBalanceDaily(Module::getInstance()->settings::get('m_debtor_advance_money'), $this->user->customer->oneAccount->id, Yii::$app->jdf->jdate("Y/m/d", $this->period->end_date));
     }
 
     public function sendSmsPayment()

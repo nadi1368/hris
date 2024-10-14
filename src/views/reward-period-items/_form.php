@@ -1,6 +1,5 @@
 <?php
 
-use backend\models\BalanceDaily;
 use hesabro\hris\models\SalaryBase;
 use hesabro\hris\models\SalaryPeriodItems;
 use common\models\Settings;
@@ -18,7 +17,7 @@ $this->registerJsFile("@web/js/reward-calculate.js?v=1.1.8", ['depends' => [\yii
 $js = 'calculateSalary();';
 $this->registerJs($js);
 
-$paymentReward = BalanceDaily::find()->byDefinite(Module::getInstance()->settings::get('reward_period_payment_m_id'))->byAccount($model->employee->account_id)->andWhere(['between', 'b_date', Year::getDefault('start'), Year::getDefault('end')])->one();
+$paymentReward = Module::getInstance()->balanceDetailedClass::find()->byDefinite(Module::getInstance()->settings::get('reward_period_payment_m_id'))->byAccount($model->employee->account_id)->andWhere(['between', 'b_date', Year::getDefault('start'), Year::getDefault('end')])->one();
 $totalPaymentInYear=$model->getTotalInYear()  - ($model->year->COST_TAX_STEP_1_MIN) - ((int)$model->getTotalInYear('insurance') * 2 / 7);
 ?>
 

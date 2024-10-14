@@ -15,6 +15,8 @@ class Module extends BaseModule
 
     public string | null $balanceDetailedClass = null;
 
+    public string | null $balanceDailyClass = null;
+
     public string | null $layoutPanel = null;
 
     public static function t($category, $message, $params = [], $language = null): string
