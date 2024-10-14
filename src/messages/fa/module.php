@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    '2-Step Verification' => 'اهراز هویت دو مرحله‌ای',
+    '2-Step Verification' => 'احراز هویت دو مرحله‌ای',
     'Account ID' => 'تفصیل',
     'Actions' => 'عملیات',
     'Active Contracts Count' => 'تعداد قرارداد های فعال',

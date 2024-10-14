@@ -15,12 +15,13 @@ class Module extends BaseModule
 
     public string | null $layoutPanel = null;
 
-    public static function t($category, $message, $params = [], $language = null): string
+    public static function t($category, $message, $params = [], $language = null)
     {
         return Yii::t('hesabro/hris/' . $category, $message, $params, $language);
     }
 
-    public static function createUrl($path = null) {
+    public static function createUrl($path = null)
+    {
         $moduleId = self::getInstance()->moduleId;
 
         return "/$moduleId/$path";
