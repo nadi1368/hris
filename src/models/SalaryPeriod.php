@@ -3,6 +3,7 @@
 namespace hesabro\hris\models;
 
 use hesabro\changelog\behaviors\LogBehavior;
+use hesabro\helpers\behaviors\DocumentsDataBehavior;
 use hesabro\helpers\behaviors\JsonAdditional;
 use hesabro\hris\Module;
 use Yii;
@@ -442,6 +443,7 @@ class SalaryPeriod extends SalaryPeriodBase
         }
         return true;
     }
+
     /**
      * @return bool
      * کارمندانی که ترک کار شده اند و در دوره ثبت نشده اند.
@@ -467,6 +469,7 @@ class SalaryPeriod extends SalaryPeriodBase
         }
         return $flag;
     }
+
     /**
      * @return mixed
      */
@@ -489,6 +492,11 @@ class SalaryPeriod extends SalaryPeriodBase
         return array_merge(parent::behaviors(), [
             [
                 'class' => MutexBehavior::class,
+            ],
+            [
+                'class' => DocumentsDataBehavior::class,
+                'documentArrayField' => 'documentsArray',
+                'documentClass' => Document::class
             ],
         ]);
     }

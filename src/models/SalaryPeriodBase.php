@@ -63,6 +63,7 @@ class SalaryPeriodBase extends \yii\db\ActiveRecord
     public $sms_payment = 0;
     public $kind = 0;
     public $setRollCall;
+    public $documentsArray;
 
     /**f
      * {@inheritdoc}
@@ -618,6 +619,7 @@ class SalaryPeriodBase extends \yii\db\ActiveRecord
                     'sms_payment' => 'Integer',
                     'kind' => 'Integer',
                     'setRollCall' => 'Integer',
+                    'documentsArray' => 'Any',
                 ],
             ],
         ];

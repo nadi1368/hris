@@ -12,8 +12,8 @@ class SalaryPeriodItemsQuery extends SalaryPeriodItemsQueryBase
     {
         return $this
             ->joinWith(['user.customer.oneAccount.balanceDetailed'])
-            ->andWhere([BalanceDetailed::tableName() . '.definite_id' => Module::getInstance()->Module::getInstance()->settings::get('m_debtor_advance_money')])
-            ->andWhere(BalanceDetailed::tableName() . '.balance>0')
-            ->andWhere(BalanceDetailed::tableName().'.`balance` <> '.SalaryPeriodItems::tableName().'.`advance_money`');
+            ->andWhere([Module::getInstance()->balanceDetailedClass::tableName() . '.definite_id' => Module::getInstance()->settings::get('m_debtor_advance_money')])
+            ->andWhere(Module::getInstance()->balanceDetailedClass::tableName() . '.balance>0')
+            ->andWhere(Module::getInstance()->balanceDetailedClass::tableName().'.`balance` <> '.SalaryPeriodItems::tableName().'.`advance_money`');
     }
 }
