@@ -1,8 +1,6 @@
 <?php
 
-use common\models\Rbac;
 use hesabro\hris\Module;
-use sadi01\bidashboard\widgets\ReportModalWidget;
 use yii\helpers\Html;
 use hesabro\helpers\widgets\grid\GridView;
 use \hesabro\hris\models\EmployeeRollCall;
@@ -25,21 +23,6 @@ $this->params['breadcrumbs'][] = $this->title;
             </h4>
             <div>
                 <?= Html::a('آپلود فایل حضور و غیاب روزانه', ['employee-roll-call/upload-csv-daily'], ['class' => 'btn btn-success']) ?>
-                <?= Yii::$app->client->identity->canAccess(Rbac::TYPE_BUSINESS_INTELLIGENT) && Yii::$app->user->can('master') ?
-                    ReportModalWidget::widget([
-                        'queryParams' => array_key_exists('EmployeeRollCallSearch', Yii::$app->request->queryParams) ? Yii::$app->request->queryParams['EmployeeRollCallSearch'] : [],
-                        'searchModel' => $searchModel,
-                        'searchModelMethod' => 'searchBiModule',
-                        'searchModelRunResultView' => '@hesabro/hris/views/employee-roll-call/index.php',
-                        'searchRoute' => Yii::$app->request->pathInfo,
-                        'searchModelFormName' => $searchModel->formName(),
-                        'outputColumn' => [
-                            'total_over_time' => Module::t('module', 'Total') . ' ' . $searchModel->getAttributeLabel('over_time'),
-                            'total_low_time' => Module::t('module', 'Total') . ' ' . $searchModel->getAttributeLabel('low_time'),
-                            'total_mission_time' => Module::t('module', 'Total') . ' ' . $searchModel->getAttributeLabel('mission_time'),
-                            'total_leave_time' => Module::t('module', 'Total') . ' ' . $searchModel->getAttributeLabel('leave_time'),
-                        ],
-                    ]) : null ?>
             </div>
         </div>
         <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false">

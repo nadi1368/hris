@@ -16,9 +16,8 @@ class HrisAdminPanelMenuItems
 {
 
 
-    public static function items()
+    public static function items($moduleId='hris')
     {
-        $moduleId = Module::getInstance()->moduleId;
         $advanceMoneyRequest = AdvanceMoney::find()->wait()->exists();
         //$employeeRequest = EmployeeRequest::find()->pending()->exists();
         $employeeRequest = false;

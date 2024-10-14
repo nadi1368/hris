@@ -352,7 +352,7 @@ $this->registerCss($style);
                 [
                     'attribute' => 'non_cash_commission',
                     'value' => function ($model) {
-                        return number_format($model->non_cash_commission);
+                        return number_format((int)$model->non_cash_commission);
                     },
                     'footer' => number_format((int)$dataProvider->query->sum('non_cash_commission')),
                     'format' => 'raw',
@@ -360,9 +360,9 @@ $this->registerCss($style);
                 [
                     'attribute' => 'payment_salary',
                     'value' => function ($model) {
-                        return number_format((float)$model->payment_salary);
+                        return number_format((int)$model->payment_salary);
                     },
-                    'footer' => number_format((float)$dataProvider->query->sum('payment_salary')),
+                    'footer' => number_format((int)$dataProvider->query->sum('payment_salary')),
                     'format' => 'raw',
                 ],
             ],
