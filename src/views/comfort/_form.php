@@ -161,7 +161,7 @@ if ($model->excluded_jobs && ($tags = Tags::find()->andWhere(['IN', 'id', $model
 
             <div class="col-md-6">
                 <?= $form->field($model, 'users')->widget(Select2::class, [
-                    'data' => Module::getInstance()->user::getUserWithRoles(['employee']),
+                    'data' => Module::getInstance()->user::getUserWithRoles(Module::getInstance()->employeeRole),
                     'options' => [
                         'placeholder' => 'کاربرانی که مجاز به استفاده هستند',
                         'dir' => 'rtl',
@@ -172,7 +172,7 @@ if ($model->excluded_jobs && ($tags = Tags::find()->andWhere(['IN', 'id', $model
 
             <div class="col-md-6">
                 <?= $form->field($model, 'excluded_users')->widget(Select2::class, [
-                    'data' => Module::getInstance()->user::getUserWithRoles(['employee']),
+                    'data' => Module::getInstance()->user::getUserWithRoles(Module::getInstance()->employeeRole),
                     'options' => [
                         'placeholder' => 'کاربرانی که مجوز استفاده ندارند',
                         'dir' => 'rtl',

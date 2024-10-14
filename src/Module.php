@@ -13,9 +13,19 @@ class Module extends BaseModule
 
     public string | null $settings = null;
 
+    public string | null $clientSettingsValue = null;
+
+    public string | null $settingsSearch = null;
+
+    public string | null $settingsCategory = null;
+
+    public array | null $userFindUrl = ['/user/get-user-list'];
+
     public string | null $balanceDetailedClass = null;
 
     public string | null $balanceDailyClass = null;
+
+    public array | null $employeeRole = ['employee'];
 
     public string | null $layoutPanel = null;
 

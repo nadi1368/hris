@@ -22,7 +22,7 @@ use yii\helpers\Html;
 
             <div class="col-md-4">
                 <?= $form->field($model, 'manager')->widget(Select2::class, array(
-                    'data' => Module::getInstance()->user::getUserWithRoles(['employee']),
+                    'data' => Module::getInstance()->user::getUserWithRoles(Module::getInstance()->employeeRole),
                     'options' => array(
                         'placeholder' => '',
                         'dir' => 'rtl',
@@ -32,7 +32,7 @@ use yii\helpers\Html;
 
             <div class="col-md-12">
                 <?= $form->field($model, 'user_ids')->widget(Select2::class, array(
-                    'data' => Module::getInstance()->user::getUserWithRoles(['employee']),
+                    'data' => Module::getInstance()->user::getUserWithRoles(Module::getInstance()->employeeRole),
                     'options' => array(
                         'placeholder' => 'کارمندان این شعبه',
                         'dir' => 'rtl',
