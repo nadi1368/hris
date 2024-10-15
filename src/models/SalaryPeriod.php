@@ -496,7 +496,8 @@ class SalaryPeriod extends SalaryPeriodBase
             [
                 'class' => DocumentsDataBehavior::class,
                 'documentArrayField' => 'documentsArray',
-                'documentClass' => Document::class
+                'documentClass' => Document::class,
+                'documentViewUrl'=> 'document/view'
             ],
         ]);
     }

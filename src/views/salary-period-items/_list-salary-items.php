@@ -1,7 +1,7 @@
 <?php
 
 use hesabro\hris\models\SalaryPeriodItems;
-use hesabro\helpers\widgets\grid\GridView;
+use common\widgets\grid\GridView;
 use hesabro\hris\Module;
 use yii\bootstrap4\ButtonDropdown;
 use yii\helpers\Html;
