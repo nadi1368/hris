@@ -15,17 +15,6 @@ use yii\helpers\Url;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /* @var $dataProviderUser yii\data\ActiveDataProvider */
 
-$style = <<<CSS
-    .list-salary-items .table-responsive {
-        overflow-x: unset !important;
-    }
-
-    .list-salary-items .kv-grid-container {
-        min-height: auto !important;
-    }
-CSS;
-
-$this->registerCss($style);
 ?>
 <div class="card list-salary-items">
     <div class="panel-group m-bot20" id="accordionTwo">

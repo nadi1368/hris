@@ -2,7 +2,7 @@
 
 use hesabro\hris\models\SalaryPeriod;
 use hesabro\hris\models\SalaryPeriodItems;
-use hesabro\helpers\widgets\TableView;
+use common\widgets\TableView;
 use hesabro\hris\Module;
 use yii\bootstrap4\Modal;
 use yii\helpers\Html;
