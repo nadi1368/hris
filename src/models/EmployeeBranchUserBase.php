@@ -13,6 +13,7 @@ use hesabro\hris\Module;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 
 /**serve-report-by-customer-buy
  * This is the model class for table "{{%employee_branch_user}}".
@@ -37,6 +38,7 @@ use yii\helpers\ArrayHelper;
  * @property-read EmployeeChild[] $childrenWithPending
  * @property EmployeeExperience[] $experiences
  * @property EmployeeExperience[] $experiencesWithPending
+ * @property string $link
  */
 class EmployeeBranchUserBase extends ActiveRecord
 {
@@ -631,7 +633,13 @@ class EmployeeBranchUserBase extends ActiveRecord
         ];
     }
 
-
+    /**
+     * @return string
+     */
+    public function getLink()
+    {
+        return Html::a($this->user->fullName, ['/hris/default/view-user', 'user_id' => $this->user_id], ['class' => $this->status == self::STATUS_DELETED ? 'text-danger showModalButton' : 'text-info showModalButton', 'title' => $this->user->fullName, 'data-size' => 'modal-xl']);
+    }
     /**
      * @return bool
      * @throws \Throwable

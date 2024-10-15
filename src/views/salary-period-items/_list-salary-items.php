@@ -181,8 +181,8 @@ use yii\helpers\Url;
                 ],
                 [
                     'attribute' => 'user_id',
-                    'value' => function ($model) {
-                        return $model->user->linkEmployee;
+                    'value' => function (SalaryPeriodItems $model) {
+                        return $model->employee->link;
                     },
                     'format' => 'raw',
                 ],
