@@ -1,6 +1,6 @@
 <?php
 
-namespace hesabro\hris\migrations;
+
 
 use yii\db\Migration;
 
@@ -14,7 +14,7 @@ class m221106_100722_create_table_content extends Migration
         }
 
         $this->createTable(
-            '{{%content}}',
+            '{{%employee_content}}',
             [
                 'id' => $this->integer()->notNull(),
                 'title' => $this->text(),
@@ -30,15 +30,15 @@ class m221106_100722_create_table_content extends Migration
             $tableOptions
         );
 
-        $this->addPrimaryKey('PRIMARYKEY', '{{%content}}', ['id', 'slave_id']);
+        $this->addPrimaryKey('PRIMARYKEY', '{{%employee_content}}', ['id', 'slave_id']);
 
-        $this->alterColumn("{{%content}}", 'id', $this->integer()->notNull()->append('AUTO_INCREMENT'));
+        $this->alterColumn("{{%employee_content}}", 'id', $this->integer()->notNull()->append('AUTO_INCREMENT'));
 
-        $this->createIndex('slave_id_index', '{{%content}}', ['slave_id']);
+        $this->createIndex('slave_id_index', '{{%employee_content}}', ['slave_id']);
     }
 
     public function safeDown()
     {
-        $this->dropTable('{{%content}}');
+        $this->dropTable('{{%employee_content}}');
     }
 }

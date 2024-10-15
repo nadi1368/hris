@@ -638,7 +638,7 @@ class EmployeeBranchUserBase extends ActiveRecord
      */
     public function getLink()
     {
-        return Html::a($this->user->fullName, ['/hris/default/view-user', 'user_id' => $this->user_id], ['class' => $this->status == self::STATUS_DELETED ? 'text-danger showModalButton' : 'text-info showModalButton', 'title' => $this->user->fullName, 'data-size' => 'modal-xl']);
+        return Html::a($this->user->fullName, ['default/view-user', 'user_id' => $this->user_id], ['class' => $this->status == self::STATUS_DELETED ? 'text-danger showModalButton' : 'text-info showModalButton', 'title' => $this->user->fullName, 'data-size' => 'modal-xl']);
     }
     /**
      * @return bool

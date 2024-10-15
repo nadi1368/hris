@@ -83,7 +83,7 @@ class ContentBase extends ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%content}}';
+        return '{{%employee_content}}';
     }
 
     public static function getDb()

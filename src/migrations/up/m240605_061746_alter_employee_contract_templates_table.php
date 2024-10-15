@@ -1,6 +1,6 @@
 <?php
 
-namespace hesabro\hris\migrations;
+
 
 use yii\db\Migration;
 
