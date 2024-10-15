@@ -6,7 +6,7 @@ use hesabro\hris\Module;
 use Yii;
 use yii\helpers\ArrayHelper;
 
-class InsuranceExportForm extends InternalNumberBase
+class InsuranceExportForm extends InsuranceExportFormBase
 {
     public function rules()
     {

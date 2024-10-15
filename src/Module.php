@@ -4,6 +4,7 @@ namespace hesabro\hris;
 
 use Yii;
 use yii\base\Module as BaseModule;
+use yii\helpers\Url;
 
 class Module extends BaseModule
 {
@@ -34,10 +35,11 @@ class Module extends BaseModule
         return Yii::t('hesabro/hris/' . $category, $message, $params, $language);
     }
 
-    public static function createUrl($path = null)
+    public static function createUrl(string $path = null, array $params = [])
     {
-        $moduleId = self::getInstance()->moduleId;
+        $moduleId = self::getInstance()?->moduleId;
 
-        return "/$moduleId/$path";
+        $path = trim($path ?: '', '/');
+        return Url::to([rtrim("/$moduleId/$path", '/'), ...$params]);
     }
 }

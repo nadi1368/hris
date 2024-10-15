@@ -5,6 +5,7 @@ use hesabro\hris\models\Content;
 use hesabro\hris\models\EmployeeBranchUser;
 use hesabro\hris\models\SalaryItemsAddition;
 use hesabro\helpers\components\iconify\Iconify;
+use hesabro\hris\Module;
 use miloschuman\highcharts\Highcharts;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -478,7 +479,7 @@ $workTimeText = $workTime ? $workTime . ' ' . Yii::t('app', 'Day') : Yii::t('app
 <?php
 Pjax::end();
 
-$url = Url::to(['profile/index']);
+$url = Module::createUrl('profile/index');
 $yearOptions = '';
 $monthOptions = '';
 for ($year = 1403; $year >= 1400; $year--) {

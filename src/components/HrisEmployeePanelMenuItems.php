@@ -18,14 +18,14 @@ class HrisEmployeePanelMenuItems
         return [
             [
                 'label' => Module::t('module', 'Home') . ' ' . Module::t('module', 'HR'),
-                'url' => ["/$moduleId/profile/index"],
+                'url' => ["/$moduleId/employee-profile/index"],
                 'group' => 'dashboard',
                 'level' => 'first-level',
                 'icon' => 'far fa-home'
             ],
             [
                 'label' => 'دوره حقوق',
-                'url' => ["/$moduleId/profile/salary-period"],
+                'url' => ["/$moduleId/employee-profile/salary-period"],
                 'group' => 'salary-period',
                 'level' => 'first-level',
                 'icon' => 'fa fa-money-check'

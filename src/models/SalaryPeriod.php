@@ -3,7 +3,6 @@
 namespace hesabro\hris\models;
 
 use hesabro\changelog\behaviors\LogBehavior;
-use hesabro\helpers\behaviors\DocumentsDataBehavior;
 use hesabro\helpers\behaviors\JsonAdditional;
 use hesabro\hris\Module;
 use Yii;
@@ -13,6 +12,9 @@ use common\models\Document;
 use common\models\Settings;
 use common\models\UserPoints;
 use common\models\Year;
+use common\models\Mutex;
+use common\behaviors\MutexBehavior;
+use common\behaviors\DocumentsDataBehavior;
 use yii\helpers\ArrayHelper;
 
 /**

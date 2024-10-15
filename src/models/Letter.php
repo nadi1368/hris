@@ -4,6 +4,7 @@ namespace hesabro\hris\models;
 
 use common\models\Indicator\Indicator;
 use hesabro\hris\Module;
+use Yii;
 
 class Letter extends LetterBase
 {
