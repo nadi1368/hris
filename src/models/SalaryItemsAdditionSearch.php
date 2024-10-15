@@ -21,8 +21,8 @@ class SalaryItemsAdditionSearch extends SalaryItemsAdditionSearchBase
         $query = SalaryItemsAddition::find()
             ->select([
                 SalaryItemsAddition::tableName() . '.user_id',
-                'year' => '`hesabro`.pyear(FROM_UNIXTIME(`from_date`))',
-                'month' => '`hesabro`.pmonth(FROM_UNIXTIME(`from_date`))',
+                'year' => 'pyear(FROM_UNIXTIME(`from_date`))',
+                'month' => 'pmonth(FROM_UNIXTIME(`from_date`))',
                 'total' => "SUM(CASE WHEN $kindColumn=$kindHourly THEN (`second`/(8*60)) ELSE ((`to_date`-`from_date`)/(24*60*60)) END)"
             ])
             ->andWhere([$kindColumn => [SalaryItemsAddition::KIND_LEAVE_HOURLY, SalaryItemsAddition::KIND_LEAVE_DAILY]])
@@ -50,7 +50,7 @@ class SalaryItemsAdditionSearch extends SalaryItemsAdditionSearchBase
 
         $filterTimestamp = $from;
         do {
-            [$y, $m] = explode('/', Yii::$app->Pdate->jdate('Y/m', $filterTimestamp, tr_num: 'en'));
+            [$y, $m] = explode('/', Yii::$app->jdf->jdate('Y/m', $filterTimestamp));
             $key = (int) ($y.$m);
             $chartData[$key] = ["$y/$m"];
 
@@ -62,7 +62,7 @@ class SalaryItemsAdditionSearch extends SalaryItemsAdditionSearchBase
                 $chartData[$key][$userId] = (float) ($userData ? $userData->total : 0);
             }
 
-            $filterTimestamp = Yii::$app->jdf::jalaliToTimestamp(Yii::$app->Pdate->add_month($filterTimestamp), 'Y/m/d');
+            $filterTimestamp = Yii::$app->jdf::jalaliToTimestamp(Yii::$app->jdf->add_month($filterTimestamp), 'Y/m/d');
         } while ($filterTimestamp < $to);
 
         return array_values(array_map(fn(array $data) => array_values($data), $chartData));

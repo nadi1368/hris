@@ -23,10 +23,7 @@ use yii\helpers\Url;
 						'data-toggle' => 'modal',
 						'data-target' => '#modal-pjax',
 						'data-url' => Url::to(['insurance-data', 'branch_id' => $model->branch_id, 'user_id' => $model->user_id]),
-						'data-reload-pjax-container-on-show' => 1,
 						'data-reload-pjax-container' => "view-user-info-pjax",
-						'data-handle-form-submit' => 1,
-						'disabled' => true,
 					]) ?>
 
 				<?= Html::a('ویرایش اطلاعات حساب',
@@ -39,10 +36,7 @@ use yii\helpers\Url;
 						'data-toggle' => 'modal',
 						'data-target' => '#modal-pjax',
 						'data-url' => Url::to(['update-user', 'branch_id' => $model->branch_id, 'user_id' => $model->user_id]),
-						'data-reload-pjax-container-on-show' => 1,
 						'data-reload-pjax-container' => "pjax-employee-user",
-						'data-handle-form-submit' => 1,
-						'disabled' => true,
 					]) ?>
 			</div>
 		</div>

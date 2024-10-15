@@ -9,7 +9,7 @@ use hesabro\hris\Module;
 $this->title = Module::t('module', 'Requests');
 $this->params['breadcrumbs'][] = $this->title;
 
-echo $this->renderFile('@hesabro/hris/views/layouts/_requests_tabs.php', [
+echo $this->render('@hesabro/hris/views/layouts/_requests_tabs', [
     'content' => $this->render('_index', [
         'searchModel' => $searchModel,
         'dataProvider' => $dataProvider

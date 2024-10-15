@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 	<div class="card-body">
 		<?php Pjax::begin(['id' => 'view-user-info-pjax']) ?>
-		<?= $this->render('_employee_info', [
+		<?= $this->render('_view-user', [
 			'model' => $model,
 		]) ?>
 		<?php Pjax::end() ?>
