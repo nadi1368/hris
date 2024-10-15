@@ -1,5 +1,6 @@
 <?php
 
+use hesabro\hris\CalculateAsset;
 use hesabro\hris\models\SalaryPeriodItems;
 use hesabro\hris\Module;
 use yii\bootstrap4\ActiveForm;
@@ -10,7 +11,8 @@ use yii\widgets\MaskedInput;
 /* @var $salaryPeriod hesabro\hris\models\SalaryPeriod */
 /* @var $model hesabro\hris\models\SalaryPeriodItems */
 /* @var $form yii\bootstrap4\ActiveForm */
-$this->registerJsFile("@web/js/salary-calculate.js?v=1.1.25", ['depends' => [\yii\web\JqueryAsset::class]]);
+
+CalculateAsset::register($this);
 $js = 'calculateSalary();';
 $this->registerJs($js);
 ?>

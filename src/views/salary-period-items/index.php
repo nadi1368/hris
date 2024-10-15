@@ -18,6 +18,8 @@ use yii\widgets\Pjax;
 $this->title = $salaryPeriod->title;
 $this->params['breadcrumbs'][] = ['label' => Module::t('module', 'Salary Periods'), 'url' => ['salary-period/index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+
 ?>
 <?php Pjax::begin(['id' => 'p-jax-salary-period-items', 'timeout' => false]); ?>
 <div class="card">
