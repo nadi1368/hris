@@ -1,7 +1,7 @@
 <?php
 
 use hesabro\hris\models\SalaryPeriodItems;
-use hesabro\helpers\widgets\grid\GridView;
+use common\widgets\grid\GridView;
 use hesabro\hris\Module;
 use yii\bootstrap4\ButtonDropdown;
 use yii\helpers\Html;
@@ -15,17 +15,6 @@ use yii\helpers\Url;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /* @var $dataProviderUser yii\data\ActiveDataProvider */
 
-$style = <<<CSS
-    .list-salary-items .table-responsive {
-        overflow-x: unset !important;
-    }
-
-    .list-salary-items .kv-grid-container {
-        min-height: auto !important;
-    }
-CSS;
-
-$this->registerCss($style);
 ?>
 <div class="card list-salary-items">
     <div class="panel-group m-bot20" id="accordionTwo">
@@ -192,8 +181,8 @@ $this->registerCss($style);
                 ],
                 [
                     'attribute' => 'user_id',
-                    'value' => function ($model) {
-                        return $model->user->linkEmployee;
+                    'value' => function (SalaryPeriodItems $model) {
+                        return $model->employee->link;
                     },
                     'format' => 'raw',
                 ],

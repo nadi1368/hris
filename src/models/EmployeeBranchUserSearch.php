@@ -126,8 +126,7 @@ class EmployeeBranchUserSearch extends EmployeeBranchUser
     public function searchSalary($params,$userIds)
     {
         $query = EmployeeBranchUser::find()
-            ->andWhere(['NOT IN','user_id', $userIds])
-            ->andWhere('JSON_EXTRACT(' . EmployeeBranchUser::tableName() . '.`additional_data`, "$.end_work") IS NULL OR JSON_EXTRACT(' . EmployeeBranchUser::tableName() . '.`additional_data`, "$.end_work")=""');
+            ->andWhere(['NOT IN','user_id', $userIds]);
 
         // add conditions that should always apply here
 
@@ -139,8 +138,14 @@ class EmployeeBranchUserSearch extends EmployeeBranchUser
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+            $query->where('0=1');
             return $dataProvider;
+        }
+        if ($this->show_on_end_work) {
+            $query->andWhere('JSON_EXTRACT(' . EmployeeBranchUser::tableName() . '.`additional_data`, "$.end_work") > "1399/01/01"');
+        } else {
+            $query->andWhere('JSON_EXTRACT(' . EmployeeBranchUser::tableName() . '.`additional_data`, "$.end_work") IS NULL OR JSON_EXTRACT(' . EmployeeBranchUser::tableName() . '.`additional_data`, "$.end_work")=""')
+                ->andWhere('JSON_EXTRACT(' . EmployeeBranchUser::tableName() . '.`additional_data`, "$.disable_show_on_salary_list") IS NULL OR JSON_EXTRACT(' . EmployeeBranchUser::tableName() . '.`additional_data`, "$.disable_show_on_salary_list")=false');
         }
 
         // grid filtering conditions

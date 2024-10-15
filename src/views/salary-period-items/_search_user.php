@@ -21,7 +21,6 @@ use yii\helpers\Html;
     <div class="card-body">
         <div class="row">
             <div class="col-md-12">
-
                 <?= $form->field($model, "user_id")->widget(Select2::class, [
                     'data' => Module::getInstance()->user::getUserWithRoles(Module::getInstance()->employeeRole),
                     'pluginOptions' => [
@@ -32,6 +31,9 @@ use yii\helpers\Html;
                         'placeholder' => Module::t('module', 'Select...'),
                     ],
                 ]); ?>
+            </div>
+            <div class="col-md-12">
+                <?= $form->field($model,'show_on_end_work')->checkbox() ?>
             </div>
 
             <div class="col align-self-center text-right">

@@ -3,7 +3,7 @@
 use hesabro\hris\models\SalaryPeriodItems;
 use hesabro\hris\Module;
 use yii\helpers\Html;
-use hesabro\helpers\widgets\grid\GridView;
+use common\widgets\grid\GridView;
 use yii\helpers\Url;
 
 
