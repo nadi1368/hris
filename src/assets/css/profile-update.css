@@ -1,0 +1,54 @@
+.add-experience, .add-child {
+    border-radius: 4px !important;
+    width: 25px;
+    height: 25px;
+}
+.remove-experience, .remove-child {
+    border-radius: 4px !important;
+    width: 25px;
+    height: 25px;
+}
+.employee-child, .employee-experience {
+    position: relative;
+    border: 2px dashed #c7c7c7;
+    border-radius: 8px;
+    padding: 8px;
+    margin-top: 8px;
+    margin-right: unset !important;
+    margin-left: unset !important;
+}
+.empty-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #c7c7c7;
+    border-radius: 8px;
+    padding: 24px 16px;
+    margin-top: 8px;
+}
+.dismiss-reject-update {
+    width: 15px;
+    height: 15px;
+    background-color: transparent;
+    border: unset;
+    cursor: pointer;
+}
+
+.document-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+}
+
+.document-toolbar > a {
+    border-radius: 4px;
+    border: 1px solid #b4b4b4;
+    padding: 4px 8px;
+    display: inline-flex;
+}
+
+.document-toolbar > a:hover {
+    background-color: #b4b4b4;
+    color: #ffffff;
+}

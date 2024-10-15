@@ -1,7 +1,7 @@
 <?php
 
 use hesabro\hris\models\EmployeeBranchUser;
-use common\widgets\FileInput;
+use hesabro\helpers\widgets\FileInput;
 use hesabro\hris\Module;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
@@ -107,7 +107,7 @@ $galleryIndex = 0;
         </div>
 
         <div class="col-12 py-4">
-            <?= $this->renderFile('@layouts/_divider.php', [
+            <?= $this->render('../../layouts/_divider', [
                 'title' => implode(' ', [
                     Module::t('module', 'Photo'),
                     Module::t('module', 'ID Card'),
@@ -227,7 +227,7 @@ $galleryIndex = 0;
         </div>
 
         <div class="col-12 py-4">
-            <?= $this->renderFile('@layouts/_divider.php', [
+            <?= $this->render('../../layouts/_divider', [
                 'title' => Module::t('module', 'Other Documents')
             ]) ?>
         </div>

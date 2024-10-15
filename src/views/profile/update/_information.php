@@ -109,7 +109,7 @@ $scenarioAttributes = $model->scenarios()[$model->scenario] ?? [];
                 <div class="col-12 col-md-4">
                     <?= $form->field($model, 'sex')
                         ->dropDownList(
-                            Customer::itemAlias('Sex'),
+                            Module::getInstance()->user::itemAlias('Sex'),
                             [
                                 'id' => 'sex-select',
                                 'prompt' => Module::t('module', 'Select...'),
@@ -141,7 +141,7 @@ $scenarioAttributes = $model->scenarios()[$model->scenario] ?? [];
         <div class="col-12 col-md-3">
             <?= $form->field($model, 'national')
                 ->dropDownList(
-                    Customer::itemAlias('National'),
+                    Module::getInstance()->user::itemAlias('National'),
                     [
                         'prompt' => Module::t('module', "Select"),
                         'value' => $model->getAttributeValue('national', $isAdmin)
