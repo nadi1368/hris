@@ -1,11 +1,11 @@
 <?php
 
-namespace hesabro\hris;
+namespace hesabro\hris\bundles;
 
 use yii\web\AssetBundle;
 
 /**
- * Class PrintLetterAsset
+ * Class CalculateAsset
  * @package hesabro\hris
  * @author Nader <nader.bahadorii@gmail.com>
  */

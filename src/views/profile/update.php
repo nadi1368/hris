@@ -1,6 +1,6 @@
 <?php
 use hesabro\hris\models\EmployeeBranchUser;
-use hesabro\hris\ProfileUpdateAssets;
+use hesabro\hris\bundles\ProfileUpdateAssets;
 use hesabro\hris\Module;
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Tabs;

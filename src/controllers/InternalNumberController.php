@@ -42,27 +42,27 @@ class InternalNumberController extends Controller
                     [
                         [
                             'allow' => true,
-                            'roles' => ['InternalNumber/index'],
+                            'roles' => ['InternalNumber/index', 'superadmin'],
                             'actions' => ['index', 'json-export', 'json-export-all', 'json-import','delete-all']
                         ],
                         [
                             'allow' => true,
-                            'roles' => ['InternalNumber/public'],
+                            'roles' => ['InternalNumber/public', 'superadmin'],
                             'actions' => ['public', 'resort']
                         ],
                         [
                             'allow' => true,
-                            'roles' => ['InternalNumber/create'],
+                            'roles' => ['InternalNumber/create', 'superadmin'],
                             'actions' => ['create', 'sort']
                         ],
                         [
                             'allow' => true,
-                            'roles' => ['InternalNumber/update'],
+                            'roles' => ['InternalNumber/update', 'superadmin'],
                             'actions' => ['update', 'sort']
                         ],
                         [
                             'allow' => true,
-                            'roles' => ['InternalNumber/delete'],
+                            'roles' => ['InternalNumber/delete', 'superadmin'],
                             'actions' => ['delete']
                         ],
                     ]

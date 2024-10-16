@@ -1,5 +1,6 @@
 <?php
 
+use hesabro\hris\bundles\ChartLeave;
 use hesabro\hris\Module;
 use yii\web\View;
 
@@ -8,7 +9,7 @@ use yii\web\View;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /* @var array $chartData */
 
-$this->registerJsFile("@web/js/loader.js", ['position' => View::POS_BEGIN]);
+ChartLeave::register($this);
 
 $this->title = 'نمودار مرخصی کارمندان';
 $this->params['breadcrumbs'][] = $this->title;

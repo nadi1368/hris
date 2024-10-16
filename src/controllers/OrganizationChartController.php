@@ -37,27 +37,27 @@ class OrganizationChartController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['OrganizationChart/index'],
+                        'roles' => ['OrganizationChart/index', 'superadmin'],
                         'actions' => ['index']
                     ],
                     [
                         'allow' => true,
-                        'roles' => ['OrganizationChart/public'],
+                        'roles' => ['OrganizationChart/public', 'superadmin'],
                         'actions' => ['public']
                     ],
                     [
                         'allow' => true,
-                        'roles' => ['OrganizationChart/create'],
+                        'roles' => ['OrganizationChart/create', 'superadmin'],
                         'actions' => ['create']
                     ],
                     [
                         'allow' => true,
-                        'roles' => ['OrganizationChart/update'],
+                        'roles' => ['OrganizationChart/update', 'superadmin'],
                         'actions' => ['update', 'toggle-show-internal-number', 'toggle-show-job-tag']
                     ],
                     [
                         'allow' => true,
-                        'roles' => ['OrganizationChart/delete'],
+                        'roles' => ['OrganizationChart/delete', 'superadmin'],
                         'actions' => ['delete']
                     ],
                 ]

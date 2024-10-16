@@ -4,7 +4,6 @@ namespace hesabro\hris\models;
 
 use hesabro\helpers\behaviors\JsonAdditional;
 use hesabro\hris\Module;
-use himiklab\sortablegrid\SortableGridBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -59,10 +58,6 @@ class InternalNumberBase extends ActiveRecord
                 'AdditionalDataProperty' => [
                     'job_position' => 'NullString',
                 ],
-            ],
-            [
-                'class' => SortableGridBehavior::class,
-                'sortableAttribute' => 'sort',
             ],
         ];
     }

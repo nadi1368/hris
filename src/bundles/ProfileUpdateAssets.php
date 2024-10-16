@@ -1,6 +1,6 @@
 <?php
 
-namespace hesabro\hris;
+namespace hesabro\hris\bundles;
 
 use yii\web\AssetBundle;
 

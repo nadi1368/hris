@@ -1,6 +1,6 @@
 <?php
 
-use hesabro\hris\CalculateAsset;
+use hesabro\hris\bundles\CalculateAsset;
 use hesabro\hris\models\SalaryPeriodItems;
 use hesabro\hris\Module;
 use yii\bootstrap4\ActiveForm;
