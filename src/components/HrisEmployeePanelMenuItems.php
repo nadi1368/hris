@@ -3,7 +3,7 @@
 namespace hesabro\hris\components;
 
 use hesabro\helpers\traits\MenuHelper;
-use hesabro\hris\models\Content;
+use hesabro\hris\models\EmployeeContent;
 use hesabro\hris\models\EmployeeRequest;
 use hesabro\hris\Module;
 
@@ -97,29 +97,29 @@ class HrisEmployeePanelMenuItems
                 'linkCssClass' => 'two-column',
                 'items' => [
                     [
-                        'label' => Content::itemAlias('Type', Content::TYPE_BUSINESS),
-                        'url' => ["/$moduleId/faq/public?type=" . Content::TYPE_BUSINESS],
+                        'label' => EmployeeContent::itemAlias('Type', EmployeeContent::TYPE_BUSINESS),
+                        'url' => ["/$moduleId/employee-content/public?type=" . EmployeeContent::TYPE_BUSINESS],
                         'group' => 'faq-business',
                         'level' => 'second-level',
                         'icon' => 'far fa-question'
                     ],
                     [
-                        'label' => Content::itemAlias('Type', Content::TYPE_EMPLOYEE),
-                        'url' => ["/$moduleId/faq/public?type=" . Content::TYPE_EMPLOYEE],
+                        'label' => EmployeeContent::itemAlias('Type', EmployeeContent::TYPE_REGULATIONS),
+                        'url' => ["/$moduleId/employee-content/public?type=" . EmployeeContent::TYPE_REGULATIONS],
                         'group' => 'faq-employee',
                         'level' => 'second-level',
                         'icon' => 'fa fa-list-alt'
                     ],
                     [
-                        'label' => Content::itemAlias('Type', Content::TYPE_JOB_DESCRIPTION),
-                        'url' => ["/$moduleId/faq/public?type=" . Content::TYPE_JOB_DESCRIPTION],
+                        'label' => EmployeeContent::itemAlias('Type', EmployeeContent::TYPE_JOB_DESCRIPTION),
+                        'url' => ["/$moduleId/employee-content/public?type=" . EmployeeContent::TYPE_JOB_DESCRIPTION],
                         'group' => 'faq-job-description',
                         'level' => 'second-level',
                         'icon' => 'fa fa-list-alt'
                     ],
                     [
-                        'label' => Content::itemAlias('Type', Content::TYPE_ANNOUNCEMENT),
-                        'url' => ["/$moduleId/faq/public?type=" . Content::TYPE_ANNOUNCEMENT],
+                        'label' => EmployeeContent::itemAlias('Type', EmployeeContent::TYPE_ANNOUNCEMENT),
+                        'url' => ["/$moduleId/employee-content/public?type=" . EmployeeContent::TYPE_ANNOUNCEMENT],
                         'group' => 'faq-announcement',
                         'level' => 'second-level',
                         'icon' => 'fa fa-list-alt'

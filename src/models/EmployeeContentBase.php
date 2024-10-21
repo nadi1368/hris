@@ -27,17 +27,24 @@ use yii\helpers\ArrayHelper;
  * @property int $sort
  * @property array $additional_data
  */
-class ContentBase extends ActiveRecord
+class EmployeeContentBase extends ActiveRecord
 {
     const STATUS_ACTIVE = 1;
+
     const STATUS_DELETED = 0;
 
     const TYPE_CUSTOMER = 1;
-    const TYPE_EMPLOYEE = 2;
+
+    const TYPE_REGULATIONS = 2;
+
     const TYPE_SOFTWARE = 3;
+
     const TYPE_BUSINESS = 4;
+
     const TYPE_JOB_DESCRIPTION = 5;
+
     const TYPE_ANNOUNCEMENT = 6;
+
 
     const SCENARIO_CREATE = 'create';
 
@@ -47,8 +54,8 @@ class ContentBase extends ActiveRecord
 
     /** Additional Data Property */
     public $clauses = [];
-    public $include_client_ids;
-    public $exclude_client_ids;
+    public $include_EmployeeContent_ids;
+    public $exclude_EmployeeContent_ids;
     public $custom_user_ids = [];
     public $custom_job_tags = [];
 
@@ -86,11 +93,6 @@ class ContentBase extends ActiveRecord
         return '{{%employee_content}}';
     }
 
-    public static function getDb()
-    {
-        return Yii::$app->get('master');
-    }
-
     public function behaviors()
     {
         return [
@@ -104,9 +106,9 @@ class ContentBase extends ActiveRecord
                 'notSaveNull' => true,
                 'fieldAdditional' => 'additional_data',
                 'AdditionalDataProperty' => [
-                    'clauses' => 'ClassArray::' . ContentClause::class,
-                    'include_client_ids' => 'StringArray',
-                    'exclude_client_ids' => 'StringArray',
+                    'clauses' => 'ClassArray::' . EmployeeContentClause::class,
+                    'include_EmployeeContent_ids' => 'StringArray',
+                    'exclude_EmployeeContent_ids' => 'StringArray',
                     'custom_user_ids' => 'StringArray',
                     'custom_job_tags' => 'StringArray',
                     'show_start_at' => 'Integer',
@@ -136,22 +138,20 @@ class ContentBase extends ActiveRecord
         return [
             [['type', 'title'], 'required'],
             [['title', 'description', 'scattered_search_query'], 'string'],
-            [['type', 'status', 'sort', 'created', 'client_id', 'creator_id', 'update_id', 'changed'], 'integer'],
+            [['type', 'status', 'sort', 'created', 'EmployeeContent_id', 'creator_id', 'update_id', 'changed'], 'integer'],
             ['type', 'typeValidator'],
-            ['include_client_ids', 'each', 'rule' => ['exist', 'targetClass' => Client::class, 'targetAttribute' => ['include_client_ids' => 'id']]],
-            ['exclude_client_ids', 'each', 'rule' => ['exist', 'targetClass' => Client::class, 'targetAttribute' => ['exclude_client_ids' => 'id']]],
             ['custom_user_ids', 'each', 'rule' => ['exist', 'targetClass' => Module::getInstance()->user, 'targetAttribute' => ['custom_user_ids' => 'id']]],
-            ['custom_job_tags', 'each', 'rule' => ['exist', 'targetClass' => Tags::class, 'targetAttribute' => ['custom_job_tags' => 'id']]],
+            ['custom_job_tags', 'each', 'rule' => ['exist', 'targetClass' => SalaryInsurance::class, 'targetAttribute' => ['custom_job_tags' => 'id']]],
             ['clauses', 'safe'],
             [
                 ['show_start_at', 'show_end_at'],
                 'integer',
-                'enableClientValidation' => false
+                'enableEmployeeContentValidation' => false
             ],
             [
                 ['show_start_at', 'show_end_at'],
                 'integer',
-                'enableClientValidation' => false
+                'enableEmployeeContentValidation' => false
             ],
             [
                 'attachment',
@@ -180,8 +180,8 @@ class ContentBase extends ActiveRecord
             'update_id' => Module::t('module', 'Update ID'),
             'changed' => Module::t('module', 'Creator'),
             'clauses' => Module::t('module', 'Clauses'),
-            'include_client_ids' => Module::t('module', 'Clients Can See This Faq'),
-            'exclude_client_ids' => Module::t('module', 'Clients Can not See This Faq'),
+            'include_EmployeeContent_ids' => Module::t('module', 'EmployeeContents Can See This Faq'),
+            'exclude_EmployeeContent_ids' => Module::t('module', 'EmployeeContents Can not See This Faq'),
             'custom_job_tags' => Module::t('module', 'Job'),
             'custom_user_ids' => Module::t('module', 'Custom Users'),
             'show_start_at' => Module::t('module', 'Show Banner From Date'),
@@ -256,35 +256,17 @@ class ContentBase extends ActiveRecord
 
     /**
      * {@inheritdoc}
-     * @return ContentQuery the active query used by this AR class.
+     * @return EmployeeContentQuery the active query used by this AR class.
      */
     public static function find()
     {
-        $query = new ContentQuery(get_called_class());
+        $query = new EmployeeContentQuery(get_called_class());
         return $query->active();
     }
 
     public function canCreate()
     {
         return true;
-    }
-
-    public function canUpdate()
-    {
-        if (in_array($this->type, [self::TYPE_CUSTOMER, self::TYPE_SOFTWARE])) {
-            return Yii::$app->client->isMaster();
-        }
-
-        return $this->client_id == Yii::$app->client->id;
-    }
-
-    public function canDelete()
-    {
-        if (in_array($this->type, [self::TYPE_CUSTOMER, self::TYPE_SOFTWARE])) {
-            return Yii::$app->client->isMaster();
-        }
-
-        return $this->client_id == Yii::$app->client->id;
     }
 
     /*
@@ -311,127 +293,6 @@ class ContentBase extends ActiveRecord
         } else {
             return false;
         }
-    }
-
-    public static function itemAlias($type, $code = NULL)
-    {
-        $shouldIncludeAllTypes  = Yii::$app->client->isMaster() || isset($code);
-
-        $list_data = [];
-        if ($type == 'ListEmployee') {
-            $list_data = ArrayHelper::map(self::find()->andWhere(['type' => self::TYPE_EMPLOYEE])->all(), 'id', 'title');
-        }
-        if ($type == 'ListSoftware') {
-            $list_data = ArrayHelper::map(self::find()->andWhere(['type' => self::TYPE_SOFTWARE])->all(), 'id', 'title');
-        }
-
-        $_items = [
-            'Status' => [
-                self::STATUS_ACTIVE => Module::t('module', 'Status Active'),
-                self::STATUS_DELETED => Module::t('module', 'Status Delete'),
-            ],
-            'Type' => array_combine([
-                self::TYPE_BUSINESS,
-                self::TYPE_EMPLOYEE,
-                self::TYPE_JOB_DESCRIPTION,
-                self::TYPE_ANNOUNCEMENT,
-                ...$shouldIncludeAllTypes ? [
-                    self::TYPE_CUSTOMER,
-                    self::TYPE_SOFTWARE,
-                ] : []
-            ], [
-                Module::t('module', 'Faq of Type', ['type' => Module::t('module', 'Faq Type')['business']]),
-                Module::t('module', 'Faq of Type', ['type' => Module::t('module', 'Faq Type')['employee']]),
-                Module::t('module', 'Faq of Type', ['type' => Module::t('module', 'Faq Type')['job_description']]),
-                Module::t('module', 'Faq of Type', ['type' => Module::t('module', 'Faq Type')['announcement']]),
-                ...$shouldIncludeAllTypes ? [
-                    Module::t('module', 'Faq of Type', ['type' => Module::t('module', 'Faq Type')['customer']]),
-                    Module::t('module', 'Faq of Type', ['type' => Module::t('module', 'Faq Type')['software']]),
-                ] : []
-            ]),
-            'ListEmployee' => $list_data,
-            'ListSoftware' => $list_data,
-        ];
-
-        if (isset($code))
-            return isset($_items[$type][$code]) ? $_items[$type][$code] : null;
-        else
-            return isset($_items[$type]) ? $_items[$type] : null;
-    }
-
-
-    public function beforeSave($insert)
-    {
-        if ($this->isNewRecord) {
-            $this->created = time();
-            $this->creator_id = Yii::$app->user->id;
-            $this->status = self::STATUS_ACTIVE;
-        }
-
-        $this->client_id = Yii::$app->client->id;
-
-        if (is_array($this->clauses)) {
-
-            // if only one clause exist and no description provided, set clause as description
-            if (count($this->clauses) == 1) {
-                $this->description = $this->clauses[0]->content;
-                $this->clauses = [];
-            } else {
-                $this->description = null; // fix description unchanged on update if already set
-                $this->clauses = $this->clauses;
-            }
-        }
-
-        $this->custom_job_tags = $this->custom_job_tags ?: [];
-        $this->custom_user_ids = $this->custom_user_ids ?: [];
-
-        if (Yii::$app->client->isMaster()) {
-            $this->include_client_ids = $this->include_client_ids && count($this->include_client_ids) > 0 ? $this->include_client_ids : ['*'];
-        } else {
-            $this->include_client_ids = [Yii::$app->client->id];
-        }
-
-        $this->update_id = Yii::$app->user->id;
-        $this->changed = time();
-        return parent::beforeSave($insert);
-    }
-
-    /**
-     * Display included clients as list view
-     *
-     * @return string
-     */
-    public function includedClientsListView()
-    {
-        $result = '';
-
-        if ($this->include_client_ids && !in_array('*', $this->include_client_ids)) {
-            foreach (Client::find()->andWhere(['IN', 'id', $this->include_client_ids])->all() as $client) {
-                $result .= '<label class="badge badge-info mr-1 mb-1 pull-right">' . $client->title . ' </label> ';
-            }
-        } else {
-            $result .= '<label class="badge badge-info mr-1 mb-1 pull-right"> تمامی کلاینت ها </label> ';
-        }
-
-        return $result;
-    }
-
-    /**
-     * Display excluded clients as list view
-     *
-     * @return string
-     */
-    public function excludedClientsListView()
-    {
-        $result = '';
-
-        if ($this->exclude_client_ids) {
-            foreach (Client::find()->andWhere(['IN', 'id', $this->exclude_client_ids])->all() as $client) {
-                $result .= '<label class="badge badge-info mr-1 mb-1 pull-right">' . $client->title . ' </label> ';
-            }
-        }
-
-        return $result;
     }
 
     public static function validateType(mixed $type): bool

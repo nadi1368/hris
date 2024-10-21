@@ -11,7 +11,7 @@ use yii\db\Expression;
  *
  * @see Faq
  */
-class ContentQuery extends ActiveQuery
+class EmployeeContentQuery extends ActiveQuery
 {
     /*public function active()
     {
@@ -20,7 +20,7 @@ class ContentQuery extends ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return Content[]|array
+     * @return EmployeeContent[]|array
      */
     public function all($db = null)
     {
@@ -29,7 +29,7 @@ class ContentQuery extends ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return Content|array|null
+     * @return EmployeeContent|array|null
      */
     public function one($db = null)
     {
@@ -38,7 +38,7 @@ class ContentQuery extends ActiveQuery
 
     public function active()
     {
-        return $this->onCondition(['<>', Content::tableName() . '.status', Content::STATUS_DELETED]);
+        return $this->onCondition(['<>', EmployeeContent::tableName() . '.status', EmployeeContent::STATUS_DELETED]);
     }
 
     public function byType($type)
@@ -53,13 +53,13 @@ class ContentQuery extends ActiveQuery
     {
         return $this->andWhere([
             'OR',
-            new Expression("JSON_CONTAINS(". Content::tableName() .".additional_data, JSON_QUOTE('$clientID'), '$.include_client_ids')"),
-            new Expression("JSON_CONTAINS(". Content::tableName() .".additional_data, JSON_QUOTE('*'), '$.include_client_ids')"),
-            new Expression("JSON_EXTRACT(". Content::tableName() .".additional_data, '$.include_client_ids') IS NULL")
+            new Expression("JSON_CONTAINS(". EmployeeContent::tableName() .".additional_data, JSON_QUOTE('$clientID'), '$.include_client_ids')"),
+            new Expression("JSON_CONTAINS(". EmployeeContent::tableName() .".additional_data, JSON_QUOTE('*'), '$.include_client_ids')"),
+            new Expression("JSON_EXTRACT(". EmployeeContent::tableName() .".additional_data, '$.include_client_ids') IS NULL")
         ])->andWhere([
             'OR',
-            new Expression("(NOT JSON_CONTAINS(" . Content::tableName() . ".additional_data, JSON_QUOTE('$clientID'), '$.exclude_client_ids'))"),
-            new Expression("JSON_EXTRACT(". Content::tableName() .".additional_data, '$.exclude_client_ids') IS NULL")
+            new Expression("(NOT JSON_CONTAINS(" . EmployeeContent::tableName() . ".additional_data, JSON_QUOTE('$clientID'), '$.exclude_client_ids'))"),
+            new Expression("JSON_EXTRACT(". EmployeeContent::tableName() .".additional_data, '$.exclude_client_ids') IS NULL")
         ]);
     }
 
@@ -82,8 +82,8 @@ class ContentQuery extends ActiveQuery
     public function byShowStartAt(int $date): self
     {
         $this->andWhere(['OR',
-            new Expression("JSON_EXTRACT(". Content::tableName() .".additional_data, '$.show_start_at') <= $date"),
-            new Expression("JSON_EXTRACT(". Content::tableName() .".additional_data, '$.show_start_at') IS NULL")
+            new Expression("JSON_EXTRACT(". EmployeeContent::tableName() .".additional_data, '$.show_start_at') <= $date"),
+            new Expression("JSON_EXTRACT(". EmployeeContent::tableName() .".additional_data, '$.show_start_at') IS NULL")
         ]);
 
         return $this;
@@ -92,8 +92,8 @@ class ContentQuery extends ActiveQuery
     public function byShowEndAt(int $date): self
     {
         $this->andWhere(['OR',
-            new Expression("JSON_EXTRACT(". Content::tableName() .".additional_data, '$.show_end_at') >= $date"),
-            new Expression("JSON_EXTRACT(". Content::tableName() .".additional_data, '$.show_end_at') IS NULL")
+            new Expression("JSON_EXTRACT(". EmployeeContent::tableName() .".additional_data, '$.show_end_at') >= $date"),
+            new Expression("JSON_EXTRACT(". EmployeeContent::tableName() .".additional_data, '$.show_end_at') IS NULL")
         ]);
 
         return $this;
@@ -104,8 +104,8 @@ class ContentQuery extends ActiveQuery
         if ($isBanner) {
             $this->andWhere([
                 'OR',
-                new Expression("JSON_EXTRACT(". Content::tableName() .".additional_data, '$.show_start_at') IS NOT NULL"),
-                new Expression("JSON_EXTRACT(". Content::tableName() .".additional_data, '$.show_end_at') IS NOT NULL"),
+                new Expression("JSON_EXTRACT(". EmployeeContent::tableName() .".additional_data, '$.show_start_at') IS NOT NULL"),
+                new Expression("JSON_EXTRACT(". EmployeeContent::tableName() .".additional_data, '$.show_end_at') IS NOT NULL"),
             ]);
 
             return $this;
@@ -113,8 +113,8 @@ class ContentQuery extends ActiveQuery
 
         $this->andWhere([
             'AND',
-            new Expression("JSON_EXTRACT(". Content::tableName() .".additional_data, '$.show_start_at') IS NULL"),
-            new Expression("JSON_EXTRACT(". Content::tableName() .".additional_data, '$.show_end_at') IS NULL"),
+            new Expression("JSON_EXTRACT(". EmployeeContent::tableName() .".additional_data, '$.show_start_at') IS NULL"),
+            new Expression("JSON_EXTRACT(". EmployeeContent::tableName() .".additional_data, '$.show_end_at') IS NULL"),
         ]);
 
         return $this;

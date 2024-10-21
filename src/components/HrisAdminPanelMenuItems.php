@@ -2,13 +2,10 @@
 
 namespace hesabro\hris\components;
 
-use hesabro\helpers\traits\MenuHelper;
 use hesabro\hris\models\AdvanceMoney;
 use hesabro\hris\models\ComfortItems;
-use hesabro\hris\models\Content;
+use hesabro\hris\models\EmployeeContent;
 use hesabro\hris\models\ContractTemplates;
-use hesabro\hris\models\EmployeeBranchUser;
-use hesabro\hris\models\EmployeeRequest;
 use hesabro\hris\Module;
 use yii\helpers\Html;
 
@@ -75,17 +72,17 @@ class HrisAdminPanelMenuItems
                     ],
                     [
                         'label' => Module::t('module', 'Job Description'),
-                        'url' => ["/$moduleId/content/index", 'type' => Content::TYPE_JOB_DESCRIPTION],
+                        'url' => ["/$moduleId/employee-content/index", 'type' => EmployeeContent::TYPE_JOB_DESCRIPTION],
                         'group' => 'GeneralInfo'
                     ],
                     [
                         'label' => Module::t('module', 'Announcement'),
-                        'url' => ["/$moduleId/content/index", 'type' => Content::TYPE_ANNOUNCEMENT],
+                        'url' => ["/$moduleId/employee-content/index", 'type' => EmployeeContent::TYPE_ANNOUNCEMENT],
                         'group' => 'GeneralInfo'
                     ],
                     [
                         'label' => Module::t('module', 'Employee'),
-                        'url' => ["/$moduleId/content/index", 'type' => Content::TYPE_EMPLOYEE],
+                        'url' => ["/$moduleId/employee-content/index", 'type' => EmployeeContent::TYPE_REGULATIONS],
                         'group' => 'GeneralInfo'
                     ],
                     [

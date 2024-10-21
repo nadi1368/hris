@@ -1,7 +1,7 @@
 <?php
 
 use hesabro\hris\models\Comfort;
-use hesabro\hris\models\Content;
+use hesabro\hris\models\EmployeeContent;
 use hesabro\hris\models\EmployeeBranchUser;
 use hesabro\hris\models\SalaryItemsAddition;
 use hesabro\helpers\components\iconify\Iconify;
@@ -34,7 +34,7 @@ use common\models\Comments;
  * @var string $monthText
  * @var string $yearText
  * @var int $monthValue
- * @var Content[] $banners
+ * @var EmployeeContent[] $banners
  */
 
 $this->title = Yii::t('app', 'Home');

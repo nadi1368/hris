@@ -5,7 +5,7 @@ namespace hesabro\hris\models;
 use Ramsey\Uuid\Uuid;
 use yii\base\Model;
 
-class ContentClause extends Model
+class EmployeeContentClause extends Model
 {
     /**
      * @var string

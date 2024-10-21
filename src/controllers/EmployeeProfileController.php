@@ -7,7 +7,7 @@ use hesabro\hris\models\AdvanceMoney;
 use hesabro\hris\models\Comfort;
 use hesabro\hris\models\ComfortItems;
 use hesabro\hris\models\ComfortSearch;
-use hesabro\hris\models\Content;
+use hesabro\hris\models\EmployeeContent;
 use hesabro\hris\models\EmployeeBranchUser;
 use hesabro\hris\models\EmployeeRequest;
 use hesabro\hris\models\RequestLeave;
@@ -26,7 +26,7 @@ class EmployeeProfileController extends EmployeeProfileBase
 
         $jobTags = array_map(fn ($item) => $item, Customer::find()->findByUser($userId)->one()->jobs ?: []);
         $time = time();
-        $banners = Content::find()
+        $banners = EmployeeContent::find()
             ->byClientAccess(Yii::$app->client->id)
             ->byCustomUserId($userId)
             ->byCustomJobTags($jobTags)

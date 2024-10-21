@@ -114,14 +114,12 @@ return [
     'Excel File Upload' => 'آپلود فایل اکسل',
     'Expire Time' => 'زمان انقضا',
     'Export Json All' => 'استخراج Json همه',
-    'Faq Type' => [
-        'customer' => 'پرسش‌های متداول مشتریان',
-        'employee' => 'آیین نامه',
-        'software' => 'پرسش‌های متداول نرم افزار',
-        'business' => 'پرسش‌های متداول کسب و کار',
-        'job_description' => 'شرح شغل',
-        'announcement' => 'اطلاعیه',
-    ],
+    'Regulations' => 'آیین نامه',
+    'Notice' => 'اطلاعیه',
+    'Employ Description' => 'شرح شغل',
+    'Customer FAQ' => 'پرسش‌های متداول مشتریان',
+    'Software FAQ' => 'پرسش‌های متداول نرم افزار',
+    'Business FAQ' => 'پرسش‌های متداول کسب و کار',
     'Faq of Type' => '{type}',
     'First Name And Last Name' => 'نام و نام خانوادگی',
     'For' => 'برای',
@@ -314,4 +312,6 @@ return [
     'Announcement' => '',
     'Select2' => 'انتخاب',
     '{attribute} is invalid.' => '{attribute} نا معتبر است',
+    'File' => 'فایل',
+    'No Data' => 'داده‌ای وجود ندارد'
 ];

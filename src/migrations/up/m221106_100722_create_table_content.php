@@ -25,6 +25,8 @@ class m221106_100722_create_table_content extends Migration
                 'creator_id' => $this->integer(),
                 'update_id' => $this->integer(),
                 'changed' => $this->integer(),
+                'additional_data' => $this->json()->null(),
+                'sort' => $this->integer()->defaultValue(0),
                 'slave_id' => $this->integer()->unsigned()->notNull(),
             ],
             $tableOptions
