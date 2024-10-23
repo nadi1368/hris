@@ -35,11 +35,6 @@ use yii\helpers\Html;
 				<?= $form->field($model, 'type')->dropdownList(EmployeeContent::itemAlias('Type'), ['prompt' => Module::t('module', 'Select...')]) ?>
 			</div>
 
-			<?php if(Yii::$app->client->isMaster()) :?>
-            <div class="col-md-2">
-                <?php echo $form->field($model, 'ignore_client')->checkbox()->label(Module::t('module', 'Ignore Client')) ?>
-            </div>
-			<?php endif; ?>
 
 			<div class="col-12 align-self-center text-right">
 				<?= Html::submitButton(Module::t('module', 'Search'), ['class' => 'btn btn-primary']) ?>

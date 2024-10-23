@@ -48,19 +48,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format' => 'raw'
                     ],
                 ] : []),
-
-                ...(Yii::$app->client->isMaster() ? [
-                    [
-                        'attribute' => 'include_client_ids',
-                        'format' => 'raw',
-                        'value' => $model->includedClientsListView(),
-                    ],
-                    [
-                        'attribute' => 'exclude_client_ids',
-                        'format' => 'raw',
-                        'value' => $model->excludedClientsListView(),
-                    ],
-                ] : []),
             ],
         ]) ?>
     </div>

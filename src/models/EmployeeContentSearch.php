@@ -91,10 +91,6 @@ class EmployeeContentSearch extends EmployeeContent
             ->andFilterWhere(['like', 'description', $this->description]);
 
 
-        if (!(Yii::$app->client->isMaster() && $this->ignore_client)) {
-            $query->byClientAccess(Yii::$app->client->id);
-        }
-
         if ($this->scattered_search_query) {
             $query->byScatteredSearch($this->scattered_search_query);
         }

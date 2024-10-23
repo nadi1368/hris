@@ -150,7 +150,7 @@ if ($model->custom_job_tags && ($jobs = SalaryInsurance::find()->andWhere(['IN',
 
             <div class="col-md-6">
 				<?= $form->field($model, 'custom_user_ids')->widget(Select2::className(), [
-					'data' => Module::getInstance()->user::getUserWithRoles(['user']),
+					'data' => Module::getInstance()->user::getUserWithRoles(Module::getInstance()->employeeRole),
 					'options' => [
 						'placeholder' => 'کاربرانی که مجاز به مشاهده هستند',
 						'dir' => 'rtl',
