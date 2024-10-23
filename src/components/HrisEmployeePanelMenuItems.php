@@ -11,9 +11,9 @@ class HrisEmployeePanelMenuItems
 {
     use MenuHelper;
 
-    public static function items()
+    public static function items($moduleId = null)
     {
-        $moduleId = Module::getInstance()->moduleId;
+        $moduleId = $moduleId ?: Module::getInstance()->id;
 
         return [
             [
@@ -98,28 +98,28 @@ class HrisEmployeePanelMenuItems
                 'items' => [
                     [
                         'label' => EmployeeContent::itemAlias('Type', EmployeeContent::TYPE_BUSINESS),
-                        'url' => ["/$moduleId/employee-content/public?type=" . EmployeeContent::TYPE_BUSINESS],
+                        'url' => ["/$moduleId/employee-content/index?type=" . EmployeeContent::TYPE_BUSINESS],
                         'group' => 'faq-business',
                         'level' => 'second-level',
                         'icon' => 'far fa-question'
                     ],
                     [
                         'label' => EmployeeContent::itemAlias('Type', EmployeeContent::TYPE_REGULATIONS),
-                        'url' => ["/$moduleId/employee-content/public?type=" . EmployeeContent::TYPE_REGULATIONS],
+                        'url' => ["/$moduleId/employee-content/index?type=" . EmployeeContent::TYPE_REGULATIONS],
                         'group' => 'faq-employee',
                         'level' => 'second-level',
                         'icon' => 'fa fa-list-alt'
                     ],
                     [
                         'label' => EmployeeContent::itemAlias('Type', EmployeeContent::TYPE_JOB_DESCRIPTION),
-                        'url' => ["/$moduleId/employee-content/public?type=" . EmployeeContent::TYPE_JOB_DESCRIPTION],
+                        'url' => ["/$moduleId/employee-content/index?type=" . EmployeeContent::TYPE_JOB_DESCRIPTION],
                         'group' => 'faq-job-description',
                         'level' => 'second-level',
                         'icon' => 'fa fa-list-alt'
                     ],
                     [
                         'label' => EmployeeContent::itemAlias('Type', EmployeeContent::TYPE_ANNOUNCEMENT),
-                        'url' => ["/$moduleId/employee-content/public?type=" . EmployeeContent::TYPE_ANNOUNCEMENT],
+                        'url' => ["/$moduleId/employee-content/index?type=" . EmployeeContent::TYPE_ANNOUNCEMENT],
                         'group' => 'faq-announcement',
                         'level' => 'second-level',
                         'icon' => 'fa fa-list-alt'

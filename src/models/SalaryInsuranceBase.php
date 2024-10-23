@@ -39,7 +39,7 @@ class SalaryInsuranceBase extends \yii\db\ActiveRecord
         return [
             [['code', 'group'], 'required'],
             [['creator_id', 'update_id', 'created', 'changed'], 'integer'],
-            [['code'], 'string', 'max' => 32],
+            [['code'], 'number'],
             [['group'], 'string', 'max' => 64],
             [['code'], 'unique']
         ];

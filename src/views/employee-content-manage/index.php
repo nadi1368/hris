@@ -1,13 +1,14 @@
 <?php
 
-use common\models\Faq;
-use common\components\mobit\SortableGridview\SortableGridView as GridView;
+use hesabro\hris\models\EmployeeContent;
+use hesabro\hris\Module;
+use hesabro\hris\widgets\SortableGridView as GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\FaqSearch */
+/* @var \hesabro\hris\models\EmployeeContentSearch $searchModel */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /* @var string $title */
 /* @var string $type */
@@ -90,27 +91,27 @@ $this->registerCssFile('@web/fonts/bundle.css');
                     'attribute' => 'description',
                     'format' => 'html',
                     'headerOptions' => ['style' => 'width:500px; text-align: right;'],
-                    'value' => function (Faq $model) {
+                    'value' => function (EmployeeContent $model) {
                         return '<div class="faq-desc">' . $model->getExcerpt() . '</div>';
                     }
                 ],
                 [
                     'attribute' => 'type',
                     'visible' => !$isTypeSet,
-                    'value' => function (Faq $model) {
-                        return Faq::itemAlias('Type', $model->type);
+                    'value' => function (EmployeeContent $model) {
+                        return EmployeeContent::itemAlias('Type', $model->type);
                     }
                 ],
                 [
                     'attribute' => 'created',
-                    'value' => function (Faq $model) {
+                    'value' => function (EmployeeContent $model) {
                         return '<span title="بروز رسانی شده در ' . Yii::$app->jdate->date("Y/m/d  H:i", $model->changed) . '">' . Yii::$app->jdate->date("Y/m/d  H:i", $model->created) . '</span>';
                     },
                     'format' => 'raw',
                 ],
                 [
                     'attribute' => 'creator_id',
-                    'value' => function (Faq $model) {
+                    'value' => function (EmployeeContent $model) {
                         return '<span title="بروز رسانی شده توسط ' . $model->update?->fullName . '">' . $model->creator?->fullName . '</span>';
                     },
                     'format' => 'raw',
@@ -119,7 +120,7 @@ $this->registerCssFile('@web/fonts/bundle.css');
                     'class' => 'common\widgets\grid\ActionColumn',
                     'template' => '{view} {update} {delete}',
                     'buttons' => [
-                        'view' => function ($url, Faq $model, $key) {
+                        'view' => function ($url, EmployeeContent $model, $key) {
                             return Html::a(
                                 '<i class="text-info far fa-eye"></i>',
                                 ['view', 'id' => $model->id],

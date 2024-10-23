@@ -1,16 +1,15 @@
 <?php
 
-use common\components\Helper;
-use common\components\jdf\Jdf;
-use common\models\Faq;
+use hesabro\hris\models\EmployeeContent;
+use hesabro\hris\Module;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Faq */
+/* @var $model EmployeeContent */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => Module::t('module', 'Faqs'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Module::t('module', 'Contents'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="faq-view card">
@@ -27,18 +26,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'attribute' => 'type',
-                    'value' => Faq::itemAlias('Type', $model->type),
+                    'value' => EmployeeContent::itemAlias('Type', $model->type),
                 ],
 
-                ...($model->type === Faq::TYPE_ANNOUNCEMENT ? [
+                ...($model->type === EmployeeContent::TYPE_ANNOUNCEMENT ? [
                     [
                         'attribute' => 'show_start_at',
-                        'value' => $model->show_end_at ? Jdf::jdate('Y/m/d', $model->show_start_at) : '-',
+                        'value' => $model->show_end_at ? Yii::$app->jdf::jdate('Y/m/d', $model->show_start_at) : '-',
                         'format' => 'html'
                     ],
                     [
                         'attribute' => 'show_end_at',
-                        'value' => $model->show_end_at ? Jdf::jdate('Y/m/d', $model->show_end_at) : '-',
+                        'value' => $model->show_end_at ? Yii::$app->jdf::jdate('Y/m/d', $model->show_end_at) : '-',
                         'format' => 'html'
                     ],
                     [
@@ -76,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'method' => 'post',
                 ],
             ]) ?>
-            <?= $model->getFileUrl('attachment') ? Html::a(Module::t('module', 'Delete attachment'), ['remove-attachment', 'id' => $model->id], [
+            <?= $model->getFileUrl('attachment') ? Html::a(Module::t('module', 'Delete Attachment'), ['remove-attachment', 'id' => $model->id], [
                 'class' => 'btn btn-outline-danger',
                 'data' => [
                     'confirm' => Module::t('module', 'Are you sure you want to delete this item?'),

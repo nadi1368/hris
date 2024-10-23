@@ -36,13 +36,12 @@ class SalaryInsuranceController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::class,
-                'rules' =>
+                'rules' => [
                     [
-                        [
-                            'allow' => true,
-                            'roles' => ['SalaryPeriod/index'],
-                        ],
-                    ]
+                        'allow' => true,
+                        'roles' => ['SalaryPeriod/index'],
+                    ],
+                ]
             ]
         ];
     }
@@ -70,7 +69,7 @@ class SalaryInsuranceController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -177,6 +176,32 @@ class SalaryInsuranceController extends Controller
         }
         Yii::$app->response->format = Response::FORMAT_JSON;
         return $result;
+    }
+
+    public function actionList($q = null)
+    {
+        $out = [];
+        if (!is_null($q)) {
+            $query = SalaryInsurance::find();
+            $searchKeys = explode(' ', $q ,3);
+            $conditions = ['or'];
+            foreach ($searchKeys as $searchKey) {
+                if ($searchKey) {
+                    $conditions[] = ['like', 'code', $searchKey];
+                    $conditions[] = ['like', 'group', $searchKey];
+                }
+            }
+            $query->andWhere($conditions);
+
+            $k = 0;
+            foreach ($query->all() as $item) {
+                //$stock=$item->getTotalStock(false, true);
+                $out['results'][$k]['id'] = $item->id;
+                $out['results'][$k]['text'] = "$item->group ($item->code)";
+                $k++;
+            }
+        }
+        return $this->asJson($out);
     }
 
     /**

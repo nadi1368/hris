@@ -44,11 +44,7 @@ class EmployeeContent extends EmployeeContentBase
 
     public function canUpdate()
     {
-        if (in_array($this->type, [self::TYPE_CUSTOMER, self::TYPE_SOFTWARE])) {
-            return Yii::$app->client->isMaster();
-        }
-
-        return $this->client_id == Yii::$app->client->id;
+        return $this->slave_id == Yii::$app->client->id;
     }
 
     public function canDelete()
@@ -57,7 +53,7 @@ class EmployeeContent extends EmployeeContentBase
             return Yii::$app->client->isMaster();
         }
 
-        return $this->client_id == Yii::$app->client->id;
+        return $this->slave_id == Yii::$app->client->id;
     }
 
     public function beforeSave($insert)
@@ -67,8 +63,6 @@ class EmployeeContent extends EmployeeContentBase
             $this->creator_id = Yii::$app->user->id;
             $this->status = self::STATUS_ACTIVE;
         }
-
-        $this->client_id = Yii::$app->client->id;
 
         if (is_array($this->clauses)) {
 

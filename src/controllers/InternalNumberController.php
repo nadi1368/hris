@@ -119,7 +119,7 @@ class InternalNumberController extends Controller
      */
     public function actionPublic()
     {
-        $this->layout = 'panel';
+        $this->layout = Module::getInstance()->layoutPanel;
 
         $searchModel = new InternalNumberSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);

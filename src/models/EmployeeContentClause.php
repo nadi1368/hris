@@ -2,11 +2,14 @@
 
 namespace hesabro\hris\models;
 
+use hesabro\helpers\traits\ModelHelper;
 use Ramsey\Uuid\Uuid;
 use yii\base\Model;
 
 class EmployeeContentClause extends Model
 {
+    use ModelHelper;
+
     /**
      * @var string
      */
