@@ -8,8 +8,6 @@ use yii\helpers\Url;
 
 class Module extends BaseModule
 {
-    public string $moduleId = 'hris';
-
     public string | null $user = null;
 
     public string | null $settings = null;
@@ -37,7 +35,7 @@ class Module extends BaseModule
 
     public static function createUrl(string $path = null, array $params = [])
     {
-        $moduleId = self::getInstance()?->moduleId;
+        $moduleId = self::getInstance()?->id;
 
         $path = trim($path ?: '', '/');
         return Url::to([rtrim("/$moduleId/$path", '/'), ...$params]);

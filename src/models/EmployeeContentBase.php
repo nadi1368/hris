@@ -54,8 +54,8 @@ class EmployeeContentBase extends ActiveRecord
 
     /** Additional Data Property */
     public $clauses = [];
-    public $include_EmployeeContent_ids;
-    public $exclude_EmployeeContent_ids;
+    public $include_client_ids;
+    public $exclude_client_ids;
     public $custom_user_ids = [];
     public $custom_job_tags = [];
 
@@ -107,8 +107,8 @@ class EmployeeContentBase extends ActiveRecord
                 'fieldAdditional' => 'additional_data',
                 'AdditionalDataProperty' => [
                     'clauses' => 'ClassArray::' . EmployeeContentClause::class,
-                    'include_EmployeeContent_ids' => 'StringArray',
-                    'exclude_EmployeeContent_ids' => 'StringArray',
+                    'include_client_ids' => 'StringArray',
+                    'exclude_client_ids' => 'StringArray',
                     'custom_user_ids' => 'StringArray',
                     'custom_job_tags' => 'StringArray',
                     'show_start_at' => 'Integer',
@@ -138,7 +138,7 @@ class EmployeeContentBase extends ActiveRecord
         return [
             [['type', 'title'], 'required'],
             [['title', 'description', 'scattered_search_query'], 'string'],
-            [['type', 'status', 'sort', 'created', 'EmployeeContent_id', 'creator_id', 'update_id', 'changed'], 'integer'],
+            [['type', 'status', 'sort', 'created', 'creator_id', 'update_id', 'changed'], 'integer'],
             ['type', 'typeValidator'],
             ['custom_user_ids', 'each', 'rule' => ['exist', 'targetClass' => Module::getInstance()->user, 'targetAttribute' => ['custom_user_ids' => 'id']]],
             ['custom_job_tags', 'each', 'rule' => ['exist', 'targetClass' => SalaryInsurance::class, 'targetAttribute' => ['custom_job_tags' => 'id']]],
@@ -146,12 +146,12 @@ class EmployeeContentBase extends ActiveRecord
             [
                 ['show_start_at', 'show_end_at'],
                 'integer',
-                'enableEmployeeContentValidation' => false
+                'enableClientValidation' => false
             ],
             [
                 ['show_start_at', 'show_end_at'],
                 'integer',
-                'enableEmployeeContentValidation' => false
+                'enableClientValidation' => false
             ],
             [
                 'attachment',
@@ -180,8 +180,8 @@ class EmployeeContentBase extends ActiveRecord
             'update_id' => Module::t('module', 'Update ID'),
             'changed' => Module::t('module', 'Creator'),
             'clauses' => Module::t('module', 'Clauses'),
-            'include_EmployeeContent_ids' => Module::t('module', 'EmployeeContents Can See This Faq'),
-            'exclude_EmployeeContent_ids' => Module::t('module', 'EmployeeContents Can not See This Faq'),
+            'include_client_ids' => Module::t('module', 'Clients Can See This Content'),
+            'exclude_client_ids' => Module::t('module', 'Clients Can not See This Content'),
             'custom_job_tags' => Module::t('module', 'Job'),
             'custom_user_ids' => Module::t('module', 'Custom Users'),
             'show_start_at' => Module::t('module', 'Show Banner From Date'),
@@ -204,7 +204,10 @@ class EmployeeContentBase extends ActiveRecord
     {
         $scenarios = parent::scenarios();
 
-        $scenarios[self::SCENARIO_CREATE] = ['id', 'title', 'description', 'type', 'status', 'created', 'creator_id', 'update_id', 'changed', 'attachment'];
+        $scenarios[self::SCENARIO_CREATE] = [
+            'id', 'title', 'description', 'type', 'status', 'created', 'creator_id', 'update_id', 'changed', 'attachment',
+            'show_start_at', 'show_end_at', 'exclude_client_ids', 'custom_job_tags', 'custom_user_ids', 'include_client_ids'
+        ];
         $scenarios[self::SCENARIO_CREATE_ANNOUNCEMENT] = [
             'id', 'title', 'description', 'type', 'status', 'created', 'creator_id', 'update_id', 'changed',
             'show_start_at', 'show_end_at', 'attachment'
@@ -297,7 +300,7 @@ class EmployeeContentBase extends ActiveRecord
 
     public static function validateType(mixed $type): bool
     {
-        return in_array((int) $type, array_keys(self::itemAlias('Type')));
+        return in_array((int) $type, array_keys(EmployeeContent::itemAlias('Type')));
     }
 
     /**

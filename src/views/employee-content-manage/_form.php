@@ -1,11 +1,11 @@
 <?php
 
 use backend\modules\master\models\Client;
-use common\components\DynamicFormWidget;
-use common\models\Faq;
-use common\models\Tags;
-use common\models\User;
-use common\widgets\CKEditorWidget;
+use hesabro\helpers\widgets\DynamicFormWidget;
+use hesabro\helpers\widgets\CKEditorWidget;
+use hesabro\hris\models\EmployeeContent;
+use hesabro\hris\models\SalaryInsurance;
+use hesabro\hris\Module;
 use kartik\select2\Select2;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\ArrayHelper;
@@ -15,14 +15,14 @@ use yii\web\JsExpression;
 use yii\widgets\MaskedInput;
 
 /** @var yii\web\View $this */
-/** @var common\models\Faq $model */
+/** @var EmployeeContent $model */
 /** @var yii\bootstrap4\ActiveForm $form */
 /* @var string|null $type */
 /* @var bool $isTypeSet */
 
 $initValueText = '';
-if ($model->custom_job_tags && ($tags = Tags::find()->andWhere(['IN', 'id', $model->custom_job_tags])->all())) {
-	$initValueText = ArrayHelper::map($tags, "id", "title");
+if ($model->custom_job_tags && ($jobs = SalaryInsurance::find()->andWhere(['IN', 'id', $model->custom_job_tags])->all())) {
+	$initValueText = ArrayHelper::map($jobs, 'id', fn($item) => $item['group'] . ' ('. $item['code'] .')');
 } else {
 	$model->custom_job_tags = [];
 }
@@ -44,7 +44,7 @@ if ($model->custom_job_tags && ($tags = Tags::find()->andWhere(['IN', 'id', $mod
 				<?= $form->field($model, 'type')->hiddenInput(['value' => $type])->label(false) ?>
 			<?php else : ?>
 				<div class="col-md-4">
-					<?= $form->field($model, 'type')->dropdownList(Faq::itemAlias('Type'), ['prompt' => Module::t('module', 'Select...')]) ?>
+					<?= $form->field($model, 'type')->dropdownList(EmployeeContent::itemAlias('Type'), ['prompt' => Module::t('module', 'Select...')]) ?>
 				</div>
 			<?php endif; ?>
 
@@ -92,7 +92,7 @@ if ($model->custom_job_tags && ($tags = Tags::find()->andWhere(['IN', 'id', $mod
 				<?php DynamicFormWidget::end(); ?>
 			</div>
 
-			<?php if (Yii::$app->client->isMaster()) : ?>
+			<?php if (class_exists('backend\modules\master\models\Client') && Yii::$app->client->isMaster()) : ?>
 				<div class="col-md-6">
 					<?= $form->field($model, 'include_client_ids')->widget(Select2::class, [
 						'data' => Client::itemAlias('List'),
@@ -129,15 +129,15 @@ if ($model->custom_job_tags && ($tags = Tags::find()->andWhere(['IN', 'id', $mod
                         'multiple' => true,
                         'minimumInputLength' => 3,
                         'language' => [
-                            'errorLoading' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Error Loading'] . "'; }"),
-                            'inputTooShort' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Input Too Short'] . "'; }"),
-                            'loadingMore' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Loading More'] . "'; }"),
-                            'noResults' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['No Results'] . "'; }"),
-                            'searching' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Searching'] . "'; }"),
-                            'maximumSelected' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Maximum Selected'] . "'; }"),
+                            'errorLoading' => new JsExpression("function () { return '" . Module::t('module', 'Error Loading') . "'; }"),
+                            'inputTooShort' => new JsExpression("function () { return '" . Module::t('module', 'Input Too Short') . "'; }"),
+                            'loadingMore' => new JsExpression("function () { return '" . Module::t('module', 'Loading More') . "'; }"),
+                            'noResults' => new JsExpression("function () { return '" . Module::t('module', 'No Results') . "'; }"),
+                            'searching' => new JsExpression("function () { return '" . Module::t('module', 'Searching') . "'; }"),
+                            'maximumSelected' => new JsExpression("function () { return '" . Module::t('module', 'Maximum Selected') . "'; }"),
                         ],
                         'ajax' => [
-                            'url' => Url::to(['/tags/find', 'category' => Tags::MODEL_JOBS]),
+                            'url' => Module::createUrl('/salary-insurance/list'),
                             'dataType' => 'json',
                             'data' => new JsExpression('function(params) { return {q:params.term}; }')
                         ],
@@ -150,7 +150,7 @@ if ($model->custom_job_tags && ($tags = Tags::find()->andWhere(['IN', 'id', $mod
 
             <div class="col-md-6">
 				<?= $form->field($model, 'custom_user_ids')->widget(Select2::className(), [
-					'data' => User::getUserWithRoles(['user']),
+					'data' => Module::getInstance()->user::getUserWithRoles(['user']),
 					'options' => [
 						'placeholder' => 'کاربرانی که مجاز به مشاهده هستند',
 						'dir' => 'rtl',

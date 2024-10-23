@@ -13,8 +13,9 @@ class HrisAdminPanelMenuItems
 {
 
 
-    public static function items($moduleId='hris')
+    public static function items($moduleId = null)
     {
+        $moduleId = $moduleId ?: Module::getInstance()->id;
         $advanceMoneyRequest = AdvanceMoney::find()->wait()->exists();
         //$employeeRequest = EmployeeRequest::find()->pending()->exists();
         $employeeRequest = false;
@@ -72,17 +73,17 @@ class HrisAdminPanelMenuItems
                     ],
                     [
                         'label' => Module::t('module', 'Job Description'),
-                        'url' => ["/$moduleId/employee-content/index", 'type' => EmployeeContent::TYPE_JOB_DESCRIPTION],
+                        'url' => ["/$moduleId/employee-content-manage/index", 'type' => EmployeeContent::TYPE_JOB_DESCRIPTION],
                         'group' => 'GeneralInfo'
                     ],
                     [
-                        'label' => Module::t('module', 'Announcement'),
-                        'url' => ["/$moduleId/employee-content/index", 'type' => EmployeeContent::TYPE_ANNOUNCEMENT],
+                        'label' => Module::t('module', 'Notice'),
+                        'url' => ["/$moduleId/employee-content-manage/index", 'type' => EmployeeContent::TYPE_ANNOUNCEMENT],
                         'group' => 'GeneralInfo'
                     ],
                     [
                         'label' => Module::t('module', 'Employee'),
-                        'url' => ["/$moduleId/employee-content/index", 'type' => EmployeeContent::TYPE_REGULATIONS],
+                        'url' => ["/$moduleId/employee-content-manage/index", 'type' => EmployeeContent::TYPE_REGULATIONS],
                         'group' => 'GeneralInfo'
                     ],
                     [

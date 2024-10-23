@@ -1,11 +1,12 @@
 <?php
 
-use common\models\Faq;
+use hesabro\hris\models\EmployeeContent;
+use hesabro\hris\Module;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\FaqSearch */
+/* @var $model \hesabro\hris\models\EmployeeContentSearch */
 /* @var $form yii\bootstrap4\ActiveForm */
 /* @var bool $isTypeSet */
 ?>
@@ -31,7 +32,7 @@ use yii\helpers\Html;
 			</div>
 
 			<div class="col-md-2">
-				<?= $form->field($model, 'type')->dropdownList(Faq::itemAlias('Type'), ['prompt' => Module::t('module', 'Select...')]) ?>
+				<?= $form->field($model, 'type')->dropdownList(EmployeeContent::itemAlias('Type'), ['prompt' => Module::t('module', 'Select...')]) ?>
 			</div>
 
 			<?php if(Yii::$app->client->isMaster()) :?>

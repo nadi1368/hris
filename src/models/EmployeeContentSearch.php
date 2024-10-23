@@ -9,6 +9,13 @@ use yii\data\ActiveDataProvider;
 class EmployeeContentSearch extends EmployeeContent
 {
     /**
+     * Determine if ignoring client_id for master queries
+     *
+     * @var bool
+     */
+    public $ignore_client;
+
+    /**
      * {@inheritdoc}
      */
     public function rules()

@@ -11,6 +11,12 @@ use yii\web\Response;
 
 class DefaultController extends DefaultBase
 {
+    public function __construct($id, $module, $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->layout = Module::getInstance()->layout;
+    }
+
     /**
      * Lists all Year models.
      * @return mixed

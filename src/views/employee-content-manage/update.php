@@ -1,7 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Faq */
+/* @var $model \hesabro\hris\models\EmployeeContent */
 /* @var string $title */
 /* @var string|null $type */
 /* @var bool $isTypeSet */

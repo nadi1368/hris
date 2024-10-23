@@ -86,7 +86,7 @@ class OrganizationChartController extends Controller
      */
     public function actionPublic()
     {
-        $this->layout = 'panel';
+        $this->layout = Module::getInstance()->layoutPanel;
 
         $searchModel = new OrganizationMemberSearch();
         $dataProvider = $searchModel->search([]);
@@ -183,7 +183,7 @@ class OrganizationChartController extends Controller
         $model = $this->findModel($id);
 
         if (OrganizationMember::find()->where(['parent_id' => $id])->exists()) {
-            throw new UnprocessableEntityHttpException(Module::t('module', 'The memeber has child'));
+            throw new UnprocessableEntityHttpException(Module::t('module', 'The member has child'));
         }
 
         $model->delete();

@@ -271,7 +271,7 @@ return [
     'Status Reject Manager' => 'رد مدیر بخش',
     'Sum of Your Hourly Merit Leaves Hours are Reached to This day Limit' => 'Sum of Your Hourly Merit Leaves Hours are Reached to This day Limit',
     'T Id Creditor' => 'تفصیل بستانکار',
-    'The memeber has child' => 'این مورد شامل زیرمجموعه است.',
+    'The member has child' => 'این مورد شامل زیرمجموعه است.',
     'The requested page does not exist.' => 'صفحه مورد نظر یافت نشد.',
     'Tickets' => 'تیکت ها',
     'Title' => 'عنوان',
@@ -313,5 +313,17 @@ return [
     'Select2' => 'انتخاب',
     '{attribute} is invalid.' => '{attribute} نا معتبر است',
     'File' => 'فایل',
-    'No Data' => 'داده‌ای وجود ندارد'
+    'No Data' => 'داده‌ای وجود ندارد',
+    'Error Loading' => 'خطا در جستجو اطلاعات',
+    'Input Too Short' => 'لطفا تایپ نمایید',
+    'Loading More' => 'بارگیری بیشتر',
+    'No Results' =>'نتیجه ای یافت نشد.',
+    'Searching' => 'در حال جستجو...',
+    'Maximum Selected' => 'حداکثر انتخاب شده',
+    'Contents' => 'محتوا',
+    'Add Clause' => 'افزودن بند',
+    'Remove Clause' => 'حذف بند',
+    'Clients Can See This Content' => 'کلاینت‌‌هایی که می‌توانند این محتوا را مشاهده کنند',
+    'Clients Can not See This Content' => 'کلاینت‌‌هایی که نمی‌توانند این محتوا را مشاهده کنند',
+    'Delete Attachment' => 'حذف پیوست'
 ];
