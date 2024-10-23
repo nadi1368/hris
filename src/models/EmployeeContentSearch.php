@@ -19,9 +19,9 @@ class EmployeeContentSearch extends EmployeeContent
             [
                 'type',
                 'in',
-                [
+                'range' => [
                     EmployeeContent::TYPE_CUSTOMER, EmployeeContent::TYPE_REGULATIONS,
-                    EmployeeContent::TYPE_SOFTWARE,EmployeeContent::TYPE_BUSINESS,
+                    EmployeeContent::TYPE_SOFTWARE, EmployeeContent::TYPE_BUSINESS,
                     EmployeeContent::TYPE_JOB_DESCRIPTION, EmployeeContent::TYPE_ANNOUNCEMENT
                 ]
             ],
@@ -54,7 +54,7 @@ class EmployeeContentSearch extends EmployeeContent
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => $pagination,
-            'sort'=>[
+            'sort' => [
                 'defaultOrder' => [
                     'sort' => SORT_DESC
                 ],
@@ -88,7 +88,7 @@ class EmployeeContentSearch extends EmployeeContent
             $query->byClientAccess(Yii::$app->client->id);
         }
 
-        if($this->scattered_search_query) {
+        if ($this->scattered_search_query) {
             $query->byScatteredSearch($this->scattered_search_query);
         }
 
@@ -104,7 +104,7 @@ class EmployeeContentSearch extends EmployeeContent
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => $pagination,
-            'sort'=>[
+            'sort' => [
                 'defaultOrder' => [
                     'sort' => SORT_DESC
                 ],
@@ -140,10 +140,10 @@ class EmployeeContentSearch extends EmployeeContent
 
         $query->byCustomUserId(Yii::$app->user->identity->id);
 
-        $jobTags = array_map(fn ($item) => $item, Customer::find()->findByUser(Yii::$app->user->identity->id)->one()->jobs ?: []);
+        $jobTags = array_map(fn($item) => $item, Customer::find()->findByUser(Yii::$app->user->identity->id)->one()->jobs ?: []);
         $query->byCustomJobTags($jobTags);
 
-        if($this->scattered_search_query) {
+        if ($this->scattered_search_query) {
             $query->byScatteredSearch($this->scattered_search_query);
         }
 
