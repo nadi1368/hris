@@ -54,8 +54,6 @@ class EmployeeContentBase extends ActiveRecord
 
     /** Additional Data Property */
     public $clauses = [];
-    public $include_client_ids;
-    public $exclude_client_ids;
     public $custom_user_ids = [];
     public $custom_job_tags = [];
 

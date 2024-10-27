@@ -36,9 +36,9 @@ Nav::begin([
                 Html::tag('span', Module::t('module', 'Advance Money')),
                 $advanceMoneyRequest ? Html::tag('span', $advanceMoneyRequest, ['class' => 'badge badge-pill badge-danger badge-employee-tab']) : ''
             ]), ['class' => 'd-flex align-center justify-center gap-2']),
-            'url' => ['advance-money-manage/index'],
+            'url' => ['advance-money/index'],
             'linkOptions' => [
-                'class' => 'nav-link ' . (Yii::$app->controller->action->id == 'advance-money-manage' ? 'active' : ''),
+                'class' => 'nav-link ' . (Yii::$app->controller->action->id == 'advance-money' ? 'active' : ''),
             ],
             'encode' => false
         ],

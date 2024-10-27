@@ -2,6 +2,7 @@
 
 use hesabro\hris\models\SalaryPeriodItems;
 use hesabro\hris\models\SalaryPeriodItemsSearch;
+use hesabro\hris\Module;
 use yii\helpers\Html;
 use hesabro\helpers\widgets\grid\GridView;
 
@@ -12,7 +13,7 @@ use hesabro\helpers\widgets\grid\GridView;
 
 
 $this->title = 'مشاهده فیش های حقوق - ' . $searchModel->user->fullName;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Profile'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Module::t('module', 'Profile'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="card">

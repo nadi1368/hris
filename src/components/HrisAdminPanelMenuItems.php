@@ -38,7 +38,7 @@ class HrisAdminPanelMenuItems
                 'items' => [
                     [
                         'label' => Module::t('module', "Salary Years Settings"),
-                        'url' => ["/$moduleId/default/year-setting"],
+                        'url' => ["/$moduleId/employee-branch/year-setting"],
                         'group' => 'GeneralInfo',
                     ],
                     [
@@ -155,14 +155,14 @@ class HrisAdminPanelMenuItems
             [
                 'label' => Module::t('module', 'Employee Branches'),
                 'icon' => 'far fa-building',
-                'url' => ["/$moduleId/default/index"],
+                'url' => ["/$moduleId/employee-branch/index"],
                 'group' => 'EmployeeBranch',
                 'level' => "first-level",
             ],
             [
                 'label' => Html::tag('span', Module::t('module', "Employee Branch User"), ['class' => $employeePendingUpdate ? 'pulse-notification' : '']),
                 'icon' => 'far fa-users',
-                'url' => ["/$moduleId/default/users"],
+                'url' => ["/$moduleId/employee-branch/users"],
                 'group' => 'EmployeeBranchUser',
                 'level' => "first-level",
                 'encode' => false

@@ -2,7 +2,6 @@
 
 namespace hesabro\hris\controllers;
 
-use common\models\Customer;
 use hesabro\hris\models\AdvanceMoney;
 use hesabro\hris\models\Comfort;
 use hesabro\hris\models\ComfortItems;
@@ -10,12 +9,18 @@ use hesabro\hris\models\ComfortSearch;
 use hesabro\hris\models\EmployeeContent;
 use hesabro\hris\models\EmployeeBranchUser;
 use hesabro\hris\models\EmployeeRequest;
+use hesabro\hris\models\EmployeeRollCallSearch;
 use hesabro\hris\models\RequestLeave;
 use hesabro\hris\models\SalaryItemsAddition;
 use hesabro\hris\models\SalaryItemsAdditionSearch;
+use hesabro\hris\models\SalaryPeriod;
+use hesabro\hris\models\SalaryPeriodItems;
 use hesabro\hris\models\SalaryPeriodItemsSearch;
+use hesabro\hris\models\UserContractsSearch;
 use hesabro\hris\Module;
 use Yii;
+use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 
 class EmployeeProfileController extends EmployeeProfileBase
 {
@@ -23,18 +28,19 @@ class EmployeeProfileController extends EmployeeProfileBase
     {
         $userId = Yii::$app->user->getId();
         $employee = EmployeeBranchUser::findOne(['user_id' => $userId]);
-
-        $jobTags = array_map(fn ($item) => $item, Customer::find()->findByUser($userId)->one()->jobs ?: []);
         $time = time();
-        $banners = EmployeeContent::find()
-            ->byClientAccess(Yii::$app->client->id)
+        $bannersQuery = EmployeeContent::find()
+            ->byCurrentClientAccess()
             ->byCustomUserId($userId)
-            ->byCustomJobTags($jobTags)
             ->byIsBanner(true)
             ->byShowStartAt($time)
-            ->byShowEndAt($time)
-            ->all();
+            ->byShowEndAt($time);
 
+        if ($jobCode = $employee?->job_code) {
+            $bannersQuery->byCustomJobTags([$jobCode]);
+        }
+
+        $banners = $bannersQuery->all();
         $requestLeave = RequestLeave::find()->my($userId)->select(['type', 'status', 'from_date'])->orderBy(['id' => SORT_DESC])->limit(2)->all();
         $advanceMoney = AdvanceMoney::find()->my($userId)->select(['status', 'amount', 'created'])->orderBy(['id' => SORT_DESC])->limit(2)->all();
         $comfortItems = ComfortItems::find()->byUser($userId)->select(['comfort_id', 'status', 'created'])->with(['comfort'])->orderBy(['id' => SORT_DESC])->limit(2)->all();
@@ -190,5 +196,79 @@ class EmployeeProfileController extends EmployeeProfileBase
             'monthText' => $monthText,
             'banners' => $banners
         ]);
+    }
+
+    public function actionRollCall()
+    {
+        $searchModel = new EmployeeRollCallSearch();
+        $startAndEndOfCurrentMonth = Yii::$app->jdf::getStartAndEndOfCurrentMonth();
+        $start_month = Yii::$app->jdf::jdate('Y/m/d', $startAndEndOfCurrentMonth[0]);
+        $end_month = Yii::$app->jdf::jdate('Y/m/d', $startAndEndOfCurrentMonth[1]);
+        $searchModel->fromDate = $start_month;
+        $searchModel->toDate = $end_month;
+        $dataProvider = $searchModel->searchUser(Yii::$app->request->queryParams, Yii::$app->user->id);
+        return $this->render('roll-call', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionContracts()
+    {
+        $searchModel = new UserContractsSearch(['user_id' => Yii::$app->user->id]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('contracts', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionSalaryPeriod()
+    {
+        $searchModel = new SalaryPeriodItemsSearch(['user_id' => Yii::$app->user->id]);
+        $dataProvider = $searchModel->searchUser(Yii::$app->request->queryParams);
+        $dataProvider->query
+            ->joinWith('period')
+            ->andWhere([SalaryPeriod::tableName() . '.status' => SalaryPeriod::STATUS_PAYMENT])
+            ->andWhere([SalaryPeriodItems::tableName() . '.can_payment' => Yii::$app->helper::CHECKED])
+            ->andWhere(['user_id' => Yii::$app->user->id]);
+
+        return $this->render('salary-period', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionViewSingleItem($id): string
+    {
+        $salaryPeriodItem = $this->findModelSalaryItem($id);
+        if (!$salaryPeriodItem->canPrint()) {
+            throw new ForbiddenHttpException('امکان مشاهده وجود ندارد');
+        }
+        return $this->render('view-single-item', [
+            'model' => $salaryPeriodItem,
+        ]);
+    }
+
+    public function actionPrintSingleItem($id): string
+    {
+        $this->layout = '@backend/views/layouts/print';
+        $salaryPeriodItem = $this->findModelSalaryItem($id);
+        if (!$salaryPeriodItem->canPrint()) {
+            throw new ForbiddenHttpException('امکان چاپ وجود ندارد');
+        }
+        return $this->render('print-single-item', [
+            'model' => $salaryPeriodItem,
+        ]);
+    }
+
+    protected function findModelSalaryItem($id): ?SalaryPeriodItems
+    {
+        if (($model = SalaryPeriodItems::findOne($id)) !== null && $model->user_id == Yii::$app->user->id) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 }

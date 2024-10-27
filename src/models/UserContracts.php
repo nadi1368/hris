@@ -88,13 +88,13 @@ class UserContracts extends \yii\db\ActiveRecord
 				'class' => JsonAdditional::class,
                 'fieldAdditional' => 'additional_data',
                 'AdditionalDataProperty' => [
-                    'contract_title',
-                    'contract_description',
-                    'contract_signatures',
-                    'daily_salary',
-                    'right_to_housing',
-                    'right_to_food',
-                    'right_to_child',
+                    'contract_title' => 'String',
+                    'contract_description' => 'String',
+                    'contract_signatures' => 'String',
+                    'daily_salary' => 'String',
+                    'right_to_housing' => 'String',
+                    'right_to_food' => 'String',
+                    'right_to_child' => 'String',
 				]
 			],
 		];

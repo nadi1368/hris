@@ -42,7 +42,7 @@ class EmployeeComfortController extends Controller
                     [
                         [
                             'allow' => true,
-                            'roles' => ['employee'],
+                            'roles' => Module::getInstance()->employeeRole,
                         ],
                     ]
             ]

@@ -32,14 +32,14 @@ class HrisEmployeePanelMenuItems
             ],
             [
                 'label' => 'حضور و غیاب',
-                'url' => ["/$moduleId/profile/roll-call"],
+                'url' => ["/$moduleId/employee-profile/roll-call"],
                 'group' => 'roll-call',
                 'level' => 'first-level',
                 'icon' => 'far fa-analytics'
             ],
             [
                 'label' => 'قراردادها',
-                'url' => ["/$moduleId/user-contracts/my-contracts"],
+                'url' => ["/$moduleId/employee-profile/contracts"],
                 'group' => 'contract',
                 'level' => 'first-level',
                 'icon' => 'far fa-handshake'
@@ -52,28 +52,28 @@ class HrisEmployeePanelMenuItems
                 'items' => [
                     [
                         'label' => 'لیست امکانات رفاهی',
-                        'url' => ["/$moduleId/comfort/index"],
+                        'url' => ["/$moduleId/employee-comfort"],
                         'group' => 'comfort',
                         'level' => 'second-level',
                         'icon' => 'far fa-gift'
                     ],
                     [
                         'label' => 'درخواست مرخصی',
-                        'url' => ["/$moduleId/request-leave/index"],
+                        'url' => ["/$moduleId/employee-request-leave/index"],
                         'group' => 'requests',
                         'level' => 'second-level',
                         'icon' => 'far fa-clock'
                     ],
                     [
                         'label' => 'درخواست مساعده',
-                        'url' => ["/$moduleId/advance-money/index"],
+                        'url' => ["/$moduleId/employee-advance-money/index"],
                         'group' => 'requests',
                         'level' => 'second-level',
                         'icon' => 'fa fa-money-bill'
                     ],
                     [
                         'label' => 'درخواست‌های رفاهی',
-                        'url' => ["/$moduleId/comfort/items"],
+                        'url' => ["/$moduleId/employee-comfort/items"],
                         'group' => 'comfort',
                         'level' => 'second-level',
                         'icon' => 'far fa-gift'

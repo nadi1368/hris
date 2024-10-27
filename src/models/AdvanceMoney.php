@@ -65,7 +65,7 @@ class AdvanceMoney extends AdvanceMoneyBase implements SendAutoCommentInterface
         if (in_array($this->getScenario(), [self::SCENARIO_CONFIRM, self::SCENARIO_REJECT])) {
             return '';
         }
-        return Yii::$app->urlManager->createAbsoluteUrl([Module::createUrl('advance-money-manage/index'), 'id' => $this->id]);
+        return Yii::$app->urlManager->createAbsoluteUrl([Module::createUrl('employee-advance-money/index'), 'id' => $this->id]);
     }
 
     /**

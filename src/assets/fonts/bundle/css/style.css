@@ -1,0 +1,46 @@
+/* Also add name to common\components\Helper::getCkEditorFonts() to load on all ckeditor instances */
+@font-face {
+  font-family: "irannastaliq";
+  src: url("../fonts/IranNastaliq.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "nazanin";
+  src: url("../fonts/Far_Nazanin.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "lotus";
+  src: url("../fonts/B_Lotus_0.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "titr";
+  src: url("../fonts/Far_TitrBd.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "roya";
+  src: url("../fonts/B_Roya_0.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "vazir";
+  src: url("../fonts/Vazirmatn-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "IRANSans";
+  src: url("../fonts/IRANSansWeb_FaNum.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "alibaba";
+  src: url("../fonts/alibaba-regular.woff2") format("woff2");
+}
+
+
+@font-face {
+  font-family: "peyda";
+  src: url("../fonts/peyda-regular.woff2") format("woff2");
+}

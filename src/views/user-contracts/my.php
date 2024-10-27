@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php Pjax::begin(['id' => 'user-contracts-p-jax']); ?>
 <div class="user-contracts-index card">
 	<div class="card-header">
-		<?= $this->render('/default/_view_user_nav', [
+		<?= $this->render('/employee-branch/_view_user_nav', [
 			'model' => $model,
 		]) ?>
 	</div>

@@ -1,87 +1,61 @@
 <?php
-
-use hesabro\hris\models\EmployeeBranch;
-use hesabro\helpers\widgets\grid\GridView;
-use hesabro\hris\Module;
-use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
-/* @var $searchModel hesabro\hris\models\EmployeeBranchSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Module::t('module', 'Employee Branch');
+$this->title = 'سیستم مدیریت حقوق';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="employee-branch-index card">
-    <div class="panel-group m-bot20" id="accordion">
-        <div class="card-header d-flex justify-content-between">
-            <h4 class="panel-title">
-                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion"
-                   href="#collapseOne" aria-expanded="false">
-                    <i class="far fa-search"></i> جستجو
-                </a>
-            </h4>
-            <div>
-                <?= Html::a(Module::t('module', 'Create'), ['create'], ['class' => 'btn btn-success']) ?>
-                <?= Html::a(Module::t('module', 'Employee Branch User'), ['users'], ['class' => 'btn btn-info']) ?>
-            </div>
-        </div>
-        <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false">
-            <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-        </div>
-    </div>
-    <div class="card-body">
-        <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-            //'filterModel' => $searchModel,
-            'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
+<div class="row">
+	<div class="col-md-2">
+		<a href="<?= Url::to(['employee-branch/index']) ?>" title="دپارتمان های آواپرداز">
+			<div class="card bg-white card-radius">
+				<div class="card-body">
+					<div class="align-items-center my-2">
+						<div class="row justify-content-md-center mb-4">
+							<span class="fal fa-building fa-4x"></span>
+						</div>
+						<div class="row justify-content-md-center mt-2">
+							<p class="text-dark h4">دپارتمان ها</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
 
-                'title',
-                [
-                    'attribute' => 'manager',
-                    'value' => function ($model) {
-                        return $model->byManager->fullName;
-                    },
-                    'format' => 'raw',
-                ],
-                [
-                    'attribute' => 'user_ids',
-                    'value' => function ($model) {
-                        return $model->showUsersList();
-                    },
-                    'format' => 'raw',
-                ],
+	<div class="col-md-2">
+		<a href="<?= Url::to(['employee-branch/users']) ?>" title="کارمندان شعبه">
+			<div class="card bg-white card-radius">
+				<div class="card-body">
+					<div class="align-items-center my-2">
+						<div class="row justify-content-md-center mb-4">
+							<span class="fal fa-users fa-4x"></span>
+						</div>
+						<div class="row justify-content-md-center mt-2">
+							<p class="text-dark h4">کارمندان دپارتمان</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
 
-                [
-                    'class' => 'common\widgets\grid\ActionColumn',
-                    'template' => '{delete}{update}{logs}',
-                    'buttons' => [
-                        'update' => function ($url, $model, $key) {
-                            return $model->canUpdate() ? Html::a('<span class="far fa-edit text-success"></span>', ['update', 'id' => $key], [
-                                'title' => Module::t('module', 'Update'),
-                            ]) : '';
-                        },
-                        'delete' => function ($url, $model, $key) {
-                            return $model->canDelete() ? Html::a('<span class="far fa-trash-alt text-danger"></span>', ['delete', 'id' => $key], [
-                                'title' => Module::t('module', 'Delete'),
-                                'data-confirm' => Module::t('module', 'Are you sure you want to delete this item?'),
-                                'data-method' => 'post',
-                            ]) : '';
-                        },
-                        'logs' => function ($url, $model, $key) {
-                            return Html::a('<span class="fas fa-history text-info"></span>',
-                                ['/mongo/log/view-ajax', 'modelId' => $model->id, 'modelClass' => EmployeeBranch::class],
-                                [
-                                    'class' => 'text-secondary showModalButton',
-                                    'title' => Module::t('module', 'Logs'),
-                                    'data-size' => 'modal-xl'
-                                ]
-                            );
-                        },
-                    ]
-                ],
-            ],
-        ]); ?>
-    </div>
+	<div class="col-md-2">
+		<a href="<?= Url::to(['salary-period/index']) ?>" title="دوره حقوق">
+			<div class="card bg-white card-radius">
+				<div class="card-body">
+					<div class="align-items-center my-2">
+						<div class="row justify-content-md-center mb-4">
+							<span class="fal fa-file-contract fa-4x"></span>
+						</div>
+						<div class="row justify-content-md-center mt-2">
+							<p class="text-dark h4">دوره حقوق</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+
 </div>

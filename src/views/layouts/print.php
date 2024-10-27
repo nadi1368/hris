@@ -1,6 +1,6 @@
 <?php
 
-use backend\assets\PrintAsset;
+use hesabro\hris\bundles\PrintAsset;
 use yii\helpers\Html;
 use yii\web\View;
 

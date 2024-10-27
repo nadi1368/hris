@@ -1,0 +1,27 @@
+#print_reseller{
+    direction: rtl;
+    text-align: justify;
+}
+#print_reseller h4{
+    margin: 10px 0 5px 0;
+}
+#print_reseller p{
+    margin: 2px 0 2px 0;
+    padding: 2px 15px 2px 0;
+    line-height: 28px;
+}
+.pr-5{
+    padding-right: 3rem !important;
+}
+@media print {
+
+    .page-break {
+        display: block;
+        page-break-before: always;
+    }
+
+    .hide_print {
+        display: none !important;
+    }
+
+}

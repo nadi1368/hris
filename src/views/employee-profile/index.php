@@ -37,8 +37,10 @@ use common\models\Comments;
  * @var EmployeeContent[] $banners
  */
 
-$this->title = Yii::t('app', 'Home');
+$this->title = Module::t('module', 'Home');
 $this->params['breadcrumbs'][] = $this->title;
+
+\hesabro\hris\bundles\EmployeePanelAssets::register($this);
 
 Pjax::begin([
     'id' => 'profile',
@@ -49,15 +51,15 @@ Pjax::begin([
 
 $yearLeaveLimitText = Yii::$app->formatter->asDuration(Yii::$app->helper::numberToWorkTime($yearLeaveLimit)['duration'], '  و ');
 $monthLeaveLimitText = Yii::$app->formatter->asDuration(Yii::$app->helper::numberToWorkTime($monthLeaveLimit)['duration'], '  و ');
-$yearLeaveText = $yearLeaveTotal > 0 ? Yii::$app->formatter->asDuration((int) Yii::$app->helper::numberToWorkTime($yearLeaveTotal)['duration'], '  و ') : Yii::t('app', 'Without Leave');
-$monthLeaveText = $monthLeaveTotal > 0 ? Yii::$app->formatter->asDuration((int) Yii::$app->helper::numberToWorkTime($monthLeaveTotal)['duration'], '  و ') : Yii::t('app', 'Without Leave');
-$yearLeaveRemainText = $yearLeaveRemain > 0 ? Yii::$app->formatter->asDuration((int) Yii::$app->helper::numberToWorkTime($yearLeaveRemain)['duration'], '  و ') : Yii::t('app', 'Without Leave');
-$monthLeaveRemainText = $monthLeaveRemain > 0 ? Yii::$app->formatter->asDuration((int) Yii::$app->helper::numberToWorkTime($monthLeaveRemain)['duration'], '  و ') : Yii::t('app', 'Without Leave');
-$overTimeDayText = $overTimeDay > 0 ? Yii::$app->formatter->asDuration((int) Yii::$app->helper::numberToWorkTime($overTimeDay)['duration'], '  و ') : Yii::t('app', 'Without Overtime');
-$overTimeNightText = $overTimeNight > 0 ? Yii::$app->formatter->asDuration((int) Yii::$app->helper::numberToWorkTime($overTimeNight)['duration'], '  و ') : Yii::t('app', 'Without Night Work');
-$overTimeHolidayText = $overTimeHoliday > 0 ? Yii::$app->formatter->asDuration((int) Yii::$app->helper::numberToWorkTime($overTimeHoliday)['duration'], '  و ') : Yii::t('app', 'Without Holiday Work');
-$lowTimeText = $lowTime > 0 ? Yii::$app->formatter->asDuration((int) Yii::$app->helper::numberToWorkTime($lowTime)['duration'], '  و ') : Yii::t('app', 'Without Low Time');
-$workTimeText = $workTime ? $workTime . ' ' . Yii::t('app', 'Day') : Yii::t('app', 'Without Worktime');
+$yearLeaveText = $yearLeaveTotal > 0 ? Yii::$app->formatter->asDuration((int) Yii::$app->helper::numberToWorkTime($yearLeaveTotal)['duration'], '  و ') : Module::t('module', 'Without Leave');
+$monthLeaveText = $monthLeaveTotal > 0 ? Yii::$app->formatter->asDuration((int) Yii::$app->helper::numberToWorkTime($monthLeaveTotal)['duration'], '  و ') : Module::t('module', 'Without Leave');
+$yearLeaveRemainText = $yearLeaveRemain > 0 ? Yii::$app->formatter->asDuration((int) Yii::$app->helper::numberToWorkTime($yearLeaveRemain)['duration'], '  و ') : Module::t('module', 'Without Leave');
+$monthLeaveRemainText = $monthLeaveRemain > 0 ? Yii::$app->formatter->asDuration((int) Yii::$app->helper::numberToWorkTime($monthLeaveRemain)['duration'], '  و ') : Module::t('module', 'Without Leave');
+$overTimeDayText = $overTimeDay > 0 ? Yii::$app->formatter->asDuration((int) Yii::$app->helper::numberToWorkTime($overTimeDay)['duration'], '  و ') : Module::t('module', 'Without Overtime');
+$overTimeNightText = $overTimeNight > 0 ? Yii::$app->formatter->asDuration((int) Yii::$app->helper::numberToWorkTime($overTimeNight)['duration'], '  و ') : Module::t('module', 'Without Night Work');
+$overTimeHolidayText = $overTimeHoliday > 0 ? Yii::$app->formatter->asDuration((int) Yii::$app->helper::numberToWorkTime($overTimeHoliday)['duration'], '  و ') : Module::t('module', 'Without Holiday Work');
+$lowTimeText = $lowTime > 0 ? Yii::$app->formatter->asDuration((int) Yii::$app->helper::numberToWorkTime($lowTime)['duration'], '  و ') : Module::t('module', 'Without Low Time');
+$workTimeText = $workTime ? $workTime . ' ' . Module::t('module', 'Day') : Module::t('module', 'Without Worktime');
 ?>
 
 <?php if (count($banners)): ?>
@@ -105,7 +107,7 @@ $workTimeText = $workTime ? $workTime . ' ' . Yii::t('app', 'Day') : Yii::t('app
             <div class="d-flex flex-column align-items-start justify-content-center" style="flex: 1; gap: 12px">
                 <div class="w-100 d-flex align-items-center justify-content-between">
                     <h4 class="mb-0"><?= $user->fullName ?> به <span data-toggle="tooltip"
-                                                                     data-title="<?= Yii::t('app', 'HRIS') ?>">Pulse</span> <?= Yii::t('app', 'Welcome') ?>
+                                                                     data-title="<?= Module::t('module', 'HRIS') ?>">Pulse</span> <?= Module::t('module', 'Welcome') ?>
                     </h4>
                 </div>
 
@@ -137,7 +139,7 @@ $workTimeText = $workTime ? $workTime . ' ' . Yii::t('app', 'Day') : Yii::t('app
                     <div class="w-100 d-flex flex-column align-items-start justify-content-start gap-1">
                         <p class="mb-0 profile-card-title" data-toggle="tooltip"
                            data-title="<?= $overTimeDayText ?>"><?= $overTimeDayText ?></p>
-                        <p class="mb-0 text-muted profile-card-subtitle"><?= Yii::t('app', 'Overtime') ?> <?= Yii::t('app', 'Daily') ?>
+                        <p class="mb-0 text-muted profile-card-subtitle"><?= Module::t('module', 'Overtime') ?> <?= Module::t('module', 'Daily') ?>
                             <strong><?= $monthText ?></strong></p>
                     </div>
                 </div>
@@ -199,7 +201,7 @@ $workTimeText = $workTime ? $workTime . ' ' . Yii::t('app', 'Day') : Yii::t('app
                     <div class="w-100 d-flex flex-column align-items-start justify-content-start gap-1">
                         <p class="mb-0 profile-card-title" data-toggle="tooltip"
                            data-title="<?= $workTimeText ?>"><?= $workTimeText ?></p>
-                        <p class="mb-0 text-muted profile-card-subtitle"><?= Yii::t('app', 'Cooperation Time') ?></p>
+                        <p class="mb-0 text-muted profile-card-subtitle"><?= Module::t('module', 'Cooperation Time') ?></p>
                     </div>
                 </div>
             </div>
@@ -240,7 +242,7 @@ $workTimeText = $workTime ? $workTime . ' ' . Yii::t('app', 'Day') : Yii::t('app
                         <p class="mb-0">نمی‌دونیم چی بذاریم اینجا</p>
                         <p class="mb-0 text-muted profile-card-subtitle">شما <a class="text-info showModalButton"
                                                                                 title="تیکت پشتیبانی"
-                                                                                href="<?= Url::toRoute(['ticket/send', 'type' => Comments::TYPE_MASTER]) ?>"><u>پیشنهاد</u></a>
+                                                                                href=""><u>پیشنهاد</u></a>
                             کنین چی باشه :)</p>
                     </div>
                 </div>
@@ -257,7 +259,7 @@ $workTimeText = $workTime ? $workTime . ' ' . Yii::t('app', 'Day') : Yii::t('app
                            data-title="<?= $monthLeaveText ?>"><?= $monthLeaveText ?></p>
                         <div class="w-100 d-flex align-items-center justify-content-between">
                             <p class="mb-0 text-muted profile-card-subtitle">
-                                <?= Yii::t('app', 'Leave') ?>
+                                <?= Module::t('module', 'Leave') ?>
                                 <strong><?= $monthText ?></strong>
                             </p>
                         </div>
@@ -274,7 +276,7 @@ $workTimeText = $workTime ? $workTime . ' ' . Yii::t('app', 'Day') : Yii::t('app
                     <div class="w-100 d-flex flex-column align-items-start justify-content-start gap-1">
                         <p class="mb-0 profile-card-title" data-toggle="tooltip"
                            data-title="<?= $yearLeaveText ?>"><?= $yearLeaveText ?></p>
-                        <p class="mb-0 text-muted profile-card-subtitle"><?= Yii::t('app', 'Total') ?> <?= Yii::t('app', 'Leave') ?>
+                        <p class="mb-0 text-muted profile-card-subtitle"><?= Module::t('module', 'Total') ?> <?= Module::t('module', 'Leave') ?>
                             <strong><?= $yearText ?></strong></p>
                     </div>
                 </div>
@@ -306,7 +308,7 @@ $workTimeText = $workTime ? $workTime . ' ' . Yii::t('app', 'Day') : Yii::t('app
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-center gap-2">
-                                            <span><?= $comfort->amount_limit ? number_format((float)$comfort->amount_limit) . ' ' . Yii::t('app', 'Rial') : Yii::t('app', 'No Limit'); ?></span>
+                                            <span><?= $comfort->amount_limit ? number_format((float)$comfort->amount_limit) . ' ' . Module::t('module', 'Rial') : Module::t('module', 'No Limit'); ?></span>
                                         </div>
                                     </div>
                                 </a>
@@ -316,7 +318,7 @@ $workTimeText = $workTime ? $workTime . ' ' . Yii::t('app', 'Day') : Yii::t('app
                 </div>
             <?php else: ?>
                 <div class="d-flex align-items-center justify-content-center">
-                    <?= Yii::t('app', 'Not items found.') ?>
+                    <?= Module::t('module', 'Not items found.') ?>
                 </div>
             <?php endif; ?>
         </div>
@@ -408,7 +410,7 @@ $workTimeText = $workTime ? $workTime . ' ' . Yii::t('app', 'Day') : Yii::t('app
                     ],
                     'series' => [
                         [
-                            'name' => '<br/><small class="text-muted plain-text">' . $yearLeaveRemainText . '</small><br/><hr class="m-0" /><span style="font-size: 14px">' . Yii::t('app', 'Leave') . ' ' . Yii::t('app', 'Remain') . '<br>' . $yearText . '</span>',
+                            'name' => '<br/><small class="text-muted plain-text">' . $yearLeaveRemainText . '</small><br/><hr class="m-0" /><span style="font-size: 14px">' . Module::t('module', 'Leave') . ' ' . Module::t('module', 'Remain') . '<br>' . $yearText . '</span>',
                             'data' => [
                                 [
                                     'color' => '#36ba98',
@@ -419,7 +421,7 @@ $workTimeText = $workTime ? $workTime . ' ' . Yii::t('app', 'Day') : Yii::t('app
                             ]
                         ],
                         [
-                            'name' => '<br/><small class="text-muted plain-text">' . $monthLeaveRemainText . '</small><br/><hr class="m-0" /><span style="font-size: 14px">' . Yii::t('app', 'Leave') . ' ' . Yii::t('app', 'Remain') . '<br>' . $monthText . '</span>',
+                            'name' => '<br/><small class="text-muted plain-text">' . $monthLeaveRemainText . '</small><br/><hr class="m-0" /><span style="font-size: 14px">' . Module::t('module', 'Leave') . ' ' . Module::t('module', 'Remain') . '<br>' . $monthText . '</span>',
                             'data' => [
                                 [
                                     'color' => '#6295a2',
@@ -449,8 +451,8 @@ $workTimeText = $workTime ? $workTime . ' ' . Yii::t('app', 'Day') : Yii::t('app
                 <table class="table kv-grid-table">
                     <thead>
                     <tr>
-                        <th><?= Yii::t('app', 'Title') ?></th>
-                        <th><?= Yii::t('app', 'Date') ?></th>
+                        <th><?= Module::t('module', 'Title') ?></th>
+                        <th><?= Module::t('module', 'Date') ?></th>
                     </tr>
                     </thead>
                     <?php foreach ($lastRequests as $lastRequest): ?>
@@ -470,7 +472,7 @@ $workTimeText = $workTime ? $workTime . ' ' . Yii::t('app', 'Day') : Yii::t('app
                 </table>
             <?php else: ?>
                 <div class="d-flex align-items-center justify-content-center">
-                    <?= Yii::t('app', 'Not items found.') ?>
+                    <?= Module::t('module', 'Not items found.') ?>
                 </div>
             <?php endif; ?>
         </div>
@@ -507,10 +509,10 @@ for ($month = 1; $month <= 12; $month++) {
 }
 
 $requestLeaveHourlyUrl = Url::to(['/request-leave/create']);
-$requestLeaveHourlyTitle = Yii::t('app', 'Request Leave Hourly');
+$requestLeaveHourlyTitle = Module::t('module', 'Request Leave Hourly');
 
 $requestLeaveDailyUrl = Url::to(['/request-leave/create-daily']);
-$requestLeaveDailyTitle = Yii::t('app', 'Request Leave Daily');
+$requestLeaveDailyTitle = Module::t('module', 'Request Leave Daily');
 
 $navbar = <<<HTML
 <li class="nav-item btn-group dropdown">
@@ -588,5 +590,5 @@ $("a[data-type='year'],a[data-type='month']").on('click', function () {
 registerTopbarDropdown(document.getElementById('navbar-actions'))
 JS;
 
-$this->registerJs($js, View::POS_READY);
+//$this->registerJs($js, View::POS_READY);
 ?>

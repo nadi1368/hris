@@ -17,7 +17,7 @@ use hesabro\hris\models\SalaryItemsAddition;
 
             <div class="col-md-12">
                 <?= $form->field($model, 'user_id')->widget(Select2::class, [
-                    'data' => Module::getInstance()->Module::getInstance()->user::getUserWithRoles(Module::getInstance()->employeeRole),
+                    'data' => Module::getInstance()->user::getUserWithRoles(Module::getInstance()->employeeRole),
                     'pluginOptions' => [
                         'allowClear' => true,
                     ],

@@ -72,7 +72,7 @@ class EmployeeRequestController extends Controller
     {
         $print = (boolean) ((int) $print);
         $preview = (boolean) ((int) $preview);
-        $this->layout = $print ? 'print' : ($preview ? 'base' : 'panel');
+        $this->layout = $print ? 'print' : ($preview ? '@hesabro/hris/views/layouts/print_preview' : Module::getInstance()->layoutPanel);
         $employeeRequest = $this->findModel($id);
         $content = $employeeRequest->indicator?->file_text;
 
@@ -103,7 +103,7 @@ class EmployeeRequestController extends Controller
         /** @var object $user */
         $user = Yii::$app->user->getIdentity();
         $employeeBranchUser = $user->employeeBranchUser;
-        $this->layout = 'panel';
+        $this->layout = Module::getInstance()->layoutPanel;
         $searchModel = new EmployeeRequestSearch();
 
         $dataProvider = $searchModel->searchUser([

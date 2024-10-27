@@ -3,6 +3,7 @@
 namespace hesabro\hris\models;
 
 use hesabro\helpers\validators\PersianValidator;
+use Yii;
 use yii\db\ActiveQuery;
 use yii\db\Expression;
 
@@ -61,6 +62,15 @@ class EmployeeContentQuery extends ActiveQuery
             new Expression("(NOT JSON_CONTAINS(" . EmployeeContent::tableName() . ".additional_data, JSON_QUOTE('$clientID'), '$.exclude_client_ids'))"),
             new Expression("JSON_EXTRACT(". EmployeeContent::tableName() .".additional_data, '$.exclude_client_ids') IS NULL")
         ]);
+    }
+
+    public function byCurrentClientAccess(): self
+    {
+        if (isset(Yii::$app->client)) {
+            $this->byClientAccess(Yii::$app->client->id);
+        }
+
+        return $this;
     }
 
     public function byCustomJobTags($tags): self
