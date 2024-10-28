@@ -22,6 +22,8 @@ $css = <<< CSS
 
 CSS;
 $this->registerCss($css);
+
+$this->title = $model->user->fullName;
 ?>
 
 <?= !$print ? Html::a(Module::t('module', 'Print'), ['user-contracts/view-my-contract', 'id' => $model->id, 'print' => 1], ['class' => 'btn btn-info', 'target' => '_blank']) : '' ?>
