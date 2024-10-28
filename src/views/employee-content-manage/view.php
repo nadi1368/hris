@@ -28,7 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'type',
                     'value' => EmployeeContent::itemAlias('Type', $model->type),
                 ],
-
                 ...($model->type === EmployeeContent::TYPE_ANNOUNCEMENT ? [
                     [
                         'attribute' => 'show_start_at',
@@ -40,14 +39,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => $model->show_end_at ? Yii::$app->jdf::jdate('Y/m/d', $model->show_end_at) : '-',
                         'format' => 'html'
                     ],
-                    [
-                        'attribute' => 'attachment',
-                        'value' => ($attachment = $model->getFileUrl('attachment')) ?
-                            Html::a(Module::t('module', 'Download'), $attachment, ['target' => '_blank', 'download' => true]) :
-                            '-',
-                        'format' => 'raw'
-                    ],
                 ] : []),
+                [
+                    'attribute' => 'attachment',
+                    'value' => ($attachment = $model->getFileUrl('attachment')) ?
+                        Html::a(Module::t('module', 'Download'), $attachment, ['target' => '_blank', 'download' => true]) :
+                        '-',
+                    'format' => 'raw'
+                ],
             ],
         ]) ?>
     </div>

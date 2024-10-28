@@ -135,6 +135,7 @@ if ($model->custom_job_tags && ($jobs = SalaryInsurance::find()->andWhere(['IN',
 				]); ?>
 			</div>
 
+            <?php if ($model->type === EmployeeContent::TYPE_ANNOUNCEMENT): ?>
                 <div class="col-12 col-md-6 date-input">
                     <?= $form->field($model, 'show_start_at')->widget(MaskedInput::class, [
                         'mask' => '9999/99/99',
@@ -153,6 +154,7 @@ if ($model->custom_job_tags && ($jobs = SalaryInsurance::find()->andWhere(['IN',
                         ]
                     ]) ?>
                 </div>
+            <?php endif; ?>
 
             <div class="col-12">
                 <?= $form->field($model, 'attachment')->fileInput() ?>

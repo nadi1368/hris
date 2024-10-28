@@ -27,7 +27,7 @@ class EmployeeContentManageController extends Controller
                 'actions' => [
                     'delete' => ['POST'],
                     'upload-image' => ['POST'],
-//                    'clauses' => ['POST']
+                    'clauses' => ['POST']
                 ],
             ],
 //            'access' => [
@@ -250,12 +250,16 @@ class EmployeeContentManageController extends Controller
             $parents = $_POST['depdrop_parents'];
             if ($parents != null) {
                 $employeeContentId = $parents[0];
-                $employeeContent = $this->findModel($employeeContentId);
+                try {
+                    $employeeContent = $this->findModel($employeeContentId);
+                } catch (\Exception $e) {
+                    $employeeContent = null;
+                }
 
                 $output = array_map(fn($clause) => [
                     'id' => $clause['id'],
                     'name' => strip_tags($clause['content']),
-                ], $employeeContent->clauses);
+                ], $employeeContent?->clauses ?: []);
             }
         }
 
