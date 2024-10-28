@@ -9,8 +9,9 @@ use yii\widgets\Pjax;
 use yii\bootstrap4\ButtonDropdown;
 
 /* @var $this yii\web\View */
-/* @var \hesabro\hris\models\AdvanceMoneySearch $searchModel */
+/* @var $searchModel hesabro\hris\models\AdvanceMoneySearch  */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+
 Pjax::begin(['id' => 'pjax-advance-money'])
 ?>
 <div class="advance-money-index card">
@@ -174,6 +175,7 @@ Pjax::begin(['id' => 'pjax-advance-money'])
                                     ],
                                 ];
                             }
+                            $items=$model->buttonDropdownDocument($items);
                             $items[] = [
                                 'label' => Html::tag('span', ' ', ['class' => 'fa fa-history']) . ' ' . Yii::t('app', 'Log'),
                                 'url' => ['/mongo/log/view-ajax', 'modelId' => $model->id, 'modelClass' => get_class($model)],

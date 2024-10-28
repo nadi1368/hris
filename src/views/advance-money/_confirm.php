@@ -17,8 +17,6 @@ use common\models\Document;
 /* @var $model backend\models\AdvanceMoney */
 /* @var $form yii\widgets\ActiveForm */
 
-
-$get_account_url = Url::to(['hesab/find', 'level' => Hesab::LEVEL_MOEIN, 'nature' => Hesab::NATURE_TARAZ, 'tafzil' => true]);
 ?>
 
 <?php $form = ActiveForm::begin([
@@ -42,7 +40,7 @@ $get_account_url = Url::to(['hesab/find', 'level' => Hesab::LEVEL_MOEIN, 'nature
                             'maximumSelected' => new JsExpression("function () { return 'حداکثر انتخاب شده'; }"),
                         ],
                         'ajax' => [
-                            'url' => $get_account_url,
+                            'url' => Url::to($model->getMDebtorUrl()),
                             'dataType' => 'json',
                             'data' => new JsExpression('function(params) { return {q:params.term}; }')
                         ],
@@ -55,7 +53,13 @@ $get_account_url = Url::to(['hesab/find', 'level' => Hesab::LEVEL_MOEIN, 'nature
 
             </div>
             <div class="col-md-4">
-                <?= $form->field($model, 't_creditor_id')->dropDownList(Tafzil::itemAlias(Tafzil::ALIAS_LIST, null, Tafzil::TYPE_BANK), ['prompt' => Yii::t('app', 'Select...')]) ?>
+                <?= $form->field($model, 't_creditor_id')->widget(Select2::class, [
+                    'data' => $model->getTCreditorItems(),
+                    'options' => ['placeholder' => Yii::t("app", "Search")],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]); ?>
             </div>
             <div class="col-md-2">
                 <?= $form->field($model, 'receipt_number')->textInput(['maxlength' => true]) ?>

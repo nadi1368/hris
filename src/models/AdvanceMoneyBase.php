@@ -64,6 +64,7 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
     public $status_transfer_to_multi_pay;
     public $model_class;
     public $model_id;
+    public $documentsArray;
 
     /**
      * {@inheritdoc}
@@ -101,7 +102,7 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
         $scenarios[self::SCENARIO_CREATE] = ['comment', 'amount', 'iban'];
         $scenarios[self::SCENARIO_CREATE_AUTO] = ['comment', 'amount', 'iban'];
         $scenarios[self::SCENARIO_REJECT] = ['reject_comment'];
-        $scenarios[self::SCENARIO_CONFIRM] = ['!status'];
+        $scenarios[self::SCENARIO_CONFIRM] = ['receipt_number', 'receipt_date', 't_creditor_id', 'm_debtor_id', 'btn_type'];
         $scenarios[self::SCENARIO_CREATE_INFINITE] = ['user_id', 'amount', 'comment'];
         $scenarios[self::SCENARIO_CREATE_WITH_CONFIRM] = ['user_id', 'amount', 'comment'];
 
@@ -140,6 +141,12 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
             'update_id' => Module::t('module', 'Update ID'),
             'created' => Module::t('module', 'Created'),
             'changed' => Module::t('module', 'Changed'),
+            'receipt_number' => Module::t('module', 'Receipt Number'),
+            'receipt_date' => Module::t('module', 'Receipt Date'),
+            't_creditor_id' => Module::t('module', 'T Id Creditor'),
+            'm_debtor_id' => Module::t('module', 'M Id Debtor'),
+            'wage_amount' => Module::t('module', 'Wage'),
+            'wage_type' => Module::t('module', 'Type') . ' ' . Yii::t('app', 'Wage'),
             'iban' => Module::t('module', 'Shaba Number'),
         ];
     }
@@ -191,6 +198,14 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
         $employeeUser = EmployeeBranchUser::find()->andWhere(['user_id' => $this->user_id])->one();
         if ($employeeUser === null) {
             $this->error_msg = 'متاسفانه اطلاعات پرسنلی شما ثبت نشده است.';
+            return false;
+        }
+        if (!$employeeUser->shaba) {
+            $this->error_msg = 'متاسفانه اطلاعات شبا شما ثبت نشده است.';
+            return false;
+        }
+        if (!$employeeUser->account_id) {
+            $this->error_msg = 'متاسفانه اطلاعات حساب تفضیل شما ثبت نشده است.';
             return false;
         }
 
@@ -366,9 +381,9 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
                     'iban' => 'String',
                     'model_class' => 'String',
                     'model_id' => 'Integer',
-                    'status_transfer_to_multi_pay' => "Boolean"
+                    'status_transfer_to_multi_pay' => "Boolean",
+                    'documentsArray' => "Any"
                 ],
-
             ],
         ];
     }
