@@ -200,7 +200,7 @@ class EmployeeBranchBase extends ActiveRecord
             foreach ($deleted_user_ids as $user_id) {
                 if(SalaryPeriodItems::find()->andWhere(['user_id'=>$user_id])->limit(1)->one()!==null)
                 {
-                    $this->addError('user_ids', 'امکان حذف کارمند از شعبه وجود ندارد.فقط میتوانید شعبه آن را از بخش کارمندان دپارتمان تغیر دهید.');
+                    $this->addError('user_ids', 'امکان حذف کارمند از شعبه وجود ندارد.فقط میتوانید شعبه آن را از بخش کارمندان دپارتمان تغییر دهید.');
                     return false;
                 }elseif (($model = EmployeeBranchUser::find()->andWhere(['user_id' => $user_id, 'branch_id' => $this->id])->one()) !== null && !$model->deleteWithLog()) {
                     $this->addError('user_ids', 'خطا در حذف کارمند از شعبه.');

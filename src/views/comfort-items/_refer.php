@@ -1,7 +1,7 @@
 <?php
 
 use hesabro\hris\models\ComfortItems;
-use common\models\Comments;
+use hesabro\ticket\models\Comments;
 use hesabro\hris\Module;
 use kartik\select2\Select2;
 use yii\helpers\Html;
@@ -33,9 +33,10 @@ $form = $standalone ? ActiveForm::begin(['id'=>'comfort-items-refer-form']) : $f
     </div>
 
     <div class="col-12 col-md-6">
-        <?= $form->field($comment, 'css_class')->dropDownList(Comments::itemAlias('Type'), [
-            'value' => Comments::TYPE_DANGER
-        ]) ?>
+<!--        TODO: fix comment item alias in comment model -->
+<!--        --><?php //= $form->field($comment, 'css_class')->dropDownList(Comments::itemAlias('Type'), [
+//            'value' => Comments::TYPE_DANGER
+//        ]) ?>
     </div>
 
     <div class="col-12 col-md-6 date-input">
@@ -48,10 +49,11 @@ $form = $standalone ? ActiveForm::begin(['id'=>'comfort-items-refer-form']) : $f
             ])
         ?>
     </div>
-    <div class="col-md-12 d-flex align-items-center justify-content-start" style="gap: 12px">
-        <?= $form->field($comment, 'send_email')->checkbox() ?>
-        <?= $form->field($comment, 'send_sms')->checkbox() ?>
-    </div>
+<!--    TODO: fix send_email and send_sms on comments model -->
+<!--    <div class="col-md-12 d-flex align-items-center justify-content-start" style="gap: 12px">-->
+<!--        --><?php //= $form->field($comment, 'send_email')->checkbox() ?>
+<!--        --><?php //= $form->field($comment, 'send_sms')->checkbox() ?>
+<!--    </div>-->
     <div class="col-12">
         <?= $form->field($comment, 'des')->textarea(['rows' => 6]) ?>
     </div>
