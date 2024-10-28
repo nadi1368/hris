@@ -79,7 +79,7 @@ class EmployeeProfileBase extends Controller
      */
     public function actionPrintSingleItem($id): string
     {
-        $this->layout = '@backend/views/layouts/print-bootstrap';
+        $this->layout = '@hesabro/hris/views/layouts/print-bootstrap';
         $salaryPeriodItem = $this->findModelSalaryItem($id);
         if (!$salaryPeriodItem->canPrint()) {
             throw new ForbiddenHttpException('امکان چاپ وجود ندارد');

@@ -128,7 +128,7 @@ class SalaryPeriodItemsController extends Controller
      */
     public function actionPrint($id)
     {
-        $this->layout = '@app/views/layouts/print';
+        $this->layout = '@hesabro/hris/views/layouts/print-bootstrap';
         $salaryPeriod = $this->findModelPeriod($id);
         $items = $salaryPeriod->getSalaryPeriodItems()->all();
         return $this->render('print', [
@@ -146,7 +146,7 @@ class SalaryPeriodItemsController extends Controller
      */
     public function actionPrintSingleItem($id): string
     {
-        $this->layout = '@backend/views/layouts/print-bootstrap';
+        $this->layout = '@hesabro/hris/views/layouts/print-bootstrap';
         $salaryPeriodItem = $this->findModel($id);
         if (!$salaryPeriodItem->canPrint()) {
             throw new ForbiddenHttpException('امکان چاپ وجود ندارد');

@@ -1,11 +1,11 @@
 <?php
 
-use backend\modules\employee\models\EmployeeRollCall;
-use common\components\jdf\Jdf;
+use hesabro\hris\models\EmployeeRollCall;
+use hesabro\helpers\components\Jdf;
 use common\widgets\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\modules\employee\models\EmployeeRollCallSearch */
+/* @var $searchModel hesabro\hris\models\EmployeeRollCallSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'حضور و غیاب';

@@ -10,7 +10,7 @@ use yii\web\View;
 PrintAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
-    <html dir="rtl" lang="<?= Yii::$app->language ?>">
+    <html lang="<?= Yii::$app->language ?>">
     <head>
         <meta charset="<?= Yii::$app->charset ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,7 +18,7 @@ PrintAsset::register($this);
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
     </head>
-    <body onload="setTimeout(function (){window.print();}, 200);" bgcolor="#ffffff" text="#000000">
+    <body dir="rtl"  onload="setTimeout(function (){window.print();}, 200);" bgcolor="#ffffff" text="#000000">
     <?php $this->beginBody() ?>
 
     <?= $content ?>
