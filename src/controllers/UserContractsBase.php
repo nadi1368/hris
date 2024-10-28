@@ -73,7 +73,7 @@ class UserContractsBase extends Controller
 					],
 					[
 						'allow' => true,
-						'roles' => ['UserContracts/my'],
+						'roles' => Module::getInstance()->employeeRole,
 						'actions' => ['my-contracts', 'view-my-contract'],
 					]
 				],
@@ -331,7 +331,7 @@ class UserContractsBase extends Controller
 	public function actionViewMyContract($id, $print = false)
 	{
 		if ($print) {
-			$this->layout = 'print';
+			$this->layout = '@hesabro/hris/views/layouts/print';
 		}
 
 		$model = $this->findUserContract($id);

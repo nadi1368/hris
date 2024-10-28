@@ -97,7 +97,7 @@ class YearPeriodItemsBase extends Controller
      */
     public function actionPrint($id)
     {
-        $this->layout = '@app/views/layouts/print-factor';
+        $this->layout = '@hesabro/hris/views/layouts/print-bootstrap';
         $salaryPeriod = $this->findModelPeriod($id);
         $items = $salaryPeriod->getSalaryPeriodItems()->all();
         return $this->render('print', [

@@ -2,6 +2,7 @@
 
 use backend\modules\employee\models\SalaryPeriod;
 use backend\modules\employee\models\SalaryPeriodItems;
+use hesabro\hris\bundles\PrintAsset;
 use hesabro\hris\Module;
 use yii\bootstrap4\Html;
 use yii\web\View;
@@ -9,6 +10,7 @@ use yii\web\View;
 /* @var $this View */
 /* @var $salaryPeriod SalaryPeriod */
 /* @var $model SalaryPeriodItems */
+PrintAsset::register($this);
 $this->title = '  فیش حقوقی دوره ' . $model->period->getTitleWithYear();
 ?>
 <div class="row d-flex justify-content-center align-items-center" dir="rtl">
