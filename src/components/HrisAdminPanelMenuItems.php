@@ -81,19 +81,19 @@ class HrisAdminPanelMenuItems
                         'group' => 'GeneralInfo',
                     ],
                     [
-                        'label' => Module::t('module', 'Job Description'),
+                        'label' => Module::t('module', 'Employ Description'),
                         'icon' => 'far fa-file-contract',
                         'url' => ["/$moduleId/employee-content-manage/index", 'type' => EmployeeContent::TYPE_JOB_DESCRIPTION],
                         'group' => 'GeneralInfo'
                     ],
                     [
-                        'label' => Module::t('module', 'Notice'),
+                        'label' => Module::t('module', 'Notices'),
                         'icon' => 'far fa-file-contract',
                         'url' => ["/$moduleId/employee-content-manage/index", 'type' => EmployeeContent::TYPE_ANNOUNCEMENT],
                         'group' => 'GeneralInfo'
                     ],
                     [
-                        'label' => Module::t('module', 'Employee'),
+                        'label' => Module::t('module', 'Regulations'),
                         'icon' => 'far fa-file-contract',
                         'url' => ["/$moduleId/employee-content-manage/index", 'type' => EmployeeContent::TYPE_REGULATIONS],
                         'group' => 'GeneralInfo'

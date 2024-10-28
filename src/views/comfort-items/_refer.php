@@ -23,7 +23,7 @@ $form = $standalone ? ActiveForm::begin(['id'=>'comfort-items-refer-form']) : $f
 <div class="row">
     <div class="col-12">
         <?= $form->field($comment, 'owner')->widget(Select2::class, [
-            'data' => Module::getInstance()->user::userOptions(),
+            'data' => Module::getInstance()->user::getUserWithRoles(Module::getInstance()->employeeRole),
             'options' => [
                 'placeholder' => Module::t('module', 'Users'),
                 'dir' => 'rtl',

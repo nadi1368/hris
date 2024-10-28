@@ -66,9 +66,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => function ($model, $key, $index, $column) {
                         return GridView::ROW_COLLAPSED;
                     },
-                    'detail' => function ($model, $key, $index, $column) {
-                        return Yii::$app->controller->renderPartial('/advance-money/_index', [
+                    'detail' => function ($model, $key, $index, $column) use($dataProvider) {
+                        return $this->render('_index', [
                             'model' => $model,
+                            'dataProvider' => $dataProvider
                         ]);
                     },
                 ],
@@ -95,7 +96,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'template' => '{delete}',
                     'buttons' => [
                         'delete' => function ($url, $model, $key) {
-                            return $model->canDelete() ? Html::a('<span class="far fa-trash-alt text-danger"></span>', Url::to(['advance-money/delete', 'id' => $key]), [
+                            return $model->canDelete() ? Html::a('<span class="far fa-trash-alt text-danger"></span>', Url::to(['delete', 'id' => $key]), [
                                 'title' => Yii::t('yii', 'Delete'),
                                 'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
                                 'data-method' => 'post',

@@ -2,9 +2,9 @@
 
 namespace hesabro\hris\models;
 
-use backend\modules\storage\behaviors\StorageUploadBehavior;
-use backend\modules\storage\models\StorageFiles;
 use backend\modules\master\models\Client;
+use mamadali\S3Storage\behaviors\StorageUploadBehavior;
+use mamadali\S3Storage\components\S3Storage;
 use hesabro\hris\Module;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -19,18 +19,16 @@ class EmployeeContent extends EmployeeContentBase
         return array_merge(parent::behaviors(), [
             'StorageUploadBehavior' => [
                 'class' => StorageUploadBehavior::class,
-                'modelType' => StorageFiles::MODEL_TYPE_FAQ,
                 'attributes' => ['attachment', 'images'],
+                'accessFile' => S3Storage::ACCESS_PRIVATE,
                 'scenarios' => [
                     self::SCENARIO_DEFAULT,
                     self::SCENARIO_CREATE,
                     self::SCENARIO_CREATE_ANNOUNCEMENT,
                     self::SCENARIO_UPDATE_ANNOUNCEMENT
                 ],
-                'accessFile' => StorageFiles::ACCESS_PUBLIC_READ,
-                'deletePreviousFilesOnAttribute' => false,
-                'convertImageToWebp' => true
-            ]
+                'path' => 'hris/employee-content/{id}',
+            ],
         ]);
     }
 

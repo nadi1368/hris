@@ -27,6 +27,7 @@ class EmployeeContentManageController extends Controller
                 'actions' => [
                     'delete' => ['POST'],
                     'upload-image' => ['POST'],
+//                    'clauses' => ['POST']
                 ],
             ],
 //            'access' => [
@@ -235,6 +236,30 @@ class EmployeeContentManageController extends Controller
         $model->getStorageFile('attachment')->one()->softDelete();
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * Get faq clauses
+     * @return mixed
+     */
+    public function actionClauses($selected = 0)
+    {
+        $output = '';
+
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $employeeContentId = $parents[0];
+                $employeeContent = $this->findModel($employeeContentId);
+
+                $output = array_map(fn($clause) => [
+                    'id' => $clause['id'],
+                    'name' => strip_tags($clause['content']),
+                ], $employeeContent->clauses);
+            }
+        }
+
+        return $this->asJson(['output' => $output, 'selected' => $selected]);
     }
 
     /**

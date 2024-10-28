@@ -44,7 +44,7 @@ Pjax::begin(['id' => 'pjax-advance-money'])
                         return GridView::ROW_COLLAPSED;
                     },
                     'detail' => function ($model, $key, $index, $column) {
-                        return Yii::$app->controller->renderPartial('_detail', [
+                        return $this->render('_detail', [
                             'model' => $model,
                         ]);
                     },

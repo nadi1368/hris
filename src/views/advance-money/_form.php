@@ -20,7 +20,7 @@ use yii\widgets\MaskedInput;
 
 			<div class="col-md-6">
 				<?= $form->field($model, 'user_id')->widget(Select2::class, [
-					'data' => Module::getInstance()->user::userOptions(),
+					'data' => Module::getInstance()->user::getUserWithRoles(Module::getInstance()->employeeRole),
 					'options' => [
 						'placeholder' => 'کاربر',
 						'dir' => 'rtl',

@@ -7,7 +7,6 @@ use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 use hesabro\hris\models\Comfort;
-use common\models\Faq;
 use kartik\depdrop\DepDrop;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
@@ -151,7 +150,7 @@ if ($model->excluded_jobs && ($salaryInsurance = SalaryInsurance::find()->andWhe
                         'loadingText' => Module::t('module', 'Loading...'),
                         'depends' => ['related_faq'],
                         'placeholder' => Module::t('module', "Select"),
-                        'url' => Url::to(['/faq/clauses', 'selected' => $model->related_faq_clause]),
+                        'url' => Url::to(['employee-content-manage/clauses', 'selected' => $model->related_faq_clause]),
                         'initialize' => true,
                         'initDepends' => ['related_faq'],
                     ]
@@ -194,12 +193,12 @@ if ($model->excluded_jobs && ($salaryInsurance = SalaryInsurance::find()->andWhe
                         'multiple' => true,
                         'minimumInputLength' => 3,
                         'language' => [
-                            'errorLoading' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Error Loading'] . "'; }"),
-                            'inputTooShort' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Input Too Short'] . "'; }"),
-                            'loadingMore' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Loading More'] . "'; }"),
-                            'noResults' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['No Results'] . "'; }"),
-                            'searching' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Searching'] . "'; }"),
-                            'maximumSelected' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Maximum Selected'] . "'; }"),
+                            'errorLoading' => new JsExpression("function () { return '" . Module::t('module', 'Error Loading') . "'; }"),
+                            'inputTooShort' => new JsExpression("function () { return '" . Module::t('module', 'Input Too Short') . "'; }"),
+                            'loadingMore' => new JsExpression("function () { return '" . Module::t('module', 'Loading More') . "'; }"),
+                            'noResults' => new JsExpression("function () { return '" . Module::t('module', 'No Results') . "'; }"),
+                            'searching' => new JsExpression("function () { return '" . Module::t('module', 'Searching') . "'; }"),
+                            'maximumSelected' => new JsExpression("function () { return '" . Module::t('module', 'Maximum Selected') . "'; }"),
                         ],
                         'ajax' => [
                             'url' => Module::createUrl('salary-insurance/list'),
@@ -224,12 +223,12 @@ if ($model->excluded_jobs && ($salaryInsurance = SalaryInsurance::find()->andWhe
                         'multiple' => true,
                         'minimumInputLength' => 3,
                         'language' => [
-                            'errorLoading' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Error Loading'] . "'; }"),
-                            'inputTooShort' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Input Too Short'] . "'; }"),
-                            'loadingMore' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Loading More'] . "'; }"),
-                            'noResults' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['No Results'] . "'; }"),
-                            'searching' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Searching'] . "'; }"),
-                            'maximumSelected' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Maximum Selected'] . "'; }"),
+                            'errorLoading' => new JsExpression("function () { return '" . Module::t('module', 'Error Loading') . "'; }"),
+                            'inputTooShort' => new JsExpression("function () { return '" . Module::t('module', 'Input Too Short') . "'; }"),
+                            'loadingMore' => new JsExpression("function () { return '" . Module::t('module', 'Loading More') . "'; }"),
+                            'noResults' => new JsExpression("function () { return '" . Module::t('module', 'No Results') . "'; }"),
+                            'searching' => new JsExpression("function () { return '" . Module::t('module', 'Searching') . "'; }"),
+                            'maximumSelected' => new JsExpression("function () { return '" . Module::t('module', 'Maximum Selected') . "'; }"),
                         ],
                         'ajax' => [
                             'url' => Module::createUrl('salary-insurance/list'),
