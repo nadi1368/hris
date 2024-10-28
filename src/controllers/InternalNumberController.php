@@ -47,7 +47,7 @@ class InternalNumberController extends Controller
                         ],
                         [
                             'allow' => true,
-                            'roles' => ['InternalNumber/public', 'superadmin'],
+                            'roles' =>  Module::getInstance()->employeeRole,
                             'actions' => ['public', 'resort']
                         ],
                         [

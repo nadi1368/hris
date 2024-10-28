@@ -38,7 +38,7 @@ class ComfortController extends Controller
                     [
                         [
                             'allow' => true,
-                            'roles' => ['Comfort/view'],
+                            'roles' => ['Comfort/view', 'superadmin'],
                         ],
                     ]
             ]
