@@ -97,4 +97,19 @@ class AdvanceMoney extends AdvanceMoneyBase implements SendAutoCommentInterface
     {
         return true;
     }
+
+    /**
+     * @return bool
+     */
+    public function canTransferToMultiPay(): bool
+    {
+        return !$this->status_transfer_to_multi_pay && $this->canConfirm();
+    }
+    /**
+     * @return bool
+     */
+    public function canUseFinno(): bool
+    {
+        return false;
+    }
 }

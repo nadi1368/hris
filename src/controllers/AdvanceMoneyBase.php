@@ -34,12 +34,12 @@ class AdvanceMoneyBase extends Controller
                     [
                         [
                             'allow' => true,
-                            'roles' => ['AdvanceMoney/manage'],
+                            'roles' => ['AdvanceMoney/manage', 'superadmin'],
                             'actions' => ['index', 'confirm', 'reject'],
                         ],
                         [
                             'allow' => true,
-                            'roles' => ['advance-money/infinite'],
+                            'roles' => ['advance-money/infinite', 'superadmin'],
                             'actions' => ['create', 'create-with-confirm'],
                         ],
                     ]

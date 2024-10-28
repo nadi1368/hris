@@ -1,35 +1,35 @@
 <?php
 
-use hesabro\hris\models\AdvanceMoney;
-use hesabro\hris\Module;
-use kartik\select2\Select2;
-use yii\bootstrap4\ActiveForm;
+use hesabro\helpers\widgets\WageFormWidget;
+use common\models\Hesab;
 use yii\helpers\Html;
-use yii\web\JsExpression;
+use yii\bootstrap4\ActiveForm;
 use yii\widgets\MaskedInput;
+use common\models\OrderPayBalance;
+use common\models\Tafzil;
+use yii\web\JsExpression;
+use kartik\select2\Select2;
+use yii\helpers\Url;
 
-/**
- * @var object[] $wageTypes
- * @var yii\web\View $this
- * @var AdvanceMoney $model
- * @var object $operation
- * @var string $getAccountUrl
- * @var array $toList
- * @var array $fromList
- */
+use common\models\Document;
+
+/* @var $this yii\web\View */
+/* @var $model backend\models\AdvanceMoney */
+/* @var $form yii\widgets\ActiveForm */
+
+
+$get_account_url = Url::to(['hesab/find', 'level' => Hesab::LEVEL_MOEIN, 'nature' => Hesab::NATURE_TARAZ, 'tafzil' => true]);
 ?>
 
-<div class="customer-adress-form">
-
-    <?php $form = ActiveForm::begin([
-        'id' => 'ajax-operation'
-    ]); ?>
+<?php $form = ActiveForm::begin([
+    'id' => 'ajax-form-confirm-advance-money'
+]); ?>
     <div class="card-body">
         <div class="row">
-			<div class="col-md-4">
-                <?= $form->field($operation, "m_id_debtor")->widget(Select2::class, [
-                    'initValueText' => $operation->m_id_debtor ? $operation->mDebtor->title : 0, // set the initial display text
-                    'options' => ['placeholder' => Module::t('module', "Search"), 'dir' => 'rtl'],
+            <div class="col-md-4">
+                <?= $form->field($model, "m_debtor_id")->widget(Select2::classname(), [
+                    'initValueText' => $model->m_debtor_id ? $model->mDebtor->halfName : 0, // set the initial display text
+                    'options' => ['placeholder' => Yii::t("app", "Search"), 'dir' => 'rtl'],
                     'pluginOptions' => [
                         'allowClear' => true,
                         'minimumInputLength' => 2,
@@ -42,92 +42,53 @@ use yii\widgets\MaskedInput;
                             'maximumSelected' => new JsExpression("function () { return 'حداکثر انتخاب شده'; }"),
                         ],
                         'ajax' => [
-                            'url' => $getAccountUrl,
+                            'url' => $get_account_url,
                             'dataType' => 'json',
                             'data' => new JsExpression('function(params) { return {q:params.term}; }')
                         ],
                         'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
-                        'templateResult' => new JsExpression('function(data) { return data.text_show; }'),
-                        'templateSelection' => new JsExpression('function (data) { return data.text; }'),
+                        'templateResult' => new JsExpression('function(city) { return city.text_show; }'),
+                        'templateSelection' => new JsExpression('function (city) { return city.text; }'),
                     ],
                 ]);
                 ?>
+
             </div>
             <div class="col-md-4">
-                <?= $form->field($operation, 'to')->widget(Select2::class, [
-                    'data' => $toList,
-                    'options' => ['placeholder' => Module::t('module', "Search")],
-                    'pluginOptions' => [
-                        //'allowClear' => true
-                    ],
-                ]); ?>
-            </div>
-
-            <div class="col-md-4">
-                <?= $form->field($operation, 'from')->widget(Select2::class, [
-                    'data' => $fromList,
-                    'options' => ['placeholder' => Module::t('module', "Search")],
-                    'pluginOptions' => [
-                        //'allowClear' => true
-                    ],
-                ]); ?>
-            </div>
-            <div class="col-md-3">
-               <?= $form->field($operation, 'price')
-                   ->widget(MaskedInput::class,
-                       [
-                           'options' => [
-                               'autocomplete' => 'off',
-                           ],
-                           'clientOptions' => [
-                               'alias' => 'integer',
-                               'groupSeparator' => ',',
-                               'autoGroup' => true,
-                               'removeMaskOnSubmit' => true,
-                               'autoUnmask' => true,
-                           ],
-                       ]) ?>
+                <?= $form->field($model, 't_creditor_id')->dropDownList(Tafzil::itemAlias(Tafzil::ALIAS_LIST, null, Tafzil::TYPE_BANK), ['prompt' => Yii::t('app', 'Select...')]) ?>
             </div>
             <div class="col-md-2">
-                <?= $form->field($operation, 'date')->widget(MaskedInput::class, [
-                    'mask' => '9999/99/99',
-                ]) ?>
+                <?= $form->field($model, 'receipt_number')->textInput(['maxlength' => true]) ?>
             </div>
-
-            <div class="clearfix"></div>
 
             <div class="col-md-2">
-                <?= $form->field($operation, 'serial') ?>
+                <?= $form->field($model, 'receipt_date')->widget(MaskedInput::className(), ['mask' => '9999/99/99']) ?>
+                <?= $form->field($model, 'btn_type')->hiddenInput()->label(false) ?>
             </div>
-            <div class="col-md-3">
-                <?= $form->field($operation, 'wage')->widget(MaskedInput::class,
-                       [
-                           'options' => [
-                               'autocomplete' => 'off',
-                           ],
-                           'clientOptions' => [
-                               'alias' => 'integer',
-                               'groupSeparator' => ',',
-                               'autoGroup' => true,
-                               'removeMaskOnSubmit' => true,
-                               'autoUnmask' => true,
-                           ],
-                       ]) ?>
-            </div>
-
-			<div class="col-md-2">
-				<?= $form->field($operation, 'wage_type')->radioList($wageTypes) ?>
-			</div>
 
             <div class="col-md-12">
-                <?= $form->field($operation, 'des')->textarea(['rows' => 1]) ?>
+                <?= WageFormWidget::widget(['model' => $model, 'form' => $form]) ?>
             </div>
+
         </div>
     </div>
     <div class="card-footer">
-        <?= Html::submitButton(Module::t('module', 'Save'), ['class' => 'btn btn-success ']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success', 'value' => 'save']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Save and see documents'), ['class' => 'btn btn-info', 'value' => 'document']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
 
-</div>
+<?php
+$script = <<< JS
+
+$("button.btn").click(function (evt) {
+   
+    $('#advancemoney-btn_type').val($(this).val());
+});
+
+
+JS;
+$this->registerJs($script);
+
+?>

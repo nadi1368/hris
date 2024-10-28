@@ -2,6 +2,7 @@
 
 namespace hesabro\hris\models;
 
+use hesabro\helpers\behaviors\WageBehavior;
 use hesabro\hris\Module;
 use Yii;
 use yii\helpers\Html;
@@ -38,20 +39,29 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
     const STATUS_WAIT_CONFIRM = 1;
     const STATUS_CONFIRM = 2;
     const STATUS_REJECT = 3;
+    const STATUS_PAYED_BY_BOOM = 4;
+    const STATUS_MULTI_PAY_LIST = 5;
 
     const SCENARIO_CREATE = "create";
     const SCENARIO_CREATE_AUTO = "create_auto";
-    const SCENARIO_REJECT = "reject";
     const SCENARIO_CONFIRM = "confirm";
+    const SCENARIO_REJECT = "reject";
     const SCENARIO_CREATE_INFINITE = "create-infinite";
+    const SCENARIO_BACKEND_FINNO = 'backend_finno';
+    const SCENARIO_BACKEND_BOOM = 'backend_boom';
     const SCENARIO_CREATE_WITH_CONFIRM = "create-with-confirm";
 
     const validRequestCount = 3;
 
+    public $t_creditor_id, $m_debtor_id;
     public $error_msg = '';
+
+    public $btn_type;
+    public $document;
 
     /** additional data */
     public $iban;
+    public $status_transfer_to_multi_pay;
     public $model_class;
     public $model_id;
 
@@ -73,8 +83,11 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
             [['amount', 'iban'], 'required', 'on' => [self::SCENARIO_CREATE, self::SCENARIO_CREATE_AUTO]],
             [['iban'], IBANValidator::class],
             [['reject_comment'], 'required', 'on' => self::SCENARIO_REJECT],
+            [['receipt_number', 'receipt_date', 't_creditor_id', 'm_debtor_id'], 'required', 'on' => [self::SCENARIO_CONFIRM, self::SCENARIO_BACKEND_FINNO, self::SCENARIO_BACKEND_BOOM]],
             [['comment', 'reject_comment'], 'string'],
             [['amount'], 'number', 'min' => 1000],
+            [['btn_type'], 'string'],
+            ['status_transfer_to_multi_pay', 'boolean'],
             [['amount'], 'validateAmountAndCount', 'on' => self::SCENARIO_CREATE],
             [['user_id', 'status', 'doc_id', 'creator_id', 'update_id', 'created', 'changed'], 'integer'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Module::getInstance()->user, 'targetAttribute' => ['user_id' => 'id']],
@@ -256,6 +269,26 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
     }
 
 
+    /**
+     * @return bool
+     */
+    public function sendToMultiPayList(): bool
+    {
+        $this->status_transfer_to_multi_pay = true;
+        $this->status = self::STATUS_MULTI_PAY_LIST;
+        return $this->save(false);
+    }
+
+    /**
+     * @return bool
+     */
+    public function removeFromMultiPayList(): bool
+    {
+        $this->status_transfer_to_multi_pay = false;
+        $this->status = self::STATUS_WAIT_CONFIRM;
+        return $this->save(false);
+    }
+
     /*
     * حذف منطقی
     */
@@ -315,6 +348,7 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
+            'wageBehavior' => WageBehavior::class,
             [
                 'class' => LogBehavior::class,
                 'ownerClassName' => self::class,
@@ -332,6 +366,7 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
                     'iban' => 'String',
                     'model_class' => 'String',
                     'model_id' => 'Integer',
+                    'status_transfer_to_multi_pay' => "Boolean"
                 ],
 
             ],
