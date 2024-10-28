@@ -14,23 +14,6 @@ use yii\helpers\ArrayHelper;
  */
 class EmployeeContent extends EmployeeContentBase
 {
-    public function behaviors()
-    {
-        return array_merge(parent::behaviors(), [
-            'StorageUploadBehavior' => [
-                'class' => StorageUploadBehavior::class,
-                'attributes' => ['attachment', 'images'],
-                'accessFile' => S3Storage::ACCESS_PRIVATE,
-                'scenarios' => [
-                    self::SCENARIO_DEFAULT,
-                    self::SCENARIO_CREATE,
-                    self::SCENARIO_CREATE_ANNOUNCEMENT,
-                    self::SCENARIO_UPDATE_ANNOUNCEMENT
-                ],
-                'path' => 'hris/employee-content/{id}',
-            ],
-        ]);
-    }
 
     public function canUpdate()
     {

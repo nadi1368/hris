@@ -42,7 +42,7 @@ class OrganizationChartController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'roles' => ['OrganizationChart/public', 'superadmin'],
+                        'roles' =>  Module::getInstance()->employeeRole,
                         'actions' => ['public']
                     ],
                     [

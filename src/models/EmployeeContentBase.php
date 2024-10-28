@@ -8,6 +8,8 @@ use hesabro\changelog\behaviors\LogBehavior;
 use hesabro\helpers\components\iconify\Iconify;
 use hesabro\hris\Module;
 use himiklab\sortablegrid\SortableGridBehavior;
+use mamadali\S3Storage\behaviors\StorageUploadBehavior;
+use mamadali\S3Storage\components\S3Storage;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
@@ -114,6 +116,18 @@ class EmployeeContentBase extends ActiveRecord
             [
                 'class' => SortableGridBehavior::class,
                 'sortableAttribute' => 'sort',
+            ],
+            'StorageUploadBehavior' => [
+                'class' => StorageUploadBehavior::class,
+                'attributes' => ['attachment', 'images'],
+                'accessFile' => S3Storage::ACCESS_PRIVATE,
+                'scenarios' => [
+                    self::SCENARIO_DEFAULT,
+                    self::SCENARIO_CREATE,
+                    self::SCENARIO_CREATE_ANNOUNCEMENT,
+                    self::SCENARIO_UPDATE_ANNOUNCEMENT
+                ],
+                'path' => 'hris/employee-content/{id}',
             ],
         ];
     }
