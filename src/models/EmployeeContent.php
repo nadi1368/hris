@@ -14,14 +14,6 @@ use yii\helpers\ArrayHelper;
  */
 class EmployeeContent extends EmployeeContentBase
 {
-    public function rules()
-    {
-        return array_merge(parent::rules(), [
-            ['include_client_ids', 'each', 'rule' => ['exist', 'targetClass' => Client::class, 'targetAttribute' => ['include_client_ids' => 'id']]],
-            ['exclude_client_ids', 'each', 'rule' => ['exist', 'targetClass' => Client::class, 'targetAttribute' => ['exclude_client_ids' => 'id']]],
-        ]);
-    }
-
     public function behaviors()
     {
         return array_merge(parent::behaviors(), [
@@ -79,53 +71,9 @@ class EmployeeContent extends EmployeeContentBase
         $this->custom_job_tags = $this->custom_job_tags ?: [];
         $this->custom_user_ids = $this->custom_user_ids ?: [];
 
-        if (Yii::$app->client->isMaster()) {
-            $this->include_client_ids = $this->include_client_ids && count($this->include_client_ids) > 0 ? $this->include_client_ids : ['*'];
-        } else {
-            $this->include_client_ids = [Yii::$app->client->id];
-        }
-
         $this->update_id = Yii::$app->user->id;
         $this->changed = time();
         return parent::beforeSave($insert);
-    }
-
-    /**
-     * Display included clients as list view
-     *
-     * @return string
-     */
-    public function includedClientsListView()
-    {
-        $result = '';
-
-        if ($this->include_client_ids && !in_array('*', $this->include_client_ids)) {
-            foreach (Client::find()->andWhere(['IN', 'id', $this->include_client_ids])->all() as $client) {
-                $result .= '<label class="badge badge-info mr-1 mb-1 pull-right">' . $client->title . ' </label> ';
-            }
-        } else {
-            $result .= '<label class="badge badge-info mr-1 mb-1 pull-right"> تمامی کلاینت ها </label> ';
-        }
-
-        return $result;
-    }
-
-    /**
-     * Display excluded clients as list view
-     *
-     * @return string
-     */
-    public function excludedClientsListView()
-    {
-        $result = '';
-
-        if ($this->exclude_client_ids) {
-            foreach (Client::find()->andWhere(['IN', 'id', $this->exclude_client_ids])->all() as $client) {
-                $result .= '<label class="badge badge-info mr-1 mb-1 pull-right">' . $client->title . ' </label> ';
-            }
-        }
-
-        return $result;
     }
 
     public static function itemAlias($type, $code = NULL)
@@ -133,7 +81,7 @@ class EmployeeContent extends EmployeeContentBase
         $shouldIncludeAllTypes  = Yii::$app->client->isMaster() || isset($code);
 
         $list_data = [];
-        if ($type == 'ListEmployee') {
+        if ($type == 'ListRegulation') {
             $list_data = ArrayHelper::map(self::find()->andWhere(['type' => self::TYPE_REGULATIONS])->all(), 'id', 'title');
         }
         if ($type == 'ListSoftware') {
@@ -164,7 +112,7 @@ class EmployeeContent extends EmployeeContentBase
                     Module::t('module', 'Software FAQ'),
                 ] : []
             ]),
-            'ListEmployee' => $list_data,
+            'ListRegulation' => $list_data,
             'ListSoftware' => $list_data,
         ];
 

@@ -92,30 +92,6 @@ if ($model->custom_job_tags && ($jobs = SalaryInsurance::find()->andWhere(['IN',
 				<?php DynamicFormWidget::end(); ?>
 			</div>
 
-			<?php if (class_exists('backend\modules\master\models\Client') && Yii::$app->client->isMaster()) : ?>
-				<div class="col-md-6">
-					<?= $form->field($model, 'include_client_ids')->widget(Select2::class, [
-						'data' => Client::itemAlias('List'),
-						'options' => [
-							'placeholder' => 'کسب‌وکارهایی که منحصرا قادر به مشاهده این مورد می‌باشند',
-							'dir' => 'rtl',
-							'multiple' => true,
-						],
-					])->hint('در صورت خالی بودن لیست، به تمامی کسب‌وکارها نمایش داده می‌شود') ?>
-				</div>
-
-				<div class="col-md-6">
-					<?= $form->field($model, 'exclude_client_ids')->widget(Select2::class, [
-						'data' => Client::itemAlias('List'),
-						'options' => [
-							'placeholder' => 'کسب‌وکارهایی که قادر به مشاهده این مورد نمی‌باشند.',
-							'dir' => 'rtl',
-							'multiple' => true,
-						],
-					]) ?>
-				</div>
-			<?php endif; ?>
-
             <div class="col-md-6">
                 <?= $form->field($model, 'custom_job_tags')->widget(Select2::className(), [
                     'initValueText' => $initValueText,

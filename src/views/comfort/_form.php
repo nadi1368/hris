@@ -1,7 +1,7 @@
 <?php
 
-use common\models\Tags;
-use common\widgets\TagsWidget;
+use hesabro\hris\models\EmployeeContent;
+use hesabro\hris\models\SalaryInsurance;
 use hesabro\hris\Module;
 use kartik\select2\Select2;
 use yii\helpers\Html;
@@ -29,15 +29,15 @@ $css = <<<CSS
 CSS;
 
 $this->registerCss($css);
-$initValueTextTagsInclude = '';
-if ($model->jobs && ($tags = Tags::find()->andWhere(['IN', 'id', $model->jobs])->all())) {
-    $initValueTextTagsInclude = ArrayHelper::map($tags, "id", "title");
+$initValueTextJobInclude = '';
+if ($model->jobs && ($salaryInsurance = SalaryInsurance::find()->andWhere(['IN', 'id', $model->jobs])->all())) {
+    $initValueTextJobInclude = ArrayHelper::map($salaryInsurance, "id", "title");
 } else {
     $model->jobs = [];
 }
-$initValueTextTagsExclude = '';
-if ($model->excluded_jobs && ($tags = Tags::find()->andWhere(['IN', 'id', $model->excluded_jobs])->all())) {
-    $initValueTextTagsExclude = ArrayHelper::map($tags, "id", "title");
+$initValueTextJobExclude = '';
+if ($model->excluded_jobs && ($salaryInsurance = SalaryInsurance::find()->andWhere(['IN', 'id', $model->excluded_jobs])->all())) {
+    $initValueTextJobExclude = ArrayHelper::map($salaryInsurance, "id", "title");
 } else {
     $model->excluded_jobs = [];
 }
@@ -132,7 +132,7 @@ if ($model->excluded_jobs && ($tags = Tags::find()->andWhere(['IN', 'id', $model
 
             <div class="col-12 col-md-6">
                 <?= $form->field($model, 'related_faq')->widget(Select2::class, [
-                    'data' => Faq::itemAlias('ListEmployee'),
+                    'data' => EmployeeContent::itemAlias('ListRegulation'),
                     'pluginOptions' => [
                         'allowClear' => true,
                     ], 'options' => [
@@ -183,7 +183,7 @@ if ($model->excluded_jobs && ($tags = Tags::find()->andWhere(['IN', 'id', $model
 
             <div class="col-md-6">
                 <?= $form->field($model, 'jobs')->widget(Select2::class, [
-                    'initValueText' => $initValueTextTagsInclude,
+                    'initValueText' => $initValueTextJobInclude,
                     'options' => [
                         'placeholder' => Module::t('module', "Search"),
                         'dir' => 'rtl',
@@ -202,7 +202,7 @@ if ($model->excluded_jobs && ($tags = Tags::find()->andWhere(['IN', 'id', $model
                             'maximumSelected' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Maximum Selected'] . "'; }"),
                         ],
                         'ajax' => [
-                            'url' => Url::to(['/tags/find', 'category' => Tags::MODEL_JOBS]),
+                            'url' => Module::createUrl('salary-insurance/list'),
                             'dataType' => 'json',
                             'data' => new JsExpression('function(params) { return {q:params.term}; }')
                         ],
@@ -213,7 +213,7 @@ if ($model->excluded_jobs && ($tags = Tags::find()->andWhere(['IN', 'id', $model
                 ]); ?>
             </div><div class="col-md-6">
                 <?= $form->field($model, 'excluded_jobs')->widget(Select2::class, [
-                    'initValueText' => $initValueTextTagsExclude,
+                    'initValueText' => $initValueTextJobExclude,
                     'options' => [
                         'placeholder' => Module::t('module', "Search"),
                         'dir' => 'rtl',
@@ -232,7 +232,7 @@ if ($model->excluded_jobs && ($tags = Tags::find()->andWhere(['IN', 'id', $model
                             'maximumSelected' => new JsExpression("function () { return '" . Module::t('module', 'Select2')['Maximum Selected'] . "'; }"),
                         ],
                         'ajax' => [
-                            'url' => Url::to(['/tags/find', 'category' => Tags::MODEL_JOBS]),
+                            'url' => Module::createUrl('salary-insurance/list'),
                             'dataType' => 'json',
                             'data' => new JsExpression('function(params) { return {q:params.term}; }')
                         ],

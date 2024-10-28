@@ -47,23 +47,6 @@ class EmployeeContentQuery extends ActiveQuery
         return $this->andWhere(['type' => $type]);
     }
 
-    /**
-     * Query by client
-     */
-    public function byClientAccess($clientID): self
-    {
-        return $this->andWhere([
-            'OR',
-            new Expression("JSON_CONTAINS(". EmployeeContent::tableName() .".additional_data, JSON_QUOTE('$clientID'), '$.include_client_ids')"),
-            new Expression("JSON_CONTAINS(". EmployeeContent::tableName() .".additional_data, JSON_QUOTE('*'), '$.include_client_ids')"),
-            new Expression("JSON_EXTRACT(". EmployeeContent::tableName() .".additional_data, '$.include_client_ids') IS NULL")
-        ])->andWhere([
-            'OR',
-            new Expression("(NOT JSON_CONTAINS(" . EmployeeContent::tableName() . ".additional_data, JSON_QUOTE('$clientID'), '$.exclude_client_ids'))"),
-            new Expression("JSON_EXTRACT(". EmployeeContent::tableName() .".additional_data, '$.exclude_client_ids') IS NULL")
-        ]);
-    }
-
     public function byCurrentClientAccess(): self
     {
         if (isset(Yii::$app->client)) {

@@ -7,7 +7,7 @@
 
 use hesabro\hris\models\ContractClausesModel;
 use hesabro\hris\models\UserContracts;
-use common\models\Settings;
+use hesabro\hris\Module;
 use yii\helpers\Html;
 
 $css = <<< CSS

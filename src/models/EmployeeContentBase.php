@@ -105,8 +105,6 @@ class EmployeeContentBase extends ActiveRecord
                 'fieldAdditional' => 'additional_data',
                 'AdditionalDataProperty' => [
                     'clauses' => 'ClassArray::' . EmployeeContentClause::class,
-                    'include_client_ids' => 'StringArray',
-                    'exclude_client_ids' => 'StringArray',
                     'custom_user_ids' => 'StringArray',
                     'custom_job_tags' => 'StringArray',
                     'show_start_at' => 'Integer',
@@ -178,8 +176,6 @@ class EmployeeContentBase extends ActiveRecord
             'update_id' => Module::t('module', 'Update ID'),
             'changed' => Module::t('module', 'Creator'),
             'clauses' => Module::t('module', 'Clauses'),
-            'include_client_ids' => Module::t('module', 'Clients Can See This Content'),
-            'exclude_client_ids' => Module::t('module', 'Clients Can not See This Content'),
             'custom_job_tags' => Module::t('module', 'Job'),
             'custom_user_ids' => Module::t('module', 'Custom Users'),
             'show_start_at' => Module::t('module', 'Show Banner From Date'),
@@ -204,7 +200,7 @@ class EmployeeContentBase extends ActiveRecord
 
         $scenarios[self::SCENARIO_CREATE] = [
             'id', 'title', 'description', 'type', 'status', 'created', 'creator_id', 'update_id', 'changed', 'attachment',
-            'show_start_at', 'show_end_at', 'exclude_client_ids', 'custom_job_tags', 'custom_user_ids', 'include_client_ids'
+            'show_start_at', 'show_end_at', 'custom_job_tags', 'custom_user_ids'
         ];
         $scenarios[self::SCENARIO_CREATE_ANNOUNCEMENT] = [
             'id', 'title', 'description', 'type', 'status', 'created', 'creator_id', 'update_id', 'changed',
