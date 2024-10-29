@@ -366,7 +366,7 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
             'wageBehavior' => WageBehavior::class,
             [
                 'class' => LogBehavior::class,
-                'ownerClassName' => self::class,
+                'ownerClassName' => 'backend\models\AdvanceMoney',
                 'saveAfterInsert' => true
             ],
             [

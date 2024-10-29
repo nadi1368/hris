@@ -813,7 +813,7 @@ class EmployeeBranchUserBase extends ActiveRecord
             ],
             [
                 'class' => LogBehavior::class,
-                'ownerClassName' => self::class,
+                'ownerClassName' => 'backend\modules\employee\models\EmployeeBranchUser',
                 'saveAfterInsert' => true,
                 'ownerPrimaryKey' => 'user_id',
             ],

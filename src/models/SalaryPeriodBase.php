@@ -3,6 +3,7 @@
 namespace hesabro\hris\models;
 
 use hesabro\changelog\behaviors\LogBehavior;
+use hesabro\errorlog\behaviors\TraceBehavior;
 use hesabro\helpers\behaviors\JsonAdditional;
 use hesabro\hris\Module;
 use hesabro\helpers\components\Jdf;
@@ -587,13 +588,18 @@ class SalaryPeriodBase extends \yii\db\ActiveRecord
         return Yii::$app->jdf->jdate('Y/m/d', $this->start_date) . " - " . Yii::$app->jdf->jdate('Y/m/d', $this->end_date);
     }
 
+
     public function behaviors()
     {
         return [
             [
                 'class' => LogBehavior::class,
-                'ownerClassName' => self::class,
+                'ownerClassName' => 'backend\modules\employee\models\SalaryPeriod',
                 'saveAfterInsert' => true
+            ],
+            [
+                'class' => TraceBehavior::class,
+                'ownerClassName' => self::class
             ],
             [
                 'class' => JsonAdditional::class,
