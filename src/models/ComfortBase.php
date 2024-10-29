@@ -268,12 +268,12 @@ class ComfortBase extends ActiveRecord
     /**
      * Get comfort related faq
      *
-     * @return Content|null
+     * @return EmployeeContent|null
      */
-    public function getRelatedFaq(): Content|null
+    public function getRelatedFaq(): EmployeeContent|null
     {
         if ($this->related_faq) {
-            return Content::find()->where(['id' => $this->related_faq])->one();
+            return EmployeeContent::find()->where(['id' => $this->related_faq])->one();
         }
 
         return null;
@@ -282,7 +282,7 @@ class ComfortBase extends ActiveRecord
     /**
      * Get comfort related faq clause
      *
-     * @return ContentClause|null
+     * @return EmployeeContentClause|null
      */
     public function getRelatedFaqClause()
     {

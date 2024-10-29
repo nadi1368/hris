@@ -18,6 +18,8 @@ class Module extends BaseModule
 
     public string | null $settingsCategory = null;
 
+    public string | null $productLogo = null;
+
     public array | null $userFindUrl = ['/user/get-user-list'];
 
     public string | null $balanceDetailedClass = null;

@@ -23,7 +23,9 @@ $color = Comfort::itemAlias('CatColor', $model->type);
         disabled
 >
     <div class="card comfort-card h-100" style="background: linear-gradient(to left bottom, <?= $bg[0] ?>, <?= $bg[1] ?>); color: <?= $color ?>">
-        <img src="<?= Url::to('/img/svg/hesabro-logo.svg') ?>" class="comfort-card__bg" alt="hesabro-bg" />
+        <?php if ($productLogo = Module::getInstance()->productLogo): ?>
+            <img src="<?= Url::to($productLogo) ?>" class="comfort-card__bg" alt="product-logo" />
+        <?php endif; ?>
         <div class="card-body d-flex flex-column justify-content-between gap-2">
             <div class="d-flex align-items-center justify-content-start gap-2">
                 <i class="far fa-gift comfort-card__icon"></i>
@@ -61,7 +63,7 @@ $color = Comfort::itemAlias('CatColor', $model->type);
                 </div>
                 <div class="comfort-card__expire-date">
                     <span class="comfort-card__spec-title"><?= Module::t('module', 'Expire') ?></span>
-                    <span><?= $model->expire_time ? Yii::$app->jdate->date("Y/m/d", $model->expire_time) : Module::t('module', 'Do Not Have'); ?></span>
+                    <span><?= $model->expire_time ? Yii::$app->jdf::jdate("Y/m/d", $model->expire_time) : Module::t('module', 'Do Not Have'); ?></span>
                 </div>
             </div>
         </div>

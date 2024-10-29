@@ -1,11 +1,12 @@
 <?php
 
 use hesabro\helpers\widgets\ListView;
+use hesabro\hris\models\ComfortSearch;
 use hesabro\hris\Module;
 use yii\widgets\Pjax;
 
 /* @var $this \yii\web\View */
-/* @var $searchModel backend\modules\employee\models\ComfortSearch */
+/* @var $searchModel ComfortSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Module::t('module', 'Comforts List');

@@ -175,7 +175,7 @@ $galleryIndex = 0;
 
         <div id="military" class="col-12 col-md-4 <?= $model->sex == Module::getInstance()->user::SEX_WOMAN ? 'hide' : '' ?>">
             <?php
-            $militaryDes = !!$model->military_description;
+            $militaryDes = !!$model->military_description || $model->hasPendingData('military_description');
             $militaryDoc = $model->getFileUrl('military_doc');
             ?>
             <div class="d-flex align-items-center justify-content-between">
@@ -199,14 +199,18 @@ $galleryIndex = 0;
                         Module::t('module', 'Related To'),
                         $model->getAttributeLabel('military_doc')
                     ]),
-                    'disabled' => !($model->isConfirmed || !$militaryDoc || $isAdmin)
-                ])->label(false) ?>
+                    'disabled' => !($model->isConfirmed || !$militaryDoc || $isAdmin),
+                    'value' => $model->getAttributeValue('military_description', $isAdmin)
+                ])
+                ->label(false)
+                ->hint(...$model->getPendingDataHint('military_description', $isAdmin)) ?>
             </div>
             <div id="military-doc" class="<?= $militaryDes ? 'hide' : '' ?>">
                 <?php if (!$model->isConfirmed || $isAdmin || !$militaryDoc) {
                     echo $form->field($model, 'military_doc')->widget(FileInput::class, [
                         'defaultFile' => $model->getFileUrl('military_doc')
-                    ])->label(false)->hint(Module::t('module', 'Maximum File Size', ['size' => $maxFileSize]));;
+                    ])
+                    ->label(false);
                 } else {
                     echo Html::tag(
                         'div',

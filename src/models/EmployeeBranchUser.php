@@ -58,8 +58,8 @@ class EmployeeBranchUser extends EmployeeBranchUserBase implements SendAutoComme
     public function getInsuranceData($for_contract = false)
     {
         $data = array_merge(parent::getInsuranceData($for_contract), [
-            'national' => is_array(Customer::itemAlias('National', $this->national)) ? null : Customer::itemAlias('National', $this->national),
-            'sex' => is_array(Customer::itemAlias('SexTitle', $this->sex)) ? null : Customer::itemAlias('SexTitle', $this->sex),
+            'national' => is_array(Module::getInstance()->user::itemAlias('National', $this->national)) ? null : Module::getInstance()->user::itemAlias('National', $this->national),
+            'sex' => is_array(Module::getInstance()->user::itemAlias('SexTitle', $this->sex)) ? null : Module::getInstance()->user::itemAlias('SexTitle', $this->sex),
         ]);
 
         if ($for_contract) {
@@ -177,35 +177,7 @@ class EmployeeBranchUser extends EmployeeBranchUserBase implements SendAutoComme
                 'scenarioValid' => [self::SCENARIO_REJECT_UPDATE],
                 'callAfterUpdate' => true
             ],
-            'StorageUploadBehavior' => [
-                'class' => StorageUploadBehavior::class,
-                'modelType' => StorageFiles::MODEL_TYPE_EMPLOYEE_BRANCH_USER,
-                'attributes' => [
-                    'sh_picture_first', 'sh_picture_second', 'sh_picture_third',
-                    'id_card_front', 'id_card_back', 'resume_file', 'military_doc',
-                    'education_picture', 'insurance_history'
-                ],
-                'scenarios' => [self::SCENARIO_UPDATE_PROFILE, self::SCENARIO_INSURANCE],
-                'accessFile' => StorageFiles::ACCESS_PRIVATE,
-                'primaryKey' => 'user_id',
-            ],
         ]);
-    }
-
-    public function afterSave($insert, $changedAttributes)
-    {
-        if (
-            $this->scenario === self::SCENARIO_INSURANCE &&
-            $this->job_code &&
-            $salaryInsurance = SalaryInsurance::findOne($this->job_code)
-        ) {
-            if ($salaryInsurance->tag_id && $customer = Customer::find()->findByUser($this->user_id)->one()) {
-                $customer->jobs = [$salaryInsurance->tag_id];
-                $customer->save(false);
-            }
-        }
-
-        parent::afterSave($insert, $changedAttributes);
     }
 
     public function getPendingDataHint(string $attribute, bool $mainValue = false, string $default = null): array

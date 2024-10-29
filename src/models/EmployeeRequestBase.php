@@ -64,6 +64,8 @@ class EmployeeRequestBase extends ActiveRecord
 
     public mixed $indicator_id = null;
 
+    // Base
+
     public static function tableName()
     {
         return '{{%employee_requests}}';

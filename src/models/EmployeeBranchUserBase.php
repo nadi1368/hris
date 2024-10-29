@@ -10,6 +10,8 @@ use hesabro\helpers\validators\DateValidator;
 use hesabro\helpers\validators\IBANValidator;
 use hesabro\helpers\validators\NationalCodeValidator;
 use hesabro\hris\Module;
+use mamadali\S3Storage\behaviors\StorageUploadBehavior;
+use mamadali\S3Storage\components\S3Storage;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
@@ -442,10 +444,10 @@ class EmployeeBranchUserBase extends ActiveRecord
     {
         return array_merge(parent::attributeHints(), [
             'confirmed' => 'در صورت فعال بودن این گزینه، کارمند امکان ویرایش اطلاعات کاربری خود را نخواهد داشت',
-            'military_doc' => 'کارت پایان خدمت، کارت معافیت از خدمت، معافیت تحصیلی، ...',
+            'military_doc' => 'کارت پایان خدمت، کارت معافیت از خدمت، معافیت تحصیلی، ... ' . Module::t('module', 'Maximum File Size', ['size' => $this->getFileSizeHint()]),
             'email' => $this->user?->email ? "پیام‌های اطلاع‌رسانی حسابرو به {$this->user->email} ارسال می‌شوند." : '',
             'insurance_history_month_count' => 'تعداد روز سابقه بیمه از شرکت های قبلی',
-            'work_history_day_count' => 'تعداد روز کارکرد ثبت نشده در سیستم از سالهای قبل'
+            'work_history_day_count' => 'تعداد روز کارکرد ثبت نشده در سیستم از سالهای قبل',
         ]);
     }
 
@@ -817,6 +819,18 @@ class EmployeeBranchUserBase extends ActiveRecord
                 'saveAfterInsert' => true,
                 'ownerPrimaryKey' => 'user_id',
             ],
+            'StorageUploadBehavior' => [
+                'class' => StorageUploadBehavior::class,
+                'attributes' => [
+                    'sh_picture_first', 'sh_picture_second', 'sh_picture_third',
+                    'id_card_front', 'id_card_back', 'resume_file', 'military_doc',
+                    'education_picture', 'insurance_history'
+                ],
+                'scenarios' => [self::SCENARIO_UPDATE_PROFILE, self::SCENARIO_INSURANCE],
+                'accessFile' => S3Storage::ACCESS_PRIVATE,
+                'path' => 'hris/employee/{user_id}',
+                'primaryKey' => 'user_id',
+            ],
             'JsonAdditional' => [
                 'class' => JsonAdditional::class,
                 'ownerClassName' => self::class,
@@ -1116,5 +1130,10 @@ class EmployeeBranchUserBase extends ActiveRecord
         }
 
         return false;
+    }
+
+    public function getFileSizeHint(): string
+    {
+        return Module::t('module', 'Maximum File Size', ['size' => self::MAX_FILE_SIZE / 1024 . 'KB']);
     }
 }

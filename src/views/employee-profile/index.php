@@ -96,21 +96,26 @@ $workTimeText = $workTime ? $workTime . ' ' . Module::t('module', 'Day') : Modul
     <div id="loading-overlay" class="profile-overlay" style="display: none">
         <?= Iconify::getInstance()->icon('svg-spinners:pulse-rings-3') ?>
     </div>
-    <div class="card mb-0">
-        <div class="card-body d-flex align-items-center justify-content-start" style="gap: 16px">
-            <?php if ($avatar = $user->getFileUrl('avatar')): ?>
-                <img src="<?= $avatar ?>" alt="avatar" width="75" height="75" class="rounded-circle"
-                     style="object-fit: cover; object-position: center;"/>
-            <?php else: ?>
-                <i class="fal fa-user-circle fa-6x pt-3 pull-right"></i>
-            <?php endif; ?>
-            <div class="d-flex flex-column align-items-start justify-content-center" style="flex: 1; gap: 12px">
+    <div class="card mb-0 position-relative" style="overflow: hidden">
+        <span class="position-absolute" style="color: #edf1f5; font-size: 256px; bottom: -140px; left: -25px;"><?= Iconify::getInstance()->icon('ph:pulse') ?> </span>
+        <div class="card-body d-flex align-items-start justify-content-start" style="gap: 16px; z-index: 10">
+            <div class="d-flex flex-column justify-content-center gap-2">
+                <?php if ($avatar = $user->getFileUrl('avatar')): ?>
+                    <img src="<?= $avatar ?>" alt="avatar" width="75" height="75" class="rounded-circle"
+                         style="object-fit: cover; object-position: center;"/>
+                <?php else: ?>
+                    <i class="fal fa-user-circle fa-6x pt-3 pull-right"></i>
+                <?php endif; ?>
+                <a href="<?= Url::to(['employee-profile/update']) ?>" class="d-block btn btn-outline-info btn-sm">
+                    <?= Module::t('module', 'Edit') ?>
+                </a>
+            </div>
+            <div class="pt-4 d-flex flex-column align-items-start justify-content-center" style="flex: 1; gap: 12px">
                 <div class="w-100 d-flex align-items-center justify-content-between">
                     <h4 class="mb-0"><?= $user->fullName ?> به <span data-toggle="tooltip"
-                                                                     data-title="<?= Module::t('module', 'HRIS') ?>">Pulse</span> <?= Module::t('module', 'Welcome') ?>
+                                                                     data-title="<?= Module::t('module', 'HRIS') ?>">پالس</span> <?= Module::t('module', 'Welcome') ?>
                     </h4>
                 </div>
-
                 <div class="d-flex justify-content-between align-items-center w-100">
                     <div>
                         <p class="d-inline-block mb-0"><?= $employee?->salaryInsurance?->group ?: '-' ?></p>
@@ -122,9 +127,6 @@ $workTimeText = $workTime ? $workTime . ' ' . Module::t('module', 'Day') : Modul
                             <p class="d-inline-block mb-0 text-muted"><small>(<?= $code ?> - <?= $description ?>)</small></p>
                         <?php endif; ?>
                     </div>
-                    <a href="<?= Url::to(['/employee/profile/update']) ?>" class="d-block text-success font-24">
-                        <?= Iconify::getInstance()->icon('ph:note-pencil-duotone') ?>
-                    </a>
                 </div>
             </div>
         </div>
@@ -291,7 +293,7 @@ $workTimeText = $workTime ? $workTime . ' ' . Module::t('module', 'Day') : Modul
         <div class="card-body" style="max-height: 100%; overflow-y: auto;">
             <?php if (count($comforts)): ?>
                 <div class="h-100 d-flex flex-column justify-content-between">
-                    <ul>
+                    <ul class="pl-0" style="list-style: none">
                         <?php $comfortsLastIndex = $lastIndex = (count($comforts) - 1); ?>
                         <?php foreach ($comforts as $index => $comfort): ?>
                             <li class="px-2 py-3"

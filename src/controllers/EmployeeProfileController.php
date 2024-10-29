@@ -2,12 +2,15 @@
 
 namespace hesabro\hris\controllers;
 
+use hesabro\helpers\traits\AjaxValidationTrait;
 use hesabro\hris\models\AdvanceMoney;
 use hesabro\hris\models\Comfort;
 use hesabro\hris\models\ComfortItems;
 use hesabro\hris\models\ComfortSearch;
+use hesabro\hris\models\EmployeeChild;
 use hesabro\hris\models\EmployeeContent;
 use hesabro\hris\models\EmployeeBranchUser;
+use hesabro\hris\models\EmployeeExperience;
 use hesabro\hris\models\EmployeeRequest;
 use hesabro\hris\models\EmployeeRollCallSearch;
 use hesabro\hris\models\RequestLeave;
@@ -19,11 +22,182 @@ use hesabro\hris\models\SalaryPeriodItemsSearch;
 use hesabro\hris\models\UserContractsSearch;
 use hesabro\hris\Module;
 use Yii;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
+use yii\web\UploadedFile;
 
-class EmployeeProfileController extends EmployeeProfileBase
+class EmployeeProfileController extends Controller
 {
+    use AjaxValidationTrait;
+
+    public function init()
+    {
+        parent::init();
+        $this->layout = Module::getInstance()->layoutPanel;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' =>
+                    [
+                        [
+                            'allow' => true,
+                            'roles' => Module::getInstance()->employeeRole,
+                        ],
+                    ]
+            ]
+        ];
+    }
+
+    /**
+     * @param $id
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionSalaryPeriod()
+    {
+        $searchModel = new SalaryPeriodItemsSearch(['user_id' => Yii::$app->user->id]);
+        $dataProvider = $searchModel->searchUser(Yii::$app->request->queryParams);
+        $dataProvider->query
+            ->joinWith('period')
+            ->andWhere([SalaryPeriod::tableName() . '.status' => SalaryPeriod::STATUS_PAYMENT])
+            ->andWhere([SalaryPeriodItems::tableName() . '.can_payment' => Yii::$app->helper::CHECKED])
+            ->andWhere(['user_id' => Yii::$app->user->id]);
+        return $this->render('salary-period', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * @param $id
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionRollCall()
+    {
+        $searchModel = new EmployeeRollCallSearch();
+        $startAndEndOfCurrentMonth = Yii::$app->jdf::getStartAndEndOfCurrentMonth();
+        $start_month = Yii::$app->jdf->jdate('Y/m/d', $startAndEndOfCurrentMonth[0]);
+        $end_month = Yii::$app->jdf->jdate('Y/m/d', $startAndEndOfCurrentMonth[1]);
+        $searchModel->fromDate = $start_month;
+        $searchModel->toDate = $end_month;
+        $dataProvider = $searchModel->searchUser(Yii::$app->request->queryParams, Yii::$app->user->id);
+        return $this->render('roll-call', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionContract()
+    {
+        $id = Yii::$app->user->id;
+
+        $searchModel = new UserContractsSearch(['user_id' => $id]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('contract', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionUpdate()
+    {
+        $request = Yii::$app->request;
+        $model = $this->findEmployeeBranchUser(Yii::$app->user->getId());
+        $model->setScenario(EmployeeBranchUser::SCENARIO_UPDATE_PROFILE);
+
+        $insuranceData = $model->getInsuranceData();
+
+        $model->employee_address = $insuranceData['employee_address'];
+        $model->first_name = $insuranceData['first_name'];
+        $model->last_name = $insuranceData['last_name'];
+        $model->nationalCode = $insuranceData['nationalCode'];
+
+        if ($request->isPost) {
+            $updateAvatar = true;
+            $user = Module::getInstance()->user::findOne(Yii::$app->user->getId());
+            if ($avatar = UploadedFile::getInstance($model, 'avatar')) {
+                $user->scenario = Module::getInstance()->user::SCENARIO_UPDATE_AVATAR;
+                $user->avatar = $avatar;
+                $updateAvatar = $user->save(false);
+            }
+
+            $model->children = EmployeeChild::createMultiple(EmployeeChild::class);
+            EmployeeChild::loadMultiple($model->children, $request->post());
+            $valid = EmployeeChild::validateMultiple($model->children);
+
+            $model->experiences = EmployeeExperience::createMultiple(EmployeeExperience::class);
+            EmployeeExperience::loadMultiple($model->experiences, $request->post());
+            $valid = $valid && EmployeeExperience::validateMultiple($model->experiences);
+
+            $updateProfile = $valid && $updateAvatar;
+
+            if (!$model->isConfirmed && $updateProfile) {
+                $updateProfile = $model->load($request->post()) && $model->save();
+            }
+
+            if ($model->isConfirmed && $updateProfile) {
+                $updateProfile = $model->load($request->post()) && $model->saveToPending();
+            }
+
+            if (!$updateAvatar) {
+                $model->addError('avatar', $user->getFirstError('avatar') ?: Module::t('module', 'Error In Save Information, Please Try Again'));
+            }
+
+            if ($updateProfile) {
+                Yii::$app->getSession()->setFlash('success', Module::t('module', 'Item Updated'));
+                return $this->redirect(['employee-profile/update']);
+            }
+        }
+
+        if ($request->isGet) {
+            $model->children = $model->getChildrenWithPending();
+            $model->experiences = $model->getExperiencesWithPending();
+        }
+
+        if (!count($model->children)) {
+            $model->children = [new EmployeeChild(['isNewRecord' => true])];
+        }
+
+        if (!count($model->experiences)) {
+            $model->experiences = [new EmployeeExperience(['isNewRecord' => true])];
+        }
+
+        return $this->render('update', [
+            'model' => $model
+        ]);
+    }
+
+    public function actionSeenReject()
+    {
+        $model = $this->findEmployeeBranchUser(Yii::$app->user->getId());
+        $seen = $model->seenRejectUpdate();
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return [
+            'success' => $seen,
+            'msg' => Module::t('module', $seen ? 'Item Updated' : 'Can Not Update')
+        ];
+    }
+
     public function actionIndex($year = null, $month = null)
     {
         $userId = Yii::$app->user->getId();
@@ -198,43 +372,12 @@ class EmployeeProfileController extends EmployeeProfileBase
         ]);
     }
 
-    public function actionRollCall()
-    {
-        $searchModel = new EmployeeRollCallSearch();
-        $startAndEndOfCurrentMonth = Yii::$app->jdf::getStartAndEndOfCurrentMonth();
-        $start_month = Yii::$app->jdf::jdate('Y/m/d', $startAndEndOfCurrentMonth[0]);
-        $end_month = Yii::$app->jdf::jdate('Y/m/d', $startAndEndOfCurrentMonth[1]);
-        $searchModel->fromDate = $start_month;
-        $searchModel->toDate = $end_month;
-        $dataProvider = $searchModel->searchUser(Yii::$app->request->queryParams, Yii::$app->user->id);
-        return $this->render('roll-call', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
     public function actionContracts()
     {
         $searchModel = new UserContractsSearch(['user_id' => Yii::$app->user->id]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('contracts', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    public function actionSalaryPeriod()
-    {
-        $searchModel = new SalaryPeriodItemsSearch(['user_id' => Yii::$app->user->id]);
-        $dataProvider = $searchModel->searchUser(Yii::$app->request->queryParams);
-        $dataProvider->query
-            ->joinWith('period')
-            ->andWhere([SalaryPeriod::tableName() . '.status' => SalaryPeriod::STATUS_PAYMENT])
-            ->andWhere([SalaryPeriodItems::tableName() . '.can_payment' => Yii::$app->helper::CHECKED])
-            ->andWhere(['user_id' => Yii::$app->user->id]);
-
-        return $this->render('salary-period', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -263,12 +406,49 @@ class EmployeeProfileController extends EmployeeProfileBase
         ]);
     }
 
+    protected function findEmployeeBranchUser($userId)
+    {
+        $model = EmployeeBranchUser::find()->where(['user_id' => $userId])->with(['user'])->one();
+
+        if (!$model) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        return $model;
+    }
+
+    /**
+     * Finds the User model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return object the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModelUser($id)
+    {
+        if (($model = Module::getInstance()->user::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
+    }
+
+    /**
+     * @param $id
+     * @return SalaryPeriodItems|null
+     * @throws NotFoundHttpException
+     */
     protected function findModelSalaryItem($id): ?SalaryPeriodItems
     {
         if (($model = SalaryPeriodItems::findOne($id)) !== null && $model->user_id == Yii::$app->user->id) {
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
+    }
+
+    protected function flash($type, $message)
+    {
+        Yii::$app->getSession()->setFlash($type == 'error' ? 'danger' : $type, $message);
     }
 }

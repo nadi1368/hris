@@ -35,9 +35,9 @@ $this->registerCss($styles);
                     <div class="alert alert-warning" role="alert">
                         <?= $comfort->description ?>
                         <?php if ($comfort->getRelatedFaq() || $comfort->getRelatedFaqClause()) : ?>
-                            <div class="clamped"><?= ($comfort->getRelatedFaqClause())?->content ?? $model->getRelatedFaq()?->description ?></div>
+                            <div class="clamped"><?= ($comfort->getRelatedFaqClause())?->content ?? $comfort->getRelatedFaq()?->description ?></div>
                             <?= Html::a(Module::t('module', 'Read More'), Url::to([
-                                'faq/public', 'type' => 2,
+                                'employee-content/index', 'type' => 2,
                                 'faq_id' => $comfort->getRelatedFaq()?->id,
                                 'clause_id' => $comfort->getRelatedFaqClause()?->id,
                             ]), ['target' => '_blank', 'class' => 'text-info d-inline-block']) ?>

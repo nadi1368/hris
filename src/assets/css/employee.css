@@ -72,6 +72,7 @@
     overflow: hidden;
     position: relative;
     transition: all 200ms;
+    border-radius: 10px;
 }
 
 .comfort-card:hover {
@@ -159,27 +160,6 @@
 
 .plain-text {
     unicode-bidi: plaintext;
-}
-
-.pulse-notification {
-    position: relative;
-}
-
-.pulse-notification:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -8px;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #e11d48;
-    box-shadow: 0 0 1px 1px #0000001a;
-    animation: pulse-animation 1500ms infinite;
-}
-
-.sidebar-link.has-arrow.active .pulse-notification:after {
-    display: none;
 }
 
 @keyframes pulse-animation {

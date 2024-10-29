@@ -364,4 +364,15 @@ return [
     'Request Leave Create' => 'ثبت درخواست مرخصی / ماموریت',
     'Request Leave Admin Branch' => 'مدیریت بخش درخواست مرخصی / ماموریت',
     'Request Leave Admin' => 'مدیریت کل درخواست مرخصی / ماموریت',
+    'Quantity' => 'عدد',
+    'Work Experience' => 'سابقه کار',
+    'Gap' => 'فاصله',
+    'Expire' => 'انقضا',
+    'Rial' => 'ریال',
+    'No Limit' => 'بدون محدودیت',
+    'Do Not Have' => 'ندارد',
+    'Read More' => 'جزئیات بیشتر',
+    'Accept And Update Information' => 'تایید و تغییر اطلاعات',
+    'Add' => 'افزودن',
+    'Remove' => 'حذف'
 ];
