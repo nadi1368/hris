@@ -23,11 +23,11 @@ $color = Comfort::itemAlias('CatColor', $model->type);
         disabled
 >
     <div class="card comfort-card h-100" style="background: linear-gradient(to left bottom, <?= $bg[0] ?>, <?= $bg[1] ?>); color: <?= $color ?>">
-        <img src="<?= Url::to('/img/svg/hesabro-logo.svg') ?>" class="comfort-card__bg" alt="hesabro-bg" />
+
         <div class="card-body d-flex flex-column justify-content-between gap-2">
             <div class="d-flex align-items-center justify-content-start gap-2">
-                <i class="far fa-gift comfort-card__icon"></i>
-                <h5 class="card-title text-center mb-0"><?= $model->title ?></h5>
+                <i class="far fa-gift mr-2 comfort-card__icon"></i>
+                <h5 class="card-title text-center mb-0"> <?= $model->title ?> </h5>
             </div>
             <div class="text-center">
                 <h3 class="mb-0"><?= $model->amount_limit ? number_format((float)$model->amount_limit) . ' ' . Module::t('module', 'Rial') : Module::t('module', 'No Limit'); ?></h3>

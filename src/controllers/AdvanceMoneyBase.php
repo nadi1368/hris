@@ -11,6 +11,7 @@ use hesabro\hris\Module;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -124,6 +125,63 @@ class AdvanceMoneyBase extends Controller
         $this->performAjaxValidation($form);
         return $this->renderAjax('_reject', [
             'model' => $form,
+        ]);
+    }
+
+
+    /**
+     * @param $id
+     * @return array|string
+     * @throws NotFoundHttpException
+     * @throws yii\base\ExitException
+     */
+    public function actionConfirm($id)
+    {
+        $model = $this->findModel($id);
+        $model->setScenario(AdvanceMoney::SCENARIO_CONFIRM);
+        $model->m_debtor_id = Module::getInstance()->settings::get('m_debtor_advance_money');
+        $model->receipt_date = Yii::$app->jdate->date("Y/m/d");
+        if (!$model->canConfirm()) {
+            throw new NotFoundHttpException($model->error_msg);
+        }
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $result = ['success' => false, 'msg' => Yii::t('app', 'Error In Save Info')];
+            $transaction = \Yii::$app->db->beginTransaction();
+            try {
+
+                $flag = $model->confirm();
+                $flag = $flag && $model->saveDocument();
+                if ($flag) {
+                    $transaction->commit();
+                    $result = [
+                        'success' => true,
+                        'msg' => Yii::t('app', 'Item Confirmed')
+                    ];
+
+                    if ($model->btn_type == 'save') {
+                        $result['hideModal'] = true;
+                    } else {
+                        $result['redirect'] = true;
+                        $result['url'] = Url::to(['/accounting/document/view', 'id' => $model->document->id]);
+                    }
+                } else {
+                    $transaction->rollBack();
+
+                }
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                $result = [
+                    'success' => false,
+                    'msg' => $e->getMessage()
+                ];
+            }
+
+            return $this->asJson($result);
+        }
+
+        $this->performAjaxValidation($model);
+        return $this->renderAjax('_confirm', [
+            'model' => $model,
         ]);
     }
 

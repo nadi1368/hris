@@ -15,6 +15,7 @@ use yii\helpers\Html;
  */
 
 $this->params['breadcrumbs'][] = $title;
+$this->title = $title;
 
 $css = <<< CSS
 .accordion .card-header {
