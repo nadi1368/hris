@@ -2,6 +2,7 @@
 
 namespace hesabro\hris\models;
 
+use hesabro\helpers\behaviors\WageBehavior;
 use hesabro\hris\Module;
 use Yii;
 use yii\helpers\Html;
@@ -38,22 +39,32 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
     const STATUS_WAIT_CONFIRM = 1;
     const STATUS_CONFIRM = 2;
     const STATUS_REJECT = 3;
+    const STATUS_PAYED_BY_BOOM = 4;
+    const STATUS_MULTI_PAY_LIST = 5;
 
     const SCENARIO_CREATE = "create";
     const SCENARIO_CREATE_AUTO = "create_auto";
-    const SCENARIO_REJECT = "reject";
     const SCENARIO_CONFIRM = "confirm";
+    const SCENARIO_REJECT = "reject";
     const SCENARIO_CREATE_INFINITE = "create-infinite";
+    const SCENARIO_BACKEND_FINNO = 'backend_finno';
+    const SCENARIO_BACKEND_BOOM = 'backend_boom';
     const SCENARIO_CREATE_WITH_CONFIRM = "create-with-confirm";
 
     const validRequestCount = 3;
 
+    public $t_creditor_id, $m_debtor_id;
     public $error_msg = '';
+
+    public $btn_type;
+    public $document;
 
     /** additional data */
     public $iban;
+    public $status_transfer_to_multi_pay;
     public $model_class;
     public $model_id;
+    public $documentsArray;
 
     /**
      * {@inheritdoc}
@@ -73,8 +84,11 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
             [['amount', 'iban'], 'required', 'on' => [self::SCENARIO_CREATE, self::SCENARIO_CREATE_AUTO]],
             [['iban'], IBANValidator::class],
             [['reject_comment'], 'required', 'on' => self::SCENARIO_REJECT],
+            [['receipt_number', 'receipt_date', 't_creditor_id', 'm_debtor_id'], 'required', 'on' => [self::SCENARIO_CONFIRM, self::SCENARIO_BACKEND_FINNO, self::SCENARIO_BACKEND_BOOM]],
             [['comment', 'reject_comment'], 'string'],
             [['amount'], 'number', 'min' => 1000],
+            [['btn_type'], 'string'],
+            ['status_transfer_to_multi_pay', 'boolean'],
             [['amount'], 'validateAmountAndCount', 'on' => self::SCENARIO_CREATE],
             [['user_id', 'status', 'doc_id', 'creator_id', 'update_id', 'created', 'changed'], 'integer'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Module::getInstance()->user, 'targetAttribute' => ['user_id' => 'id']],
@@ -88,7 +102,7 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
         $scenarios[self::SCENARIO_CREATE] = ['comment', 'amount', 'iban'];
         $scenarios[self::SCENARIO_CREATE_AUTO] = ['comment', 'amount', 'iban'];
         $scenarios[self::SCENARIO_REJECT] = ['reject_comment'];
-        $scenarios[self::SCENARIO_CONFIRM] = ['!status'];
+        $scenarios[self::SCENARIO_CONFIRM] = ['receipt_number', 'receipt_date', 't_creditor_id', 'm_debtor_id', 'btn_type'];
         $scenarios[self::SCENARIO_CREATE_INFINITE] = ['user_id', 'amount', 'comment'];
         $scenarios[self::SCENARIO_CREATE_WITH_CONFIRM] = ['user_id', 'amount', 'comment'];
 
@@ -127,6 +141,12 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
             'update_id' => Module::t('module', 'Update ID'),
             'created' => Module::t('module', 'Created'),
             'changed' => Module::t('module', 'Changed'),
+            'receipt_number' => Module::t('module', 'Receipt Number'),
+            'receipt_date' => Module::t('module', 'Receipt Date'),
+            't_creditor_id' => Module::t('module', 'T Id Creditor'),
+            'm_debtor_id' => Module::t('module', 'M Id Debtor'),
+            'wage_amount' => Module::t('module', 'Wage'),
+            'wage_type' => Module::t('module', 'Type') . ' ' . Yii::t('app', 'Wage'),
             'iban' => Module::t('module', 'Shaba Number'),
         ];
     }
@@ -178,6 +198,14 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
         $employeeUser = EmployeeBranchUser::find()->andWhere(['user_id' => $this->user_id])->one();
         if ($employeeUser === null) {
             $this->error_msg = 'متاسفانه اطلاعات پرسنلی شما ثبت نشده است.';
+            return false;
+        }
+        if (!$employeeUser->shaba) {
+            $this->error_msg = 'متاسفانه اطلاعات شبا شما ثبت نشده است.';
+            return false;
+        }
+        if (!$employeeUser->account_id) {
+            $this->error_msg = 'متاسفانه اطلاعات حساب تفضیل شما ثبت نشده است.';
             return false;
         }
 
@@ -256,6 +284,26 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
     }
 
 
+    /**
+     * @return bool
+     */
+    public function sendToMultiPayList(): bool
+    {
+        $this->status_transfer_to_multi_pay = true;
+        $this->status = self::STATUS_MULTI_PAY_LIST;
+        return $this->save(false);
+    }
+
+    /**
+     * @return bool
+     */
+    public function removeFromMultiPayList(): bool
+    {
+        $this->status_transfer_to_multi_pay = false;
+        $this->status = self::STATUS_WAIT_CONFIRM;
+        return $this->save(false);
+    }
+
     /*
     * حذف منطقی
     */
@@ -315,9 +363,10 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
+            'wageBehavior' => WageBehavior::class,
             [
                 'class' => LogBehavior::class,
-                'ownerClassName' => self::class,
+                'ownerClassName' => 'backend\models\AdvanceMoney',
                 'saveAfterInsert' => true
             ],
             [
@@ -332,8 +381,9 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
                     'iban' => 'String',
                     'model_class' => 'String',
                     'model_id' => 'Integer',
+                    'status_transfer_to_multi_pay' => "Boolean",
+                    'documentsArray' => "Any"
                 ],
-
             ],
         ];
     }

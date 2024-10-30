@@ -17,7 +17,7 @@ class HrisEmployeePanelMenuItems
 
         return [
             [
-                'label' => Module::t('module', 'Home') . ' ' . Module::t('module', 'HR'),
+                'label' => Module::t('module', 'Home') ,
                 'url' => ["/$moduleId/employee-profile/index"],
                 'group' => 'dashboard',
                 'level' => 'first-level',
@@ -90,7 +90,7 @@ class HrisEmployeePanelMenuItems
             [
                 'label' => 'سایر',
                 'group' => 'Others',
-                // 'icon' => 'fa fa-table',
+                'icon' => 'fa fa-table',
                 'iconWidget' => 'ph:grid-four-bold',
                 'iconWidgetClass' => 'font-24',
                 'level' => 'first-level',

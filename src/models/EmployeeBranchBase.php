@@ -260,7 +260,7 @@ class EmployeeBranchBase extends ActiveRecord
             ],
             [
                 'class' => LogBehavior::class,
-                'ownerClassName' => self::class,
+                'ownerClassName' => 'backend\modules\employee\models\EmployeeBranch',
                 'saveAfterInsert' => true,
                 'excludeAttribute' => ['changed', 'update_id'],
             ],

@@ -136,60 +136,55 @@ class AdvanceMoneyController extends Controller
      * @param $id
      * @return array|string
      * @throws NotFoundHttpException
-     * @throws \yii\base\ExitException
+     * @throws yii\base\ExitException
      */
     public function actionConfirm($id)
     {
         $model = $this->findModel($id);
         $model->setScenario(AdvanceMoney::SCENARIO_CONFIRM);
+        $model->m_debtor_id = Module::getInstance()->settings::get('m_debtor_advance_money');
+        $model->receipt_date = Yii::$app->jdate->date("Y/m/d");
         if (!$model->canConfirm()) {
-            throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
+            throw new NotFoundHttpException($model->error_msg);
         }
-        $operation = new Operation();
-        $operation->setScenario(Operation::SCENARIO_PAYMENT_TO_CUSTOMER);
-        $operation->price = (int)$model->amount;
-        if ($operation->load(Yii::$app->request->post()) && $operation->validate()) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            $response = ['success' => false, 'msg' => Module::t('module', 'Error In Save Info')];
-
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $result = ['success' => false, 'msg' => Yii::t('app', 'Error In Save Info')];
             $transaction = \Yii::$app->db->beginTransaction();
             try {
-                $flag = $operation->saveDocument(Document::TYPE_PAYMENT_TO_CUSTOMER, $operation->serial);
-                $model->doc_id = $operation->document->id;
-                $model->status = AdvanceMoney::STATUS_CONFIRM;
-                $flag = $flag && $model->save();
 
+                $flag = $model->confirm();
+                $flag = $flag && $model->saveDocument();
                 if ($flag) {
                     $transaction->commit();
-                    $response = [
+                    $result = [
                         'success' => true,
-                        'msg' => Module::t('module', 'Item Confirmed')
+                        'msg' => Yii::t('app', 'Item Confirmed')
                     ];
+
+                    if ($model->btn_type == 'save') {
+                        $result['hideModal'] = true;
+                    } else {
+                        $result['redirect'] = true;
+                        $result['url'] = Url::to(['/accounting/document/view', 'id' => $model->document->id]);
+                    }
                 } else {
                     $transaction->rollBack();
+
                 }
             } catch (\Exception $e) {
                 $transaction->rollBack();
-                Yii::error($e->getMessage() . $e->getTraceAsString(), __METHOD__ . ':' . __LINE__);
-                $response = [
+                $result = [
                     'success' => false,
                     'msg' => $e->getMessage()
                 ];
             }
 
-
-            return $response;
+            return $this->asJson($result);
         }
+
         $this->performAjaxValidation($model);
-        $operation->date = Yii::$app->jdf->jdate("Y/m/d");
-        $operation->des = $model->comment . " - درخواست مساعده #" . $model->id;
         return $this->renderAjax('_confirm', [
             'model' => $model,
-            'operation' => $operation,
-            'wageTypes' => Operation::itemAlias('WageType'),
-            'getAccountUrl' => Url::to(['/account-definite/find', 'level' => AccountDefinite::LEVEL_DEFINITE, 'is_account' => 1]),
-            'toList' => Account::itemAlias('Customer', null, $model->user->customer->id),
-            'fromList' => Account::itemAlias('BankOrCashOrPublic')
         ]);
     }
 

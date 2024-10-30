@@ -32,36 +32,45 @@ class HrisAdminPanelMenuItems
                 'url' => ["/$moduleId"],
             ],
             [
-                'label' => 'اطلاعات اولیه',
-                'iconWidget' => 'ph:database-bold',
-                'icon' => 'far fa-layer-group',
-                'group' => 'GeneralInfo',
+                'label' => 'تنظیمات',
+                'iconWidget' => 'ph:settings-bold',
+                'icon' => 'far fa-cog',
+                'group' => 'GeneralSettings',
                 'level' => "first-level",
                 'items' => [
                     [
                         'label' => Module::t('module', "Salary Years Settings"),
                         'icon' => 'far fa-layer-group',
                         'url' => ["/$moduleId/employee-branch/year-setting"],
-                        'group' => 'GeneralInfo',
+                        'group' => 'GeneralSettings',
                     ],
                     [
                         'label' => Module::t('module', 'Rate Of Year Salaries'),
                         'icon' => 'far fa-layer-group',
                         'url' => ["/$moduleId/rate-of-year-salary/index"],
-                        'group' => 'GeneralInfo',
+                        'group' => 'GeneralSettings',
                     ],
                     [
                         'label' => Module::t('module', "Salary Insurances"),
                         'icon' => 'far fa-hashtag',
                         'url' => ["/$moduleId/salary-insurance/index"],
-                        'group' => 'GeneralInfo',
+                        'group' => 'GeneralSettings',
                     ],
                     [
                         'label' => Module::t('module', "Workshop Insurances"),
                         'icon' => 'far fa-briefcase',
                         'url' => ["/$moduleId/workshop-insurance/index"],
-                        'group' => 'GeneralInfo',
+                        'group' => 'GeneralSettings',
                     ],
+                ]
+            ],
+            [
+                'label' => 'اطلاعات',
+                'iconWidget' => 'ph:database-bold',
+                'icon' => 'far fa-layer-group',
+                'group' => 'GeneralInfo',
+                'level' => "first-level",
+                'items' => [
                     [
                         'label' => Module::t('module', "Contract Templates"),
                         'icon' => 'far fa-file-contract',
@@ -204,7 +213,7 @@ class HrisAdminPanelMenuItems
                 'level' => 'first-level'
             ],
             [
-                'label' => 'مدیریت درخواست مرخصی',
+                'label' => 'درخواست مرخصی',
                 'group' => 'request-leave-manage',
                 'level' => 'first-level',
                 'icon' => 'fa fa-user',

@@ -1043,7 +1043,7 @@ class SalaryPeriodItemsBase extends \yii\db\ActiveRecord
             ],
             [
                 'class' => LogBehavior::class,
-                'ownerClassName' => SalaryPeriodItems::class,
+                'ownerClassName' => 'backend\modules\employee\models\SalaryPeriodItems',
                 'saveAfterInsert' => true,
                 'savePostDataAfterInsert' => true,
                 'savePostDataAfterUpdate' => true,

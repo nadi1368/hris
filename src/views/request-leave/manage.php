@@ -10,7 +10,7 @@ $this->title = Module::t('module', 'Requests');
 $this->params['breadcrumbs'][] = $this->title;
 
 echo $this->renderFile('@hesabro/hris/views/layouts/_requests_tabs.php', [
-    'content' => $this->re('_manage', [
+    'content' => $this->render('_manage', [
         'searchModel' => $searchModel,
         'dataProvider' => $dataProvider
     ])

@@ -414,7 +414,7 @@ class ComfortBase extends ActiveRecord
             ],
             [
                 'class' => LogBehavior::class,
-                'ownerClassName' => self::class,
+                'ownerClassName' => 'backend\modules\employee\models\Comfort',
                 'saveAfterInsert' => true
             ],
             [

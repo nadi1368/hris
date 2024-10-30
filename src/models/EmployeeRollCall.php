@@ -153,7 +153,7 @@ class EmployeeRollCall extends \yii\db\ActiveRecord
             ],
             [
                 'class' => LogBehavior::class,
-                'ownerClassName' => self::class,
+                'ownerClassName' => 'backend\modules\employee\models\EmployeeRollCall',
                 'saveAfterInsert' => true
             ]
         ];
