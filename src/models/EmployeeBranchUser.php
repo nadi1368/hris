@@ -196,9 +196,12 @@ class EmployeeBranchUser extends EmployeeBranchUserBase implements SendAutoComme
 
             if (!is_array($value)) {
                 return [
-                    $mainValue ?
-                        Module::t('module', 'Old Value',) . ": $value" :
-                        Module::t('module', 'Pending Value') . ": $value",
+                    implode('<br />', [
+                        Module::t('module', 'Edited by employee'),
+                        $mainValue ?
+                            Module::t('module', 'Old Value',) . ": $value" :
+                            Module::t('module', 'Pending Value') . ": $value",
+                    ]),
                     ['class' => 'profile-input-hint']
                 ];
             }

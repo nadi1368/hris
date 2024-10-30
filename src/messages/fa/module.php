@@ -377,5 +377,7 @@ return [
     'Read More' => 'جزئیات بیشتر',
     'Accept And Update Information' => 'تایید و تغییر اطلاعات',
     'Add' => 'افزودن',
-    'Remove' => 'حذف'
+    'Remove' => 'حذف',
+    'Create Letter Template' => 'ایجاد نمونه نامه',
+    'Edited by employee' => 'ویرایش شده توسط کارمند'
 ];

@@ -6,7 +6,6 @@ use hesabro\hris\models\SalaryInsurance;
 use hesabro\helpers\widgets\DynamicFormWidget;
 use hesabro\hris\Module;
 use yii\bootstrap4\ActiveForm;
-use common\models\Customer;
 use yii\web\View;
 use yii\widgets\MaskedInput;
 
@@ -90,19 +89,19 @@ $scenarioAttributes = $model->scenarios()[$model->scenario] ?? [];
             <div class="row">
                 <div class="col-12 col-md-4">
                     <?= $form->field($model, 'first_name')
-                        ->textInput(['maxlength' => true, 'value' => $model->getAttributeValue('first_name', $isAdmin)])
+                        ->textInput(['maxlength' => true, 'value' => $model->getAttributeValue('first_name', $isAdmin), 'class' => 'form-control' . ($model->hasPendingData('first_name') ? ' border-warning' : '')])
                         ->hint(...$model->getPendingDataHint('first_name', $isAdmin)) ?>
                 </div>
 
                 <div class="col-12 col-md-4">
                     <?= $form->field($model, 'last_name')
-                        ->textInput(['maxlength' => true, 'value' => $model->getAttributeValue('last_name', $isAdmin)])
+                        ->textInput(['maxlength' => true, 'value' => $model->getAttributeValue('last_name', $isAdmin), 'class' => 'form-control' . ($model->hasPendingData('last_name') ? ' border-warning' : '')])
                         ->hint(...$model->getPendingDataHint('last_name', $isAdmin)) ?>
                 </div>
 
                 <div class="col-12 col-md-4">
                     <?= $form->field($model, 'father_name')
-                        ->textInput(['maxlength' => true, 'value' => $model->getAttributeValue('father_name', $isAdmin)])
+                        ->textInput(['maxlength' => true, 'value' => $model->getAttributeValue('father_name', $isAdmin), 'class' => 'form-control' . ($model->hasPendingData('father_name') ? ' border-warning' : '')])
                         ->hint(...$model->getPendingDataHint('father_name', $isAdmin)) ?>
                 </div>
 
@@ -113,14 +112,15 @@ $scenarioAttributes = $model->scenarios()[$model->scenario] ?? [];
                             [
                                 'id' => 'sex-select',
                                 'prompt' => Module::t('module', 'Select...'),
-                                'value' => $model->getAttributeValue('sex', $isAdmin)
+                                'value' => $model->getAttributeValue('sex', $isAdmin),
+                                'class' => 'form-control' . ($model->hasPendingData('sex') ? ' border-warning' : '')
                             ]
                         )->hint(...$model->getPendingDataHint('sex', $isAdmin)) ?>
                 </div>
 
                 <div class="col-12 col-md-4">
                     <?= $form->field($model, 'nationalCode')
-                        ->textInput(['maxlength' => true, 'value' => $model->getAttributeValue('nationalCode', $isAdmin)])
+                        ->textInput(['maxlength' => true, 'value' => $model->getAttributeValue('nationalCode', $isAdmin), 'class' => 'form-control' . ($model->hasPendingData('nationalCode') ? ' border-warning' : '')])
                         ->hint(...$model->getPendingDataHint('nationalCode', $isAdmin)) ?>
                 </div>
 
@@ -132,7 +132,8 @@ $scenarioAttributes = $model->scenarios()[$model->scenario] ?? [];
                                 'value' => $model->getAttributeValue('birthday', $isAdmin),
                                 'id' => "employeebranchuser-birthday",
                                 'autocomplete' => 'off'
-                            ]
+                            ],
+                            'class' => 'form-control' . ($model->hasPendingData('birthday') ? ' border-warning' : '')
                         ])->hint(...$model->getPendingDataHint('birthday', $isAdmin)) ?>
                 </div>
             </div>
@@ -144,14 +145,15 @@ $scenarioAttributes = $model->scenarios()[$model->scenario] ?? [];
                     Module::getInstance()->user::itemAlias('National'),
                     [
                         'prompt' => Module::t('module', "Select"),
-                        'value' => $model->getAttributeValue('national', $isAdmin)
+                        'value' => $model->getAttributeValue('national', $isAdmin),
+                        'class' => 'form-control' . ($model->hasPendingData('national') ? ' border-warning' : '')
                     ]
                 )->hint(...$model->getPendingDataHint('national', $isAdmin)) ?>
         </div>
 
         <div class="col-12 col-md-3">
             <?= $form->field($model, 'sh_number')
-                ->textInput(['maxlength' => true, 'value' => $model->getAttributeValue('sh_number', $isAdmin)])
+                ->textInput(['maxlength' => true, 'value' => $model->getAttributeValue('sh_number', $isAdmin), 'class' => 'form-control' . ($model->hasPendingData('sh_number') ? ' border-warning' : '')])
                 ->hint(...$model->getPendingDataHint('sh_number', $isAdmin)) ?>
         </div>
 
@@ -163,13 +165,14 @@ $scenarioAttributes = $model->scenarios()[$model->scenario] ?? [];
                         'value' => $model->getAttributeValue('issue_date', $isAdmin),
                         'id' => "employeebranchuser-issue_date",
                         'autocomplete' => 'off'
-                    ]
+                    ],
+                    'class' => 'form-control' . ($model->hasPendingData('issue_date') ? ' border-warning' : '')
                 ])->hint(...$model->getPendingDataHint('issue_date', $isAdmin)) ?>
         </div>
 
         <div class="col-12 col-md-3">
             <?= $form->field($model, 'issue_place')
-                ->textInput(['maxlength' => true, 'value' => $model->getAttributeValue('issue_place', $isAdmin)])
+                ->textInput(['maxlength' => true, 'value' => $model->getAttributeValue('issue_place', $isAdmin), 'class' => 'form-control' . ($model->hasPendingData('issue_place') ? ' border-warning' : '')])
                 ->hint(...$model->getPendingDataHint('issue_place', $isAdmin)) ?>
         </div>
 
@@ -179,7 +182,8 @@ $scenarioAttributes = $model->scenarios()[$model->scenario] ?? [];
                     EmployeeBranchUser::itemAlias('education'),
                     [
                         'prompt' => Module::t('module', 'Select...'),
-                        'value' => $model->getAttributeValue('education', $isAdmin)
+                        'value' => $model->getAttributeValue('education', $isAdmin),
+                        'class' => 'form-control' . ($model->hasPendingData('education') ? ' border-warning' : '')
                     ]
                 )->hint(...$model->getPendingDataHint('education', $isAdmin)) ?>
         </div>
@@ -191,7 +195,8 @@ $scenarioAttributes = $model->scenarios()[$model->scenario] ?? [];
                     [
                         'id' => 'marital-select',
                         'prompt' => Module::t('module', 'Select...'),
-                        'value' => $model->getAttributeValue('marital', $isAdmin)
+                        'value' => $model->getAttributeValue('marital', $isAdmin),
+                        'class' => 'form-control' . ($model->hasPendingData('marital') ? ' border-warning' : '')
                     ]
                 )->hint(...$model->getPendingDataHint('marital', $isAdmin)) ?>
         </div>
@@ -204,13 +209,14 @@ $scenarioAttributes = $model->scenarios()[$model->scenario] ?? [];
                         'value' => $model->getAttributeValue('date_of_marriage', $isAdmin),
                         'id' => "employeebranchuser-date_of_marriage",
                         'autocomplete' => 'off'
-                    ]
+                    ],
+                    'class' => 'form-control' . ($model->hasPendingData('date_of_marriage') ? ' border-warning' : '')
                 ])->hint(...$model->getPendingDataHint('date_of_marriage', $isAdmin)) ?>
         </div>
 
         <div id="childCount" class="col-12 col-md-3 <?= $marriageClass ?>">
             <?= $form->field($model, 'child_count')
-                ->textInput(['type' => 'number', 'value' => $model->getAttributeValue('child_count', $isAdmin)])
+                ->textInput(['type' => 'number', 'value' => $model->getAttributeValue('child_count', $isAdmin), 'class' => 'form-control' . ($model->hasPendingData('child_count') ? ' border-warning' : '')])
                 ->hint(...$model->getPendingDataHint('child_count', $isAdmin)) ?>
         </div>
 
@@ -228,7 +234,8 @@ $scenarioAttributes = $model->scenarios()[$model->scenario] ?? [];
             <?= $form->field($model, 'insurance_history_month_count')
                 ->textInput([
                     'type' => 'number',
-                    'value' => $model->getAttributeValue('insurance_history_month_count', $isAdmin)
+                    'value' => $model->getAttributeValue('insurance_history_month_count', $isAdmin),
+                    'class' => 'form-control' . ($model->hasPendingData('insurance_history_month_count') ? ' border-warning' : '')
                 ])->hint(...$model->getPendingDataHint('insurance_history_month_count', $isAdmin)) ?>
         </div>
 
@@ -236,7 +243,8 @@ $scenarioAttributes = $model->scenarios()[$model->scenario] ?? [];
             <?= $form->field($model, 'work_history_day_count')
                 ->textInput([
                     'type' => 'number',
-                    'value' => $model->getAttributeValue('work_history_day_count', $isAdmin)
+                    'value' => $model->getAttributeValue('work_history_day_count', $isAdmin),
+                    'class' => 'form-control' . ($model->hasPendingData('work_history_day_count') ? ' border-warning' : '')
                 ])->hint(...$model->getPendingDataHint('work_history_day_count', $isAdmin)) ?>
         </div>
 
@@ -275,7 +283,8 @@ $scenarioAttributes = $model->scenarios()[$model->scenario] ?? [];
             <?= $form->field($model, 'email')
                 ->textInput([
                     'type' => 'email',
-                    'value' => $model->getAttributeValue('email', $isAdmin)
+                    'value' => $model->getAttributeValue('email', $isAdmin),
+                    'class' => 'form-control' . ($model->hasPendingData('email') ? ' border-warning' : '')
                 ])->label(Module::t('module', 'Email') . ' ' . Module::t('module', 'Organizational'))
                 ->hint(...$model->getPendingDataHint('email', $isAdmin)) ?>
         </div>
@@ -294,7 +303,7 @@ $scenarioAttributes = $model->scenarios()[$model->scenario] ?? [];
 
         <div class="col-12">
             <?= $form->field($model, 'employee_address')
-                ->textarea(['rows' => 1, 'value' => $model->getAttributeValue('employee_address', $isAdmin)])
+                ->textarea(['rows' => 1, 'value' => $model->getAttributeValue('employee_address', $isAdmin), 'class' => 'form-control' . ($model->hasPendingData('employee_address') ? ' border-warning' : '')])
                 ->label(Module::t('module', 'Address'))
                 ->hint(...$model->getPendingDataHint('employee_address', $isAdmin)) ?>
         </div>
@@ -333,7 +342,7 @@ $scenarioAttributes = $model->scenarios()[$model->scenario] ?? [];
 
                         <div class="col-12 col-md-3">
                             <?= $form->field($child, "[$childIndex]name")
-                                ->textInput(['value' => $model->getAttributeValue("children.$childIndex.name", $isAdmin)])
+                                ->textInput(['value' => $model->getAttributeValue("children.$childIndex.name", $isAdmin), ])
                                 ->hint(...$child->getPendingDataHint("children.$childIndex.name", $model, $isAdmin)) ?>
                         </div>
                         <div class="col-12 col-md-3">

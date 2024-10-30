@@ -81,6 +81,8 @@ class EmployeeExperienceBase extends Model
         if ($this->deleted || $this->added) {
             return [
                 implode(' ', [
+                    Module::t('module', 'Edited by employee'),
+                    '<br />',
                     Module::t('module', 'Pending Value'),
                     Module::t('module', $this->deleted ? 'Delete' : 'Add')
                 ]),
