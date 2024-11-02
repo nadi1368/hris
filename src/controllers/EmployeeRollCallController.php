@@ -2,9 +2,8 @@
 
 namespace hesabro\hris\controllers;
 
-use backend\models\UploadExcelSearch;
-use backend\modules\excel\models\UploadFormExcel;
-use common\models\UploadExcel;
+use hesabro\helpers\models\UploadExcelSearch;
+use hesabro\helpers\models\UploadExcel;
 use hesabro\helpers\validators\PersianValidator;
 use hesabro\hris\models\EmployeeBranchUser;
 use hesabro\hris\models\EmployeeRollCall;

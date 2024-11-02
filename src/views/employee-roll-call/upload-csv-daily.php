@@ -3,7 +3,7 @@
 use kartik\file\FileInput;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
-use common\models\UploadExcel;
+use hesabro\helpers\models\UploadExcel;
 use hesabro\hris\Module;
 use yii\widgets\MaskedInput;
 
@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]) ?>
             </div>
             <div class="col-md-12">
-                <?= $form->field($uploadForm, "excelFile")->fileInput() ?>
+                <?= $form->field($uploadForm, "file_name")->fileInput() ?>
             </div>
         </div>
 
