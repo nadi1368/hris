@@ -317,7 +317,7 @@ class SalaryPeriodBase extends \yii\db\ActiveRecord
             }
             foreach ($this->getSalaryPeriodItems()->all() as $item) {
                 /** @var $item SalaryPeriodItems * */
-                if (!$item->employee->canCreateSalaryPayment()) {
+                if (!$item->employee->canConfirmSalaryPayment(Yii::$app->jdate->date("Y/m/d", $this->end_date))) {
                     $this->error_msq = $item->user->fullName . ': ' . $item->employee->error_msg;
                     return false;
                 }
@@ -357,7 +357,7 @@ class SalaryPeriodBase extends \yii\db\ActiveRecord
 
             foreach ($this->getSalaryPeriodItems()->all() as $item) {
                 /** @var $item SalaryPeriodItems * */
-                if (!$item->employee->canCreateSalaryPayment()) {
+                if (!$item->employee->canConfirmSalaryPayment(Yii::$app->jdate->date("Y/m/d", $this->end_date))) {
                     $this->error_msq = $item->user->fullName . ': ' . $item->employee->error_msg;
                     return false;
                 }

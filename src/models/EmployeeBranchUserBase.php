@@ -539,6 +539,31 @@ class EmployeeBranchUserBase extends ActiveRecord
         return true;
     }
 
+
+
+    public function canConfirmSalaryPayment($endDate)
+    {
+        if (!empty($this->end_work) && $this->end_work < $endDate) {
+            $this->error_msg = 'این کارمند ترک کار شده است.';
+            return false;
+        }
+        if ($this->disable_show_on_salary_list) {
+            $this->error_msg = 'این کارمند غیر فعال شده است.';
+            return false;
+        }
+
+        if (!$this->account_id) {
+            $this->error_msg = 'حساب تفضیل کارمند ست نشده است.لطفا از قسمت بروزرسانی ثبت نمایید';
+            return false;
+        }
+        if (empty($this->job_code)) {
+            $this->error_msg = 'کد شغلی کارمند ست نشده است.';
+            return false;
+        }
+
+        return true;
+    }
+
     public function canCreateRewardPayment()
     {
 
