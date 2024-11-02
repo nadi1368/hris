@@ -35,6 +35,10 @@ class EmployeeRollCall extends \yii\db\ActiveRecord
 {
 
     const SCENARIO_INSERT = 'insert';
+
+
+    const OLD_CLASS_NAME = 'backend\modules\employee\models\EmployeeRollCall';
+
     public EmployeeBranchUser $employee;
 
     /**
@@ -153,7 +157,7 @@ class EmployeeRollCall extends \yii\db\ActiveRecord
             ],
             [
                 'class' => LogBehavior::class,
-                'ownerClassName' => 'backend\modules\employee\models\EmployeeRollCall',
+                'ownerClassName' => self::OLD_CLASS_NAME,
                 'saveAfterInsert' => true
             ]
         ];

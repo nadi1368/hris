@@ -1,7 +1,7 @@
 <?php
 
-use backend\modules\employee\models\SalaryPeriod;
-use backend\modules\employee\models\SalaryPeriodItems;
+use hesabro\hris\models\SalaryPeriod;
+use hesabro\hris\models\SalaryPeriodItems;
 use hesabro\hris\bundles\PrintAsset;
 use hesabro\hris\Module;
 use yii\bootstrap4\Html;

@@ -237,7 +237,7 @@ $operationItems[] = [
 ];
 $operationItems[] = [
     'label' => Html::tag('span', '', ['class' => 'fa fa-history']) . ' ' . Module::t('module', 'Log'),
-    'url' => ['/mongo/log/view-ajax', 'modelId' => $salaryPeriod->id, 'modelClass' => get_class($salaryPeriod)],
+    'url' => ['/mongo/log/view-ajax', 'modelId' => $salaryPeriod->id, 'modelClass' => SalaryPeriod::OLD_CLASS_NAME],
     'encode' => false,
     'linkOptions' => [
         'class' => 'showModalButton',

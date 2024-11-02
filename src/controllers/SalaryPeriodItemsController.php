@@ -789,7 +789,7 @@ class SalaryPeriodItemsController extends Controller
                 $totalBalance,
                 $model->bank_name
             ];
-            MGLogs::saveManual(SalaryPeriod::class, $model->id, $rows);
+            MGLogs::saveManual(SalaryPeriod::OLD_CLASS_NAME, $model->id, $rows);
             return [
                 'success' => true,
                 'msg' => Module::t('module', "Item Created"),
@@ -900,7 +900,7 @@ class SalaryPeriodItemsController extends Controller
             }
             $fileId = Yii::$app->jdf->jdate("ymd") . '00' . $model->file_number;
             $fileName = 'IR' . $model->shaba . $fileId . '.txt';
-            MGLogs::saveManual(SalaryPeriod::class, $model->id, $rows);
+            MGLogs::saveManual(SalaryPeriod::OLD_CLASS_NAME, $model->id, $rows);
             return [
                 'success' => true,
                 'msg' => Module::t('module', "Item Created"),
@@ -1121,7 +1121,7 @@ class SalaryPeriodItemsController extends Controller
         ];
         $fileName = 'WH' . Yii::$app->jdf->jdate("Ym", $model->end_date) . '.txt';
         $fileNameHeader = 'WK' . Yii::$app->jdf->jdate("Ym", $model->end_date) . '.txt';
-        MGLogs::saveManual(SalaryPeriod::class, $model->id, $rows);
+        MGLogs::saveManual(SalaryPeriod::OLD_CLASS_NAME, $model->id, $rows);
         return $this->renderAjax('_excel-tax-send-to-native', [
             'model' => $model,
             'rows' => json_encode($rows),
@@ -1570,7 +1570,7 @@ class SalaryPeriodItemsController extends Controller
                     }
                 }
             }
-            MGLogs::saveManual(SalaryPeriod::class, $model->id, $rows);
+            MGLogs::saveManual(SalaryPeriod::OLD_CLASS_NAME, $model->id, $rows);
             $dataProvider = new ArrayDataProvider([
                 'allModels' => $rows,
             ]);

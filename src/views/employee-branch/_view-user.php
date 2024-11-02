@@ -108,7 +108,7 @@ use yii\widgets\Pjax;
             ]) : '' ?>
         <?= Html::a('اطلاعات کاربری', ['/user-main/view-ajax', 'id' => $model->user_id], ['class' => 'btn btn-success showModalButton', 'data-pjax' => '0', 'title' => $model->user->fullName]) ?>
         <?= Html::a('دروه حقوق های قبلی', ['salary-period-items/user', 'id' => $model->user_id], ['class' => 'btn btn-info', 'title' => 'مشاهده دروه حقوق های قبلی این کارمند']) ?>
-        <?= Html::a(Module::t('module', 'Log'), ['/mongo/log/view-ajax', 'modelId' => $model->user_id, 'modelClass' => EmployeeBranchUser::class], ['class' => 'btn btn-secondary showModalButton', 'data-pjax' => '0', 'title' => Module::t('module', 'Log')]) ?>
+        <?= Html::a(Module::t('module', 'Log'), ['/mongo/log/view-ajax', 'modelId' => $model->user_id, 'modelClass' => EmployeeBranchUser::OLD_CLASS_NAME], ['class' => 'btn btn-secondary showModalButton', 'data-pjax' => '0', 'title' => Module::t('module', 'Log')]) ?>
     </div>
 </div>
 <?php Pjax::end() ?>

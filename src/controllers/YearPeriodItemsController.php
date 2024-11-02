@@ -674,7 +674,7 @@ class YearPeriodItemsController extends Controller
             }
             $fileId = Yii::$app->jdf->jdate("ymd") . '00' . $model->file_number;
             $fileName = 'IR' . $model->shaba . $fileId . '.txt';
-            MGLogs::saveManual(SalaryPeriod::class, $model->id, $rows);
+            MGLogs::saveManual(SalaryPeriod::OLD_CLASS_NAME, $model->id, $rows);
             return [
                 'success' => true,
                 'msg' => Module::t('module', "Item Created"),
@@ -1042,7 +1042,7 @@ class YearPeriodItemsController extends Controller
                 $totalBalance,
                 $model->bank_name
             ];
-            MGLogs::saveManual(SalaryPeriod::class, $model->id, $rows);
+            MGLogs::saveManual(SalaryPeriod::OLD_CLASS_NAME, $model->id, $rows);
             return [
                 'success' => true,
                 'msg' => Module::t('module', "Item Created"),

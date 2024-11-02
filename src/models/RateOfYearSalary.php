@@ -32,6 +32,9 @@ class RateOfYearSalary extends \yii\db\ActiveRecord
 
     const SCENARIO_CREATE = 'create';
 
+
+    const OLD_CLASS_NAME = 'backend\modules\employee\models\RateOfYearSalary';
+
     /**
      * {@inheritdoc}
      */
@@ -157,7 +160,7 @@ class RateOfYearSalary extends \yii\db\ActiveRecord
             ],
             [
                 'class' => LogBehavior::class,
-                'ownerClassName' => 'backend\modules\employee\models\RateOfYearSalary',
+                'ownerClassName' => self::OLD_CLASS_NAME,
                 'saveAfterInsert' => true
             ],
         ];

@@ -184,7 +184,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ];
                             $items[] = [
                                 'label' => Html::tag('span', ' ', ['class' => 'fa fa-history']) . ' ' . Module::t('module', 'Log'),
-                                'url' => ['/mongo/log/view-ajax', 'modelId' => $model->user_id, 'modelClass' => EmployeeBranchUser::class],
+                                'url' => ['/mongo/log/view-ajax', 'modelId' => $model->user_id, 'modelClass' => EmployeeBranchUser::OLD_CLASS_NAME],
                                 'encode' => false,
                                 'linkOptions' => [
                                     'title' => Module::t('module', 'Log'),

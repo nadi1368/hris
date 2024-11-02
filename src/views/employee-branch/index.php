@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                         'logs' => function ($url, $model, $key) {
                             return Html::a('<span class="fas fa-history text-info"></span>',
-                                ['/mongo/log/view-ajax', 'modelId' => $model->id, 'modelClass' => EmployeeBranch::class],
+                                ['/mongo/log/view-ajax', 'modelId' => $model->id, 'modelClass' => EmployeeBranch::OLD_CLASS_NAME],
                                 [
                                     'class' => 'text-secondary showModalButton',
                                     'title' => Module::t('module', 'Logs'),

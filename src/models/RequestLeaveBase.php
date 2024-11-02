@@ -59,6 +59,9 @@ class RequestLeaveBase extends \yii\db\ActiveRecord
 
     const MERIT_HOURLY_REQUESTS_PER_DAY = 4;
 
+
+    const OLD_CLASS_NAME = 'backend\modules\employee\models\RequestLeave';
+
     public $rejectDescription='';
 
     /**
@@ -459,7 +462,7 @@ class RequestLeaveBase extends \yii\db\ActiveRecord
             ],
             [
                 'class' => LogBehavior::class,
-                'ownerClassName' => 'backend\modules\employee\models\RequestLeave',
+                'ownerClassName' => self::OLD_CLASS_NAME,
                 'saveAfterInsert' => true
             ]
         ];

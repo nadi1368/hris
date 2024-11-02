@@ -98,7 +98,7 @@ class EmployeeContentBase extends ActiveRecord
         return [
             [
                 'class' => LogBehavior::class,
-                'ownerClassName' => 'backend\modules\employee\models\EmployeeContent',
+                'ownerClassName' => self::class,
                 'saveAfterInsert' => true,
             ],
             [
