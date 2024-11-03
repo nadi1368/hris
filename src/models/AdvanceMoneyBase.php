@@ -53,6 +53,9 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
 
     const validRequestCount = 3;
 
+
+    const OLD_CLASS_NAME = 'backend\models\AdvanceMoney';
+
     public $t_creditor_id, $m_debtor_id;
     public $error_msg = '';
 
@@ -359,14 +362,13 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
         return parent::beforeSave($insert);
     }
 
-
     public function behaviors()
     {
         return [
             'wageBehavior' => WageBehavior::class,
             [
                 'class' => LogBehavior::class,
-                'ownerClassName' => 'backend\models\AdvanceMoney',
+                'ownerClassName' => self::OLD_CLASS_NAME,
                 'saveAfterInsert' => true
             ],
             [

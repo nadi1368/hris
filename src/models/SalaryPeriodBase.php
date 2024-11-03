@@ -52,6 +52,9 @@ class SalaryPeriodBase extends \yii\db\ActiveRecord
     const SCENARIO_PAYMENT = "payment"; // پرداخت
     const SCENARIO_EXPORT_INSURANCE = "insurance"; // خروجی بیمه
 
+
+    const OLD_CLASS_NAME = 'backend\modules\employee\models\SalaryPeriod';
+
     public $disableStartDate = false;
 
     public $error_msq = '';
@@ -594,7 +597,7 @@ class SalaryPeriodBase extends \yii\db\ActiveRecord
         return [
             [
                 'class' => LogBehavior::class,
-                'ownerClassName' => 'backend\modules\employee\models\SalaryPeriod',
+                'ownerClassName' => self::OLD_CLASS_NAME,
                 'saveAfterInsert' => true
             ],
             [

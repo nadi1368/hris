@@ -159,7 +159,7 @@ use yii\helpers\Url;
                             ];
                             $items[] = [
                                 'label' => Html::tag('span', ' ', ['class' => 'fa fa-history']) . ' ' . Module::t('module', 'Log'),
-                                'url' => ['/mongo/log/view-ajax', 'modelId' => $model->id, 'modelClass' => SalaryPeriodItems::class],
+                                'url' => ['/mongo/log/view-ajax', 'modelId' => $model->id, 'modelClass' => SalaryPeriodItems::OLD_CLASS_NAME],
                                 'encode' => false,
                                 'linkOptions' => [
                                     'title' => Module::t('module', 'Log'),

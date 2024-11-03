@@ -1,8 +1,8 @@
 <?php
 
-use backend\modules\employee\models\SalaryItemsAddition;
-use backend\modules\employee\models\SalaryPeriod;
-use backend\modules\employee\models\SalaryPeriodItems;
+use hesabro\hris\models\SalaryItemsAddition;
+use hesabro\hris\models\SalaryPeriod;
+use hesabro\hris\models\SalaryPeriodItems;
 use hesabro\hris\Module;
 use yii\bootstrap4\Html;
 use yii\web\View;

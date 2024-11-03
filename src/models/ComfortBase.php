@@ -57,6 +57,10 @@ class ComfortBase extends ActiveRecord
 
     const SCENARIO_UPDATE = 'update';
 
+
+
+    const OLD_CLASS_NAME = 'backend\modules\employee\models\Comfort';
+
     public $users;
 
     public mixed $excluded_users = [];
@@ -414,7 +418,7 @@ class ComfortBase extends ActiveRecord
             ],
             [
                 'class' => LogBehavior::class,
-                'ownerClassName' => 'backend\modules\employee\models\Comfort',
+                'ownerClassName' => self::OLD_CLASS_NAME,
                 'saveAfterInsert' => true
             ],
             [

@@ -164,7 +164,7 @@ use yii\helpers\Url;
     ]) : ''
 ?>
 <?= Html::a(Module::t('module', 'Logs'),
-    ['/mongo/log/view-ajax', 'modelId' => $salaryPeriod->id, 'modelClass' => SalaryPeriod::class],
+    ['/mongo/log/view-ajax', 'modelId' => $salaryPeriod->id, 'modelClass' => SalaryPeriod::OLD_CLASS_NAME],
     [
         'class' => 'btn btn-secondary showModalButton ml-1 ',
         'title' => Module::t('module', 'Logs'),

@@ -178,7 +178,7 @@ Pjax::begin(['id' => 'pjax-advance-money'])
                             $items=$model->buttonDropdownDocument($items);
                             $items[] = [
                                 'label' => Html::tag('span', ' ', ['class' => 'fa fa-history']) . ' ' . Yii::t('app', 'Log'),
-                                'url' => ['/mongo/log/view-ajax', 'modelId' => $model->id, 'modelClass' => get_class($model)],
+                                'url' => ['/mongo/log/view-ajax', 'modelId' => $model->id, 'modelClass' => AdvanceMoney::OLD_CLASS_NAME],
                                 'encode' => false,
                                 'linkOptions' => [
                                     'title' => Yii::t('app', 'Log'),

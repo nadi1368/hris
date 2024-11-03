@@ -90,6 +90,9 @@ class SalaryItemsAdditionBase extends \yii\db\ActiveRecord
 
     const MERIT_HOURLY_REQUESTS_PER_DAY = 4;
 
+
+    const OLD_CLASS_NAME = 'backend\modules\employee\models\SalaryItemsAddition';
+
     public $error_msg;
 
     public $date;
@@ -652,7 +655,7 @@ class SalaryItemsAdditionBase extends \yii\db\ActiveRecord
             ],
             [
                 'class' => LogBehavior::class,
-                'ownerClassName' => 'backend\modules\employee\models\SalaryItemsAddition',
+                'ownerClassName' => self::OLD_CLASS_NAME,
                 'saveAfterInsert' => true
             ],
         ];

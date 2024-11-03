@@ -31,6 +31,8 @@ class EmployeeBranchBase extends ActiveRecord
     const STATUS_DELETED = 0;
 
 
+    const OLD_CLASS_NAME = 'backend\modules\employee\models\EmployeeBranch';
+
     public $user_ids;
 
     /**
@@ -260,7 +262,7 @@ class EmployeeBranchBase extends ActiveRecord
             ],
             [
                 'class' => LogBehavior::class,
-                'ownerClassName' => 'backend\modules\employee\models\EmployeeBranch',
+                'ownerClassName' => self::OLD_CLASS_NAME,
                 'saveAfterInsert' => true,
                 'excludeAttribute' => ['changed', 'update_id'],
             ],

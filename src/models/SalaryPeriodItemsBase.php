@@ -65,6 +65,7 @@ class SalaryPeriodItemsBase extends \yii\db\ActiveRecord
     const SCENARIO_CREATE_YEAR = 'create_year';
     const SCENARIO_UPDATE_YEAR = 'update_year';
 
+    const OLD_CLASS_NAME = 'backend\modules\employee\models\SalaryPeriodItems';
 
     public $hours_of_overtime_cost, $holiday_of_overtime_cost, $night_of_overtime_cost, $final_payment;
 
@@ -1043,7 +1044,7 @@ class SalaryPeriodItemsBase extends \yii\db\ActiveRecord
             ],
             [
                 'class' => LogBehavior::class,
-                'ownerClassName' => 'backend\modules\employee\models\SalaryPeriodItems',
+                'ownerClassName' => self::OLD_CLASS_NAME,
                 'saveAfterInsert' => true,
                 'savePostDataAfterInsert' => true,
                 'savePostDataAfterUpdate' => true,

@@ -2,6 +2,7 @@
 
 use common\models\UploadExcel;
 use hesabro\helpers\widgets\grid\GridView;
+use hesabro\hris\models\SalaryItemsAddition;
 use hesabro\hris\Module;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -74,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         'log' => function ($url, $model, $key) {
                             return Html::a('<span class="fas fa-history text-info"></span>',
-                                ['/mongo/log/view-ajax', 'modelId' => $model->id, 'modelClass' => get_class($model)],
+                                ['/mongo/log/view-ajax', 'modelId' => $model->id, 'modelClass' => SalaryItemsAddition::OLD_CLASS_NAME],
                                 [
                                     'class' => 'text-secondary showModalButton',
                                     'title' => Module::t('module', 'Logs'),

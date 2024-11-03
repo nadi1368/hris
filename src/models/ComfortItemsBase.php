@@ -56,6 +56,9 @@ class ComfortItemsBase extends \yii\db\ActiveRecord
 
     const SCENARIO_REVERT = 'revert';
 
+
+    const OLD_CLASS_NAME = 'backend\modules\employee\models\ComfortItems';
+
     const LOAN_INSTALLMENTS = [
         1, 2, 3
     ];
@@ -522,7 +525,7 @@ class ComfortItemsBase extends \yii\db\ActiveRecord
             ],
             [
                 'class' => LogBehavior::class,
-                'ownerClassName' => 'backend\modules\employee\models\ComfortItems',
+                'ownerClassName' => self::OLD_CLASS_NAME,
                 'saveAfterInsert' => true
             ],
             [

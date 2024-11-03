@@ -171,7 +171,7 @@ use yii\helpers\Url;
                         },
                         'log' => function ($url, $model, $key) {
                             return Html::a('<span class="fas fa-history text-info"></span>',
-                                ['/mongo/log/view-ajax', 'modelId' => $model->id, 'modelClass' => get_class($model)],
+                                ['/mongo/log/view-ajax', 'modelId' => $model->id, 'modelClass' => ComfortItems::OLD_CLASS_NAME],
                                 [
                                     'class' => 'text-secondary showModalButton',
                                     'title' => Module::t('module', 'Logs'),

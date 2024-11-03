@@ -175,7 +175,7 @@ class EmployeeRollCallController extends Controller
         if ($excelFile->status != UploadExcel::STATUS_ACTIVE) {
             throw new NotFoundHttpException('فایل در تاریخ مورد نظر ثبت شده است.اگر اشتباه ثبت شده.لطفا ابتدا فایل رو پاک نمایید.');
         }
-        $file = $excelFile->getStorageFile('excelFile')->one();
+        $file = $excelFile->getStorageFile('file_name')->one();
         $fileContent = $file->getFileContent();
         $tmpFileName = tempnam(sys_get_temp_dir(), '');
         file_put_contents(

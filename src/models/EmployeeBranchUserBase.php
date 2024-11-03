@@ -77,6 +77,9 @@ class EmployeeBranchUserBase extends ActiveRecord
         'education_picture', 'insurance_history', 'resume_file', 'military_doc'
     ];
 
+
+    const OLD_CLASS_NAME = 'backend\modules\employee\models\EmployeeBranchUser';
+
     public $delete_document_end_work = false;
 
     public $error_msg = '';
@@ -840,7 +843,7 @@ class EmployeeBranchUserBase extends ActiveRecord
             ],
             [
                 'class' => LogBehavior::class,
-                'ownerClassName' => 'backend\modules\employee\models\EmployeeBranchUser',
+                'ownerClassName' => self::OLD_CLASS_NAME,
                 'saveAfterInsert' => true,
                 'ownerPrimaryKey' => 'user_id',
             ],
