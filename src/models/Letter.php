@@ -2,7 +2,6 @@
 
 namespace hesabro\hris\models;
 
-use common\models\Indicator\Indicator;
 use hesabro\hris\Module;
 use Yii;
 
@@ -18,7 +17,7 @@ class Letter extends LetterBase
             }
 
             if ($this->employeeRequest->indicator_id) {
-                Indicator::findOne($this->employeeRequest->indicator_id)?->softDelete();
+                // Todo: Mota: Delete AuLetter After delete letter
             }
             $undo = $this->employeeRequest->pending();
             $transaction->commit();

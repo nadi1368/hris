@@ -379,5 +379,8 @@ return [
     'Add' => 'افزودن',
     'Remove' => 'حذف',
     'Create Letter Template' => 'ایجاد نمونه نامه',
-    'Edited by employee' => 'ویرایش شده توسط کارمند'
+    'Edited by employee' => 'ویرایش شده توسط کارمند',
+    'Letter Type' => 'نوع نامه',
+    'Create Letter In Automation System' => 'ایجاد نامه در سیستم اتوماسیون اداری',
+    'Optional' => 'اختیاری',
 ];

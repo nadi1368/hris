@@ -62,7 +62,7 @@ class EmployeeRequestBase extends ActiveRecord
 
     public mixed $reject_description = null;
 
-    public mixed $indicator_id = null;
+    public mixed $au_letter_id = null;
 
     // Base
 
@@ -106,7 +106,7 @@ class EmployeeRequestBase extends ActiveRecord
                     'contract_template_id' => 'Integer',
                     'description' => 'String',
                     'reject_description' => 'String',
-                    'indicator_id' => 'Integer'
+                    'au_letter_id' => 'Integer'
                 ],
             ],
             [

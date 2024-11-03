@@ -2,6 +2,7 @@
 
 namespace hesabro\hris\models;
 
+use hesabro\automation\models\AuLetter;
 use hesabro\helpers\traits\ModelHelper;
 use hesabro\hris\Module;
 use Yii;
@@ -111,11 +112,12 @@ class LetterBase extends Model
 
         try {
 
-            $indicator = $this->createIndicator();
-
-            if (!$indicator) {
-                $transaction->rollBack();
-                return false;
+            if ($this->contractTemplate->au_letter_type) {
+                $auLetter = $this->createAuLetter();
+                if (!$auLetter) {
+                    $transaction->rollBack();
+                    return false;
+                }
             }
 
             $this->employeeRequest->indicator_id = $indicator->id;
@@ -149,5 +151,18 @@ class LetterBase extends Model
             $transaction->rollBack();
             return false;
         }
+    }
+
+    public function createAuLetter(): AuLetter
+    {
+        $scenario = match ($this->contractTemplate->au_letter_type) {
+            AuLetter::TYPE_INPUT => AuLetter::SCENARIO_CREATE_INPUT,
+            AuLetter::TYPE_OUTPUT => AuLetter::SCENARIO_CREATE_OUTPUT,
+            AuLetter::TYPE_INTERNAL => AuLetter::SCENARIO_CREATE_INTERNAL,
+            AuLetter::TYPE_RECORD => AuLetter::SCENARIO_CREATE_RECORD,
+        };
+
+        $auLetter = new AuLetter(['scenario' => $scenario]);
+
     }
 }

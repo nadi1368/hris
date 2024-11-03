@@ -2,6 +2,8 @@
 
 namespace hesabro\hris\models;
 
+use hesabro\automation\models\AuLetter;
+use hesabro\helpers\behaviors\JsonAdditional;
 use hesabro\hris\Module;
 use Yii;
 use yii\behaviors\BlameableBehavior;
@@ -24,6 +26,7 @@ use yii\helpers\ArrayHelper;
  * @property int|null $updated_by
  * @property array $variables
  * @property string|null $typeText
+ * @property bool $isLetter
  */
 class ContractTemplatesBase extends \yii\db\ActiveRecord
 {
@@ -42,6 +45,10 @@ class ContractTemplatesBase extends \yii\db\ActiveRecord
 
     public $json_file;
 
+    // Additional Data
+
+    public $au_letter_type = null;
+
     /**
      * {@inheritdoc}
      */
@@ -59,6 +66,15 @@ class ContractTemplatesBase extends \yii\db\ActiveRecord
 			[
 				'class' => BlameableBehavior::class,
 			],
+            'JsonAdditional' => [
+                'class' => JsonAdditional::class,
+                'ownerClassName' => self::class,
+                'fieldAdditional' => 'additional_data',
+                'notSaveNull' => true,
+                'AdditionalDataProperty' => [
+                    'au_letter_type' => 'NullInteger'
+                ],
+            ],
 		];
 	}
 
@@ -75,6 +91,7 @@ class ContractTemplatesBase extends \yii\db\ActiveRecord
             ['type', 'in', 'range' => [self::TYPE_CONTRACT, self::TYPE_CUSTOMER, self::TYPE_LETTER]],
             //[['variables'], 'validateVariables'],
             [['json_file'], 'file', 'extensions' => 'json'],
+            [['au_letter_type'], 'in', 'range' => array_keys(AuLetter::itemAlias('Type'))],
         ];
     }
 
@@ -94,14 +111,25 @@ class ContractTemplatesBase extends \yii\db\ActiveRecord
             'created_by' => Module::t('module', 'Created By'),
             'updated_by' => Module::t('module', 'Updated By'),
             'signatures' => 'امضا کنندگان',
+            'au_letter_type' => Module::t('module', 'Letter Type')
         ];
+    }
+
+    public function attributeHints()
+    {
+        return array_merge(parent::attributeHints(), [
+            'au_letter_type' => implode(' ', [
+                Module::t('module', 'Create Letter In Automation System'),
+                '('.Module::t('module', 'Optional').')',
+            ])
+        ]);
     }
 
     public function scenarios()
     {
         $scenarios = parent::scenarios();
 
-        $scenarios[self::SCENARIO_CREATE] = ['id', 'title', 'type', 'description', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'];
+        $scenarios[self::SCENARIO_CREATE] = ['id', 'title', 'type', 'description', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by', 'au_letter_type'];
 
         return $scenarios;
     }
@@ -232,6 +260,11 @@ class ContractTemplatesBase extends \yii\db\ActiveRecord
     public function getTypeText(): ?string
     {
         return self::itemAlias('TypeText', $this->type) ?: 'Contract';
+    }
+
+    public function getIsLetter(): bool
+    {
+        return $this->type === self::TYPE_LETTER;
     }
 
 	public function afterFind()
