@@ -298,7 +298,7 @@ $workTimeText = $workTime ? $workTime . ' ' . Module::t('module', 'Day') : Modul
                         <?php foreach ($comforts as $index => $comfort): ?>
                             <li class="px-2 py-3"
                                 style="<?= $index < $comfortsLastIndex ? 'border-bottom: 1px solid #d1d5db;' : '' ?>">
-                                <a href="<?= Url::toRoute('comfort/index') ?>">
+                                <a href="<?= Url::toRoute('employee-comfort/index') ?>">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="d-flex align-items-center gap-3">
                                             <div class="d-flex align-items-center gap-1">
