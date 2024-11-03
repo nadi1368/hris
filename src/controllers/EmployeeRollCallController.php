@@ -38,7 +38,7 @@ class EmployeeRollCallController extends Controller
                     [
                         [
                             'allow' => true,
-                            'roles' => ['EmployeeBranch/RollCall'],
+                            'roles' => ['EmployeeBranch/RollCall', 'superadmin'],
                         ],
                     ]
             ]

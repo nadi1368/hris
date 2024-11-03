@@ -41,27 +41,27 @@ class ContractTemplatesController extends Controller
                     [
                         [
                             'allow' => true,
-                            'roles' => ['ContractTemplates/index'],
+                            'roles' => ['ContractTemplates/index', 'superadmin'],
                             'actions' => ['index', 'json-export', 'json-import']
                         ],
                         [
                             'allow' => true,
-                            'roles' => ['ContractTemplates/create'],
+                            'roles' => ['ContractTemplates/create', 'superadmin'],
                             'actions' => ['create']
                         ],
                         [
                             'allow' => true,
-                            'roles' => ['ContractTemplates/update'],
+                            'roles' => ['ContractTemplates/update', 'superadmin'],
                             'actions' => ['update']
                         ],
                         [
                             'allow' => true,
-                            'roles' => ['ContractTemplates/delete'],
+                            'roles' => ['ContractTemplates/delete', 'superadmin'],
                             'actions' => ['delete']
                         ],
                         [
                             'allow' => true,
-                            'roles' => ['ContractTemplates/view'],
+                            'roles' => ['ContractTemplates/view', 'superadmin'],
                             'actions' => ['view']
                         ],
                     ]

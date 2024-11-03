@@ -39,7 +39,7 @@ class SalaryInsuranceController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['SalaryPeriod/index'],
+                        'roles' => ['SalaryPeriod/index', 'superadmin'],
                     ],
                 ]
             ]

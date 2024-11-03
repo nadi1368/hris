@@ -40,12 +40,12 @@ class SalaryItemsAdditionController extends Controller
                     [
                         [
                             'allow' => true,
-                            'roles' => ['SalaryPeriod/index'],
+                            'roles' => ['SalaryPeriod/index', 'superadmin'],
                             'actions' => ['index', 'create', 'update', 'delete', 'view', 'report-leave', 'chart-leave', 'list-csv-salary-non-cash', 'upload-salary-non-cash', 'insert-salary-non-cash']
                         ],
                         [
                             'allow' => true,
-                            'roles' => ['SalaryPeriod/confirm'],
+                            'roles' => ['SalaryPeriod/confirm', 'superadmin'],
                             'actions' => ['confirm', 'confirm-selected', 'return-status', 'reject']
                         ],
                     ]

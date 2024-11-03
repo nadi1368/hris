@@ -40,27 +40,27 @@ class UserContractsShelvesController extends Controller
                 [
                     [
                         'allow' => true,
-                        'roles' => ['UserContractsShelves/index'],
+                        'roles' => ['UserContractsShelves/index', 'superadmin'],
                         'actions' => ['index']
                     ],
                     [
                         'allow' => true,
-                        'roles' => ['UserContractsShelves/create'],
+                        'roles' => ['UserContractsShelves/create', 'superadmin'],
                         'actions' => ['create']
                     ],
                     [
                         'allow' => true,
-                        'roles' => ['UserContractsShelves/update'],
+                        'roles' => ['UserContractsShelves/update', 'superadmin'],
                         'actions' => ['update']
                     ],
                     [
                         'allow' => true,
-                        'roles' => ['UserContractsShelves/delete'],
+                        'roles' => ['UserContractsShelves/delete', 'superadmin'],
                         'actions' => ['delete']
                     ],
                     [
                         'allow' => true,
-                        'roles' => ['UserContractsShelves/view'],
+                        'roles' => ['UserContractsShelves/view', 'superadmin'],
                         'actions' => ['view']
                     ],
                 ]

@@ -212,28 +212,6 @@ class HrisAdminPanelMenuItems
                 'group' => 'EmployeeContracts',
                 'level' => 'first-level'
             ],
-            [
-                'label' => 'درخواست مرخصی',
-                'group' => 'request-leave-manage',
-                'level' => 'first-level',
-                'icon' => 'fa fa-user',
-                'items' => [
-                    [
-                        'label' => Module::t('module', 'Department Manager'),
-                        'icon' => 'fa fa-user',
-                        'url' => ["/$moduleId/request-leave/manage"],
-                        'group' => 'request-leave-manage',
-                        'level' => 'second-level',
-                    ],
-                    [
-                        'label' => Module::t('module', 'General Manager'),
-                        'icon' => 'fa fa-user',
-                        'url' => ["/$moduleId/request-leave/admin"],
-                        'group' => 'request-leave-manage',
-                        'level' => 'second-level',
-                    ]
-                ]
-            ],
         ];
     }
 }

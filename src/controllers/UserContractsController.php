@@ -41,32 +41,32 @@ class UserContractsController extends Controller
                     [
                         [
                             'allow' => true,
-                            'roles' => ['UserContracts/index'],
+                            'roles' => ['UserContracts/index', 'superadmin'],
                             'actions' => ['index', 'employee-contracts', 'view-my-contract'],
                         ],
                         [
                             'allow' => true,
-                            'roles' => ['UserContracts/create'],
+                            'roles' => ['UserContracts/create', 'superadmin'],
                             'actions' => ['create', 'pre-create', 'confirm'],
                         ],
                         [
                             'allow' => true,
-                            'roles' => ['UserContracts/update'],
+                            'roles' => ['UserContracts/update', 'superadmin'],
                             'actions' => ['update', 'change-shelf'],
                         ],
                         [
                             'allow' => true,
-                            'roles' => ['UserContracts/delete'],
+                            'roles' => ['UserContracts/delete', 'superadmin'],
                             'actions' => ['delete'],
                         ],
                         [
                             'allow' => true,
-                            'roles' => ['UserContracts/view'],
+                            'roles' => ['UserContracts/view', 'superadmin'],
                             'actions' => ['view'],
                         ],
                         [
                             'allow' => true,
-                            'roles' => ['UserContracts/update'],
+                            'roles' => ['UserContracts/update', 'superadmin'],
                             'actions' => ['un-confirm'],
                         ],
                         [
