@@ -34,12 +34,12 @@ class EmployeeRequestController extends Controller
                     [
                         'actions' => ['index', 'confirm', 'reject'],
                         'allow' => true,
-                        'roles' => ['EmployeeRequest/admin'],
+                        'roles' => ['EmployeeRequest/admin', 'superadmin'],
                     ],
                     [
                         'actions' => ['my', 'create', 'update'],
                         'allow' => true,
-                        'roles' => ['EmployeeRequest/create'],
+                        'roles' => Module::getInstance()->employeeRole,
                     ],
                     [
                         'actions' => ['view'],

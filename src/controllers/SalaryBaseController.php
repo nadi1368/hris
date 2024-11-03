@@ -38,7 +38,7 @@ class SalaryBaseController extends Controller
                     [
                         [
                             'allow' => true,
-                            'roles' => ['SalaryPeriod/index'],
+                            'roles' => ['SalaryPeriod/index', 'superadmin'],
                         ],
                     ]
             ]

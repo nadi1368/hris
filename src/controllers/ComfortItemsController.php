@@ -39,12 +39,12 @@ class ComfortItemsController extends Controller
                     [
                         [
                             'allow' => true,
-                            'roles' => ['Comfort/view'],
+                            'roles' => ['Comfort/view', 'superadmin'],
                             'actions' => ['index', 'view', 'view-attach', 'comments', 'refer']
                         ],
                         [
                             'allow' => true,
-                            'roles' => ['Comfort/confirm'],
+                            'roles' => ['Comfort/confirm', 'superadmin'],
                             'actions' => ['confirm', 'reject', 'revert']
                         ],
                     ]

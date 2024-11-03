@@ -3,10 +3,12 @@
 namespace hesabro\hris\controllers;
 
 use common\models\UserUpload;
+use hesabro\hris\Module;
 use Yii;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
-class SiteController extends SiteBase
+class SiteController extends Controller
 {
     /**
      * @throws NotFoundHttpException

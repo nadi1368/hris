@@ -56,7 +56,7 @@ class SalaryPeriodItemsController extends Controller
                     [
                         [
                             'allow' => true,
-                            'roles' => ['SalaryPeriod/index'],
+                            'roles' => ['SalaryPeriod/index', 'superadmin'],
                         ],
                     ]
             ]

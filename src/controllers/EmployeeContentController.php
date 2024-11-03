@@ -20,8 +20,7 @@ class EmployeeContentController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => Module::getInstance()->employeeRole,
-                        'actions' => ['index']
+                        'roles' => Module::getInstance()->employeeRole
                     ]
                 ]
             ]

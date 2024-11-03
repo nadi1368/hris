@@ -37,7 +37,7 @@ class RateOfYearSalaryController extends Controller
                     [
                         [
                             'allow' => true,
-                            'roles' => ['EmployeeBranch/index'],
+                            'roles' => ['RateOfYearSalary/index', 'superadmin'],
                         ],
                     ]
             ]

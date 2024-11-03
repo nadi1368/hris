@@ -30,36 +30,36 @@ class EmployeeContentManageController extends Controller
                     'clauses' => ['POST']
                 ],
             ],
-//            'access' => [
-//                'class' => AccessControl::class,
-//                'rules' => [
-//                    [
-//                        'allow' => true,
-//                        'roles' => ['hris/employee-content-manage/index'],
-//                        'actions' => ['index', 'clauses']
-//                    ],
-//                    [
-//                        'allow' => true,
-//                        'roles' => ['hris/employee-content-manage/create'],
-//                        'actions' => ['create', 'sort', 'upload-image']
-//                    ],
-//                    [
-//                        'allow' => true,
-//                        'roles' => ['hris/employee-content-manage/update'],
-//                        'actions' => ['update', 'sort', 'upload-image', 'remove-attachment']
-//                    ],
-//                    [
-//                        'allow' => true,
-//                        'roles' => ['hris/employee-content-manage/delete'],
-//                        'actions' => ['delete']
-//                    ],
-//                    [
-//                        'allow' => true,
-//                        'roles' => ['hris/employee-content-manage/view'],
-//                        'actions' => ['view']
-//                    ]
-//                ]
-//            ]
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['EmployeeContentManage/index', 'superadmin'],
+                        'actions' => ['index', 'clauses']
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['EmployeeContentManage/create', 'superadmin'],
+                        'actions' => ['create', 'sort', 'upload-image']
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['EmployeeContentManage/update', 'superadmin'],
+                        'actions' => ['update', 'sort', 'upload-image', 'remove-attachment']
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['EmployeeContentManage/delete', 'superadmin'],
+                        'actions' => ['delete']
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['EmployeeContentManage/view', 'superadmin'],
+                        'actions' => ['view']
+                    ]
+                ]
+            ]
         ];
     }
 
