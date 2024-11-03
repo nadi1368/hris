@@ -91,7 +91,7 @@ class ContractTemplatesBase extends \yii\db\ActiveRecord
             ['type', 'in', 'range' => [self::TYPE_CONTRACT, self::TYPE_CUSTOMER, self::TYPE_LETTER]],
             //[['variables'], 'validateVariables'],
             [['json_file'], 'file', 'extensions' => 'json'],
-            [['au_letter_type'], 'in', 'range' => array_keys(AuLetter::itemAlias('Type'))],
+            ['au_letter_type', 'in', 'range' => array_keys(self::itemAlias('AuLetterType'))],
         ];
     }
 
@@ -247,6 +247,11 @@ class ContractTemplatesBase extends \yii\db\ActiveRecord
                     self::TYPE_CONTRACT => 'Contract',
                     self::TYPE_CUSTOMER => 'Customer',
                     self::TYPE_LETTER => 'Letter',
+                ];
+            case 'AuLetterType';
+                $_items = [
+                    AuLetter::TYPE_INTERNAL => AuLetter::itemAlias('Type', AuLetter::TYPE_INTERNAL),
+                    AuLetter::TYPE_OUTPUT => AuLetter::itemAlias('Type', AuLetter::TYPE_OUTPUT),
                 ];
                 break;
 		}

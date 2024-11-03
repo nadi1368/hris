@@ -6,6 +6,7 @@ use hesabro\automation\models\AuLetter;
 use hesabro\helpers\traits\ModelHelper;
 use hesabro\hris\Module;
 use Yii;
+use yii\base\ErrorException;
 use yii\base\Model;
 use yii\bootstrap4\ActiveForm;
 
@@ -42,7 +43,7 @@ class LetterBase extends Model
     {
         return [
             'variables' => Module::t('module', 'Variables'),
-            'date' => Module::t('module', 'Date') . ' ' . Module::t('module', 'Indicator'),
+            'date' => Module::t('module', 'Date') . ' ' . Module::t('module', 'Letter'),
             'rejectDescription' => Module::t('module', 'Reject Description'),
         ];
     }
@@ -111,7 +112,6 @@ class LetterBase extends Model
         $transaction = Yii::$app->db->beginTransaction();
 
         try {
-
             if ($this->contractTemplate->au_letter_type) {
                 $auLetter = $this->createAuLetter();
                 if (!$auLetter) {
@@ -120,14 +120,8 @@ class LetterBase extends Model
                 }
             }
 
-            $this->employeeRequest->indicator_id = $indicator->id;
+            $this->employeeRequest->au_letter_id = $auLetter->id;
             $confirm = $this->employeeRequest->confirm();
-
-            $indicator->file_text = (Yii::$app->getView())->renderFile('@hesabro/hris/views/employee-request/letter/template.php', [
-                'letter' => $this
-            ]);
-            $indicator->save();
-
             $transaction->commit();
 
             return $confirm;
@@ -155,14 +149,20 @@ class LetterBase extends Model
 
     public function createAuLetter(): AuLetter
     {
-        $scenario = match ($this->contractTemplate->au_letter_type) {
-            AuLetter::TYPE_INPUT => AuLetter::SCENARIO_CREATE_INPUT,
-            AuLetter::TYPE_OUTPUT => AuLetter::SCENARIO_CREATE_OUTPUT,
-            AuLetter::TYPE_INTERNAL => AuLetter::SCENARIO_CREATE_INTERNAL,
-            AuLetter::TYPE_RECORD => AuLetter::SCENARIO_CREATE_RECORD,
-        };
+        $auLetter = new AuLetter();
+        $auLetter->type = $this->contractTemplate->au_letter_type;
+        $auLetter->input_type = 0;
+        $auLetter->title = implode(' ', [
+            Module::t('module', 'Letter'),
+            "({$this->contractTemplate->title})",
+            Module::t('module', 'For'),
+            $this->employeeRequest->user->fullName
+        ]);
+        $auLetter->body = (Yii::$app->getView())->renderFile('@hesabro/hris/views/employee-request/letter/template.php', [
+            'letter' => $this
+        ]);
+        $auLetter->save(false);
 
-        $auLetter = new AuLetter(['scenario' => $scenario]);
-
+        return $auLetter;
     }
 }

@@ -74,7 +74,7 @@ class EmployeeRequestController extends Controller
         $preview = (boolean) ((int) $preview);
         $this->layout = $print ? 'print' : ($preview ? '@hesabro/hris/views/layouts/print_preview' : Module::getInstance()->layoutPanel);
         $employeeRequest = $this->findModel($id);
-        $content = $employeeRequest->indicator?->file_text;
+        $body = $employeeRequest->auLetter?->body;
 
         if ($preview && Yii::$app->request->isPost) {
             $postData = Yii::$app->request->post('Letter');
@@ -84,7 +84,7 @@ class EmployeeRequestController extends Controller
                 'employeeRequest' => $employeeRequest
             ]);
 
-            $content = $this->renderFile('@hesabro/hris/views/employee-request/letter/template.php', [
+            $body = $this->renderFile('@hesabro/hris/views/employee-request/letter/template.php', [
                 'letter' => $letter
             ]);
         }
@@ -94,7 +94,7 @@ class EmployeeRequestController extends Controller
         return $this->$renderMethod($this->viewByType('view', $employeeRequest->type), [
             'employeeRequest' => $employeeRequest,
             'print' => $print,
-            'content' => $content
+            'content' => $body
         ]);
     }
 

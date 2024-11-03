@@ -1,6 +1,4 @@
 <?php
-
-use hesabro\automation\models\AuLetter;
 use hesabro\hris\models\ContractClausesModel;
 use hesabro\hris\models\ContractTemplates;
 use hesabro\hris\models\EmployeeBranchUser;
@@ -62,11 +60,11 @@ $typeTextFa = Module::t('module', $model->typeText);
 				</div>
 
                 <?php if ($model->isLetter): ?>
-                    <div class="<?= $model->isLetter ? 'col-md-6' : 'col-md-12' ?>">
+                    <div class="col-md-6">
                         <?=
                         $form->field($model, 'au_letter_type')
                             ->dropdownList(
-                                AuLetter::itemAlias('Type'),
+                                ContractTemplates::itemAlias('AuLetterType'),
                                 ['prompt' => Module::t('module', 'Select')]
                             )
                         ?>

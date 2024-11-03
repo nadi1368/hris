@@ -2,6 +2,7 @@
 
 namespace hesabro\hris\models;
 
+use hesabro\automation\models\AuLetter;
 use hesabro\helpers\behaviors\JsonAdditional;
 use hesabro\changelog\behaviors\LogBehavior;
 use hesabro\errorlog\behaviors\TraceBehavior;
@@ -30,7 +31,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property-read object $user
  * @property-read EmployeeBranch $branch
  * @property-read ContractTemplates $contractTemplate
- * @property-read object $indicator
+ * @property-read AuLetter $auLetter
  *
  * @mixin LogBehavior
  * @mixin TimestampBehavior
@@ -163,7 +164,6 @@ class EmployeeRequestBase extends ActiveRecord
             'contract_template_id' => Module::t('module', 'Letter'),
             'description' => Module::t('module', 'Description'),
             'reject_description' => Module::t('module', 'Reject Description'),
-            'indicator_id' => Module::t('module', 'Indicator'),
         ];
     }
 
@@ -182,6 +182,11 @@ class EmployeeRequestBase extends ActiveRecord
     public function getContractTemplate(): ActiveQuery
     {
         return $this->hasOne(ContractTemplates::class, ['id' => 'contract_template_id']);
+    }
+
+    public function getAuLetter(): ActiveQuery
+    {
+        return $this->hasOne(AuLetter::class, ['id' => 'au_letter_id']);
     }
 
     // Validators
