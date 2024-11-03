@@ -23,10 +23,10 @@ use hesabro\hris\Module;
                     'format' => 'raw'
                 ],
                 [
-                    'attribute' => 'indicator_id',
-                    'label' => Module::t('module', 'Document Number') . ' ' .Module::t('module', 'Indicator'),
+                    'attribute' => 'au_letter_id',
+                    'label' => Module::t('module', 'Document Number'),
                     'value' => function (EmployeeRequest $model) {
-                        return $model->indicator?->document_number;
+                        return $model->auLetter?->number ?: '-';
                     },
                     'format' => 'raw'
                 ],

@@ -1,5 +1,4 @@
 <?php
-
 use hesabro\hris\models\ContractClausesModel;
 use hesabro\hris\models\ContractTemplates;
 use hesabro\hris\models\EmployeeBranchUser;
@@ -56,9 +55,21 @@ $typeTextFa = Module::t('module', $model->typeText);
 					]) ?>
 				</div>
 
-				<div class="col-md-12">
+				<div class="<?= $model->isLetter ? 'col-md-6' : 'col-md-12' ?>">
 					<?= $form->field($model, 'title')->textInput() ?>
 				</div>
+
+                <?php if ($model->isLetter): ?>
+                    <div class="col-md-6">
+                        <?=
+                        $form->field($model, 'au_letter_type')
+                            ->dropdownList(
+                                ContractTemplates::itemAlias('AuLetterType'),
+                                ['prompt' => Module::t('module', 'Select')]
+                            )
+                        ?>
+                    </div>
+                <?php endif; ?>
 
 				<div class="col-md-12">
 					<?= $form->field($model, 'description')->widget(CKEditorWidget::class, [

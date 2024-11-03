@@ -2,8 +2,7 @@
 
 namespace hesabro\hris\models;
 
-use common\models\Indicator\Indicator;
-use hesabro\hris\Module;
+use hesabro\automation\models\AuLetter;
 use Yii;
 
 class Letter extends LetterBase
@@ -17,8 +16,11 @@ class Letter extends LetterBase
                 $this->employeeRequest->reject_description = null;
             }
 
-            if ($this->employeeRequest->indicator_id) {
-                Indicator::findOne($this->employeeRequest->indicator_id)?->softDelete();
+            if ($this->employeeRequest->au_letter_id) {
+                $auLetter = AuLetter::findOne($this->employeeRequest->au_letter_id);
+                if ($auLetter->canDelete()) {
+                    $auLetter->softDelete();
+                }
             }
             $undo = $this->employeeRequest->pending();
             $transaction->commit();
@@ -27,32 +29,5 @@ class Letter extends LetterBase
             $transaction->rollBack();
             return false;
         }
-    }
-
-    public function createIndicator(): ?Indicator
-    {
-        $indicator = new Indicator([
-            'scenario' => Indicator::SCENARIO_CREATE_LETTER,
-            'type' => Indicator::TYPE_EXPORT,
-            'status' => Indicator::STATUS_ACTIVE,
-            'date' => $this->date,
-            'title' => implode(' ', [
-                Module::t('module', 'Letter'),
-                "({$this->contractTemplate->title})",
-                Module::t('module', 'For'),
-                $this->employeeRequest->user->fullName
-            ]),
-            'file_text' => ''
-        ]);
-
-        $indicator->loadAttributes();
-        $saveIndicator = $indicator->save();
-
-        if ($saveIndicator && !$indicator->document_number) {
-            $indicator->document_number = $indicator->id;
-            $saveIndicator = $indicator->save();
-        }
-
-        return $saveIndicator ? $indicator : null;
     }
 }

@@ -161,6 +161,7 @@ return [
     'Item UnConfirmed' => 'عدم‌تاییذ با موفقیت انجام شد.',
     'Item Updated' => 'بروز رسانی با موفقیت انجام شد.',
     'Item created' => 'ایجاد با موفقیت انجام شد.',
+    'Item Undid' => 'بازگشت به حالت قبل با موفقیت انجام شد.',
     'Job' => 'شغل',
     'Job Code' => 'کد شغل',
     'Job Description' => 'توضیحات شغل',
@@ -379,5 +380,8 @@ return [
     'Add' => 'افزودن',
     'Remove' => 'حذف',
     'Create Letter Template' => 'ایجاد نمونه نامه',
-    'Edited by employee' => 'ویرایش شده توسط کارمند'
+    'Edited by employee' => 'ویرایش شده توسط کارمند',
+    'Letter Type' => 'نوع نامه',
+    'Create Letter In Automation System' => 'ایجاد نامه در سیستم اتوماسیون اداری',
+    'Optional' => 'اختیاری',
 ];

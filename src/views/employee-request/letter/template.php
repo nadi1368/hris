@@ -30,11 +30,11 @@ $y2 = $position[2] ?? 20;
             <th class="text-right" style="width: 33%">
                 <p style="position: absolute; top: <?= $x ?>; left: <?= $y ?>; margin-block-start: 0 !important; margin-block-end: 0 !important; font-weight: normal;">
                     <?= Module::t('module', 'Letter Number') ?>:
-                    <?= $letter->employeeRequest?->indicator?->document_number ?: '' ?>
+                    <?= $letter->employeeRequest?->auLetter?->number ?: '-' ?>
                 </p>
                 <p style="position: absolute; top: <?= $x + $y2 ?>; left: <?= $y ?>; margin-block-start: 0 !important; margin-block-end: 0 !important; font-weight: normal;">
                     <?= Module::t('module', 'Date') ?>:
-                    <?= $letter->employeeRequest?->indicator?->date ? Yii::$app->jdf->jdate("Y/m/d",$letter->employeeRequest?->indicator?->date): '' ?>
+                    <?= $letter->employeeRequest?->auLetter?->date ?: '-' ?>
                 </p>
             </th>
         </tr>
@@ -42,10 +42,10 @@ $y2 = $position[2] ?? 20;
         <tr>
             <th class="text-right" style="width: 33%">
                 <p style="position: absolute; top: <?= $x ?>; left: <?= $y ?>; margin-block-start: 0 !important; margin-block-end: 0 !important; font-weight: normal;">
-                    <?= $letter->employeeRequest?->indicator?->document_number ?: '' ?>
+                    <?= $letter->employeeRequest?->auLetter?->number ?: '-' ?>
                 </p>
                 <p style="position: absolute; top: <?= $x + $y2 ?>; left: <?= $y ?>; margin-block-start: 0 !important; margin-block-end: 0 !important; font-weight: normal;">
-                    <?= $letter->employeeRequest?->indicator?->date ? Yii::$app->jdf->jdate("Y/m/d",$letter->employeeRequest?->indicator?->date): '' ?>
+                    <?= $letter->employeeRequest?->auLetter?->number ?: '-' ?>
                 </p>
             </th>
         </tr>
