@@ -49,20 +49,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'user_id',
                     'value' => function (EmployeeBranchUser $model) {
                         $avatar = $model->user->getFileUrl('avatar');
-                        $name = Html::tag('span', $model->user->linkEmployee);
+                        $name = Html::tag('span', $model->user->linkEmployee, $model->pending_data ? [
+                            'data-title' => 'دارای ویرایش تایید نشده',
+                            'data-toggle' => 'tooltip',
+                            'class' => 'pulse-notification'
+                        ] : []);
                         $avatar = $avatar ?
                             Html::img($avatar, ['alt' => $model->user->linkEmployee, 'class' => 'rounded-circle ml-1', 'width' => '36', 'height' => '36']) :
                             Html::tag('i', '', ['class' => 'fal fa-user-circle ml-1 fa-3x']);
 
                         $content = Html::tag('div', $avatar . $name, ['class' => 'd-flex align-items-center justify-content-start gap-4']);
-
-                        if ($model->pending_data) {
-                            return Html::tag('span', $content, [
-                                'data-title' => 'دارای ویرایش تایید نشده',
-                                'data-toggle' => 'tooltip',
-                                'class' => 'pulse-notification'
-                            ]);
-                        }
 
                         return $content;
                     },
