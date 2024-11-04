@@ -171,7 +171,6 @@ class HrisAdminPanelMenuItems
                 'iconWidget' => 'ph:gift-bold',
                 'icon' => 'far fa-gift ',
                 'url' => ["/$moduleId/comfort/index"],
-                'level' => "first-level",
                 'group' => 'comforts',
             ],
             [
@@ -179,7 +178,6 @@ class HrisAdminPanelMenuItems
                 'icon' => 'far fa-hand-paper',
                 'iconWidget' => 'ph:gift-bold',
                 'url' => ["/$moduleId/comfort-items/index"],
-                'level' => "first-level",
                 'group' => 'Requests',
                 'encode' => false
             ],
@@ -188,14 +186,12 @@ class HrisAdminPanelMenuItems
                 'icon' => 'far fa-building',
                 'url' => ["/$moduleId/employee-branch/index"],
                 'group' => 'EmployeeBranch',
-                'level' => "first-level",
             ],
             [
                 'label' => Html::tag('span', Module::t('module', "Employee Branch User"), ['class' => $employeePendingUpdate ? 'pulse-notification' : '']),
                 'icon' => 'far fa-users',
                 'url' => ["/$moduleId/employee-branch/users"],
                 'group' => 'EmployeeBranchUser',
-                'level' => "first-level",
                 'encode' => false
             ],
             [
@@ -203,14 +199,12 @@ class HrisAdminPanelMenuItems
                 'icon' => 'far fa-money-check',
                 'url' => ["/$moduleId/salary-period/index"],
                 'group' => 'EmployeeSalaryPeriods',
-                'level' => "first-level",
             ],
             [
                 'label' => Module::t('module', 'Contracts'),
                 'icon' => 'far fa-file-contract',
                 'url' => ["/$moduleId/user-contracts/index"],
                 'group' => 'EmployeeContracts',
-                'level' => 'first-level'
             ],
         ];
     }
