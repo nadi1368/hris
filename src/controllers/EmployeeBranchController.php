@@ -54,7 +54,7 @@ class EmployeeBranchController extends Controller
                         [
                             'allow' => true,
                             'roles' => ['EmployeeBranch/index', 'superadmin'],
-                            'actions' => ['index', 'users']
+                            'actions' => ['index', 'users', 'view', 'view-user', 'view-user-documents', 'view-user-contracts', 'confirm-document', 'delete-document']
                         ],
                         [
                             'allow' => true,
@@ -70,11 +70,6 @@ class EmployeeBranchController extends Controller
                             'allow' => true,
                             'roles' => ['EmployeeBranch/delete', 'superadmin'],
                             'actions' => ['delete', 'migrate']
-                        ],
-                        [
-                            'allow' => true,
-                            'roles' => ['EmployeeBranch/view', 'superadmin'],
-                            'actions' => ['view', 'view-user', 'view-user-documents', 'view-user-contracts', 'confirm-document', 'delete-document']
                         ],
                     ]
             ]

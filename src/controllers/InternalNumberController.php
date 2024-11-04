@@ -47,23 +47,13 @@ class InternalNumberController extends Controller
                         ],
                         [
                             'allow' => true,
+                            'roles' => ['InternalNumber/actions', 'superadmin'],
+                            'actions' => ['create', 'update', 'sort', 'delete']
+                        ],
+                        [
+                            'allow' => true,
                             'roles' =>  Module::getInstance()->employeeRole,
                             'actions' => ['public', 'resort']
-                        ],
-                        [
-                            'allow' => true,
-                            'roles' => ['InternalNumber/create', 'superadmin'],
-                            'actions' => ['create', 'sort']
-                        ],
-                        [
-                            'allow' => true,
-                            'roles' => ['InternalNumber/update', 'superadmin'],
-                            'actions' => ['update', 'sort']
-                        ],
-                        [
-                            'allow' => true,
-                            'roles' => ['InternalNumber/delete', 'superadmin'],
-                            'actions' => ['delete']
                         ],
                     ]
             ]
