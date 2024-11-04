@@ -118,3 +118,41 @@
 .gap-5 {
     gap: 20px;
 }
+
+.hris-tag {
+    background-color: #ffffff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    line-height: 0.1;
+    font-size: 14px;
+    font-family: sans-serif;
+}
+
+.navbar-header[data-logobg='skin1'] .hris-tag {
+    color: #2cabe3;
+}
+
+.navbar-header[data-logobg='skin2'] .hris-tag {
+    color: #02abc0;
+}
+
+.navbar-header[data-logobg='skin2'][data-app='mobit'] .hris-tag {
+    color: #707cd2;
+}
+
+.navbar-header[data-logobg='skin3'] .hris-tag {
+    color: #ff7676;
+}
+
+.navbar-header[data-logobg='skin4'] .hris-tag {
+    color: #4CAF50;
+}
+
+.navbar-header[data-logobg='skin5'] .hris-tag {
+    color: #2f323e;
+}
+
+.navbar-header[data-logobg='skin6'] .hris-tag {
+    background-color: #02abc0;
+    color: #fff;
+}
