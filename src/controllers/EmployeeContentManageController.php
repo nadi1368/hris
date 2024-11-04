@@ -36,28 +36,13 @@ class EmployeeContentManageController extends Controller
                     [
                         'allow' => true,
                         'roles' => ['EmployeeContentManage/index', 'superadmin'],
-                        'actions' => ['index', 'clauses']
+                        'actions' => ['index', 'clauses', 'view']
                     ],
                     [
                         'allow' => true,
-                        'roles' => ['EmployeeContentManage/create', 'superadmin'],
-                        'actions' => ['create', 'sort', 'upload-image']
+                        'roles' => ['EmployeeContentManage/actions', 'superadmin'],
+                        'actions' => ['create', 'sort', 'upload-image', 'update', 'remove-attachment', 'delete']
                     ],
-                    [
-                        'allow' => true,
-                        'roles' => ['EmployeeContentManage/update', 'superadmin'],
-                        'actions' => ['update', 'sort', 'upload-image', 'remove-attachment']
-                    ],
-                    [
-                        'allow' => true,
-                        'roles' => ['EmployeeContentManage/delete', 'superadmin'],
-                        'actions' => ['delete']
-                    ],
-                    [
-                        'allow' => true,
-                        'roles' => ['EmployeeContentManage/view', 'superadmin'],
-                        'actions' => ['view']
-                    ]
                 ]
             ]
         ];

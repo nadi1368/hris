@@ -42,23 +42,13 @@ class OrganizationChartController extends Controller
                     ],
                     [
                         'allow' => true,
+                        'roles' => ['OrganizationChart/actions', 'superadmin'],
+                        'actions' => ['create', 'update', 'toggle-show-internal-number', 'toggle-show-job-tag', 'delete']
+                    ],
+                    [
+                        'allow' => true,
                         'roles' =>  Module::getInstance()->employeeRole,
                         'actions' => ['public']
-                    ],
-                    [
-                        'allow' => true,
-                        'roles' => ['OrganizationChart/create', 'superadmin'],
-                        'actions' => ['create']
-                    ],
-                    [
-                        'allow' => true,
-                        'roles' => ['OrganizationChart/update', 'superadmin'],
-                        'actions' => ['update', 'toggle-show-internal-number', 'toggle-show-job-tag']
-                    ],
-                    [
-                        'allow' => true,
-                        'roles' => ['OrganizationChart/delete', 'superadmin'],
-                        'actions' => ['delete']
                     ],
                 ]
             ]
