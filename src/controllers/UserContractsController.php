@@ -52,7 +52,7 @@ class UserContractsController extends Controller
                         [
                             'allow' => true,
                             'roles' => ['UserContracts/update', 'superadmin'],
-                            'actions' => ['update', 'change-shelf'],
+                            'actions' => ['update', 'change-shelf', 'un-confirm'],
                         ],
                         [
                             'allow' => true,
@@ -63,11 +63,6 @@ class UserContractsController extends Controller
                             'allow' => true,
                             'roles' => ['UserContracts/view', 'superadmin'],
                             'actions' => ['view'],
-                        ],
-                        [
-                            'allow' => true,
-                            'roles' => ['UserContracts/update', 'superadmin'],
-                            'actions' => ['un-confirm'],
                         ],
                         [
                             'allow' => true,

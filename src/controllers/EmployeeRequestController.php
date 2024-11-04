@@ -27,30 +27,25 @@ class EmployeeRequestController extends Controller
                         'roles' => ['@']
                     ],
                     [
+                        'allow' => true,
+                        'verbs' => ['POST'],
                         'actions' => ['delete', 'undo'],
-                        'allow' => true,
-                        'verbs' => ['POST']
                     ],
                     [
-                        'actions' => ['index', 'confirm', 'reject'],
                         'allow' => true,
-                        'roles' => ['EmployeeRequest/admin', 'superadmin'],
+                        'roles' => ['EmployeeRequest/index', 'superadmin'],
+                        'actions' => ['index', 'view'],
                     ],
                     [
-                        'actions' => ['my', 'create', 'update'],
+                        'allow' => true,
+                        'roles' => ['EmployeeRequest/actions', 'superadmin'],
+                        'actions' => ['confirm', 'reject', 'delete'],
+                    ],
+                    [
                         'allow' => true,
                         'roles' => Module::getInstance()->employeeRole,
+                        'actions' => ['my', 'create', 'update'],
                     ],
-                    [
-                        'actions' => ['view'],
-                        'allow' => true,
-                        'roles' => ['EmployeeRequest/view'],
-                    ],
-                    [
-                        'actions' => ['delete'],
-                        'allow' => true,
-                        'roles' => ['EmployeeRequest/delete'],
-                    ]
                 ]
             ]
         ];

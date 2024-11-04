@@ -43,18 +43,13 @@ class RequestLeaveController extends Controller
                     [
                         'allow' => true,
                         'roles' => ['RequestLeave/admin-branch', 'superadmin'],
-                        'actions' => ['manage', 'confirm', 'reject', 'sum-merit']
+                        'actions' => ['manage', 'confirm', 'reject', 'sum-merit', 'delete']
                     ],
                     [
                         'allow' => true,
                         'roles' => ['RequestLeave/admin', 'superadmin'],
-                        'actions' => ['manage', 'admin', 'confirm', 'reject', 'sum-merit']
-                    ],
-                    [
-                        'allow' => true,
-                        'roles' => ['RequestLeave/delete', 'superadmin'],
-                        'actions' => ['delete']
-                    ],
+                        'actions' => ['manage', 'admin', 'confirm', 'reject', 'sum-merit', 'delete']
+                    ]
                 ]
             ]
         ];

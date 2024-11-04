@@ -33,13 +33,18 @@ class RateOfYearSalaryController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::class,
-                'rules' =>
+                'rules' => [
                     [
-                        [
-                            'allow' => true,
-                            'roles' => ['RateOfYearSalary/index', 'superadmin'],
-                        ],
-                    ]
+                        'allow' => true,
+                        'roles' => ['RateOfYearSalary/index', 'superadmin'],
+                        'actions' => ['index']
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['RateOfYearSalary/actions', 'superadmin'],
+                        'actions' => ['create', 'update', 'delete']
+                    ],
+                ]
             ]
         ];
     }
