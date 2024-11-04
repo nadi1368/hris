@@ -384,4 +384,5 @@ return [
     'Letter Type' => 'نوع نامه',
     'Create Letter In Automation System' => 'ایجاد نامه در سیستم اتوماسیون اداری',
     'Optional' => 'اختیاری',
+    'You Are Not A Employee Of Any Department' => 'شما در لیست کارمندان هیچ دپارتمانی نیستید.'
 ];

@@ -11,6 +11,7 @@ use Yii;
 use hesabro\hris\models\Comfort;
 use hesabro\hris\models\ComfortSearch;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -252,7 +253,7 @@ class EmployeeComfortController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Module::t('module', 'The requested page does not exist.'));
+        throw new ForbiddenHttpException(Module::t('module', 'You Are Not A Employee Of Any Department'));
     }
 
     public function flash($type, $message)

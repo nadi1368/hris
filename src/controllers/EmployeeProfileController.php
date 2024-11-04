@@ -201,7 +201,7 @@ class EmployeeProfileController extends Controller
     public function actionIndex($year = null, $month = null)
     {
         $userId = Yii::$app->user->getId();
-        $employee = EmployeeBranchUser::findOne(['user_id' => $userId]);
+        $employee = $this->findEmployeeBranchUser($userId);
         $time = time();
         $bannersQuery = EmployeeContent::find()
             ->byCurrentClientAccess()
@@ -411,7 +411,7 @@ class EmployeeProfileController extends Controller
         $model = EmployeeBranchUser::find()->where(['user_id' => $userId])->with(['user'])->one();
 
         if (!$model) {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new ForbiddenHttpException(Module::t('module', 'You Are Not A Employee Of Any Department'));
         }
 
         return $model;
