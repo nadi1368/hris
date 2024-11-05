@@ -3,6 +3,7 @@
 use hesabro\hris\models\SalaryPeriod;
 use hesabro\hris\models\SalaryPeriodItems;
 use common\models\Settings;
+use hesabro\hris\Module;
 use yii\bootstrap4\Html;
 use yii\web\View;
 
