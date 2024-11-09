@@ -60,7 +60,7 @@ $rejectForm = $rejectForm ? trim(preg_replace('/\s\s+/', ' ', preg_replace("/(\/
 ActiveForm::end();
 $marital = EmployeeBranchUser::MARITAL_MARRIED;
 $man = Module::getInstance()->user::SEX_MAN;
-$seenRejectUrl = Url::to(['profile/seen-reject']);
+$seenRejectUrl = Url::to(['employee-profile/seen-reject']);
 $js = <<<JS
 window.seenRejectUrl = '$seenRejectUrl';
 window.manType = parseInt('$man');

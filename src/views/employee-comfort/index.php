@@ -10,7 +10,7 @@ use yii\widgets\Pjax;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Module::t('module', 'Comforts List');
-$this->params['breadcrumbs'][] = ['label' => Module::t('module', 'Profile'), 'url' => ['/profile/index']];
+$this->params['breadcrumbs'][] = ['label' => Module::t('module', 'Profile'), 'url' => ['employee-profile/index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 $searchBox = $this->render('_search', ['model' => $searchModel]);

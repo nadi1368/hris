@@ -327,7 +327,7 @@ $workTimeText = $workTime ? $workTime . ' ' . Module::t('module', 'Day') : Modul
         <?php if (count($comforts)): ?>
             <div class="card-footer bg-white">
                 <div class="d-flex align-items-center justify-content-end">
-                    <?= Html::a('مشاهده بیشتر و درخواست', ['comfort/index'], [
+                    <?= Html::a('مشاهده بیشتر و درخواست', ['employee-comfort/index'], [
                         'class' => 'btn btn-info'
                     ]) ?>
                 </div>
@@ -483,7 +483,7 @@ $workTimeText = $workTime ? $workTime . ' ' . Module::t('module', 'Day') : Modul
 <?php
 Pjax::end();
 
-$url = Module::createUrl('profile/index');
+$url = Module::createUrl('employee-profile/index');
 $yearOptions = '';
 $monthOptions = '';
 for ($year = 1403; $year >= 1400; $year--) {
