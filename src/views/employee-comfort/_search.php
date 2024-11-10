@@ -11,7 +11,7 @@ use yii\helpers\Html;
  */
 
 $form = ActiveForm::begin([
-    'action' => ['comfort/index'],
+    'action' => ['employee-comfort/index'],
     'method' => 'get',
 ]);
 ?>

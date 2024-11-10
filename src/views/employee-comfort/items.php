@@ -11,8 +11,8 @@ use yii\widgets\Pjax;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Module::t('module', 'My Requests');
-$this->params['breadcrumbs'][] = ['label' => Module::t('module', 'Profile'), 'url' => ['/profile/index']];
-$this->params['breadcrumbs'][] = ['label' => Module::t('module', 'Comforts'), 'url' => ['/comfort/index']];
+$this->params['breadcrumbs'][] = ['label' => Module::t('module', 'Profile'), 'url' => ['employee-profile/index']];
+$this->params['breadcrumbs'][] = ['label' => Module::t('module', 'Comforts'), 'url' => ['employee-comfort/index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 Pjax::begin(['id' => 'pjax-comfort-items']);
