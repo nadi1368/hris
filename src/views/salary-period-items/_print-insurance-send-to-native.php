@@ -22,7 +22,7 @@ function sendPrintInsuranceToNative(variable,rows) {
     };
    variables = variable;
    
-   textStatus = printReport(variables, 'InsuranceEmployeesList', objects);
+   textStatus = sendToPrinter(variables, 'InsuranceEmployeesList', objects);
    if (textStatus == 'error') {
         return false;
     }
