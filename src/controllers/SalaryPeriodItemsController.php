@@ -1635,8 +1635,8 @@ class SalaryPeriodItemsController extends Controller
                     ],
                 ],
             ]);
-
-            return $spreadsheet->send('ExcelNoneCash_' . Yii::$app->client->identity->domain . '_' . Yii::$app->jdf->jdate("Y/m/d", $model->start_date) . '.xlsx');
+            $fileName = 'ExcelNoneCash_' . (Yii::$app->client !== null ? Yii::$app->client->identity->domain : '') . '_' . Yii::$app->jdf->jdate("Y/m/d", $model->start_date) . '.xlsx';
+            return $spreadsheet->send($fileName);
         }
         $this->performAjaxValidation($model);
         return $this->renderAjax('_form-bank-none-cash', [
