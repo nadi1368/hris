@@ -50,24 +50,4 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </div>
-    <?php if ($model->canDelete()) : ?>
-        <div class="card-footer">
-            <?php // Html::a(Module::t('module', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary'])
-            ?>
-            <?= Html::a(Module::t('module', 'Delete'), ['delete', 'id' => $model->id], [
-                'class' => 'btn btn-danger',
-                'data' => [
-                    'confirm' => Module::t('module', 'Are you sure you want to delete this item?'),
-                    'method' => 'post',
-                ],
-            ]) ?>
-            <?= $model->getFileUrl('attachment') ? Html::a(Module::t('module', 'Delete Attachment'), ['remove-attachment', 'id' => $model->id], [
-                'class' => 'btn btn-outline-danger',
-                'data' => [
-                    'confirm' => Module::t('module', 'Are you sure you want to delete this item?'),
-                    'method' => 'post',
-                ],
-            ]) : '' ?>
-        </div>
-    <?php endif; ?>
 </div>

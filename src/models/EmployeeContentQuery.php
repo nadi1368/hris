@@ -59,7 +59,7 @@ class EmployeeContentQuery extends ActiveQuery
     public function byCustomJobTags($tags): self
     {
         return $this->andWhere(['OR',
-            ['JSON_OVERLAPS(additional_data->"$.custom_salary_insurance", \'' . json_encode($tags) . '\')' => 1],
+            ['JSON_OVERLAPS(additional_data->"$.custom_job_tags", \'' . json_encode($tags) . '\')' => 1],
             ['JSON_LENGTH(JSON_EXTRACT(additional_data, "$.custom_job_tags"))' => 0]
         ]);
     }

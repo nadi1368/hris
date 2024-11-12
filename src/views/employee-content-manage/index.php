@@ -3,6 +3,7 @@
 use hesabro\hris\models\EmployeeContent;
 use hesabro\hris\Module;
 use hesabro\hris\widgets\SortableGridView as GridView;
+use yii\bootstrap4\ButtonDropdown;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
@@ -35,7 +36,7 @@ $this->registerCss($css);
 
 $this->registerCssFile('@web/fonts/bundle.css');
 ?>
-<?php Pjax::begin(['id' => 'faq-p-jax']); ?>
+<?php Pjax::begin(['id' => 'employee-content-pjax']); ?>
 <div class="faq-index card">
     <div class="panel-group m-bot20" id="accordion">
         <div class="card-header d-flex justify-content-between">
@@ -56,7 +57,7 @@ $this->registerCssFile('@web/fonts/bundle.css');
                         'data-toggle' => 'modal',
                         'data-target' => '#modal-pjax',
                         'data-url' => Url::to(['create', 'type' => $type]),
-                        'data-reload-pjax-container' => 'faq-p-jax',
+                        'data-reload-pjax-container' => 'employee-content-pjax',
                         'disabled' => true
                     ]
                 ); ?>
@@ -118,45 +119,70 @@ $this->registerCssFile('@web/fonts/bundle.css');
                 ],
                 [
                     'class' => 'common\widgets\grid\ActionColumn',
-                    'template' => '{view} {update} {delete}',
+                    'contentOptions' => ['style' => 'width:100px; text-align:left;'],
+                    'template' => '{group}',
                     'buttons' => [
-                        'view' => function ($url, EmployeeContent $model, $key) {
-                            return Html::a(
-                                '<i class="text-info far fa-eye"></i>',
-                                ['view', 'id' => $model->id],
+                        'group' => function ($url, EmployeeContent $model, $key) use ($type) {
+                            $items = [
                                 [
-                                    'title' => Module::t('module', 'View'),
-                                    'class' => 'grid-btn grid-btn-view showModalButton'
+                                    'label' => Html::tag('span', ' ', ['class' => 'far fa-eye']) . ' ' . Module::t('module', 'View'),
+                                    'url' => ['view', 'id' => $model->id],
+                                    'encode' => false,
+                                    'linkOptions' => [
+                                        'title' => Module::t('module', 'View'),
+                                        'class' => 'showModalButton',
+                                        'data-size' => 'modal-md',
+                                    ],
                                 ]
-                            );
-                        },
-                        'update' => function ($url, $model, $key) use ($type, $title) {
-                            return $model->canUpdate() ? Html::a(
-                                '<i class="text-success far fa-edit"></i>',
-                                "javascript:void(0)",
-                                [
-                                    'id' => 'faq-update',
-                                    'class' => 'grid-btn grid-btn-update',
-                                    'data-size' => 'modal-lg',
-                                    'data-title' => Module::t('module', 'Update') . " $title",
-                                    'data-toggle' => 'modal',
-                                    'data-target' => '#modal-pjax',
-                                    'data-url' => Url::to(['update', 'id' => $model->id, 'type' => $type]),
-                                    'data-reload-pjax-container' => 'faq-p-jax',
-                                    'disabled' => true,
-                                ]
-                            ) : '';
-                        },
-                        'delete' => function ($url, $model, $key) {
-                            return $model->canDelete() ? Html::a(
-                                '<span class="ti-trash grid-btn grid-btn-delete"></span>',
-                                ['delete', 'id' => $key],
-                                [
-                                    'title' => Yii::t('yii', 'Delete'),
-                                    'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
-                                    'data-method' => 'post',
-                                ]
-                            ) : '';
+                            ];
+
+                            if ($model->canUpdate()) {
+                                $items[] = [
+                                    'label' => Html::tag('span', ' ', ['class' => 'fa fa-pen']) . ' ' . Module::t('module', 'Update'),
+                                    'url' => ['update', 'id' => $model->id, 'type' => $type],
+                                    'encode' => false,
+                                    'linkOptions' => [
+                                        'title' => Module::t('module', 'Update'),
+                                        'data-title' => Module::t('module', 'Update'),
+                                        'data-url' => Url::to(['update', 'id' => $model->id, 'type' => $type]),
+                                        'data-pjax' => '0',
+                                        'data-size' => 'modal-lg',
+                                        'data-toggle' => 'modal',
+                                        'data-target' => '#modal-pjax',
+                                        'data-reload-pjax-container-on-show' => 0,
+                                        'data-reload-pjax-container' => 'employee-content-pjax',
+                                    ],
+                                ];
+                            }
+
+                            if ($model->canDelete()) {
+                                $items[] = [
+                                    'label' => Html::tag('span', '', ['class' => 'fa fa-trash-alt']) . ' ' . Module::t('module', 'Delete'),
+                                    'url' => 'javascript:void(0)',
+                                    'encode' => false,
+                                    'linkOptions' => [
+                                        'data-confirm' => Module::t('module', 'Are you sure you want to delete this item?'),
+                                        'title' => Module::t('module', 'Delete'),
+                                        'aria-label' => Module::t('module', 'Delete'),
+                                        'data-reload-pjax-container' => 'employee-content-pjax',
+                                        'data-pjax' => '0',
+                                        'data-url' => Url::to(['delete', 'id' => $model->id]),
+                                        'class' => "text-danger p-jax-btn",
+                                        'data-title' => Module::t('module', 'Delete'),
+                                        'data-method' => 'post'
+                                    ],
+                                ];
+                            }
+
+                            return ButtonDropdown::widget([
+                                'buttonOptions' => ['class' => 'btn btn-info btn-md dropdown-toggle', 'style' => 'padding: 3px 7px !important;', 'title' => Module::t('module', 'Actions')],
+                                'encodeLabel' => false,
+                                'label' => '<i class="far fa-list mr-1"></i>',
+                                'options' => ['class' => 'float-right'],
+                                'dropdown' => [
+                                    'items' => $items,
+                                ],
+                            ]);
                         },
                     ],
                 ],

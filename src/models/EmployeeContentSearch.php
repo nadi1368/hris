@@ -100,6 +100,9 @@ class EmployeeContentSearch extends EmployeeContent
 
     public function searchForEmployee($params, $pagination = ['pageSize' => 20])
     {
+        $userId = Yii::$app->user->identity->id;
+        $employee = EmployeeBranchUser::find()->where(['user_id' => $userId])->with(['user'])->one();
+
         $query = EmployeeContent::find();
 
         // add conditions that should always apply here
@@ -136,15 +139,9 @@ class EmployeeContentSearch extends EmployeeContent
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description]);
 
+        $query->byCustomUserId($userId);
 
-        if (!(Yii::$app->client->isMaster() && $this->ignore_client)) {
-            $query->byClientAccess(Yii::$app->client->id);
-        }
-
-        $query->byCustomUserId(Yii::$app->user->identity->id);
-
-        $jobTags = array_map(fn($item) => $item, Customer::find()->findByUser(Yii::$app->user->identity->id)->one()->jobs ?: []);
-        $query->byCustomJobTags($jobTags);
+        $query->byCustomJobTags($employee->job_code);
 
         if ($this->scattered_search_query) {
             $query->byScatteredSearch($this->scattered_search_query);
