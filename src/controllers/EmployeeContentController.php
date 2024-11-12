@@ -36,7 +36,7 @@ class EmployeeContentController extends Controller
     public function actionIndex($type, $faq_id = null, $clause_id = null)
     {
         $searchModel = new EmployeeContentSearch(['type' => $type, 'id' => $faq_id]);
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
+        $dataProvider = $searchModel->searchForEmployee(Yii::$app->request->queryParams, false);
 
         return $this->render('index', [
             'title' => EmployeeContent::itemAlias('Type', $type),
