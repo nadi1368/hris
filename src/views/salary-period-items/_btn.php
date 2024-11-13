@@ -217,6 +217,22 @@ if ($salaryPeriod->status === SalaryPeriod::STATUS_PAYMENT) {
             'data-title' => 'فایل مزایای غیر نقدی',
         ],
     ];
+
+    $operationItems[] = [
+        'label' => Html::tag('span', '', ['class' => 'fa fa-file']) . ' ' . 'ثبت سند پرداخت مزایای غیر نقدی',
+        'url' => 'javascript:void(0)',
+        'encode' => false,
+        'linkOptions' => [
+            'title' => 'ثبت سند پرداخت مزایای غیر نقدی',
+            'id' => 'shortcut-document-create-modal',
+            'data-size' => 'modal-xxl',
+            'data-title' => 'ثبت سند پرداخت مزایای غیر نقدی',
+            'data-toggle' => 'modal',
+            'data-target' => '#modal-pjax',
+            'data-url' => Url::to($salaryPeriod->createDocumentNonCashLink),
+            'data-reload-pjax-container-on-show' => 0,
+        ],
+    ];
     $operationItems[] = [
         'label' => Html::tag('span', '', ['class' => 'fa fa-print']) . ' ' . Module::t('module', 'Print'),
         'url' => ['print', 'id' => $salaryPeriod->id],
@@ -256,7 +272,7 @@ $operationItems[] = [
     ],
 ])
 ?>
-<?php if ( ($documentItems =$salaryPeriod->buttonDropdownDocument([])) && count($documentItems) > 0): ?>
+<?php if (($documentItems = $salaryPeriod->buttonDropdownDocument([])) && count($documentItems) > 0): ?>
     <?= ButtonDropdown::widget([
         'label' => 'اسناد',
         'options' => ['class' => ''],

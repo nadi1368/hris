@@ -22,6 +22,7 @@ use yii\helpers\ArrayHelper;
  * @package hesabro\hris\models
  * @author Nader <nader.bahadorii@gmail.com>
  *
+ * @property array createDocumentNonCashLink
  * @mixin MutexBehavior
  */
 class SalaryPeriod extends SalaryPeriodBase
@@ -487,6 +488,11 @@ class SalaryPeriod extends SalaryPeriodBase
         $link['DocumentSearch']['type'][] = Document::TYPE_SALARY_INSURANCE_ADDITION;
         $link['DocumentSearch']['type'][] = Document::TYPE_SALARY_PERIOD_PAYMENT;
         return Yii::$app->urlManager->createUrl(ArrayHelper::merge(['/document/index'], $link));
+    }
+
+    public function getCreateDocumentNonCashLink()
+    {
+        return ['/accounting/document/create-modal', 'salary_non_cash' => $this->id];
     }
 
     public function behaviors()
