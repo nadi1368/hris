@@ -492,7 +492,7 @@ class SalaryPeriod extends SalaryPeriodBase
 
     public function getCreateDocumentNonCashLink()
     {
-        return ['/accounting/document/create-modal', 'salary_non_cash' => $this->id];
+        return ['/document/create-modal', 'salary_non_cash' => $this->id];
     }
 
     public function behaviors()
