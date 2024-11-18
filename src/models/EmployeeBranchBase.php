@@ -20,6 +20,10 @@ use yii\helpers\ArrayHelper;
  * @property int $update_id
  * @property int $created
  * @property int $changed
+ * @property int $definite_id_salary
+ * @property int $account_id_salary
+ * @property int $definite_id_insurance_owner
+ * @property int $account_id_insurance_owner
  *
  * @property object $byManager
  * @property EmployeeBranchUser[] $branchUsers
@@ -49,9 +53,9 @@ class EmployeeBranchBase extends ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'manager'], 'required'],
+            [['title', 'manager', 'definite_id_salary', 'definite_id_insurance_owner'], 'required'],
             [['user_ids'], 'safe'],
-            [['manager', 'status', 'creator_id', 'update_id', 'created', 'changed'], 'integer'],
+            [['manager', 'status', 'creator_id', 'update_id', 'created', 'changed', 'definite_id_salary', 'account_id_salary', 'definite_id_insurance_owner', 'account_id_insurance_owner'], 'integer'],
             [['title'], 'string', 'max' => 32],
             [['manager'], 'exist', 'skipOnError' => true, 'targetClass' => Module::getInstance()->user, 'targetAttribute' => ['manager' => 'id']],
         ];
@@ -72,6 +76,10 @@ class EmployeeBranchBase extends ActiveRecord
             'created' => Module::t('module', 'Created'),
             'changed' => Module::t('module', 'Changed'),
             'user_ids' => Module::t('module', 'Employee User Ids'),
+            'definite_id_salary' => 'حساب معین حقوق و دستمزد',
+            'account_id_salary' => 'حساب تفضیل حقوق و دستمزد',
+            'definite_id_insurance_owner' => 'حساب معین بیمه سهم کارفرما',
+            'account_id_insurance_owner' => 'حساب تفضیل بیمه سهم کارفرما',
         ];
     }
 
@@ -200,11 +208,10 @@ class EmployeeBranchBase extends ActiveRecord
         if (!empty($deleted_user_ids)) {
 
             foreach ($deleted_user_ids as $user_id) {
-                if(SalaryPeriodItems::find()->andWhere(['user_id'=>$user_id])->limit(1)->one()!==null)
-                {
+                if (SalaryPeriodItems::find()->andWhere(['user_id' => $user_id])->limit(1)->one() !== null) {
                     $this->addError('user_ids', 'امکان حذف کارمند از شعبه وجود ندارد.فقط میتوانید شعبه آن را از بخش کارمندان دپارتمان تغییر دهید.');
                     return false;
-                }elseif (($model = EmployeeBranchUser::find()->andWhere(['user_id' => $user_id, 'branch_id' => $this->id])->one()) !== null && !$model->deleteWithLog()) {
+                } elseif (($model = EmployeeBranchUser::find()->andWhere(['user_id' => $user_id, 'branch_id' => $this->id])->one()) !== null && !$model->deleteWithLog()) {
                     $this->addError('user_ids', 'خطا در حذف کارمند از شعبه.');
                     return false;
                 }

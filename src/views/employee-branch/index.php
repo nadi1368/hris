@@ -36,7 +36,19 @@ $this->params['breadcrumbs'][] = $this->title;
             //'filterModel' => $searchModel,
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
-
+                [
+                    'class' => 'kartik\grid\ExpandRowColumn',
+                    'expandIcon' => '<span class="fal fa-chevron-down" style="font-size: 13px"></span>',
+                    'collapseIcon' => '<span class="fal fa-chevron-up" style="font-size: 13px"></span>',
+                    'value' => function ($model, $key, $index, $column) {
+                        return GridView::ROW_COLLAPSED;
+                    },
+                    'detail' => function ($model, $key, $index, $column) {
+                        return Yii::$app->controller->renderPartial('_index', [
+                            'model' => $model,
+                        ]);
+                    },
+                ],
                 'title',
                 [
                     'attribute' => 'manager',
