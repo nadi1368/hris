@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
         <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false">
-            <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+            <?= $this->render('_search', ['model' => $searchModel]); ?>
         </div>
     </div>
     <div class="card-body">
@@ -40,14 +40,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'title',
                 [
                     'attribute' => 'manager',
-                    'value' => function ($model) {
-                        return $model->byManager->fullName;
+                    'value' => function (EmployeeBranch $model) {
+                        return $model->byManager->linkEmployee;
                     },
                     'format' => 'raw',
                 ],
                 [
                     'attribute' => 'user_ids',
-                    'value' => function ($model) {
+                    'value' => function (EmployeeBranch $model) {
                         return $model->showUsersList();
                     },
                     'format' => 'raw',

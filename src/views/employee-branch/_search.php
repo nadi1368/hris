@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use hesabro\hris\Module;
 
 /* @var $this yii\web\View */
 /* @var $model hesabro\hris\models\EmployeeBranchSearch */
@@ -14,30 +15,22 @@ use yii\widgets\ActiveForm;
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
-<div class="card-body">
-    <div class="row">
-    <?= $form->field($model, 'id') ?>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3">
+                <?= $form->field($model, 'id') ?>
+            </div>
 
-    <?= $form->field($model, 'title') ?>
+            <div class="col-md-3">
+                <?= $form->field($model, 'title') ?>
+            </div>
 
-    <?= $form->field($model, 'manager') ?>
-
-    <?= $form->field($model, 'status') ?>
-
-    <?= $form->field($model, 'creator_id') ?>
-
-    <?php // echo $form->field($model, 'update_id') ?>
-
-    <?php // echo $form->field($model, 'created') ?>
-
-    <?php // echo $form->field($model, 'changed') ?>
-
-		<div class="col align-self-center text-right">
-			<?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-			<?= Html::resetButton('Reset', ['class' => 'btn btn-secondary']) ?>
-		</div>
-	</div>
-</div>
+            <div class="col align-self-center text-right">
+                <?= Html::submitButton(Module::t('module','Search'), ['class' => 'btn btn-primary']) ?>
+                <?= Html::resetButton(Module::t('module','Reset'), ['class' => 'btn btn-secondary']) ?>
+            </div>
+        </div>
+    </div>
     <?php ActiveForm::end(); ?>
 
 </div>

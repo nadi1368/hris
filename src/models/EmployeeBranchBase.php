@@ -165,7 +165,7 @@ class EmployeeBranchBase extends ActiveRecord
     {
         $branches = '';
         foreach ($this->getBranchUsers()->all() as $user) {
-            $branches .= '<label class="badge badge-info mr-2 mb-2">' . $user->user->fullName . ' </label> ';
+            $branches .= '<label class="badge badge-light mr-2 mb-2">' . $user->user->linkEmployee . ' </label> ';
         }
         return $branches;
     }

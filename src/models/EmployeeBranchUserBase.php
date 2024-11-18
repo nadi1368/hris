@@ -440,6 +440,7 @@ class EmployeeBranchUserBase extends ActiveRecord
             'date_of_marriage' => Module::t('module', 'Date Of Marriage'),
             'reject_update_description' => Module::t('module', 'Reject Description'),
             'count_insurance_addition' => 'تعداد بیمه تکمیلی',
+            'branch' => 'دپارتمان',
         ];
     }
 

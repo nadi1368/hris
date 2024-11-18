@@ -16,6 +16,7 @@ use common\models\Year;
 use hesabro\hris\Module;
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 
 /**
  * @mixin StorageUploadBehavior
@@ -60,6 +61,7 @@ class EmployeeBranchUser extends EmployeeBranchUserBase implements SendAutoComme
         $data = array_merge(parent::getInsuranceData($for_contract), [
             'national' => is_array(Module::getInstance()->user::itemAlias('National', $this->national)) ? null : Module::getInstance()->user::itemAlias('National', $this->national),
             'sex' => is_array(Module::getInstance()->user::itemAlias('SexTitle', $this->sex)) ? null : Module::getInstance()->user::itemAlias('SexTitle', $this->sex),
+            'branch'=> Html::a($this->branch->title, ['/pulse/employee-branch/index', 'EmployeeBranchSearch[id]' => $this->branch_id], ['class'=>'text-info']),
         ]);
 
         if ($for_contract) {
