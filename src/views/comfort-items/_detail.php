@@ -28,7 +28,7 @@ use yii\helpers\Html;
     </div>
     <div class="card-body">
         <?php
-            $img = Html::img($model->getStorageFileUrl('attach'), ['class' => 'img-responsive', 'width' => '200px']);
+            $img = Html::img($model->getFileUrl('attach'), ['class' => 'img-responsive', 'width' => '200px']);
             echo Html::a($img, ['view-attach', 'id' => $model->id], ['class' => 'showModalButton']);
         ?>
     </div>
