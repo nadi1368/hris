@@ -464,7 +464,7 @@ class SalaryPeriodItemsController extends Controller
                 }
             } catch (\Exception $e) {
                 $transaction->rollBack();
-                Yii::error($e->getMessage() . $e->getTraceAsString(), __METHOD__ . ':' . __LINE__);
+                Yii::error($e->getMessage() . $e->getTraceAsString(), Yii::$app->controller->id.'/'.Yii::$app->controller->action->id);
                 $result = [
                     'status' => false,
                     'message' => $e->getMessage()
@@ -476,8 +476,8 @@ class SalaryPeriodItemsController extends Controller
                 'message' => Module::t('module', "It is not possible to perform this operation")
             ];
         }
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return $result;
+
+        return $this->asJson($result);
     }
 
 
@@ -521,15 +521,14 @@ class SalaryPeriodItemsController extends Controller
                 }
             } catch (\Exception $e) {
                 $transaction->rollBack();
-                Yii::error($e->getMessage() . $e->getTraceAsString(), __METHOD__ . ':' . __LINE__);
+                Yii::error($e->getMessage() . $e->getTraceAsString(), Yii::$app->controller->id.'/'.Yii::$app->controller->action->id);
                 $result = [
                     'success' => false,
                     'msg' => $e->getMessage()
                 ];
             }
 
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return $result;
+            return $this->asJson($result);
         }
 
         $this->performAjaxValidation($model);
@@ -583,8 +582,7 @@ class SalaryPeriodItemsController extends Controller
                 'message' => Module::t('module', "It is not possible to perform this operation")
             ];
         }
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return $result;
+        return $this->asJson($result);
     }
 
     /**
@@ -629,8 +627,7 @@ class SalaryPeriodItemsController extends Controller
                 'message' => Module::t('module', "Error In Save Info")
             ];
         }
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return $result;
+        return $this->asJson($result);
     }
 
 
