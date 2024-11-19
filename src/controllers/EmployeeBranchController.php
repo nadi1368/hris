@@ -64,7 +64,7 @@ class EmployeeBranchController extends Controller
                         [
                             'allow' => true,
                             'roles' => ['EmployeeBranch/update', 'superadmin'],
-                            'actions' => ['update', 'update-user', 'insurance-data', 'reject-update', 'year-setting', 'update-year-setting', 'set-end-work', 'start-work-again', 'return-end-work']
+                            'actions' => ['update', 'update-user', 'insurance-data', 'reject-update', 'year-setting', 'update-year-setting', 'set-end-work', 'start-work-again', 'return-end-work', 'change-branch']
                         ],
                         [
                             'allow' => true,
@@ -557,6 +557,38 @@ class EmployeeBranchController extends Controller
         ]);
     }
 
+    public function actionChangeBranch($user_id)
+    {
+        $model = $this->findModelUser($user_id);
+        $model->setScenario(EmployeeBranchUser::SCENARIO_CHANGE_BRANCH);
+        $result = [
+            'success' => false,
+            'msg' => Yii::t("app", "Error In Save Info")
+        ];
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                $flag = $model->save(false);
+                if ($flag) {
+                    $result = [
+                        'success' => true,
+                        'msg' => Yii::t("app", "Item Updated")
+                    ];
+                    $transaction->commit();
+                } else {
+                    $transaction->rollBack();
+                }
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                Yii::error($e->getMessage() . $e->getTraceAsString(), Yii::$app->controller->id.'/'.Yii::$app->controller->action->id);
+            }
+            return $this->asJson($result);
+        }
+        $this->performAjaxValidation($model);
+        return $this->renderAjax('_change-branch', [
+            'model' => $model,
+        ]);
+    }
     /**
      * Finds the Year model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

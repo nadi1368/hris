@@ -56,6 +56,8 @@ class EmployeeBranchUserBase extends ActiveRecord
 
     const SCENARIO_REJECT_UPDATE = 'reject_update';
 
+    const SCENARIO_CHANGE_BRANCH = 'change_branch';
+
     const MARITAL_MARRIED = 1;
     const MARITAL_SINGLE = 2;
 
@@ -213,6 +215,7 @@ class EmployeeBranchUserBase extends ActiveRecord
         return [
             [['user_id', 'branch_id'], 'required'],
             [['end_work'], 'required', 'on' => [self::SCENARIO_SET_END_WORK]],
+            [['branch_id'], 'required', 'on' => [self::SCENARIO_CHANGE_BRANCH]],
             [['salary', 'branch_id', 'account_id'], 'required', 'on' => [self::SCENARIO_UPDATE]],
             [['start_work', 'birthday', 'issue_date'], DateValidator::class, 'on' => [self::SCENARIO_INSURANCE, self::SCENARIO_UPDATE_PROFILE]],
             [['nationalCode'], NationalCodeValidator::class, 'on' => [self::SCENARIO_INSURANCE, self::SCENARIO_UPDATE_PROFILE]],
@@ -354,6 +357,9 @@ class EmployeeBranchUserBase extends ActiveRecord
             'work_history_day_count', 'email', 'employee_address', 'sh_picture_first', 'sh_picture_second',
             'sh_picture_third', 'id_card_front', 'id_card_back', 'education_picture', 'insurance_history',
             'date_of_marriage', 'resume_file', 'military_doc', 'military_description', 'child_count'
+        ];
+        $scenarios[self::SCENARIO_CHANGE_BRANCH] = [
+            'branch_id'
         ];
 
         return $scenarios;

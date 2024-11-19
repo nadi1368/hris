@@ -101,11 +101,20 @@ use yii\widgets\Pjax;
                 'data-toggle' => 'modal',
                 'data-target' => '#modal-pjax',
                 'data-url' => Url::to(['insurance-data', 'branch_id' => $model->branch_id, 'user_id' => $model->user_id]),
-                'data-reload-pjax-container-on-show' => false,
                 'data-hide-previous-modal' => '#modal',
-                'data-handle-form-submit' => 1,
-                'disabled' => true,
             ]) : '' ?>
+        <?= Html::a('تغییر دپارتمان',
+            'javascript:void(0)', [
+                'title' => 'تغییر دپارتمان',
+                'id' => 'insurance-data' . $model->user_id,
+                'class' => 'btn btn-primary',
+                'data-size' => 'modal-xl',
+                'data-title' => 'تغییر دپارتمان',
+                'data-toggle' => 'modal',
+                'data-target' => '#modal-pjax',
+                'data-url' => Url::to(['change-branch', 'user_id' => $model->user_id]),
+                'data-hide-previous-modal' => '#modal',
+            ])  ?>
         <?= Html::a('اطلاعات کاربری', ['/user-main/view-ajax', 'id' => $model->user_id], ['class' => 'btn btn-success showModalButton', 'data-pjax' => '0', 'title' => $model->user->fullName]) ?>
         <?= Html::a('دروه حقوق های قبلی', ['salary-period-items/user', 'id' => $model->user_id], ['class' => 'btn btn-info', 'title' => 'مشاهده دروه حقوق های قبلی این کارمند']) ?>
         <?= Html::a(Module::t('module', 'Log'), ['/mongo/log/view-ajax', 'modelId' => $model->user_id, 'modelClass' => EmployeeBranchUser::OLD_CLASS_NAME], ['class' => 'btn btn-secondary showModalButton', 'data-pjax' => '0', 'title' => Module::t('module', 'Log')]) ?>
