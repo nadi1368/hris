@@ -105,7 +105,7 @@ class ComfortItemsBase extends \yii\db\ActiveRecord
             [['comfort_id', 'user_id', 'amount'], 'required'],
             [['amount'], 'validateComfort', 'on' => [self::SCENARIO_CREATE, self::SCENARIO_LOAN_CREATE]],
             [['amount'], 'validateComfortAdminConfirm', 'on' => [self::SCENARIO_UPDATE_ADMIN]],
-            [['file_name'], 'file', 'skipOnEmpty' => false, 'extensions' => ['jpg', 'jpeg', 'png', 'pdf'], 'maxSize' => 1024 * 1024 * 8],
+            [['attach'], 'file', 'skipOnEmpty' => true, 'extensions' => ['jpg', 'jpeg', 'png', 'pdf'], 'maxSize' => 1024 * 1024 * 8],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Module::getInstance()->user, 'targetAttribute' => ['user_id' => 'id']],
             [['comfort_id'], 'exist', 'skipOnError' => true, 'targetClass' => Comfort::class, 'targetAttribute' => ['comfort_id' => 'id'],
                 'filter' => function ($query) {
