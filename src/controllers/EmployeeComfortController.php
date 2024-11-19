@@ -135,9 +135,9 @@ class EmployeeComfortController extends Controller
             if ($model->validate()) {
                 $transaction = Yii::$app->db->beginTransaction();
                 try {
-                    $comfort->document_required && $model->attach = uniqid() . '.' . $model->file_name->extension;
+//                    $comfort->document_required && $model->attach = uniqid() . '.' . $model->file_name->extension;
                     $flag = $model->save(false);
-                    $flag = $comfort->document_required ? ($flag && $model->uploadFileToCdn('file_name', $model->attach)) : true;
+//                    $flag = $comfort->document_required ? ($flag && $model->uploadFileToCdn('file_name', $model->attach)) : true;
                     if ($flag) {
                         $result = [
                             'success' => true,
