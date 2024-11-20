@@ -146,8 +146,7 @@ class EmployeeComfortController extends Controller
                     $transaction->rollBack();
                     Yii::error($e->getMessage() . $e->getTraceAsString(), Yii::$app->controller->id . '/' . Yii::$app->controller->action->id);
                 }
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                return $result;
+                return $this->asJson($result);
             }
         }
         $this->performAjaxValidation($model);
@@ -197,8 +196,7 @@ class EmployeeComfortController extends Controller
                 'message' => Module::t('module', "It is not possible to perform this operation")
             ];
         }
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return $result;
+        return $this->asJson($result);
     }
 
     /**
