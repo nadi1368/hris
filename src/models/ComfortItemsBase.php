@@ -6,6 +6,8 @@ use hesabro\helpers\behaviors\JsonAdditional;
 use hesabro\changelog\behaviors\LogBehavior;
 use hesabro\errorlog\behaviors\TraceBehavior;
 use hesabro\hris\Module;
+use mamadali\S3Storage\behaviors\StorageUploadBehavior;
+use mamadali\S3Storage\components\S3Storage;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -34,6 +36,8 @@ use yii\db\ActiveQuery;
  * @property SalaryPeriodItems $salaryItems
  * @property Comfort $comfort
  * @property-read object[] $comments
+ *
+ * @mixin StorageUploadBehavior
  */
 class ComfortItemsBase extends \yii\db\ActiveRecord
 {
@@ -65,7 +69,7 @@ class ComfortItemsBase extends \yii\db\ActiveRecord
 
     public ?EmployeeBranchUser $employee = null;
 
-    public $file_name;
+    public $attach;
 
     public string $error_msg = '';
     public bool $saveAdvanceMoney = false;
@@ -105,7 +109,7 @@ class ComfortItemsBase extends \yii\db\ActiveRecord
             [['comfort_id', 'user_id', 'amount'], 'required'],
             [['amount'], 'validateComfort', 'on' => [self::SCENARIO_CREATE, self::SCENARIO_LOAN_CREATE]],
             [['amount'], 'validateComfortAdminConfirm', 'on' => [self::SCENARIO_UPDATE_ADMIN]],
-            [['file_name'], 'file', 'skipOnEmpty' => false, 'extensions' => ['jpg', 'jpeg', 'png', 'pdf'], 'maxSize' => 1024 * 1024 * 8],
+            [['attach'], 'file', 'skipOnEmpty' => false, 'extensions' => ['jpg', 'jpeg', 'png', 'pdf'], 'maxSize' => 1024 * 1024 * 8],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Module::getInstance()->user, 'targetAttribute' => ['user_id' => 'id']],
             [['comfort_id'], 'exist', 'skipOnError' => true, 'targetClass' => Comfort::class, 'targetAttribute' => ['comfort_id' => 'id'],
                 'filter' => function ($query) {
@@ -127,12 +131,12 @@ class ComfortItemsBase extends \yii\db\ActiveRecord
 
 
         if ($this->comfort->document_required) {
-            $dynamicFields[] = 'file_name';
+            $dynamicFields[] = 'attach';
         }
 
         $scenarios[self::SCENARIO_DELETE] = [];
-        $scenarios[self::SCENARIO_CREATE] = array_merge(['!comfort_id', '!user_id', 'amount', 'description'], $dynamicFields);
-        $scenarios[self::SCENARIO_LOAN_CREATE] = array_merge(['!comfort_id', '!user_id', 'amount', 'loan_installment', 'description'], $dynamicFields);
+        $scenarios[self::SCENARIO_CREATE] = ['!comfort_id', '!user_id', 'amount', 'description', ...$dynamicFields];
+        $scenarios[self::SCENARIO_LOAN_CREATE] = ['!comfort_id', '!user_id', 'amount', 'loan_installment', 'description', ...$dynamicFields];
         $scenarios[self::SCENARIO_UPDATE_ADMIN] = ['amount', 'description', 'saveAdvanceMoney'];
         $scenarios[self::SCENARIO_CONFIRM] = ['amount', 'description', 'saveAdvanceMoney', 'salary_items_addition_id'];
         $scenarios[self::SCENARIO_REJECT] = ['reject_description'];
@@ -509,6 +513,13 @@ class ComfortItemsBase extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
+            'StorageUploadBehavior' => [
+                'class' => StorageUploadBehavior::class,
+                'attributes' => ['attach'],
+                'accessFile' => S3Storage::ACCESS_PRIVATE,
+                'scenarios' => [self::SCENARIO_CREATE],
+                'path' => 'hris/comfort-items/{id}',
+            ],
             [
                 'class' => TimestampBehavior::class,
                 'createdAtAttribute' => 'created',

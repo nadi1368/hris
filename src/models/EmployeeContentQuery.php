@@ -47,15 +47,6 @@ class EmployeeContentQuery extends ActiveQuery
         return $this->andWhere(['type' => $type]);
     }
 
-    public function byCurrentClientAccess(): self
-    {
-        if (isset(Yii::$app->client)) {
-            $this->byClientAccess(Yii::$app->client->id);
-        }
-
-        return $this;
-    }
-
     public function byCustomJobTags($tags): self
     {
         return $this->andWhere(['OR',

@@ -1,12 +1,13 @@
 <?php
 
-use hesabro\helpers\widgets\WageFormWidget;
+use common\models\OrderPayBalance;
+use common\models\Tafzil;
 use common\models\Hesab;
+use hesabro\helpers\widgets\WageFormWidget;
+use hesabro\hris\models\AdvanceMoney;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 use yii\widgets\MaskedInput;
-use common\models\OrderPayBalance;
-use common\models\Tafzil;
 use yii\web\JsExpression;
 use kartik\select2\Select2;
 use yii\helpers\Url;
@@ -14,7 +15,7 @@ use yii\helpers\Url;
 use common\models\Document;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\AdvanceMoney */
+/* @var $model AdvanceMoney */
 /* @var $form yii\widgets\ActiveForm */
 
 ?>
@@ -40,7 +41,7 @@ use common\models\Document;
                             'maximumSelected' => new JsExpression("function () { return 'حداکثر انتخاب شده'; }"),
                         ],
                         'ajax' => [
-                            'url' => Url::to($model->getMDebtorUrl()),
+                            'url' => $model->getDefiniteUrl(),
                             'dataType' => 'json',
                             'data' => new JsExpression('function(params) { return {q:params.term}; }')
                         ],

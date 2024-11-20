@@ -341,11 +341,8 @@ class ComfortBase extends ActiveRecord
     public function softDelete(): bool
     {
         $this->status = self::STATUS_DELETED;
-        if ($this->save()) {
-            return true;
-        } else {
-            return false;
-        }
+
+        return $this->save(false);
     }
 
     public static function itemAlias($type, $code = NULL)

@@ -79,7 +79,7 @@ $this->registerCss($styles);
 
             <?php if ($comfort->document_required) : ?>
                 <div class="col-md-12">
-                    <?= $form->field($model, "file_name")->fileInput() ?>
+                    <?= $form->field($model, "attach")->fileInput() ?>
                 </div>
             <?php endif; ?>
         <?php endif; ?>

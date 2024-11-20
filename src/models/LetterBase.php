@@ -118,9 +118,9 @@ class LetterBase extends Model
                     $transaction->rollBack();
                     return false;
                 }
+                $this->employeeRequest->au_letter_id = $auLetter->id;
             }
 
-            $this->employeeRequest->au_letter_id = $auLetter->id;
             $confirm = $this->employeeRequest->confirm();
             $transaction->commit();
 
@@ -166,3 +166,4 @@ class LetterBase extends Model
         return $auLetter;
     }
 }
+

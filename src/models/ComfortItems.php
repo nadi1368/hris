@@ -17,11 +17,6 @@ class ComfortItems extends ComfortItemsBase implements SendAutoCommentInterface
     {
         return array_merge(parent::behaviors(), [
             [
-                'class' => CdnUploadFileBehavior::class,
-                'model_class' => 'Comfort',
-                'allowed_mime_types' => 'application,image',
-            ],
-            [
                 'class' => SendAutoCommentsBehavior::class,
                 'type' => CommentsType::REQUEST_COMFORT,
                 'title' => 'ثبت درخواست امکانات رفاهی',
