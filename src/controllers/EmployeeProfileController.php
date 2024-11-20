@@ -204,7 +204,6 @@ class EmployeeProfileController extends Controller
         $employee = $this->findEmployeeBranchUser($userId);
         $time = time();
         $bannersQuery = EmployeeContent::find()
-            ->byCurrentClientAccess()
             ->byCustomUserId($userId)
             ->byIsBanner(true)
             ->byShowStartAt($time)

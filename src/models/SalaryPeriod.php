@@ -3,6 +3,7 @@
 namespace hesabro\hris\models;
 
 use hesabro\changelog\behaviors\LogBehavior;
+use hesabro\helpers\behaviors\DocumentsDataBehavior;
 use hesabro\helpers\behaviors\JsonAdditional;
 use hesabro\hris\Module;
 use Yii;
@@ -14,7 +15,6 @@ use common\models\UserPoints;
 use common\models\Year;
 use common\models\Mutex;
 use common\behaviors\MutexBehavior;
-use common\behaviors\DocumentsDataBehavior;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -473,7 +473,7 @@ class SalaryPeriod extends SalaryPeriodBase
         return $flag;
     }
 
-    /**
+    /**7
      * @return mixed
      */
     public function getDocumentLink()

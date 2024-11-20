@@ -2,13 +2,14 @@
 
 namespace hesabro\hris\models;
 
+use hesabro\helpers\behaviors\DocumentsDataBehavior;
 use common\models\AccountDefinite;
 use common\models\CommentsType;
 use common\behaviors\SendAutoCommentsBehavior;
 use common\interfaces\SendAutoCommentInterface;
-use hesabro\hris\Module;
-use Yii;
-use yii\helpers\Html;
+use common\behaviors\MutexBehavior;
+use common\models\Document;
+use yii\helpers\Url;
 
 class AdvanceMoney extends AdvanceMoneyBase implements SendAutoCommentInterface
 {
@@ -117,5 +118,57 @@ class AdvanceMoney extends AdvanceMoneyBase implements SendAutoCommentInterface
     public function getTCreditorItems() : array
     {
         return [];
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefiniteUrl(): string
+    {
+        return Url::to(['/account-definite/find', 'level' => 3, 'is_account' => 1]);
+    }
+
+    /**
+     * @return string
+     */
+    public function getAccountUrl(): string
+    {
+        return Url::to(['/account/get-account']);
+    }
+
+    /**
+     * @param bool $link
+     * @return string
+     */
+    public function getDefiniteSalaryTitle(bool $link = false): string
+    {
+        return '';
+    }
+
+    /**
+     * @param bool $link
+     * @return string
+     */
+    public function getAccountSalaryTitle(bool $link = false): string
+    {
+        return '';
+    }
+
+    /**
+     * @param bool $link
+     * @return string
+     */
+    public function getDefiniteInsuranceTitle(bool $link = false): string
+    {
+        return '';
+    }
+
+    /**
+     * @param bool $link
+     * @return string
+     */
+    public function getAccountInsuranceTitle(bool $link = false): string
+    {
+        return '';
     }
 }

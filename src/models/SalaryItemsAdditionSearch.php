@@ -27,7 +27,7 @@ class SalaryItemsAdditionSearch extends SalaryItemsAdditionSearchBase
             ])
             ->andWhere([$kindColumn => [SalaryItemsAddition::KIND_LEAVE_HOURLY, SalaryItemsAddition::KIND_LEAVE_DAILY]])
             ->andWhere([SalaryItemsAddition::tableName() . '.status' => SalaryItemsAddition::STATUS_CONFIRM])
-            ->andWhere(['IN', SalaryItemsAddition::tableName() . '.user_id', array_map(fn(User $user) => $user->id, $employees)])
+            ->andWhere(['IN', SalaryItemsAddition::tableName() . '.user_id', array_map(fn($user) => $user->id, $employees)])
             ->groupBy([SalaryItemsAddition::tableName() .'.user_id', 'month'])
             ->orderBy([SalaryItemsAddition::tableName() .'.user_id' => SORT_ASC, 'year' => SORT_ASC, 'month' => SORT_ASC]);
 
