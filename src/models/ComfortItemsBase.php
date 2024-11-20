@@ -69,7 +69,7 @@ class ComfortItemsBase extends \yii\db\ActiveRecord
 
     public ?EmployeeBranchUser $employee = null;
 
-    public $attach;
+    //public $attach;
 
     public string $error_msg = '';
     public bool $saveAdvanceMoney = false;
