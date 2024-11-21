@@ -4,6 +4,7 @@ use hesabro\hris\models\EmployeeBranch;
 use hesabro\helpers\widgets\grid\GridView;
 use hesabro\hris\Module;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel hesabro\hris\models\EmployeeBranchSearch */
@@ -22,6 +23,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 </a>
             </h4>
             <div>
+                <?= Html::button(Module::t('module', 'Hiring'), [
+                    'class' => 'btn btn-success text-white',
+                    'data-size' => 'modal-lg',
+                    'data-title' => Module::t('module', 'Hiring'),
+                    'data-toggle' => 'modal',
+                    'data-target' => '#modal-pjax',
+                    'data-url' => Url::to(['employee-branch-user/create']),
+                    'data-reload-pjax-container' => 'pjax-employee-branch',
+                ]); ?>
                 <?= Html::a(Module::t('module', 'Create'), ['create'], ['class' => 'btn btn-success']) ?>
                 <?= Html::a(Module::t('module', 'Employee Branch User'), ['users'], ['class' => 'btn btn-info']) ?>
             </div>
@@ -33,7 +43,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="card-body">
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
-            //'filterModel' => $searchModel,
+            'pjax' => true,
+            'pjaxSettings' => [
+                'options' => [
+                    'id' => 'pjax-employee-branch'
+                ],
+            ],
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
                 [

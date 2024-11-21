@@ -18,6 +18,12 @@ class Module extends BaseModule
 
     public string | null $settingsCategory = null;
 
+    public string | null $assignment = null;
+
+    public array $hiringAttachRoles = [];
+
+    public array $hiringDetachRoles = [];
+
     public string | null $productLogo = null;
 
     public array | null $userFindUrl = ['/user/get-user-list'];
