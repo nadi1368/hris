@@ -35,7 +35,6 @@ class SalaryPeriodItems extends SalaryPeriodItemsBase
     {
         return UserPoints::countRequestPayment($userId);
     }
-
     /**
      * @param $account_id
      * @return int
