@@ -226,7 +226,7 @@ class SalaryItemsAdditionBase extends \yii\db\ActiveRecord
     {
         if ($this->to_date - $this->from_date <= 0) {
             $this->addError($attribute, Module::t('module', "Minimum Range of Daily Leave is 1 Day and Days Start From daybreak"));
-        } elseif ((date('z', $this->to_date) - date('z', $this->from_date)) > 1 && Yii::$app->jdf::jdate("Y/m", $this->from_date) != Yii::$app->jdf::jdate("Y/m", $this->to_date)) {
+        } elseif ((date('z', $this->to_date) - date('z', $this->from_date)) > 1 && Yii::$app->jdf::jdate("Y/m", $this->from_date) != Yii::$app->jdf::jdate("Y/m", $this->to_date) && Yii::$app->jdf::jdate("d", $this->to_date) > 1) {
             $this->addError($attribute, 'مرخصی روزانه باید در یک ماه باشد.اگر در دوماه می باشد.لطفا ۲ مرخصی ثبت نمایید.');
         }
     }

@@ -7,7 +7,7 @@ use console\job\SmsArrayJob;
 use common\models\Year;
 use Yii;
 use hesabro\hris\Module;
-
+use common\models\BalanceDetailed;
 /**
  * Class SalaryPeriodItems
  * @package hesabro\hris\models
