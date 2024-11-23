@@ -91,7 +91,7 @@ use yii\helpers\Url;
                                         'data-title' => Module::t('module', 'Update') . ' - ' . $model->user->fullName,
                                         'data-toggle' => 'modal',
                                         'data-target' => '#modal-pjax',
-                                        'data-url' => Url::to([Module::createUrl('employee-branch/update-user'), 'branch_id' => $model->branch_id, 'user_id' => $model->user_id]),
+                                        'data-url' => Url::to(['employee-branch/update-user', 'branch_id' => $model->branch_id, 'user_id' => $model->user_id]),
                                         'data-reload-pjax-container' => "p-jax-salary-period-items",
                                     ],
                                 ];
@@ -105,7 +105,7 @@ use yii\helpers\Url;
                                         'data-title' => Module::t('module', 'Insurance Data') . ' - ' . $model->user->fullName,
                                         'data-toggle' => 'modal',
                                         'data-target' => '#modal-pjax',
-                                        'data-url' => Url::to([Module::createUrl('employee-branch/insurance-data'), 'branch_id' => $model->branch_id, 'user_id' => $model->user_id]),
+                                        'data-url' => Url::to(['employee-branch/insurance-data', 'branch_id' => $model->branch_id, 'user_id' => $model->user_id]),
                                         'data-reload-pjax-container' => "p-jax-salary-period-items",
                                     ],
                                 ];
