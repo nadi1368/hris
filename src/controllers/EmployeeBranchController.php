@@ -455,6 +455,7 @@ class EmployeeBranchController extends Controller
                 $model->history[] = $history;
                 $model->start_work = Yii::$app->jdf->jdate("Y/m/01");
                 $model->end_work = '';
+                $model->updateSettlements(false);
                 $flag = $model->save(false);
                 if ($flag) {
                     $transaction->commit();
