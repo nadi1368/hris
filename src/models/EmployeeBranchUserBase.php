@@ -47,6 +47,8 @@ class EmployeeBranchUserBase extends ActiveRecord
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 0;
 
+    const SCENARIO_CREATE = 'create';
+
     const SCENARIO_UPDATE = "update";
     const SCENARIO_INSURANCE = "insurance";
     const SCENARIO_SET_END_WORK = "set_end_work";
@@ -332,6 +334,14 @@ class EmployeeBranchUserBase extends ActiveRecord
             ],
             ['reject_update_description', 'required', 'on' => [self::SCENARIO_REJECT_UPDATE]],
             ['reject_update_description', 'string', 'on' => [self::SCENARIO_REJECT_UPDATE]],
+            [
+                'user_id',
+                'unique',
+                'targetAttribute' => ['user_id', 'branch_id'],
+                'targetClass' => EmployeeBranchUser::class,
+                'message' => 'این کارمند قبلا در این شعبه تعریف شده است.',
+                'on' => [self::SCENARIO_CREATE]
+            ],
         ];
     }
 
@@ -339,6 +349,7 @@ class EmployeeBranchUserBase extends ActiveRecord
     {
         $scenarios = parent::scenarios();
 
+        $scenarios[self::SCENARIO_CREATE] = ['user_id', 'branch_id'];
         $scenarios[self::SCENARIO_UPDATE] = ['salary', 'shaba', 'shaba_non_cash', 'account_non_cash', 'delete_point', 'branch_id', 'branch_id', 'shift', 'roll_call_id', 'manager', 'email', 'account_id', 'confirmed'];
         $scenarios[self::SCENARIO_SET_END_WORK] = ['end_work'];
         $scenarios[self::SCENARIO_RETURN_END_WORK] = ['delete_document_end_work'];
