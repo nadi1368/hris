@@ -198,6 +198,14 @@ class EmployeeBranchUserBase extends ActiveRecord
 
     public $reject_update_description_seen = false;
 
+    public bool|null $settlement_leave = false;
+
+    public bool|null $settlement_loans = false;
+
+    public bool|null $settlement_comforts = false;
+
+    public bool|null $settlement_insurance_addition = false;
+
     /**
      * {@inheritdoc}
      */
@@ -216,7 +224,7 @@ class EmployeeBranchUserBase extends ActiveRecord
         $married = self::MARITAL_MARRIED;
         return [
             [['user_id', 'branch_id'], 'required'],
-            [['end_work'], 'required', 'on' => [self::SCENARIO_SET_END_WORK]],
+            [['end_work','settlement_leave', 'settlement_loans', 'settlement_comforts', 'settlement_insurance_addition'], 'required', 'on' => [self::SCENARIO_SET_END_WORK]],
             [['branch_id'], 'required', 'on' => [self::SCENARIO_CHANGE_BRANCH]],
             [['salary', 'branch_id', 'account_id'], 'required', 'on' => [self::SCENARIO_UPDATE]],
             [['start_work', 'birthday', 'issue_date'], DateValidator::class, 'on' => [self::SCENARIO_INSURANCE, self::SCENARIO_UPDATE_PROFILE]],
@@ -342,6 +350,11 @@ class EmployeeBranchUserBase extends ActiveRecord
                 'message' => 'این کارمند قبلا در این شعبه تعریف شده است.',
                 'on' => [self::SCENARIO_CREATE]
             ],
+            [
+                ['settlement_leave', 'settlement_loans', 'settlement_comforts', 'settlement_insurance_addition'],
+                'validateAccepted',
+                'on' => [self::SCENARIO_SET_END_WORK]
+            ]
         ];
     }
 
@@ -351,7 +364,7 @@ class EmployeeBranchUserBase extends ActiveRecord
 
         $scenarios[self::SCENARIO_CREATE] = ['user_id', 'branch_id'];
         $scenarios[self::SCENARIO_UPDATE] = ['salary', 'shaba', 'shaba_non_cash', 'account_non_cash', 'delete_point', 'branch_id', 'branch_id', 'shift', 'roll_call_id', 'manager', 'email', 'account_id', 'confirmed'];
-        $scenarios[self::SCENARIO_SET_END_WORK] = ['end_work'];
+        $scenarios[self::SCENARIO_SET_END_WORK] = ['end_work', 'settlement_leave', 'settlement_loans', 'settlement_comforts', 'settlement_insurance_addition'];
         $scenarios[self::SCENARIO_RETURN_END_WORK] = ['delete_document_end_work'];
         $scenarios[self::SCENARIO_REJECT_UPDATE] = ['reject_update_description'];
         $scenarios[self::SCENARIO_INSURANCE] = [
@@ -391,6 +404,13 @@ class EmployeeBranchUserBase extends ActiveRecord
 
         if ($this->isConfirmed) {
             $this->addError($attribute, 'امکان ویرایش وجود ندارد.');
+        }
+    }
+
+    public function validateAccepted($attribute, $params)
+    {
+        if (!$this->{$attribute}) {
+            $this->addError($attribute, $this->getAttributeLabel($attribute) . ' باید انجام شده باشد.');
         }
     }
 
@@ -458,6 +478,10 @@ class EmployeeBranchUserBase extends ActiveRecord
             'reject_update_description' => Module::t('module', 'Reject Description'),
             'count_insurance_addition' => 'تعداد بیمه تکمیلی',
             'branch' => 'دپارتمان',
+            'settlement_leave' => 'بررسی مرخصی‌ها',
+            'settlement_loans' => 'تسویه حساب وام‌ها',
+            'settlement_comforts' => 'تسویه حساب امکانات رفاهی (پی‌بای)',
+            'settlement_insurance_addition' => 'تسویه حساب بیمه تکمیلی',
         ];
     }
 
@@ -923,6 +947,10 @@ class EmployeeBranchUserBase extends ActiveRecord
                     'shaba_non_cash' => 'String',
                     'account_non_cash' => 'String',
                     'count_insurance_addition' => 'Integer',
+                    'settlement_leave' => 'Boolean',
+                    'settlement_loans' => 'Boolean',
+                    'settlement_comforts' => 'Boolean',
+                    'settlement_insurance_addition' => 'Boolean',
                 ],
 
             ],
@@ -1181,5 +1209,13 @@ class EmployeeBranchUserBase extends ActiveRecord
     public function getFileSizeHint(): string
     {
         return Module::t('module', 'Maximum File Size', ['size' => self::MAX_FILE_SIZE / 1024 . 'KB']);
+    }
+
+    public function updateSettlements(bool $value = true): void
+    {
+        $this->settlement_leave = $value;
+        $this->settlement_comforts = $value;
+        $this->settlement_loans = $value;
+        $this->settlement_insurance_addition = $value;
     }
 }

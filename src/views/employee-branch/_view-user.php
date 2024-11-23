@@ -56,7 +56,7 @@ use yii\widgets\Pjax;
                 'title' => Module::t('module', 'Set End Work'),
                 'id' => 'set-end-work' . $model->user_id,
                 'class' => 'btn btn-primary',
-                'data-size' => 'modal-lg',
+                'data-size' => '',
                 'data-title' => Module::t('module', 'Set End Work'),
                 'data-toggle' => 'modal',
                 'data-target' => '#modal-pjax',
