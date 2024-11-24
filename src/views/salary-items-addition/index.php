@@ -6,6 +6,7 @@ use yii\helpers\Html;
 use hesabro\helpers\widgets\grid\GridView;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
+use yii\bootstrap4\ButtonDropdown;
 
 /* @var $this yii\web\View */
 /* @var $searchModel hesabro\hris\models\SalaryItemsAdditionSearch */
@@ -130,83 +131,118 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'class' => 'common\widgets\grid\ActionColumn',
-                    'template' => "{update}{delete}{confirm}{reject}{log}{returnStatus}",
+                    'contentOptions' => ['style' => 'width:100px;text-align:left;'],
+                    'template' => '{group}',
                     'buttons' => [
-                        'update' => function ($url, SalaryItemsAddition $model, $key) {
-                            return $model->canUpdate() ? Html::a('<span class="fa fa-edit text-primary"></span>',
-                                'javascript:void(0)', [
-                                    'title' => Module::t('module', 'Update'),
-                                    'data-size' => 'modal-lg',
-                                    'data-title' => Module::t('module', 'Update'),
-                                    'data-toggle' => 'modal',
-                                    'data-target' => '#modal-pjax',
-                                    'data-url' => Url::to(['update', 'id' => $model->id]),
-                                    'data-action' => 'edit-ipg',
-                                    'data-reload-pjax-container' => 'salary-items-addition',
-                                    'data-handleFormSubmit' => 1,
-                                    'disabled' => true
-                                ]) : '';
-                        },
-                        'delete' => function ($url, SalaryItemsAddition $model, $key) {
-                            return $model->canDelete() ? Html::a(Html::tag('span', '', ['class' => "far fa-trash-alt ml-2"]), 'javascript:void(0)',
-                                [
-                                    'title' => Module::t('module', 'Delete'),
-                                    'aria-label' => Module::t('module', 'Delete'),
-                                    'data-reload-pjax-container' => 'salary-items-addition',
-                                    'data-pjax' => '0',
-                                    'data-url' => Url::to(['delete', 'id' => $model->id]),
-                                    'class' => " text-danger p-jax-btn",
-                                    'data-title' => Module::t('module', 'Delete'),
-                                    'data-method' => 'post'
+                        'group' => function ($url, SalaryItemsAddition $model, $key) {
+                            $items = [];
 
-                                ]) : '';
-                        },
-                        'log' => function ($url, SalaryItemsAddition $model, $key) {
-                            return Html::a('<span class="fas fa-history text-info"></span>',
-                                ['/mongo/log/view-ajax', 'modelId' => $model->id, 'modelClass' => SalaryItemsAddition::OLD_CLASS_NAME],
-                                [
-                                    'class' => 'text-secondary showModalButton',
+                            if($model->canUpdate()) {
+                                $items[] = [
+                                        'label' => Html::tag('span', ' ', ['class' => 'fa fa-pen']) . ' ' . Yii::t('app', 'Update'),
+                                        'url' => 'javascript:void(0)',
+                                        'encode' => false,
+                                        'linkOptions' => [
+                                            'title' => Yii::t('app', 'Update'),
+                                            'data-title' => Yii::t('app', 'Update'),
+                                            'data-size' => 'modal-lg',
+                                            'data-toggle' => 'modal',
+                                            'data-target' => '#modal-pjax',
+                                            'data-url' => Url::to(['update', 'id' => $key]),
+                                            'data-reload-pjax-container-on-show' => 0,
+                                            'data-reload-pjax-container' => 'salary-items-addition',
+                                        ],
+                                    ];
+                                }
+                            if($model->canDelete())
+                            {
+                                $items[] = [
+                                    'label' =>  Html::tag('span', '', ['class' => 'fa fa-trash-alt']) .' '. Yii::t('app', 'Delete'),
+                                    'url' => 'javascript:void(0)',
+                                    'encode' => false,
+                                    'linkOptions' => ['title' => Module::t('module', 'Delete'),
+                                        'aria-label' => Module::t('module', 'Delete'),
+                                        'data-reload-pjax-container' => 'salary-items-addition',
+                                        'data-pjax' => '0',
+                                        'data-url' => Url::to(['delete', 'id' => $model->id]),
+                                        'class' => " text-danger p-jax-btn",
+                                        'data-title' => Module::t('module', 'Delete'),
+                                        'data-method' => 'post'
+                                    ],
+                                ];
+                            }
+                            if($model->canConfirm())
+                            {
+                                $items[] = [
+                                    'label' =>  Html::tag('span', '', ['class' => 'fa fa-check-circle']) .' '.Module::t('module', 'Confirm'),
+                                    'url' => ['confirm', 'id' => $model->id],
+                                    'encode' => false,
+                                    'linkOptions' => [
+                                        'title' => Module::t('module', 'Confirm'),
+                                        'data-confirm' => Module::t('module', 'Are you sure?'),
+                                        'data-method' => 'post',
+                                        'class' => 'ajax-btn',
+                                        'data-view' => 'index',
+                                        'data-p-jax' => '#salary-items-addition',
+                                    ],
+                                ];
+                            }
+                            if($model->canReject())
+                            {
+                                $items[] = [
+                                    'label' =>  Html::tag('span', '', ['class' => 'fa fa-minus-circle']) .' '. Module::t('module', 'Reject'),
+                                    'url' => 'javascript:void(0)',
+                                    'encode' => false,
+                                    'linkOptions' => [
+                                        'data-size' => 'modal-lg',
+                                        'title' => Module::t('module', 'Reject'),
+                                        'data-title' => Module::t('module', 'Reject'),
+                                        'data-toggle' => 'modal',
+                                        'data-target' => '#modal-pjax',
+                                        'data-url' => Url::to(['reject', 'id' => $model->id]),
+                                        'data-reload-pjax-container' => 'salary-items-addition',
+                                        'disabled' => true
+                                    ],
+                                ];
+                            }
+                            if($model->canReturnStatus())
+                            {
+                                $items[] = [
+                                    'label' =>  Html::tag('span', '', ['class' => 'fa fa-undo']) .' '. Module::t('module', 'Return State'),
+                                    'url' => ['return-status', 'id' => $model->id],
+                                    'encode' => false,
+                                    'linkOptions' => [
+                                        'title' => Module::t('module', 'Return State'),
+                                        'data-confirm' => Module::t('module', 'Are you sure?'),
+                                        'data-method' => 'post',
+                                        'class' => 'ajax-btn',
+                                        'data-view' => 'index',
+                                        'data-p-jax' => '#salary-items-addition',
+                                    ],
+                                ];
+                            }
+                            $items[] = [
+                                'label' => Html::tag('span', ' ', ['class' => 'fa fa-history']) .' '. Yii::t('app', 'Log'),
+                                'url' => ['/mongo/log/view-ajax', 'modelId' => $model->id, 'modelClass' => SalaryItemsAddition::OLD_CLASS_NAME],
+                                'encode' => false,
+                                'linkOptions' => [
+                                    'class' => 'showModalButton',
                                     'title' => Module::t('module', 'Logs'),
                                     'data-size' => 'modal-xl'
-                                ]
-                            );
+                                ],
+                            ];
+
+                            return ButtonDropdown::widget([
+                                'buttonOptions' => ['class' => 'btn btn-info btn-md dropdown-toggle', 'style' => 'padding: 3px 7px !important;', 'title' => Yii::t('app', 'Actions')],
+                                'encodeLabel' => false,
+                                'label' => '<i class="far fa-list mr-1"></i>',
+                                'options' => ['class' => 'float-right'],
+                                'dropdown' => [
+                                    'items' => $items,
+                                ],
+                            ]);
                         },
-                        'reject' => function ($url, SalaryItemsAddition $model, $key) {
-                            return $model->canReject() ? Html::a('<span class="far fa-times text-danger"></span>',
-                                "javascript:void(0)",
-                                [
-                                    'id' => 'reject-leave-btn',
-                                    'data-size' => 'modal-lg',
-                                    'title' => Module::t('module', 'Reject'),
-                                    'data-title' => Module::t('module', 'Reject'),
-                                    'data-toggle' => 'modal',
-                                    'data-target' => '#modal-pjax',
-                                    'data-url' => Url::to(['reject', 'id' => $model->id]),
-                                    'data-reload-pjax-container' => 'salary-items-addition',
-                                    'disabled' => true
-                                ]) : '';
-                        },
-                        'confirm' => function ($url, SalaryItemsAddition $model, $key) {
-                            return $model->canConfirm() ? Html::a('<span class="fa fa-check text-success"></span>', ['confirm', 'id' => $model->id], [
-                                'title' => Module::t('module', 'Confirm'),
-                                'data-confirm' => Module::t('module', 'Are you sure?'),
-                                'data-method' => 'post',
-                                'class' => 'ajax-btn',
-                                'data-view' => 'index',
-                                'data-p-jax' => '#salary-items-addition',
-                            ]) : '';
-                        },
-                        'returnStatus' => function ($url, SalaryItemsAddition $model, $key) {
-                            return $model->canReturnStatus() ? Html::a('<span class="fa fa-undo text-warning"></span>', ['return-status', 'id' => $model->id], [
-                                'title' => Module::t('module', 'Return State'),
-                                'data-confirm' => Module::t('module', 'Are you sure?'),
-                                'data-method' => 'post',
-                                'class' => 'ajax-btn',
-                                'data-view' => 'index',
-                                'data-p-jax' => '#salary-items-addition',
-                            ]) : '';
-                        }
-                    ]
+                    ],
                 ],
             ],
         ]); ?>

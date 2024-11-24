@@ -244,7 +244,7 @@ class EmployeeRollCall extends \yii\db\ActiveRecord
                 'from_date' => $this->date,
                 'second' => $this->over_time,
                 'description' => 'ثبت خودکار از دستگاه حضور و غیاب',
-                'status' => SalaryItemsAddition::STATUS_CONFIRM,
+                'status' => $this->over_time > 40 ? SalaryItemsAddition::STATUS_WAIT_CONFIRM : SalaryItemsAddition::STATUS_CONFIRM,
                 'period_id' => $this->period_id
             ]);
             return $model->save();
