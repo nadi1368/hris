@@ -386,5 +386,8 @@ return [
     'Optional' => 'اختیاری',
     'You Are Not A Employee Of Any Department' => 'شما در لیست کارمندان هیچ دپارتمانی نیستید.',
     'All' => 'همه',
-    'Hiring' => 'استخدام'
+    'Hiring' => 'استخدام',
+    'Error In Loading' => 'خطا در بارگذاری اطلاعات',
+    'Type Something Please' => 'لطفا تایپ نمایید',
+    'No items found' => 'نتیجه ای یافت نشد',
 ];
