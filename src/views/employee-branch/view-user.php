@@ -1,28 +1,26 @@
 <?php
-use hesabro\hris\models\EmployeeBranchUser;
-use yii\web\View;
 use yii\widgets\Pjax;
 
-/* @var $this View */
-/* @var $model EmployeeBranchUser */
+/* @var $this yii\web\View */
+/* @var $model hesabro\hris\models\EmployeeBranchUser */
+/* @var $searchModel hesabro\hris\models\UserContractsSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = $model->user->fullName;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<?php Pjax::begin(['id' => 'user-data-pjax', 'enablePushState' => false]); ?>
+<div class="user-contracts-index card">
+    <div class="card-header">
+        <?= $this->renderFile('@hesabro/hris/views/employee-branch/_view_user_nav.php', [
+            'model' => $model,
+        ]) ?>
+    </div>
 
-
-<div class="card">
-	<div class="card-header">
-		<?= $this->render('_view_user_nav', [
-			'model' => $model,
-		]) ?>
-	</div>
-
-	<div class="card-body">
-		<?php Pjax::begin(['id' => 'view-user-info-pjax']) ?>
-		<?= $this->render('_view-user', [
-			'model' => $model,
-		]) ?>
-		<?php Pjax::end() ?>
-	</div>
+    <div class="card-body">
+        <?= $this->renderFile('@hesabro/hris/views/employee-branch/_view-user.php', [
+            'model' => $model,
+        ]) ?>
+    </div>
 </div>
+<?php Pjax::end(); ?>
