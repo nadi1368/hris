@@ -17,10 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </div>
 
-    <div class="card-body">
         <?= $this->renderFile('@hesabro/hris/views/employee-branch/_view-user.php', [
             'model' => $model,
         ]) ?>
-    </div>
 </div>
 <?php Pjax::end(); ?>

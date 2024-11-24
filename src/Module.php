@@ -28,6 +28,8 @@ class Module extends BaseModule
 
     public array | null $userFindUrl = ['/user/get-user-list'];
 
+    public string | null $userViewUrl = '/user-main/view-ajax';
+
     public string | null $balanceDetailedClass = null;
 
     public string | null $balanceDailyClass = null;
