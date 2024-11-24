@@ -52,7 +52,7 @@ class SalaryPeriodItems extends SalaryPeriodItemsBase
      */
     public function getAdvanceMoneyUntilThisMonth()
     {
-        return (int)Module::getInstance()->balanceDailyClass::getBalanceDaily(Module::getInstance()->settings::get('m_debtor_advance_money'), $this->user->customer->oneAccount->id, Yii::$app->jdf->jdate("Y/m/d", $this->period->end_date));
+        return (int)Module::getInstance()->balanceDailyClass::getBalanceDaily(Module::getInstance()->settings::get('m_debtor_advance_money'), $this->employee->account_id, Yii::$app->jdf->jdate("Y/m/d", $this->period->end_date));
     }
 
     public function sendSmsPayment()
