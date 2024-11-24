@@ -43,7 +43,7 @@ $link['SalaryPeriodItemsSearch']['user_id'] = [];
                         <td><?= $index + 1; ?></td>
                         <td><?= $item->user->linkEmployee ?></td>
                         <td><?= number_format((float)$item->advance_money) ?></td>
-                        <td><?= number_format((float)Module::getInstance()->balanceDetailedClass::getBalance(Module::getInstance()->settings::get('m_debtor_advance_money'), $item->user->customer->oneAccount->id, false)) ?></td>
+                        <td><?= number_format((float)Module::getInstance()->balanceDetailedClass::getBalance(Module::getInstance()->settings::get('m_debtor_advance_money'), $item->employee->account_id, false)) ?></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>

@@ -323,7 +323,7 @@ use yii\helpers\Url;
                 [
                     'label' => 'مساعده دریافتی',
                     'value' => function ($model) {
-                        return number_format((float)Module::getInstance()->balanceDetailedClass::getBalance(Module::getInstance()->settings::get('m_debtor_advance_money'), $model->user->customer->oneAccount->id, false));
+                        return number_format((float)Module::getInstance()->balanceDetailedClass::getBalance(Module::getInstance()->settings::get('m_debtor_advance_money'), $model->employee->account_id, false));
                     },
                     'format' => 'raw',
 
