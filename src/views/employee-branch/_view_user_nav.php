@@ -16,7 +16,6 @@ Nav::begin([
 			'label' =>'اطلاعات کارمند',
 			'url' => [
 				'employee-branch/view-user',
-				'branch_id' => $model->branch_id,
 				'user_id' => $model->user_id,
 			],
 			'linkOptions' => [
@@ -24,18 +23,6 @@ Nav::begin([
 				'class' => 'nav-link ' . (Yii::$app->controller->action->id == 'view-user' ? 'active' : ''),
 			],
 		],
-//		[
-//			'label' => 'مدارک',
-//			'url' => [
-//				'employee-branch/view-user-documents',
-//				'branch_id' => $model->branch_id,
-//				'user_id' => $model->user_id,
-//			],
-//			'linkOptions' => [
-//				'id' => 'employeeInfoTab',
-//				'class' => 'nav-link ' . (Yii::$app->controller->action->id == 'view-user-documents' ? 'active' : ''),
-//			],
-//		],
 		[
 			'label' =>'قرارداد ها',
 			'url' => [

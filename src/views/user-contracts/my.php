@@ -15,7 +15,7 @@ use yii\widgets\Pjax;
 $this->title = $model->user->fullName;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<?php Pjax::begin(['id' => 'user-contracts-p-jax']); ?>
+<?php Pjax::begin(['id' => 'user-data-pjax', 'enablePushState' => false]); ?>
 <div class="user-contracts-index card">
 	<div class="card-header">
 		<?= $this->render('/employee-branch/_view_user_nav', [
@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						'data-size' => 'modal-lg',
 						'data-title' => Module::t('module', 'Create'),
 						'data-toggle' => 'modal',
-						'data-target' => '#modal-pjax',
+						'data-target' => '#modal-pjax-over',
 						'data-url' => Url::to(['pre-create', 'user_id' => $model->user_id, 'branch_id' => $model->branch_id]),
 						'data-reload-pjax-container' => 'user-contracts-p-jax',
 						'disabled' => true,
@@ -113,6 +113,6 @@ $this->params['breadcrumbs'][] = $this->title;
 				],
 			],
 		]); ?>
-		<?php Pjax::end(); ?>
 	</div>
 </div>
+<?php Pjax::end(); ?>

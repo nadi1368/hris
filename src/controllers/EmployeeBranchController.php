@@ -117,7 +117,7 @@ class EmployeeBranchController extends Controller
     {
         $model = $this->findModelUser($user_id);
         if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('_view-user', [
+            return $this->renderAjax('view-user', [
                 'model' => $model,
             ]);
         } else {
