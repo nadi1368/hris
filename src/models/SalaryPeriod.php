@@ -93,12 +93,6 @@ class SalaryPeriod extends SalaryPeriodBase
                 return false;
             }
         }
-        foreach ($this->getSalaryPeriodItems()->all() as $item) {
-            /** @var SalaryPeriodItems $item * */
-            if ($item->payment_salary > 0) {
-                $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('salary_period_payment_m_id', true), $item->employee->account_id, 0, $item->payment_salary, $document->des, $document->h_date); // حقوق ودستمزد پرداختنی
-            }
-        }
         return $flag && $document->validateTaraz() && $this->pushDocument($document->id, 'سند شناسایی حقوق');
     }
 
