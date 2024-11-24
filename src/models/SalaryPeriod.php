@@ -61,21 +61,45 @@ class SalaryPeriod extends SalaryPeriodBase
         $document->des = "شناسایی حقوق " . $this->title . ' - ' . Yii::$app->jdf->jdate("Y/m/d", $this->start_date);
         $flag = $document->save();
 
-        /****************** بدهکار ******************/
-        $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('salary_period_m_id', true), ($this->workshop->account_id ?: null), $this->getSalaryPeriodItems()->sum('total_salary'), 0, $document->des, $document->h_date); // حقوق و دستمزد
-        $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('salary_period_insurance_owner_m_id', true), null, $this->getSalaryPeriodItems()->sum('insurance_owner'), 0, $document->des, $document->h_date); // بیمه سهم کارفرما
-
-
         /****************** بستانکار ******************/
         $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('salary_period_insurance_m_id', true), Module::getInstance()->settings::get('salary_period_insurance_t_id', true), 0, $this->getSalaryPeriodItems()->sum('insurance+insurance_owner'), $document->des, $document->h_date); // سازمان تامین اجتماعی
         $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('salary_period_tax_m_id', true), Module::getInstance()->settings::get('salary_period_tax_t_id', true), 0, $this->getSalaryPeriodItems()->sum('tax'), $document->des, $document->h_date); // سازمان امور مالیاتی
+
+
+        $total = [];
+        foreach ($this->getSalaryPeriodItems()->all() as $item) {
+            /** @var SalaryPeriodItems $item * */
+            $branchId = $item->employee->branch_id;
+            if (!isset($total[$branchId])) {
+                $total[$branchId] = ['salary' => 0, 'insurance_owner' => 0];
+            }
+            $total[$branchId]['salary'] += $item->total_salary;
+            $total[$branchId]['insurance_owner'] += $item->insurance_owner;
+            if ($item->payment_salary > 0) {
+                $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('salary_period_payment_m_id', true), $item->employee->account_id, 0, $item->payment_salary, $document->des, $document->h_date); // حقوق ودستمزد پرداختنی
+            }
+        }
+
+        /****************** بدهکار ******************/
+        foreach ($total as $branchId => $value) {
+            $branch = EmployeeBranch::findOne($branchId);
+            if($branch->canSaveDocument())
+            {
+                $flag = $flag && $document->saveDetailWitDefinite($branch->definite_id_salary, ($branch->account_id_salary ?: null), $value['salary'], 0, $document->des.' - '.$branch->title, $document->h_date); // حقوق و دستمزد
+                $flag = $flag && $document->saveDetailWitDefinite($branch->definite_id_insurance_owner, ($branch->account_id_insurance_owner ?: null), $value['insurance_owner'], 0, $document->des.' - '.$branch->title, $document->h_date); // بیمه سهم کارفرما
+            }else{
+                $this->addError('title',"برای دپارتمان ".$branch->title." حساب های حقوق و دستمزد تنظیم نشده است.");
+                $this->afterValidate();
+                return false;
+            }
+        }
         foreach ($this->getSalaryPeriodItems()->all() as $item) {
             /** @var SalaryPeriodItems $item * */
             if ($item->payment_salary > 0) {
                 $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('salary_period_payment_m_id', true), $item->employee->account_id, 0, $item->payment_salary, $document->des, $document->h_date); // حقوق ودستمزد پرداختنی
             }
         }
-        return $flag && $document->validateTaraz();
+        return $flag && $document->validateTaraz() && $this->pushDocument($document->id, 'سند شناسایی حقوق');
     }
 
     /**
@@ -103,7 +127,7 @@ class SalaryPeriod extends SalaryPeriodBase
                 $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('reward_period_payment_m_id', true), $item->employee->account_id, 0, $item->payment_salary, $document->des, $document->h_date); // حقوق ودستمزد پرداختنی
             }
         }
-        return $flag && $document->validateTaraz();
+        return $flag && $document->validateTaraz() && $this->pushDocument($document->id, 'سند شناسایی حقوق');
     }
 
     /**
@@ -143,7 +167,7 @@ class SalaryPeriod extends SalaryPeriodBase
         }
         /****************** بستانکار ******************/
         $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('year_period_interface', true), null, 0, $totalDebtor, $document->des, $document->h_date); // هزینه مزد سنوات پرسنل
-        return $flag && $document->validateTaraz();
+        return $flag && $document->validateTaraz() && $this->pushDocument($document->id, 'سند تهاتر سنوات');
     }
 
     /**
@@ -171,7 +195,7 @@ class SalaryPeriod extends SalaryPeriodBase
                 $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('year_period_m_id', true), $item->employee->account_id, 0, $item->payment_salary, $document->des, $document->h_date); // حقوق ودستمزد پرداختنی
             }
         }
-        return $flag && $document->validateTaraz();
+        return $flag && $document->validateTaraz() && $this->pushDocument($document->id, 'سند شناسایی سنوات');
     }
 
     /**
@@ -202,7 +226,7 @@ class SalaryPeriod extends SalaryPeriodBase
                 /****************** بستانکار ******************/
                 $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('m_debtor_salary_decrease', true), null, 0, $item->salary_decrease, $document->des . ' - کسر حقوق ' . ' - ' . $item->user->customer->fullName, $document->h_date);
             }
-            return $flag && $document->validateTaraz();
+            return $flag && $document->validateTaraz() && $this->pushDocument($document->id, 'سند کسر مساعده حقوق');
         } else {
             return true;
         }
@@ -233,7 +257,7 @@ class SalaryPeriod extends SalaryPeriodBase
                 $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('salary_period_non_cash_payment_m_id', true), $item->employee->account_id, 0, $item->non_cash_commission, $document->des, $document->h_date);
 
             }
-            return $flag && $document->validateTaraz();
+            return $flag && $document->validateTaraz() && $this->pushDocument($document->id, 'سند مزایای غیر نقدی حقوق');
         } else {
             return true;
         }
@@ -263,7 +287,7 @@ class SalaryPeriod extends SalaryPeriodBase
                 $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('salary_period_insurance_addition_m_id', true), $item->employee->account_id, 0, $item->insurance_addition, $document->des, $document->h_date);
 
             }
-            return $flag && $document->validateTaraz();
+            return $flag && $document->validateTaraz() && $this->pushDocument($document->id, 'سند بیمه تکمیلی حقوق');
         } else {
             return true;
         }
@@ -290,7 +314,7 @@ class SalaryPeriod extends SalaryPeriodBase
                 /****************** بستانکار ******************/
                 $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('m_debtor_advance_money', true), $item->employee->account_id, 0, $item->advance_money, $document->des, $document->h_date);
             }
-            return $flag && $document->validateTaraz();
+            return $flag && $document->validateTaraz() && $this->pushDocument($document->id, 'سند کسر مساعده حقوق');
         } else {
             return true;
         }
@@ -322,7 +346,7 @@ class SalaryPeriod extends SalaryPeriodBase
         }
         /****************** بستانکار ******************/
         $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('m_interface_salary_period_item', true), null, 0, $totalAmount, $document->des, $document->h_date);
-        return $flag && $document->validateTaraz();
+        return $flag && $document->validateTaraz() && $this->pushDocument($document->id, 'سند پرداخت حقوق');
 
     }
 
@@ -351,7 +375,7 @@ class SalaryPeriod extends SalaryPeriodBase
         }
         /****************** بستانکار ******************/
         $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('m_interface_salary_period_item', true), null, 0, $totalAmount, $document->des, $document->h_date);
-        return $flag && $document->validateTaraz();
+        return $flag && $document->validateTaraz() && $this->pushDocument($document->id, 'سند پرداخت حقوق');
 
     }
 
@@ -380,7 +404,7 @@ class SalaryPeriod extends SalaryPeriodBase
         }
         /****************** بستانکار ******************/
         $flag = $flag && $document->saveDetailWitDefinite(Module::getInstance()->settings::get('m_interface_salary_period_item', true), null, 0, $totalAmount, $document->des, $document->h_date);
-        return $flag && $document->validateTaraz();
+        return $flag && $document->validateTaraz() && $this->pushDocument($document->id, 'سند پرداخت حقوق');
 
     }
 
@@ -403,6 +427,7 @@ class SalaryPeriod extends SalaryPeriodBase
                 $this->error_msq = 'امکان حذف سند حسابداری وجود ندارد.';
                 return false;
             }
+            return $this->popDocumentWithKey($document->id);
         }
         return true;
 
