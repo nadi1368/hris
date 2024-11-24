@@ -1,6 +1,6 @@
 <?php
 
-use hesabro\helpers\widgets\UserSelect2;
+use hesabro\hris\widgets\UserSelect2;
 use hesabro\hris\models\EmployeeBranchUser;
 use hesabro\hris\Module;
 use hesabro\hris\widgets\EmployeeBranchSelect2;

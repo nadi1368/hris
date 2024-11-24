@@ -17,30 +17,42 @@ use yii\widgets\Pjax;
         <div class="row">
             <div class="col-12 pb-2">
                 <div>
-                    <?= $model->canSetEndWork() ? Html::a(Module::t('module', 'Set End Work'),
-                        'javascript:void(0)', [
+                    <?php if ($model->canSetEndWork()): ?>
+                        <?= Html::a(Module::t('module', 'Set End Work'), 'javascript:void(0)', [
                             'title' => Module::t('module', 'Set End Work'),
                             'id' => 'set-end-work' . $model->user_id,
                             'class' => 'btn btn-primary',
-                            'data-size' => '',
                             'data-title' => Module::t('module', 'Set End Work'),
                             'data-toggle' => 'modal',
                             'data-target' => '#modal-pjax-over',
                             'data-url' => Url::to(['set-end-work', 'id' => $model->user_id]),
                             'data-reload-pjax-container-on-show' => false,
-                            'data-reload-pjax-container' => 'view-user-info-pjax',
-                        ]) : (($document = $model->getDocumentEndWork()) !== null ? Html::a('مشاهده سند تسویه', ['/document/view', 'id' => $document->id], ['class' => 'btn btn-success showModalButton', 'data-size' => 'modal-xl', 'title' => Module::t('module', 'Document')]) : ''); ?>
+                            'data-reload-pjax-container' => 'user-data-pjax',
+                            'data-reload-pjax-url' => Url::to(['employee-branch/view-user', 'user_id' => $model->user_id])
+                        ]) ?>
+                    <?php elseif(($document = $model->getDocumentEndWork()) !== null): ?>
+                        <?= Html::a('مشاهده سند تسویه','javascript:void(0)', [
+                            'class' => 'btn btn-success',
+                            'title' => Module::t('module', 'Document'),
+                            'data-title' => Module::t('module', 'Document'),
+                            'data-toggle' => 'modal',
+                            'data-target' => '#modal-pjax-over',
+                            'data-url' => Url::to(['/document/view', 'id' => $document->id]),
+                            'data-size' => 'modal-xl',
+                        ]) ?>
+                    <?php endif; ?>
 
                     <?= $model->canStartWorkAgain() ? Html::a(Module::t('module', 'Start Work Again'),
                         'javascript:void(0)', [
                             'title' => Module::t('module', 'Start Work Again'),
                             'id' => 'Return-end-work' . $model->user_id,
                             'class' => 'btn btn-danger p-jax-btn',
-                            'data-pjax' => '0',
                             'data-url' => Url::to(['start-work-again', 'id' => $model->user_id]),
-                            'data-reload-pjax-container' => 'view-user-info-pjax',
-                            'data-method' => 'post'
+                            'data-method' => 'post',
+                            'data-reload-pjax-container' => 'user-data-pjax',
+                            'data-reload-pjax-url' => Url::to(['employee-branch/view-user', 'user_id' => $model->user_id])
                         ]) : ''; ?>
+
                     <?= $model->canUpdate() ? Html::a(Module::t('module', 'Update'),
                         'javascript:void(0)', [
                             'title' => Module::t('module', 'Update'),
@@ -53,7 +65,8 @@ use yii\widgets\Pjax;
                             'data-url' => Url::to(['update-user', 'branch_id' => $model->branch_id, 'user_id' => $model->user_id]),
                             'data-reload-pjax-container-on-show' => false,
                             'data-handle-form-submit' => 1,
-                            'disabled' => true,
+                            'data-reload-pjax-container' => 'user-data-pjax',
+                            'data-reload-pjax-url' => Url::to(['employee-branch/view-user', 'user_id' => $model->user_id])
                         ]) : '';
                     ?>
                     <?= $model->canUpdate() ? Html::a(Module::t('module', 'Insurance Data'),
@@ -64,9 +77,10 @@ use yii\widgets\Pjax;
                             'data-size' => 'modal-xl',
                             'data-title' => Module::t('module', 'Insurance Data'),
                             'data-toggle' => 'modal',
-                            'data-target' => '#modal-pjax',
+                            'data-target' => '#modal-pjax-over',
                             'data-url' => Url::to(['insurance-data', 'branch_id' => $model->branch_id, 'user_id' => $model->user_id]),
-                            'data-hide-previous-modal' => '#modal',
+                            'data-reload-pjax-container' => 'user-data-pjax',
+                            'data-reload-pjax-url' => Url::to(['employee-branch/view-user', 'user_id' => $model->user_id])
                         ]) : '' ?>
                     <?= Html::a('تغییر دپارتمان',
                         'javascript:void(0)', [
@@ -78,27 +92,36 @@ use yii\widgets\Pjax;
                             'data-toggle' => 'modal',
                             'data-target' => '#modal-pjax-over',
                             'data-url' => Url::to(['change-branch', 'user_id' => $model->user_id]),
+                            'data-reload-pjax-container' => 'view-user-info-pjax',
                         ])  ?>
-                    <?= Html::a('اطلاعات کاربری',
-                        ['/user-main/view-ajax', 'id' => $model->user_id],
-                        [
-                            'class' => 'btn btn-success showModalButton',
-                            'data-pjax' => '0',
-                            'title' => $model->user->fullName
-                        ]) ?>
+                    <?= Html::a('اطلاعات کاربری', 'javascript:void(0)', [
+                        'id' => 'user-detail' . $model->user_id,
+                        'class' => 'btn btn-success',
+                        'title' => $model->user->fullName,
+                        'data-title' => $model->user->fullName,
+                        'data-toggle' => 'modal',
+                        'data-target' => '#modal-pjax-over',
+                        'data-reload-pjax-container-on-show' => false,
+                        'data-pjax' => false,
+                        'data-url' => Url::to(['employee-branch/user-detail', 'id' => $model->user_id]),
+                    ])  ?>
                     <?= Html::a('دروه حقوق های قبلی',
                         ['salary-period-items/user', 'id' => $model->user_id],
                         [
                             'class' => 'btn btn-info',
                             'title' => 'مشاهده دروه حقوق های قبلی این کارمند'
                         ]) ?>
-                    <?= Html::a(Module::t('module', 'Log'),
-                        ['/mongo/log/view-ajax', 'modelId' => $model->user_id, 'modelClass' => EmployeeBranchUser::OLD_CLASS_NAME],
-                        [
-                            'class' => 'btn btn-secondary showModalButton',
-                            'data-pjax' => '0',
-                            'title' => Module::t('module', 'Log')
-                        ]) ?>
+                    <?= Html::a(Module::t('module', 'Log'), 'javascript:void(0)', [
+                        'id' => 'change-log' . $model->user_id,
+                        'class' => 'btn btn-secondary',
+                        'title' => Module::t('module', 'Log'),
+                        'data-title' => Module::t('module', 'Log'),
+                        'data-size' => 'modal-xl',
+                        'data-toggle' => 'modal',
+                        'data-target' => '#modal-pjax-over',
+                        'data-reload-pjax-container-on-show' => false,
+                        'data-url' => Url::to(['/mongo/log/view-ajax', 'modelId' => $model->user_id, 'modelClass' => EmployeeBranchUser::OLD_CLASS_NAME]),
+                    ])  ?>
                 </div>
             </div>
 

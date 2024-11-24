@@ -54,7 +54,7 @@ class EmployeeBranchController extends Controller
                         [
                             'allow' => true,
                             'roles' => ['EmployeeBranch/index', 'superadmin'],
-                            'actions' => ['index', 'users', 'view', 'view-user', 'view-user-documents', 'view-user-contracts', 'confirm-document', 'delete-document']
+                            'actions' => ['index', 'users', 'view', 'view-user', 'view-user-documents', 'view-user-contracts', 'confirm-document', 'delete-document', 'user-detail']
                         ],
                         [
                             'allow' => true,
@@ -590,6 +590,20 @@ class EmployeeBranchController extends Controller
             'model' => $model,
         ]);
     }
+
+    public function actionUserDetail($id)
+    {
+        $model = Module::getInstance()->user::findOne($id);
+
+        if (!$model) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        return $this->renderAjax('_user-detail', [
+            'model' => $model,
+        ]);
+    }
+
     /**
      * Finds the Year model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
