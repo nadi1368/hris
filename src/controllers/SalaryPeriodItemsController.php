@@ -721,7 +721,7 @@ class SalaryPeriodItemsController extends Controller
             $totalBalance = 0;
 
             $index = 1;
-            foreach ($model->salaryPeriodItems as $index => $item) {
+            foreach ($model->salaryPeriodItems as $item) {
                 if ($item->finalPayment > 0 && $item->can_payment) {
                     if (($employeeUser = $item->employee) !== null) {
                         if (!$employeeUser->canPaymentSalary()) {
@@ -750,7 +750,7 @@ class SalaryPeriodItemsController extends Controller
 
             foreach (is_array($model->another_period) ? $model->another_period : [] as $anotherPeriodId) {
                 $anotherPeriodModel = $this->findModelPeriod($anotherPeriodId);
-                foreach ($anotherPeriodModel->salaryPeriodItems as $index => $item) {
+                foreach ($anotherPeriodModel->salaryPeriodItems as $item) {
                     if ($item->finalPayment > 0 && $item->can_payment) {
                         if (($employeeUser = $item->employee) !== null) {
                             if (!$employeeUser->canPaymentSalary()) {
@@ -791,7 +791,7 @@ class SalaryPeriodItemsController extends Controller
                 'msg' => Module::t('module', "Item Created"),
                 'html' => $this->renderAjax('_excel-bank-send-to-native', [
                     'model' => $model,
-                    'rows' => json_encode(array_values($rows)),
+                    'rows' => json_encode($rows),
                     'fileName' => $fileName,
                 ]),
             ];
