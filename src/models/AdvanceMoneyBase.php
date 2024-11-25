@@ -56,6 +56,12 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
 
     const OLD_CLASS_NAME = 'backend\models\AdvanceMoney';
 
+    const NOTIF_ADVANCE_MONEY_CREATE = 'notif_advance_money_create';
+
+    const NOTIF_ADVANCE_MONEY_CONFIRM = 'notif_advance_money_confirm';
+
+    const NOTIF_ADVANCE_MONEY_REJECT = 'notif_advance_money_reject';
+
     public $t_creditor_id, $m_debtor_id;
     public $error_msg = '';
 
@@ -339,6 +345,11 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
                 self::STATUS_WAIT_CONFIRM,
                 self::STATUS_CONFIRM,
             ],
+            'Notif' => [
+                self::NOTIF_ADVANCE_MONEY_CREATE => 'ایجاد درخواست مساعده',
+                self::NOTIF_ADVANCE_MONEY_CONFIRM => 'تایید درخواست مساعده',
+                self::NOTIF_ADVANCE_MONEY_REJECT => 'رد درخواست مساعده'
+            ]
         ];
         if (isset($code))
             return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
