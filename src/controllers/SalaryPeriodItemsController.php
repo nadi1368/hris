@@ -722,7 +722,7 @@ class SalaryPeriodItemsController extends Controller
 
             $index = 1;
             foreach ($model->salaryPeriodItems as $index => $item) {
-                if ($item->finalPayment > 0) {
+                if ($item->finalPayment > 0 && $item->can_payment) {
                     if (($employeeUser = $item->employee) !== null) {
                         if (!$employeeUser->canPaymentSalary()) {
                             throw new HttpException(400, $employeeUser->error_msg);
@@ -751,7 +751,7 @@ class SalaryPeriodItemsController extends Controller
             foreach (is_array($model->another_period) ? $model->another_period : [] as $anotherPeriodId) {
                 $anotherPeriodModel = $this->findModelPeriod($anotherPeriodId);
                 foreach ($anotherPeriodModel->salaryPeriodItems as $index => $item) {
-                    if ($item->finalPayment > 0) {
+                    if ($item->finalPayment > 0 && $item->can_payment) {
                         if (($employeeUser = $item->employee) !== null) {
                             if (!$employeeUser->canPaymentSalary()) {
                                 throw new HttpException(400, $employeeUser->error_msg);
@@ -772,7 +772,6 @@ class SalaryPeriodItemsController extends Controller
                         } else {
                             throw new HttpException(400, $item->user->fullName . ' در مشخصات کارمندی ثبت نشده است.');
                         }
-
                     }
                 }
             }
