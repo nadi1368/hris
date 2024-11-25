@@ -1,9 +1,9 @@
 <?php
 
+use hesabro\helpers\models\UploadExcel;
 use kartik\file\FileInput;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
-use common\models\UploadExcel;
 use hesabro\hris\Module;
 
 /* @var $this yii\web\View */
@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($uploadForm, 'month')->dropdownList(UploadExcel::itemAlias('Months')) ?>
             </div>
             <div class="col-md-12">
-                <?= $form->field($uploadForm, "excelFile")->fileInput() ?>
+                <?= $form->field($uploadForm, "file_name")->fileInput() ?>
             </div>
         </div>
 

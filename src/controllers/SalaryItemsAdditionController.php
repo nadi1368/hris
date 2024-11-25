@@ -3,8 +3,8 @@
 namespace hesabro\hris\controllers;
 
 use backend\models\RejectForm;
-use backend\models\UploadExcelSearch;
-use common\models\UploadExcel;
+use hesabro\helpers\models\UploadExcelSearch;
+use hesabro\helpers\models\UploadExcel;
 use hesabro\helpers\traits\AjaxValidationTrait;
 use hesabro\hris\models\EmployeeBranchUser;
 use hesabro\hris\models\SalaryItemsAddition;
@@ -380,7 +380,7 @@ class SalaryItemsAdditionController extends Controller
         if ($excelFile->status != 1) {
             throw new NotFoundHttpException('فایل در تاریخ مورد نظر ثبت شده است.اگر اشتباه ثبت شده.لطفا ابتدا فایل رو پاک نمایید.');
         }
-        $file = $excelFile->getStorageFile('excelFile')->one();
+        $file = $excelFile->getStorageFile('file_name')->one();
         $fileContent = $file->getFileContent();
         $tmpFileName = tempnam(sys_get_temp_dir(), '');
         file_put_contents(
