@@ -792,7 +792,7 @@ class SalaryPeriodItemsController extends Controller
                 'msg' => Module::t('module', "Item Created"),
                 'html' => $this->renderAjax('_excel-bank-send-to-native', [
                     'model' => $model,
-                    'rows' => json_encode($rows),
+                    'rows' => json_encode(array_values($rows)),
                     'fileName' => $fileName,
                 ]),
             ];
