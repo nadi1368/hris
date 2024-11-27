@@ -424,10 +424,7 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord implements NotifInterface
 
     public function notifUsers(): array
     {
-        if (in_array($this->getScenario(), [self::SCENARIO_CONFIRM, self::SCENARIO_REJECT])) {
-            return [$this->user_id];
-        }
-        return [];
+        return [$this->user_id];
     }
 
     public function notifTitle(): string
