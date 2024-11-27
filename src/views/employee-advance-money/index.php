@@ -2,6 +2,7 @@
 
 use hesabro\hris\models\AdvanceMoneySearch;
 use hesabro\hris\models\AdvanceMoney;
+use hesabro\hris\Module;
 use yii\helpers\Html;
 use hesabro\helpers\widgets\grid\GridView;
 use yii\helpers\Url;
@@ -11,7 +12,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel AdvanceMoneySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Advance Money');
+$this->title = Module::t('module', 'Advance Money');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php Pjax::begin(['id' => 'pjax-advance-money']) ?>
@@ -27,22 +28,25 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php endif;?>
             </h4>
             <div>
-                <?= $searchModel->canCreate() ? Html::a(Yii::t('app', 'Create'),
-                    'javascript:void(0)', [
-                        'title' => Yii::t('app', 'Create'),
+                <?= Html::button(Yii::t('app', 'Create'),
+                    $searchModel->canCreate() ? [
+                        'title' => Module::t('module', 'Create'),
                         'id' => 'create-advance-money',
                         'class' => 'btn btn-success',
                         'data-size' => 'modal-xl',
-                        'data-title' => Yii::t('app', 'Create'),
+                        'data-title' => Module::t('module', 'Create'),
                         'data-toggle' => 'modal',
                         'data-target' => '#modal-pjax',
-                        'data-url' => Url::to(['create']),
+                        'data-url' => Url::to(['employee-advance-money/create']),
                         'data-reload-pjax-container-on-show' => 1,
                         'data-reload-pjax-container' => "pjax-advance-money",
                         'data-handle-form-submit' => 1,
-                        'disabled' => true,
-                    ]) : Html::a(Yii::t('app', 'Create'),
-                    'javascript:void(0)', ['class' => 'btn btn-secondary', 'title' => $searchModel->error_msg]); ?>
+                    ] :
+                    [
+                        'class' => 'btn btn-success',
+                        'title' => $searchModel->error_msg,
+                        'disabled' => 1,
+                    ]); ?>
             </div>
         </div>
         <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false">

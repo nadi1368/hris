@@ -4,38 +4,15 @@ namespace hesabro\hris\models;
 
 use hesabro\helpers\behaviors\DocumentsDataBehavior;
 use common\models\AccountDefinite;
-use common\models\CommentsType;
-use common\behaviors\SendAutoCommentsBehavior;
-use common\interfaces\SendAutoCommentInterface;
 use common\behaviors\MutexBehavior;
 use common\models\Document;
 use yii\helpers\Url;
 
-class AdvanceMoney extends AdvanceMoneyBase implements SendAutoCommentInterface
+class AdvanceMoney extends AdvanceMoneyBase
 {
     public function behaviors()
     {
         return array_merge(parent::behaviors(), [
-            [
-                'class' => SendAutoCommentsBehavior::class,
-                'type' => CommentsType::REQUEST_ADVANCE_MONEY,
-                'title' => 'ثبت درخواست مساعده',
-                'scenarioValid' => [self::SCENARIO_CREATE, self::SCENARIO_CREATE_AUTO]
-            ],
-            [
-                'class' => SendAutoCommentsBehavior::class,
-                'type' => CommentsType::REQUEST_ADVANCE_MONEY_REJECT,
-                'title' => 'رد درخواست مساعده',
-                'scenarioValid' => [self::SCENARIO_REJECT],
-                'callAfterUpdate' => true
-            ],
-            [
-                'class' => SendAutoCommentsBehavior::class,
-                'type' => CommentsType::REQUEST_ADVANCE_MONEY_CONFIRM,
-                'title' => 'تایید درخواست مساعده',
-                'scenarioValid' => [self::SCENARIO_CONFIRM],
-                'callAfterUpdate' => true
-            ],
             [
                 'class' => MutexBehavior::class,
             ],

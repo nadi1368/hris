@@ -4,6 +4,8 @@ namespace hesabro\hris\models;
 
 use hesabro\helpers\behaviors\WageBehavior;
 use hesabro\hris\Module;
+use hesabro\notif\behaviors\NotifBehavior;
+use hesabro\notif\interfaces\NotifInterface;
 use Yii;
 use yii\helpers\Html;
 use hesabro\helpers\behaviors\JsonAdditional;
@@ -33,7 +35,7 @@ use hesabro\helpers\validators\IBANValidator;
  * @property object $update
  * @property EmployeeBranchUser $employee
  */
-class AdvanceMoneyBase extends \yii\db\ActiveRecord
+class AdvanceMoneyBase extends \yii\db\ActiveRecord implements NotifInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_WAIT_CONFIRM = 1;
@@ -74,6 +76,8 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
     public $model_class;
     public $model_id;
     public $documentsArray;
+
+    public $doc_id;
 
     /**
      * {@inheritdoc}
@@ -346,7 +350,7 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
                 self::STATUS_CONFIRM,
             ],
             'Notif' => [
-                self::NOTIF_ADVANCE_MONEY_CREATE => 'ایجاد درخواست مساعده',
+                self::NOTIF_ADVANCE_MONEY_CREATE => 'ثبت درخواست مساعده',
                 self::NOTIF_ADVANCE_MONEY_CONFIRM => 'تایید درخواست مساعده',
                 self::NOTIF_ADVANCE_MONEY_REJECT => 'رد درخواست مساعده'
             ]
@@ -376,7 +380,24 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
-            'wageBehavior' => WageBehavior::class,
+            [
+                'class' => NotifBehavior::class,
+                'event' => self::NOTIF_ADVANCE_MONEY_CREATE,
+                'scenario' => [self::SCENARIO_CREATE, self::SCENARIO_CREATE_AUTO]
+            ],
+            [
+                'class' => NotifBehavior::class,
+                'event' => self::NOTIF_ADVANCE_MONEY_REJECT,
+                'scenario' => [self::SCENARIO_REJECT],
+            ],
+            [
+                'class' => NotifBehavior::class,
+                'event' => self::NOTIF_ADVANCE_MONEY_CONFIRM,
+                'scenario' => [self::SCENARIO_CONFIRM],
+            ],
+            'wageBehavior' => [
+                'class' => WageBehavior::class
+            ],
             [
                 'class' => LogBehavior::class,
                 'ownerClassName' => self::OLD_CLASS_NAME,
@@ -401,10 +422,7 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function getUserMail(): array
+    public function notifUsers(): array
     {
         if (in_array($this->getScenario(), [self::SCENARIO_CONFIRM, self::SCENARIO_REJECT])) {
             return [$this->user_id];
@@ -412,21 +430,17 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
         return [];
     }
 
-    /**
-     * @return string
-     */
-    public function getLinkMail(): string
+    public function notifTitle(): string
     {
-        if (in_array($this->getScenario(), [self::SCENARIO_CONFIRM, self::SCENARIO_REJECT])) {
-            return '';
-        }
-        return Yii::$app->urlManager->createAbsoluteUrl([Module::createUrl('employee-advance-money/index'), 'id' => $this->id]);
+        return match ($this->getScenario()) {
+            self::SCENARIO_CREATE, self::SCENARIO_CREATE_AUTO, => 'ثبت درخواست مساعده',
+            self::SCENARIO_REJECT => 'رد درخواست مساعده',
+            self::SCENARIO_CONFIRM => 'تایید درخواست مساعده',
+            default => ''
+        };
     }
 
-    /**
-     * @return string
-     */
-    public function getContentMail(): string
+    public function notifDescription(): ?string
     {
         $content = '';
         if ($this->getScenario() == self::SCENARIO_CREATE) {
@@ -448,8 +462,38 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
         return $content;
     }
 
-    public function autoCommentCondition(): bool
+    public function notifConditionToSend(): bool
     {
         return true;
+    }
+
+    public function notifSmsConditionToSend(): bool
+    {
+        return true;
+    }
+
+    public function notifSmsDelayToSend(): ?int
+    {
+        return 0;
+    }
+
+    public function notifEmailConditionToSend(): bool
+    {
+        return true;
+    }
+
+    public function notifEmailDelayToSend(): ?int
+    {
+        return 0;
+    }
+
+    public function notifTicketConditionToSend(): bool
+    {
+        return true;
+    }
+
+    public function notifTicketDelayToSend(): ?int
+    {
+        return 0;
     }
 }
