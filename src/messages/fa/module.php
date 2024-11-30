@@ -390,4 +390,6 @@ return [
     'Error In Loading' => 'خطا در بارگذاری اطلاعات',
     'Type Something Please' => 'لطفا تایپ نمایید',
     'No items found' => 'نتیجه ای یافت نشد',
+    'Payed By Boom' => 'پرداخت شده فرابوم',
+    'Status Transfer To MultiPay' => 'انتقال به لیست حواله گروهی',
 ];

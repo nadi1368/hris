@@ -257,6 +257,11 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
         return $this->status == self::STATUS_WAIT_CONFIRM;
     }
 
+    public function canReturn()
+    {
+        return $this->status == self::STATUS_WAIT_CONFIRM;
+    }
+
     public function canConfirm()
     {
         if ($this->status != self::STATUS_WAIT_CONFIRM) {
@@ -330,16 +335,22 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord
                 self::STATUS_WAIT_CONFIRM => Module::t('module', 'Wait Confirm'),
                 self::STATUS_CONFIRM => Module::t('module', 'Status Confirm'),
                 self::STATUS_REJECT => Module::t('module', 'Reject'),
+                self::STATUS_PAYED_BY_BOOM => Module::t('module', 'Payed By Boom'),
+                self::STATUS_MULTI_PAY_LIST => Module::t('module', 'Status Transfer To MultiPay'),
             ],
             'StatusClass' => [
                 self::STATUS_WAIT_CONFIRM => 'warning',
                 self::STATUS_CONFIRM => 'success',
                 self::STATUS_REJECT => 'danger',
+                self::STATUS_PAYED_BY_BOOM => 'success',
+                self::STATUS_MULTI_PAY_LIST => 'warning',
             ],
             'StatusIcon' => [
                 self::STATUS_WAIT_CONFIRM => 'ph:clock-countdown-duotone',
                 self::STATUS_CONFIRM => 'ph:check-circle-duotone',
-                self::STATUS_REJECT => 'ph:x-circle-duotone'
+                self::STATUS_REJECT => 'ph:x-circle-duotone',
+                self::STATUS_PAYED_BY_BOOM => 'ph:check-circle-duotone',
+                self::STATUS_MULTI_PAY_LIST => 'ph:clock-countdown-duotone',
             ],
             'StatusValid' => [
                 self::STATUS_WAIT_CONFIRM,
