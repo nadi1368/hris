@@ -25,6 +25,7 @@
         "hesabro/helpers": "*",
         "hesabro/change-log": "*",
         "hesabro/error-log": "*",
+        "hesabro/notif": "*",
         "yiisoft/yii2": "~2.0.14",
         "yiisoft/yii2-bootstrap4": "^2.0",
         "yii2tech/ar-softdelete": "*",
