@@ -42,8 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						'data-toggle' => 'modal',
 						'data-target' => '#modal-pjax-over',
 						'data-url' => Url::to(['pre-create', 'user_id' => $model->user_id, 'branch_id' => $model->branch_id]),
-						'data-reload-pjax-container' => 'user-contracts-p-jax',
-						'disabled' => true,
+						//'data-reload-pjax-container' => 'user-contracts-p-jax',
 					]); ?>
 			</div>
 		</div>

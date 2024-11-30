@@ -176,8 +176,7 @@ class UserContractsController extends Controller
                 'url' => Url::to(['create', 'branch_id' => $model->branch_id, 'user_id' => $model->user_id, 'contract_id' => $model->contract_id]),
             ];
 
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return $result;
+            return $this->asJson($result);
         }
 
         $this->performAjaxValidation($model);
