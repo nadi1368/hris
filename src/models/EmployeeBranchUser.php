@@ -2,13 +2,10 @@
 
 namespace hesabro\hris\models;
 
-use common\interfaces\SendAutoCommentInterface;
 use backend\modules\storage\behaviors\StorageUploadBehavior;
 use backend\modules\storage\models\StorageFiles;
-use common\behaviors\SendAutoCommentsBehavior;
 use common\models\Account;
 use common\models\BalanceDetailed;
-use common\models\CommentsType;
 use common\models\Customer;
 use common\models\Document;
 use common\models\Settings;
@@ -21,7 +18,7 @@ use yii\helpers\Html;
 /**
  * @mixin StorageUploadBehavior
  */
-class EmployeeBranchUser extends EmployeeBranchUserBase implements SendAutoCommentInterface
+class EmployeeBranchUser extends EmployeeBranchUserBase
 {
     public function rules()
     {
@@ -160,26 +157,6 @@ class EmployeeBranchUser extends EmployeeBranchUserBase implements SendAutoComme
             }
         }
         return true;
-    }
-
-    public function behaviors()
-    {
-        return array_merge(parent::behaviors(), [
-            [
-                'class' => SendAutoCommentsBehavior::class,
-                'type' => CommentsType::EMPLOYEE_UPDATE_PROFILE,
-                'title' => 'درخواست ویرایش حساب کاربری',
-                'scenarioValid' => [self::SCENARIO_UPDATE_PROFILE],
-                'callAfterUpdate' => true
-            ],
-            [
-                'class' => SendAutoCommentsBehavior::class,
-                'type' => CommentsType::EMPLOYEE_UPDATE_PROFILE_REJECT,
-                'title' => 'رد درخواست ویرایش حساب کاربری',
-                'scenarioValid' => [self::SCENARIO_REJECT_UPDATE],
-                'callAfterUpdate' => true
-            ],
-        ]);
     }
 
     public function getPendingDataHint(string $attribute, bool $mainValue = false, string $default = null): array

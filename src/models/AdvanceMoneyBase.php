@@ -433,22 +433,22 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord implements NotifInterface
         ];
     }
 
-    public function notifUsers(): array
+    public function notifUsers(string $event): array
     {
         return [$this->user_id];
     }
 
-    public function notifTitle(): string
+    public function notifTitle(string $event): string
     {
-        return match ($this->getScenario()) {
-            self::SCENARIO_CREATE, self::SCENARIO_CREATE_AUTO, => 'ثبت درخواست مساعده',
-            self::SCENARIO_REJECT => 'رد درخواست مساعده',
-            self::SCENARIO_CONFIRM => 'تایید درخواست مساعده',
-            default => ''
-        };
+        return self::itemAlias('Notif', $event);
     }
 
-    public function notifDescription(): ?string
+    public function notifLink(string $event): ?string
+    {
+        return null;
+    }
+
+    public function notifDescription(string $event): ?string
     {
         $content = '';
         if ($this->getScenario() == self::SCENARIO_CREATE) {
@@ -470,37 +470,27 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord implements NotifInterface
         return $content;
     }
 
-    public function notifConditionToSend(): bool
+    public function notifConditionToSend(string $event): bool
     {
         return true;
     }
 
-    public function notifSmsConditionToSend(): bool
+    public function notifSmsConditionToSend(string $event): bool
     {
         return true;
     }
 
-    public function notifSmsDelayToSend(): ?int
+    public function notifSmsDelayToSend(string $event): ?int
     {
         return 0;
     }
 
-    public function notifEmailConditionToSend(): bool
+    public function notifEmailConditionToSend(string $event): bool
     {
         return true;
     }
 
-    public function notifEmailDelayToSend(): ?int
-    {
-        return 0;
-    }
-
-    public function notifTicketConditionToSend(): bool
-    {
-        return true;
-    }
-
-    public function notifTicketDelayToSend(): ?int
+    public function notifEmailDelayToSend(string $event): ?int
     {
         return 0;
     }

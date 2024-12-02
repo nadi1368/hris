@@ -10,6 +10,8 @@ use hesabro\helpers\validators\DateValidator;
 use hesabro\helpers\validators\IBANValidator;
 use hesabro\helpers\validators\NationalCodeValidator;
 use hesabro\hris\Module;
+use hesabro\notif\behaviors\NotifBehavior;
+use hesabro\notif\interfaces\NotifInterface;
 use mamadali\S3Storage\behaviors\StorageUploadBehavior;
 use mamadali\S3Storage\components\S3Storage;
 use Yii;
@@ -42,7 +44,7 @@ use yii\helpers\Html;
  * @property EmployeeExperience[] $experiencesWithPending
  * @property string $link
  */
-class EmployeeBranchUserBase extends ActiveRecord
+class EmployeeBranchUserBase extends ActiveRecord implements NotifInterface
 {
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 0;
@@ -83,6 +85,10 @@ class EmployeeBranchUserBase extends ActiveRecord
 
 
     const OLD_CLASS_NAME = 'backend\modules\employee\models\EmployeeBranchUser';
+
+    const NOTIF_EMPLOYEE_BRANCH_USER_UPDATE_PROFILE = 'notif_employee_branch_user_update_profile';
+
+    const NOTIF_EMPLOYEE_BRANCH_USER_REJECT_UPDATE = 'notif_employee_branch_user_reject_update';
 
     public $delete_document_end_work = false;
 
@@ -869,6 +875,10 @@ class EmployeeBranchUserBase extends ActiveRecord
                 'right_to_food' => 'حق خواربار',
                 'rightToChild' => 'حق اولاد',
             ],
+            'Notif' => [
+                self::NOTIF_EMPLOYEE_BRANCH_USER_UPDATE_PROFILE => 'درخواست ویرایش حساب کاربری',
+                self::NOTIF_EMPLOYEE_BRANCH_USER_REJECT_UPDATE => 'رد درخواست ویرایش حساب کاربری'
+            ]
         ];
         if (isset($code))
             return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
@@ -953,6 +963,16 @@ class EmployeeBranchUserBase extends ActiveRecord
                     'settlement_insurance_addition' => 'Boolean',
                 ],
 
+            ],
+            [
+                'class' => NotifBehavior::class,
+                'event' => self::NOTIF_EMPLOYEE_BRANCH_USER_UPDATE_PROFILE,
+                'scenario' => [self::SCENARIO_UPDATE_PROFILE],
+            ],
+            [
+                'class' => NotifBehavior::class,
+                'event' => self::NOTIF_EMPLOYEE_BRANCH_USER_REJECT_UPDATE,
+                'scenario' => [self::SCENARIO_REJECT_UPDATE],
             ],
         ];
     }
@@ -1120,38 +1140,6 @@ class EmployeeBranchUserBase extends ActiveRecord
         return false;
     }
 
-    public function getContentMail(): string
-    {
-        if ($this->scenario === self::SCENARIO_UPDATE_PROFILE) {
-            return "یک درخواست ویرایش حساب کاربری برای {$this->user->fullName} ثبت شد.";
-        }
-
-        if ($this->scenario === self::SCENARIO_REJECT_UPDATE) {
-            return "درخواست ویرایش حساب کاربری برای {$this->user->fullName} رد شد.";
-        }
-
-        return '';
-    }
-
-    public function getLinkMail(): string
-    {
-        return Yii::$app->urlManager->createAbsoluteUrl([Module::createUrl('employee-comfort/items')]);
-    }
-
-    public function getUserMail(): array
-    {
-        return [$this->user_id];
-    }
-
-    public function autoCommentCondition(): bool
-    {
-        if ($this->scenario === self::SCENARIO_UPDATE_PROFILE && !$this->isConfirmed) {
-            return false;
-        }
-
-        return true;
-    }
-
     /**
      * @param EmployeeChild[] $children
      * @return bool
@@ -1217,5 +1205,64 @@ class EmployeeBranchUserBase extends ActiveRecord
         $this->settlement_comforts = $value;
         $this->settlement_loans = $value;
         $this->settlement_insurance_addition = $value;
+    }
+
+    // Notif Settings
+
+    public function notifUsers(string $event): array
+    {
+        return [$this->user_id];
+    }
+
+    public function notifTitle(string $event): string
+    {
+        return match ($this->getScenario()) {
+            self::SCENARIO_UPDATE_PROFILE => self::itemAlias('Notif', self::NOTIF_EMPLOYEE_BRANCH_USER_UPDATE_PROFILE),
+            self::SCENARIO_REJECT_UPDATE => self::itemAlias('Notif', self::NOTIF_EMPLOYEE_BRANCH_USER_REJECT_UPDATE),
+            default => '',
+        };
+    }
+
+    public function notifLink(string $event): ?string
+    {
+        return Yii::$app->urlManager->createAbsoluteUrl([Module::createUrl('employee-comfort/items')]);
+    }
+
+    public function notifDescription(string $event): ?string
+    {
+        if ($this->scenario === self::SCENARIO_UPDATE_PROFILE) {
+            return "یک درخواست ویرایش حساب کاربری برای {$this->user->fullName} ثبت شد.";
+        }
+
+        if ($this->scenario === self::SCENARIO_REJECT_UPDATE) {
+            return "درخواست ویرایش حساب کاربری برای {$this->user->fullName} رد شد.";
+        }
+
+        return '';
+    }
+
+    public function notifConditionToSend(string $event): bool
+    {
+        return true;
+    }
+
+    public function notifSmsConditionToSend(string $event): bool
+    {
+        return true;
+    }
+
+    public function notifSmsDelayToSend(string $event): ?int
+    {
+        return 0;
+    }
+
+    public function notifEmailConditionToSend(string $event): bool
+    {
+        return true;
+    }
+
+    public function notifEmailDelayToSend(string $event): ?int
+    {
+        return 0;
     }
 }

@@ -6,12 +6,15 @@ use hesabro\helpers\behaviors\JsonAdditional;
 use hesabro\changelog\behaviors\LogBehavior;
 use hesabro\errorlog\behaviors\TraceBehavior;
 use hesabro\hris\Module;
+use hesabro\notif\behaviors\NotifBehavior;
+use hesabro\notif\interfaces\NotifInterface;
 use mamadali\S3Storage\behaviors\StorageUploadBehavior;
 use mamadali\S3Storage\components\S3Storage;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%employee_comfort_items}}".
@@ -39,7 +42,7 @@ use yii\db\ActiveQuery;
  *
  * @mixin StorageUploadBehavior
  */
-class ComfortItemsBase extends \yii\db\ActiveRecord
+class ComfortItemsBase extends ActiveRecord implements NotifInterface
 {
     const STATUS_WAIT_CONFIRM = 1;
     const STATUS_CONFIRM = 2;
@@ -66,6 +69,12 @@ class ComfortItemsBase extends \yii\db\ActiveRecord
     const LOAN_INSTALLMENTS = [
         1, 2, 3
     ];
+
+    const NOTIF_COMFORT_ITEM_CREATE = 'notif_comfort_item_create';
+
+    const NOTIF_COMFORT_ITEM_CONFIRM = 'notif_comfort_item_confirm';
+
+    const NOTIF_COMFORT_ITEM_REJECT = 'notif_comfort_item_reject';
 
     public ?EmployeeBranchUser $employee = null;
 
@@ -502,7 +511,12 @@ class ComfortItemsBase extends \yii\db\ActiveRecord
                 self::STATUS_CONFIRM => 'ph:check-circle-duotone',
                 self::STATUS_REJECT => 'ph:x-circle-duotone'
             ],
-            'Installments' => array_combine(ComfortItems::LOAN_INSTALLMENTS, array_map(fn($value) => "هر $value ماه یک چک", ComfortItems::LOAN_INSTALLMENTS))
+            'Installments' => array_combine(ComfortItems::LOAN_INSTALLMENTS, array_map(fn($value) => "هر $value ماه یک چک", ComfortItems::LOAN_INSTALLMENTS)),
+            'Notif' => [
+                self::NOTIF_COMFORT_ITEM_CREATE => 'ثبت درخواست امکانات رفاهی',
+                self::NOTIF_COMFORT_ITEM_CONFIRM => 'تایید درخواست امکانات رفاهی',
+                self::NOTIF_COMFORT_ITEM_REJECT => 'رد درخواست امکانات رفاهی',
+            ]
         ];
         if (isset($code))
             return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
@@ -550,6 +564,21 @@ class ComfortItemsBase extends \yii\db\ActiveRecord
                     'salary_items_addition_id' => 'NullInteger'
                 ]
             ],
+            [
+                'class' => NotifBehavior::class,
+                'event' => self::NOTIF_COMFORT_ITEM_CREATE,
+                'scenario' => [self::SCENARIO_CREATE, self::SCENARIO_LOAN_CREATE]
+            ],
+            [
+                'class' => NotifBehavior::class,
+                'event' => self::NOTIF_COMFORT_ITEM_CONFIRM,
+                'scenario' => [self::SCENARIO_CONFIRM],
+            ],
+            [
+                'class' => NotifBehavior::class,
+                'event' => self::NOTIF_COMFORT_ITEM_REJECT,
+                'scenario' => [self::SCENARIO_REJECT],
+            ]
         ];
     }
 
@@ -569,41 +598,6 @@ class ComfortItemsBase extends \yii\db\ActiveRecord
         };
 
         $this->scenario = is_array($scenario) ? ($scenario[$comfort->type] ?? self::SCENARIO_DEFAULT) : $scenario;
-    }
-
-    public function getContentMail(): string
-    {
-        if (in_array($this->scenario, [self::SCENARIO_CREATE, self::SCENARIO_LOAN_CREATE])) {
-            $type = Comfort::itemAlias('TypeCat', $this->comfort->type);
-            return "یک درخواست $type برای {$this->user->fullName} ثبت شد.";
-        }
-
-        if ($this->scenario === self::SCENARIO_CONFIRM) {
-            $type = Comfort::itemAlias('TypeCat', $this->comfort->type);
-            return "درخواست $type شما تایید شد.";
-        }
-
-        if ($this->scenario === self::SCENARIO_REJECT) {
-            $type = Comfort::itemAlias('TypeCat', $this->comfort->type);
-            return "درخواست $type شما رد شد.";
-        }
-
-        return '';
-    }
-
-    public function getLinkMail(): string
-    {
-        return Yii::$app->urlManager->createAbsoluteUrl([Module::createUrl('comfort/items')]);
-    }
-
-    public function getUserMail(): array
-    {
-        return [$this->user_id];
-    }
-
-    public function autoCommentCondition(): bool
-    {
-        return true;
     }
 
     public function createSalaryItemAddition(): bool
@@ -650,5 +644,67 @@ class ComfortItemsBase extends \yii\db\ActiveRecord
         }
 
         return true;
+    }
+
+    // Notif Settings
+
+    public function notifUsers(string $event): array
+    {
+        return [$this->user_id];
+    }
+
+    public function notifTitle(string $event): string
+    {
+        return self::itemAlias('Notif', $event);
+    }
+
+    public function notifLink(string $event): ?string
+    {
+        return Yii::$app->urlManager->createAbsoluteUrl([Module::createUrl('comfort/items')]);
+    }
+
+    public function notifDescription(string $event): ?string
+    {
+        if (in_array($this->scenario, [self::SCENARIO_CREATE, self::SCENARIO_LOAN_CREATE])) {
+            $type = Comfort::itemAlias('TypeCat', $this->comfort->type);
+            return "یک درخواست $type برای {$this->user->fullName} ثبت شد.";
+        }
+
+        if ($this->scenario === self::SCENARIO_CONFIRM) {
+            $type = Comfort::itemAlias('TypeCat', $this->comfort->type);
+            return "درخواست $type شما تایید شد.";
+        }
+
+        if ($this->scenario === self::SCENARIO_REJECT) {
+            $type = Comfort::itemAlias('TypeCat', $this->comfort->type);
+            return "درخواست $type شما رد شد.";
+        }
+
+        return '';
+    }
+
+    public function notifConditionToSend(string $event): bool
+    {
+        return true;
+    }
+
+    public function notifSmsConditionToSend(string $event): bool
+    {
+        return true;
+    }
+
+    public function notifSmsDelayToSend(string $event): ?int
+    {
+        return 0;
+    }
+
+    public function notifEmailConditionToSend(string $event): bool
+    {
+        return true;
+    }
+
+    public function notifEmailDelayToSend(string $event): ?int
+    {
+        return 0;
     }
 }
