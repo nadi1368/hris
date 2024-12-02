@@ -2,12 +2,14 @@
 
 namespace hesabro\hris\models;
 
-use hesabro\hris\models\EmployeeBranch;
-use hesabro\hris\models\EmployeeBranchUser;
+use hesabro\helpers\traits\CoreTrait;
 use hesabro\changelog\behaviors\LogBehavior;
 use hesabro\errorlog\behaviors\TraceBehavior;
 use hesabro\hris\Module;
+use hesabro\notif\behaviors\NotifBehavior;
+use hesabro\notif\interfaces\NotifInterface;
 use Yii;
+use yii\db\ActiveRecord;
 use yii\helpers\Html;
 
 /**
@@ -32,8 +34,10 @@ use yii\helpers\Html;
  * @property object $manager
  * @property object $update
  */
-class RequestLeaveBase extends \yii\db\ActiveRecord
+class RequestLeaveBase extends ActiveRecord implements NotifInterface
 {
+    use CoreTrait;
+
     public $range;
 
     const STATUS_DELETED = 0;
@@ -61,6 +65,12 @@ class RequestLeaveBase extends \yii\db\ActiveRecord
 
 
     const OLD_CLASS_NAME = 'backend\modules\employee\models\RequestLeave';
+
+    const NOTIF_REQUEST_LEAVE_CREATE = 'notif_request_leave_create';
+
+    const NOTIF_REQUEST_LEAVE_CONFIRM = 'notif_request_leave_confirm';
+
+    const NOTIF_REQUEST_LEAVE_REJECT = 'notif_request_leave_reject';
 
     public $rejectDescription='';
 
@@ -434,6 +444,11 @@ class RequestLeaveBase extends \yii\db\ActiveRecord
                 self::STATUS_CONFIRM_ADMIN => 'ph:check-circle-duotone',
                 self::STATUS_REJECT_ADMIN => 'ph:x-circle-duotone'
             ],
+            'Notif' => [
+                self::NOTIF_REQUEST_LEAVE_CREATE => 'ثبت درخواست مرخصی',
+                self::NOTIF_REQUEST_LEAVE_CONFIRM => 'تایید درخواست مرخصی',
+                self::NOTIF_REQUEST_LEAVE_REJECT => 'رد درخواست مرخصی',
+            ]
         ];
         if (isset($code))
             return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
@@ -457,6 +472,21 @@ class RequestLeaveBase extends \yii\db\ActiveRecord
     {
         return [
             [
+                'class' => NotifBehavior::class,
+                'event' => self::NOTIF_REQUEST_LEAVE_CREATE,
+                'scenario' => [self::SCENARIO_CREATE]
+            ],
+            [
+                'class' => NotifBehavior::class,
+                'event' => self::NOTIF_REQUEST_LEAVE_CONFIRM,
+                'scenario' => [self::SCENARIO_CONFIRM],
+            ],
+            [
+                'class' => NotifBehavior::class,
+                'event' => self::NOTIF_REQUEST_LEAVE_REJECT,
+                'scenario' => [self::SCENARIO_REJECT],
+            ],
+            [
                 'class' => TraceBehavior::class,
                 'ownerClassName' => self::class
             ],
@@ -468,10 +498,7 @@ class RequestLeaveBase extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function getUserMail(): array
+    public function notifUsers(string $event): array
     {
         if (in_array($this->getScenario(), [self::SCENARIO_CONFIRM, self::SCENARIO_REJECT])) {
             return [$this->user_id];
@@ -479,23 +506,20 @@ class RequestLeaveBase extends \yii\db\ActiveRecord
         return [];
     }
 
+    public function notifTitle(string $event): string
+    {
+        return self::itemAlias('Notif', $event);
+    }
 
-    /**
-     * @return string
-     */
-    public function getLinkMail(): string
+    public function notifLink(string $event): ?string
     {
         if (in_array($this->getScenario(), [self::SCENARIO_CONFIRM, self::SCENARIO_REJECT])) {
             return '';
         }
         return Yii::$app->urlManager->createAbsoluteUrl([Module::createUrl('request-leave/manage'), 'RequestLeaveSearch[id]' => $this->id]);
-
     }
 
-    /**
-     * @return string
-     */
-    public function getContentMail(): string
+    public function notifDescription(string $event): ?string
     {
         $content = '';
         $type=self::itemAlias('Types', (int)$this->type);
@@ -527,11 +551,28 @@ class RequestLeaveBase extends \yii\db\ActiveRecord
         return $content;
     }
 
-    /**
-     * @return bool
-     */
-    public function autoCommentCondition(): bool
+    public function notifConditionToSend(string $event): bool
     {
         return true;
+    }
+
+    public function notifSmsConditionToSend(string $event): bool
+    {
+        return true;
+    }
+
+    public function notifSmsDelayToSend(string $event): ?int
+    {
+        return 0;
+    }
+
+    public function notifEmailConditionToSend(string $event): bool
+    {
+        return true;
+    }
+
+    public function notifEmailDelayToSend(string $event): ?int
+    {
+        return 0;
     }
 }
