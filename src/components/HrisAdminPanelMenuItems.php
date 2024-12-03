@@ -11,8 +11,6 @@ use yii\helpers\Html;
 
 class HrisAdminPanelMenuItems
 {
-
-
     public static function items($moduleId = null)
     {
         $moduleId = $moduleId ?: Module::getInstance()->id;
@@ -205,6 +203,12 @@ class HrisAdminPanelMenuItems
                 'icon' => 'far fa-file-contract',
                 'url' => ["/$moduleId/user-contracts/index"],
                 'group' => 'EmployeeContracts',
+            ],
+            [
+                'label' => Module::t('module', 'Notification Settings'),
+                'icon' => 'far fa-bell',
+                'url' => ["/$moduleId/notif-listener/index"],
+                'group' => 'PulseNotif',
             ],
         ];
     }
