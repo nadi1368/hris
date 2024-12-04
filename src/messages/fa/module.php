@@ -392,4 +392,5 @@ return [
     'No items found' => 'نتیجه ای یافت نشد',
     'Payed By Boom' => 'پرداخت شده فرابوم',
     'Status Transfer To MultiPay' => 'انتقال به لیست حواله گروهی',
+    'Notification Settings' => 'تنظیمات اطلاع‌رسانی',
 ];

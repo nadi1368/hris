@@ -43,7 +43,6 @@ if ($model->excluded_jobs && ($salaryInsurance = SalaryInsurance::find()->andWhe
 ?>
 
 <div class="comfort-form">
-
     <?php $form = ActiveForm::begin(['id' => 'form-comfort']); ?>
     <div class="card-body">
         <div class="row">

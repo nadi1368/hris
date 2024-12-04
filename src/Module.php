@@ -2,6 +2,10 @@
 
 namespace hesabro\hris;
 
+use hesabro\hris\models\AdvanceMoneyBase;
+use hesabro\hris\models\ComfortItemsBase;
+use hesabro\hris\models\EmployeeBranchUserBase;
+use hesabro\hris\models\RequestLeave;
 use Yii;
 use yii\base\Module as BaseModule;
 use yii\helpers\Url;
@@ -49,5 +53,15 @@ class Module extends BaseModule
 
         $path = trim($path ?: '', '/');
         return Url::to([rtrim("/$moduleId/$path", '/'), ...$params]);
+    }
+
+    public static function getNotifEvents(): array
+    {
+        return array_merge(
+            AdvanceMoneyBase::itemAlias('Notif') ?: [],
+            RequestLeave::itemAlias('Notif') ?: [],
+            EmployeeBranchUserBase::itemAlias('Notif') ?: [],
+            ComfortItemsBase::itemAlias('Notif') ?: [],
+        );
     }
 }
