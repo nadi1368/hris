@@ -589,8 +589,10 @@ $("a[data-type='year'],a[data-type='month']").on('click', function () {
     $(_this.parents().get(1)).find('a[data-toggle="dropdown"] > span:first-child')?.text(_this.text())
     changeDateRange()
 })
-registerTopbarDropdown(document.getElementById('navbar-actions'))
+if(typeof registerTopbarDropdown === 'function') {
+ registerTopbarDropdown(document.getElementById('navbar-actions'))   
+}
 JS;
 
-//$this->registerJs($js, View::POS_READY);
+$this->registerJs($js);
 ?>
