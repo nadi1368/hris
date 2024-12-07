@@ -658,7 +658,7 @@ class ComfortItemsBase extends ActiveRecord implements NotifInterface
         return self::itemAlias('Notif', $event);
     }
 
-    public function notifLink(string $event): ?string
+    public function notifLink(string $event, ?int $userId): ?string
     {
         return Yii::$app->urlManager->createAbsoluteUrl([Module::createUrl('comfort/items')]);
     }

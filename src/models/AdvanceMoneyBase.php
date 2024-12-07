@@ -443,9 +443,9 @@ class AdvanceMoneyBase extends \yii\db\ActiveRecord implements NotifInterface
         return self::itemAlias('Notif', $event);
     }
 
-    public function notifLink(string $event): ?string
+    public function notifLink(string $event, ?int $userId): ?string
     {
-        return null;
+        return Module::getInstance()::createUrl($this->user_id == $userId ? 'employee-advance-money/index' : 'advance-money/index');
     }
 
     public function notifDescription(string $event): ?string
