@@ -1223,7 +1223,7 @@ class EmployeeBranchUserBase extends ActiveRecord implements NotifInterface
         };
     }
 
-    public function notifLink(string $event): ?string
+    public function notifLink(string $event, ?int $userId): ?string
     {
         return Yii::$app->urlManager->createAbsoluteUrl([Module::createUrl('employee-comfort/items')]);
     }

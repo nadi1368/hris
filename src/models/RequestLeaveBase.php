@@ -511,7 +511,7 @@ class RequestLeaveBase extends ActiveRecord implements NotifInterface
         return self::itemAlias('Notif', $event);
     }
 
-    public function notifLink(string $event): ?string
+    public function notifLink(string $event, ?int $userId): ?string
     {
         if (in_array($this->getScenario(), [self::SCENARIO_CONFIRM, self::SCENARIO_REJECT])) {
             return '';
