@@ -6,4 +6,4 @@
 composer require hesabro/hris
 ```
 
-Last version is: `v1.0.0` ;
+Last version is: `v1.0.5` ;
