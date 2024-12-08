@@ -4,6 +4,7 @@ namespace hesabro\hris\models;
 
 use hesabro\helpers\behaviors\DocumentsDataBehavior;
 use common\models\AccountDefinite;
+use common\models\Account;
 use common\behaviors\MutexBehavior;
 use common\models\Document;
 use yii\helpers\Url;
@@ -94,7 +95,7 @@ class AdvanceMoney extends AdvanceMoneyBase
      */
     public function getTCreditorItems() : array
     {
-        return [];
+        return Account::itemAlias('BankOrCashOrPublic');
     }
 
     /**
