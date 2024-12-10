@@ -1550,9 +1550,9 @@ class SalaryPeriodItemsController extends Controller
                         $IBANList[] = $employeeUser->shaba_non_cash;
                         $accountList[] = $employeeUser->account_non_cash;
                         $rows[$index++] = [
-                            'firstName' => $employeeUser->user->first_name,
-                            'lastName' => $employeeUser->user->last_name,
-                            'nationalCode' => $employeeUser->user->nationalCode,
+                            'firstName' => $employeeUser->first_name,
+                            'lastName' => $employeeUser->last_name,
+                            'nationalCode' => $employeeUser->nationalcode,
                             'cartNumber' => $employeeUser->shaba_non_cash,
                             'accountNumber' => $employeeUser->account_non_cash,
                             'amount' => $item->non_cash_commission,

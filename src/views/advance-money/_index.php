@@ -9,7 +9,7 @@ use yii\widgets\Pjax;
 use yii\bootstrap4\ButtonDropdown;
 
 /* @var $this yii\web\View */
-/* @var $searchModel hesabro\hris\models\AdvanceMoneySearch  */
+/* @var $searchModel hesabro\hris\models\AdvanceMoneySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 Pjax::begin(['id' => 'pjax-advance-money'])
@@ -113,8 +113,7 @@ Pjax::begin(['id' => 'pjax-advance-money'])
                                     ],
                                 ];
                             }
-                            if($model->canUseFinno())
-                            {
+                            if ($model->canUseFinno()) {
                                 $items[] = [
                                     'label' => Html::tag('span', '', ['class' => 'fa fa-check-circle']) . ' ' . 'حساب واسط',
                                     'url' => 'javascript:void(0)',
@@ -175,7 +174,7 @@ Pjax::begin(['id' => 'pjax-advance-money'])
                                     ],
                                 ];
                             }
-                            $items=$model->buttonDropdownDocument($items);
+                            $items = $model->buttonDropdownDocument($items);
                             $items[] = [
                                 'label' => Html::tag('span', ' ', ['class' => 'fa fa-history']) . ' ' . Yii::t('app', 'Log'),
                                 'url' => ['/mongo/log/view-ajax', 'modelId' => $model->id, 'modelClass' => AdvanceMoney::OLD_CLASS_NAME],
