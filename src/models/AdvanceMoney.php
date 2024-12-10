@@ -2,6 +2,7 @@
 
 namespace hesabro\hris\models;
 
+use common\models\Settings;
 use hesabro\helpers\behaviors\DocumentsDataBehavior;
 use common\models\AccountDefinite;
 use common\models\Account;
@@ -65,21 +66,22 @@ class AdvanceMoney extends AdvanceMoneyBase
     {
         $flag = true;
         $document = new Document();
-        $document->process = Process::PRC_CONFIRM_ADVANCE_MONEY;
+        $document->type = Document::TYPE_EMPLOYEE_ADVANCE_MONEY;
         $document->model_id = $this->id;
         $document->is_auto = 1;
-        $document->date = $this->receipt_date;
-        $document->description = "واریز وجه مساعده حقوق - رسید شماره " . $this->receipt_number;
+        $document->h_date = $this->receipt_date;
+        $document->des = "واریز وجه مساعده حقوق - رسید شماره " . $this->receipt_number;
         $flag = $flag && $document->save();
 
         $this->document = $document;
 
         /****************** بدهکار ******************/
-        $flag = $flag && $document->setDetail($this->m_debtor_id, $this->employee->account_id, 0, $this->amount, $document->description);
+        $flag = $flag && $document->saveDetailWitDefinite(Settings::get('m_debtor_advance_money', true), $this->employee->account_id, $this->amount, 0, $document->des, $document->h_date); // مساعده حقوق به تفضیل کارمند
         /****************** بستانکار ******************/
-        $flag= $flag && $document->setDetailWithWage(SettingsAccount::get(SettingsAccount::MOIN11), $this->t_creditor_id, $this->amount, 0, $this->wage_type, $this->wage_amount, $document->description);
+        $flag = $flag && $document->saveDetailWithWage(Settings::get('definite_bank'), $this->t_creditor_id, 0, $this->amount, $this->wage_type, $this->wage_amount, $document->des, $document->h_date);
 
-        return $flag && $document->validateTaraz() && $this->pushDocument($document->id, 'سند شناسایی حقوق');
+
+        return $flag && $document->validateTaraz() && $this->pushDocument($document->id, 'سند پرداخت مساعده');
     }
 
     /**
