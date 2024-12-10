@@ -214,15 +214,15 @@ class EmployeeContentBase extends ActiveRecord
         $scenarios = parent::scenarios();
 
         $scenarios[self::SCENARIO_CREATE] = [
-            'id', 'title', 'description', 'type', 'status', 'created', 'creator_id', 'update_id', 'changed', 'attachment',
+            'id', 'title', 'type', 'status', 'created', 'creator_id', 'update_id', 'changed', 'attachment',
             'show_start_at', 'show_end_at', 'custom_job_tags', 'custom_user_ids'
         ];
         $scenarios[self::SCENARIO_CREATE_ANNOUNCEMENT] = [
-            'id', 'title', 'description', 'type', 'status', 'created', 'creator_id', 'update_id', 'changed',
+            'id', 'title', 'type', 'status', 'created', 'creator_id', 'update_id', 'changed',
             'show_start_at', 'show_end_at', 'attachment'
         ];
         $scenarios[self::SCENARIO_UPDATE_ANNOUNCEMENT] = [
-            'id', 'title', 'description', 'type', 'status', 'created', 'creator_id', 'update_id', 'changed',
+            'id', 'title', 'type', 'status', 'created', 'creator_id', 'update_id', 'changed',
             'show_start_at', 'show_end_at', 'attachment'
         ];
 
@@ -234,12 +234,7 @@ class EmployeeContentBase extends ActiveRecord
      */
     public function getContent($highlightedClauseId = null)
     {
-        $content = implode('<br/>', array_merge(
-                [$this->description],
-                array_map(fn($clause) => '<div id="clause-' . $clause->id . '" class="' . ($highlightedClauseId == $clause->id ? 'highlight' : '') . '">' . $clause->content . '</div>', $this->clauses ?? [])
-            )
-        );
-        return $content;
+        return implode('<br/>', array_map(fn($clause) => '<div id="clause-' . $clause->id . '" class="' . ($highlightedClauseId == $clause->id ? 'highlight' : '') . '">' . $clause->content . '</div>', $this->clauses ?? []));
     }
 
     /**
@@ -364,7 +359,6 @@ class EmployeeContentBase extends ActiveRecord
     {
         parent::afterFind();
 
-        $this->description = $this->replaceTemplateVariables($this->description);
         foreach($this->clauses ?? [] as $clause) {
             $clause->content = $this->replaceTemplateVariables($clause->content);
         }

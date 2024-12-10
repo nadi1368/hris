@@ -37,18 +37,6 @@ class EmployeeContent extends EmployeeContentBase
             $this->status = self::STATUS_ACTIVE;
         }
 
-        if (is_array($this->clauses)) {
-
-            // if only one clause exist and no description provided, set clause as description
-            if (count($this->clauses) == 1) {
-                $this->description = $this->clauses[0]->content;
-                $this->clauses = [];
-            } else {
-                $this->description = null; // fix description unchanged on update if already set
-                $this->clauses = $this->clauses;
-            }
-        }
-
         $this->custom_job_tags = $this->custom_job_tags ?: [];
         $this->custom_user_ids = $this->custom_user_ids ?: [];
 

@@ -27,10 +27,6 @@ use yii\helpers\Html;
 				<?= $form->field($model, 'title') ?>
 			</div>
 
-			<div class="col-md-5">
-				<?= $form->field($model, 'description') ?>
-			</div>
-
 			<div class="col-md-2">
 				<?= $form->field($model, 'type')->dropdownList(EmployeeContent::itemAlias('Type'), ['prompt' => Module::t('module', 'Select...')]) ?>
 			</div>
