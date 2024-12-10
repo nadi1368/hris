@@ -129,7 +129,7 @@ class HrisAdminPanelMenuItems
                     [
                         'label' => 'فایل های اکسل حضور و غیاب',
                         'icon' => 'far fa-layer-group',
-                        'url' => ["/$moduleId/employee-roll-call/list-csv"],
+                        'url' => ["/$moduleId/employee-roll-call-manage/index"],
                         'group' => 'RollCall',
                     ],
                     [
