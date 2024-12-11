@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'id',
                 'title:ntext',
                 [
-                    'attribute' => 'description',
+                    'attribute' => 'clauses',
                     'format' => 'html',
                     'value' => $model->getContent(),
                 ],

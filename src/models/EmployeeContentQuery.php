@@ -107,7 +107,6 @@ class EmployeeContentQuery extends ActiveQuery
     public function byScatteredSearch(string $query): self
     {
         $likeCondition = null;
-        $searchKey = '';
         $searchKeys = explode(' ', $query);
         $likeCondition[0] = 'AND';
 
@@ -116,7 +115,6 @@ class EmployeeContentQuery extends ActiveQuery
             if ($searchKey) {
                 $likeCondition[] = ['OR',
                     ['like', 'title', $searchKey],
-                    ['like', 'description', $searchKey],
                     ['like', "JSON_EXTRACT(additional_data, '$.clauses')", $searchKey]
                 ];
             }

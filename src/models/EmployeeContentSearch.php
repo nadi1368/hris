@@ -33,7 +33,7 @@ class EmployeeContentSearch extends EmployeeContent
                 ]
             ],
             [['ignore_client'], 'boolean'],
-            [['title', 'description'], 'safe'],
+            [['title'], 'safe'],
         ];
     }
 
@@ -87,8 +87,7 @@ class EmployeeContentSearch extends EmployeeContent
             'changed' => $this->changed,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'description', $this->description]);
+        $query->andFilterWhere(['like', 'title', $this->title]);
 
 
         if ($this->scattered_search_query) {
@@ -136,8 +135,7 @@ class EmployeeContentSearch extends EmployeeContent
             'changed' => $this->changed,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'description', $this->description]);
+        $query->andFilterWhere(['like', 'title', $this->title]);
 
         $query->byCustomUserId($userId);
 

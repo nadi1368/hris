@@ -25,10 +25,6 @@ use yii\helpers\Html;
 				<?= $form->field($model, 'title') ?>
 			</div>
 
-			<div class="col-md-5">
-				<?= $form->field($model, 'description') ?>
-			</div>
-
 			<div class="col-12 align-self-center text-right">
 				<?= Html::submitButton(Module::t('module', 'Search'), ['class' => 'btn btn-primary']) ?>
 				<?= Html::resetButton(Module::t('module', 'Reset'), ['class' => 'btn btn-secondary']) ?>

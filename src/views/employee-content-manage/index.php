@@ -89,14 +89,6 @@ $this->registerCssFile('@web/fonts/bundle.css');
                 ],
                 'title:ntext',
                 [
-                    'attribute' => 'description',
-                    'format' => 'html',
-                    'headerOptions' => ['style' => 'width:500px; text-align: right;'],
-                    'value' => function (EmployeeContent $model) {
-                        return '<div class="faq-desc">' . $model->getExcerpt() . '</div>';
-                    }
-                ],
-                [
                     'attribute' => 'type',
                     'visible' => !$isTypeSet,
                     'value' => function (EmployeeContent $model) {
