@@ -50,7 +50,7 @@ class  EmployeeBranch extends EmployeeBranchBase
     public function getAccountSalaryTitle(bool $link = false): string
     {
         if ($this->account_id_salary && ($model = Account::findOne($this->account_id_salary)) !== null) {
-            return $link ? $model->getFullName(true) : $model->halfName;
+            return $model->getFullName(true);
         }
         return '';
     }
