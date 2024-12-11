@@ -74,7 +74,7 @@ class  EmployeeBranch extends EmployeeBranchBase
     public function getAccountInsuranceTitle(bool $link = false): string
     {
         if ($this->account_id_insurance_owner && ($model = Account::findOne($this->account_id_insurance_owner)) !== null) {
-            return $link ? $model->getFullName(true) : $model->halfName;
+            return $model->getFullName(true);
         }
         return '';
     }
