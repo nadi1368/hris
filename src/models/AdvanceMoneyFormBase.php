@@ -62,8 +62,8 @@ class AdvanceMoneyFormBase extends Model
         $model->user_id = $this->user_id;
         $model->amount = $this->amount;
         $model->comment = $this->description;
-        $model->created = Yii::$app->jdf::jalaliToTimestamp($this->date);
-        $model->changed = Yii::$app->jdf::jalaliToTimestamp($this->date);
+        $model->created = Yii::$app->jdf::jalaliToTimestamp($this->date, 'Y/m/d');
+        $model->changed = Yii::$app->jdf::jalaliToTimestamp($this->date, 'Y/m/d');
         $model->creator_id = Yii::$app->user->id;
         $model->update_id = Yii::$app->user->id;
         $model->status = AdvanceMoney::STATUS_CONFIRM;
