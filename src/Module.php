@@ -24,6 +24,8 @@ class Module extends BaseModule
 
     public string | null $assignment = null;
 
+    public string | int | null $rbacId = null;
+
     public array $hiringAttachRoles = [];
 
     public array $hiringDetachRoles = [];
